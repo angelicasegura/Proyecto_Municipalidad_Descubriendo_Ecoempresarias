@@ -471,15 +471,7 @@ footer {
   margin: 5px 0;
   color: #555;
 }
-.btn {
-  display: inline-block;
-  margin-top: 10px;
-  padding: 8px 15px;
-  background-color: #1e1e1e;
-  color: white;
-  border-radius: 6px;
-  text-decoration: none;
-}
+
 
 .btn:hover {
   background-color: #333;

@@ -35,9 +35,10 @@
               Administrador
             </a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Usuarios</a></li>
+                <li><a class="dropdown-item" href="../Usuarios/Usuarios.html">Usuarios</a></li>
 
               <li><a class="dropdown-item" href="#">Gestion de Roles</a></li>
+              <li><a class="dropdown-item" href="EmprendedoresAdmin.html">Gestion de emprendimientos</a></li>
               <li>
                 <a class="dropdown-item" href="#">Revisión de productos</a>
               </li>
@@ -194,7 +195,93 @@
 
     </div>
 
+
+
 </div>
+
+<!--Comentarios-->
+
+<div class="container mt-5">
+    <h3 class="mb-4">Comentarios</h3>
+
+    <!-- Caja para agregar un nuevo comentario -->
+    <div class="card mb-4 shadow-sm">
+        <div class="card-body">
+            <h5 class="card-title">Agregar un comentario</h5>
+            <textarea class="form-control mb-3" rows="3" placeholder="Escribe tu comentario aquí..."></textarea>
+            <button class="btn btn-primary">
+                <i class="fas fa-paper-plane"></i> Publicar comentario
+            </button>
+        </div>
+    </div>
+
+    <!-- LISTA DE COMENTARIOS -->
+    <div class="list-group">
+
+        <!-- Comentario 1 -->
+        <div class="list-group-item shadow-sm mb-3 rounded">
+            <div class="d-flex justify-content-between align-items-start">
+                <div>
+                    <h6 class="fw-bold mb-1">María López</h6>
+                    <p class="mb-2">Excelente atención y productos de calidad, muy recomendados.</p>
+                    <small class="text-muted">Publicado el 15 de febrero de 2025</small>
+                </div>
+
+                <!-- BOTONES DE ACCIÓN -->
+                <div class="ms-3 text-end">
+                    <button class="btn btn-outline-secondary btn-sm mb-1">
+                        <i class="fas fa-edit"></i> Editar
+                    </button>
+                    <button class="btn btn-outline-danger btn-sm">
+                        <i class="fas fa-trash"></i> Eliminar
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Comentario 2 -->
+        <div class="list-group-item shadow-sm mb-3 rounded">
+            <div class="d-flex justify-content-between align-items-start">
+                <div>
+                    <h6 class="fw-bold mb-1">Carlos Ramírez</h6>
+                    <p class="mb-2">Los pasteles son deliciosos y la entrega fue puntual. Volveré a comprar.</p>
+                    <small class="text-muted">Publicado el 10 de febrero de 2025</small>
+                </div>
+
+                <div class="ms-3 text-end">
+                    <button class="btn btn-outline-secondary btn-sm mb-1">
+                        <i class="fas fa-edit"></i> Editar
+                    </button>
+                    <button class="btn btn-outline-danger btn-sm">
+                        <i class="fas fa-trash"></i> Eliminar
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Comentario 3 -->
+        <div class="list-group-item shadow-sm mb-3 rounded">
+            <div class="d-flex justify-content-between align-items-start">
+                <div>
+                    <h6 class="fw-bold mb-1">Ana Solís</h6>
+                    <p class="mb-2">Muy buena experiencia, atención rápida y productos frescos.</p>
+                    <small class="text-muted">Publicado el 3 de febrero de 2025</small>
+                </div>
+
+                <div class="ms-3 text-end">
+                    <button class="btn btn-outline-secondary btn-sm mb-1">
+                        <i class="fas fa-edit"></i> Editar
+                    </button>
+                    <button class="btn btn-outline-danger btn-sm">
+                        <i class="fas fa-trash"></i> Eliminar
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
 
 </div>
 
