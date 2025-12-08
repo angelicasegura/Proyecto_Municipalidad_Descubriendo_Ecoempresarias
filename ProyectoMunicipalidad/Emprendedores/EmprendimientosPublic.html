@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Ecoempresarias</title>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../styles/styles.css" />
+  </head>
+
+  <body>
+    <!-- NAVBAR FRAGMENT -->
+    <nav th:fragment="navbar">
+      <div class="nav-container">
+        <a href="#" class="logo">
+          <img src="imagenes/logo.png" alt="Logo" class="logo-img" />
+          Ecoempresarias
+        </a>
+        <ul class="nav-links">
+          <li><a href="#features">Emprendedores</a></li>
+          <li><a href="#entrepreneurs">Productos</a></li>
+          <li><a href="#contact">Carrito</a></li>
+          <li><a href="/Eventos/eventos.html">Eventos</a></li>
+          <li><a href="#contact">Entregas y seguimientos</a></li>
+          <li><a href="#contact">Mapas</a></li>
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              href="#"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              Administrador
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Usuarios</a></li>
+
+              <li><a class="dropdown-item" href="#">Gestion de Roles</a></li>
+              <li>
+                <a class="dropdown-item" href="#">Revisión de productos</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="#">Aprobacion de solicitudes</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="#"
+                  >Sistema de Inteligencia Municipal</a
+                >
+              </li>
+              <li>
+                <a class="dropdown-item" href="#">Analisis de sectores</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              href="#"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              Emprendedor
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Inventario</a></li>
+
+              <li>
+                <a class="dropdown-item" href="#">Analiticas del negocio</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="/Eventos/misEventos.html"
+                  >Mis Eventos</a
+                >
+              </li>
+            </ul>
+          </li>
+          <li><a href="#contact">Iniciar Sesión</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <!--Body-->
+    <!-- HERO SECTION -->
+    <section class="hero-section bg-primary text-white py-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h1 class="display-4 fw-bold mb-3">Nuestros Emprendimientos</h1>
+                    <p class="lead mb-0">Descubre productos y servicios de emprendedores comprometidos con la sostenibilidad</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BÚSQUEDA Y FILTROS -->
+    <div class="container py-4">
+        <div class="row mb-4">
+            <div class="col-md-5">
+                <div class="input-group input-group-lg">
+                    <span class="input-group-text bg-white"><i class="fas fa-search"></i></span>
+                    <input type="text" class="form-control" id="inputBuscar" placeholder="Buscar emprendimiento...">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <select class="form-select form-select-lg" id="selectCategoria">
+                    <option value="">Todas las categorías</option>
+                    <option value="Artesanía">Artesanía</option>
+                    <option value="Alimentos">Alimentos</option>
+                    <option value="Tecnología">Tecnología</option>
+                    <option value="Textiles">Textiles</option>
+                    <option value="Servicios">Servicios</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <button class="btn btn-primary btn-lg w-100" onclick="buscarEmprendimientos()">
+                    <i class="fas fa-search"></i> Buscar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- GRID DE EMPRENDIMIENTOS -->
+    <div class="container pb-5">
+        <div class="row g-4" id="gridEmprendimientos">
+            <div class="card">
+                <h3>Pastelería Sweet Dreams</h3>
+                <p><strong>Dueño:</strong> Ana Solís</p>
+                <p><strong>Categoría:</strong> Repostería artesanal</p>
+                <p><strong>Ubicación:</strong> San José</p>
+                <a href="../Emprendedores/EmprendimientoDetalle.html" class="btn" data-bs-toggle="modal" data-bs-target="#modalConfirmarEstado">Ver más</a>
+            </div>
+
+            <!-- CARD 2 -->
+            <div class="card">
+                <h3>TechPro Solutions</h3>
+                <p><strong>Dueño:</strong> Carlos Herrera</p>
+                <p><strong>Categoría:</strong> Desarrollo de software</p>
+                <p><strong>Ubicación:</strong> Cartago</p>
+                <a href="../Emprendedores/EmprendimientoDetalle.html" class="btn">Ver más</a>
+            </div>
+
+            <!-- CARD 3 -->
+            <div class="card">
+                <h3>Green Garden</h3>
+                <p><strong>Dueño:</strong> Sofía Araya</p>
+                <p><strong>Categoría:</strong> Plantas y jardinería</p>
+                <p><strong>Ubicación:</strong> Alajuela</p>
+                <a href="../Emprendedores/EmprendimientoDetalle.html" class="btn">Ver más</a>
+            </div>
+
+            <!-- CARD 4 -->
+            <div class="card">
+                <h3>Café Montaña</h3>
+                <p><strong>Dueño:</strong> Luis Madrigal</p>
+                <p><strong>Categoría:</strong> Café gourmet</p>
+                <p><strong>Ubicación:</strong> Heredia</p>
+                <a href="../Emprendedores/EmprendimientoDetalle.html" class="btn">Ver más</a>
+            </div>
+
+        </div>
+        <div id="mensajeVacio" class="alert alert-info text-center my-5" style="display: none;">
+            <i class="fas fa-inbox"></i> No encontramos emprendimientos que coincidan con tu búsqueda
+        </div>
+    </div>
+
+    
+    <!-- FOOTER FRAGMENT -->
+    <footer th:fragment="footer">
+      <div class="footer-container">
+        <div class="footer-grid">
+          <div class="footer-section">
+            <h4>Sobre Nosotros</h4>
+            <ul>
+              <li><a href="#">Misión</a></li>
+              <li><a href="#">Visión</a></li>
+              <li><a href="#">Historia</a></li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h4>Recursos</h4>
+            <ul>
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">Capacitación</a></li>
+              <li><a href="#">Documentos</a></li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h4>Contacto</h4>
+            <ul>
+              <li>
+                <a href="mailto:info@ecoempresarias.mx"
+                  >info@ecoempresarias.mx</a
+                >
+              </li>
+              <li><a href="tel:+525555555555">+52 (555) 555-5555</a></li>
+              <li><a href="#">Redes Sociales</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>
+            &copy; 2025 Conociendo a Nuestras Ecoempresarias. Todos los derechos
+            reservados.
+          </p>
+        </div>
+      </div>
+    </footer>
+  </body>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</html>
