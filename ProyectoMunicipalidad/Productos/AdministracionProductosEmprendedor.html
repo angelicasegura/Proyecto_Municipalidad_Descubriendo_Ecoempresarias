@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Ecoempresarias</title>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../styles/styles.css" />
+  </head>
+
+  <body>
+    <!-- NAVBAR FRAGMENT -->
+    <nav th:fragment="navbar">
+      <div class="nav-container">
+        <a href="#" class="logo">
+          <img src="../imagenes/logo.png" alt="Logo" class="logo-img" />
+          Ecoempresarias
+        </a>
+        <ul class="nav-links">
+          <li><a href="../Emprendedores/EmprendimientosPublic.html">Emprendedores</a></li>
+          <li><a href="#entrepreneurs">Productos</a></li>
+          <li><a href="#contact">Carrito</a></li>
+          <li><a href="/Eventos/eventos.html">Eventos</a></li>
+          <li><a href="#contact">Entregas y seguimientos</a></li>
+          <li><a href="#contact">Mapas</a></li>
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              href="#"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              Administrador
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="../Usuarios/Usuarios.html">Usuarios</a></li>
+
+              <li><a class="dropdown-item" href="#">Gestion de Roles</a></li>
+              <li><a class="dropdown-item" href="../Emprendedores/EmprendedoresAdmin.html">Gestion de emprendimientos</a></li>
+              <li>
+                <a class="dropdown-item" href="#">Revisión de productos</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="#">Aprobacion de solicitudes</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="#"
+                  >Sistema de Inteligencia Municipal</a
+                >
+              </li>
+              <li>
+                <a class="dropdown-item" href="#">Analisis de sectores</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              href="#"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              Emprendedor
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Inventario</a></li>
+
+              <li><a class="dropdown-item" href="../Productos/AdministracionProductosEmprendedor.html">Mis Productos</a></li>
+              <li>
+                <a class="dropdown-item" href="#">Analiticas del negocio</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="/Eventos/misEventos.html"
+                  >Mis Eventos</a
+                >
+              </li>
+            </ul>
+          </li>
+          <li><a href="#contact">Iniciar Sesión</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <!--Body-->
+    <div class="container-fluid py-4">
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h1 class="h2 mb-0">
+                            <i class="fas fa-box text-primary me-2"></i>Gestión de Productos
+                        </h1>
+                        <p class="text-muted mt-1">Administra tu catálogo de productos</p>
+                    </div>
+                    <button class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#nuevoProductoModal">
+                        <i class="fas fa-plus me-2"></i>Agregar Producto
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Buscar y Filtrar -->
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <span class="input-group-text bg-light border-0">
+                        <i class="fas fa-search text-primary"></i>
+                    </span>
+                    <input type="text" class="form-control border-0 bg-light" id="buscarProducto" 
+                           placeholder="Buscar por nombre...">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <select class="form-select border-0 bg-light" id="filtroCategoria">
+                    <option value="">Todas las categorías</option>
+                    <option value="Artesanía">Artesanía</option>
+                    <option value="Alimentos">Alimentos</option>
+                    <option value="Textil">Textil</option>
+                    <option value="Cosmética">Cosmética</option>
+                    <option value="Servicios">Servicios</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <select class="form-select border-0 bg-light" id="filtroEstado">
+                    <option value="">Todos los estados</option>
+                    <option value="activo">Activos</option>
+                    <option value="inactivo">Inactivos</option>
+                    <option value="Pendiente de revisión">Pendiente de revisón</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Tabla de Productos  -->
+        <div class="row d-none d-lg-flex">
+            <div class="col-12">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th class="fw-600 text-primary">Nombre</th>
+                                        <th class="fw-600 text-primary">Categoría</th>
+                                        <th class="fw-600 text-primary">Precio</th>
+                                        <th class="fw-600 text-primary">Stock</th>
+                                        <th class="fw-600 text-primary">Estado</th>
+                                        <th class="fw-600 text-primary">Acciones</th>
+                                    </tr>
+                                </thead>
+                               <tbody id="tablaProductos">
+                                <tr>
+                                    <td>Galletas La Abuela</td>
+                                    <td>Alimentos</td>
+                                    <td>₡2,000</td>
+                                    <td>120</td>
+                                    <td><span class="badge bg-success">Publicado</span></td>
+                                    <td>
+                                    <a href="../Productos/DetalleProductoPublic.html" class="btn btn-sm btn-primary me-1">Ver</a>
+                                    <button class="btn btn-sm btn-outline-secondary me-1" data-bs-toggle="modal" data-bs-target="#editarProductoModal">Editar</button>
+                                    <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#confirmarEstadoModal">Eliminar</button>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>Pastel Tres Leches</td>
+                                    <td>Repostería</td>
+                                    <td>₡8,500</td>
+                                    <td>20</td>
+                                    <td><span class="badge bg-success">Publicado</span></td>
+                                    <td>
+                                    <a href="../Productos/DetalleProductoPublic.html" class="btn btn-sm btn-primary me-1">Ver</a>
+                                    <button class="btn btn-sm btn-outline-secondary me-1" data-bs-toggle="modal" data-bs-target="#editarProductoModal">Editar</button>
+                                    <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#confirmarEstadoModal">Eliminar</button>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>Bolsa Ecológica Tela</td>
+                                    <td>Textiles</td>
+                                    <td>₡3,500</td>
+                                    <td>45</td>
+                                    <td><span class="badge bg-warning text-dark">Pendiente de revisión</span></td>
+                                    <td>
+                                    <a href="../Productos/DetalleProductoPublic.html" class="btn btn-sm btn-primary me-1">Ver</a>
+                                    <button class="btn btn-sm btn-outline-secondary me-1" data-bs-toggle="modal" data-bs-target="#editarProductoModal">Editar</button>
+                                    <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#confirmarEstadoModal">Eliminar</button>
+                                    </td>
+                                </tr>
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div id="sinProductos" class="alert alert-info mt-3" style="display: none;">
+                    <i class="fas fa-info-circle me-2"></i>No se encontraron productos.
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Modal: Nuevo Producto  -->
+    <div class="modal fade" id="nuevoProductoModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white border-0">
+                    <h5 class="modal-title">
+                        <i class="fas fa-plus-circle me-2"></i>Agregar Nuevo Producto
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formularioProducto" novalidate>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="nombreProducto" class="form-label fw-600">
+                                    Nombre del Producto <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" class="form-control" id="nombreProducto" 
+                                       placeholder="Ej: Jabón Natural de Café" required>
+                                <div class="invalid-feedback">El nombre es requerido.</div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="precioProducto" class="form-label fw-600">
+                                    Precio <span class="text-danger">*</span>
+                                </label>
+                                <input type="number" class="form-control" id="precioProducto" 
+                                       placeholder="0.00" step="0.01" required>
+                                <div class="invalid-feedback">El precio es requerido y debe ser válido.</div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="categoriaProducto" class="form-label fw-600">
+                                    Categoría <span class="text-danger">*</span>
+                                </label>
+                                <select class="form-select" id="categoriaProducto" required>
+                                    <option value="">Selecciona una categoría</option>
+                                    <option value="Artesanía">Artesanía</option>
+                                    <option value="Alimentos">Alimentos</option>
+                                    <option value="Textil">Textil</option>
+                                    <option value="Cosmética">Cosmética</option>
+                                    <option value="Servicios">Servicios</option>
+                                </select>
+                                <div class="invalid-feedback">Selecciona una categoría.</div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="stockProducto" class="form-label fw-600">
+                                    Stock <span class="text-danger">*</span>
+                                </label>
+                                <input type="number" class="form-control" id="stockProducto" 
+                                       placeholder="0" required>
+                                <div class="invalid-feedback">El stock es requerido.</div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="descripcionProducto" class="form-label fw-600">
+                                Descripción <span class="text-danger">*</span>
+                            </label>
+                            <textarea class="form-control" id="descripcionProducto" rows="3"
+                                      placeholder="Describe tu producto..." required></textarea>
+                            <div class="invalid-feedback">La descripción es requerida.</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="imagenProducto" class="form-label fw-600">
+                                Imagen del Producto
+                            </label>
+                            <input type="file" class="form-control" id="imagenProducto" accept="image/*">
+                            <small class="text-muted">JPG, PNG (máx. 2MB)</small>
+                        </div>
+
+                        <div class="alert alert-info d-none" id="alertaProducto" role="alert"></div>
+                    </form>
+                </div>
+                <div class="modal-footer bg-light border-top">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="fas fa-times me-2"></i>Cancelar
+                    </button>
+                    <button type="button" class="btn btn-primary" id="guardarProductoBtn">
+                        <i class="fas fa-save me-2"></i>Guardar Producto
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Editar Producto  -->
+    <div class="modal fade" id="editarProductoModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white border-0">
+                    <h5 class="modal-title">
+                        <i class="fas fa-edit me-2"></i>Editar Producto
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formularioEditar" novalidate>
+                        <input type="hidden" id="idProductoEditar">
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="nombreProductoEdit" class="form-label fw-600">
+                                    Nombre del Producto <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" class="form-control" id="nombreProductoEdit" required>
+                                <div class="invalid-feedback">El nombre es requerido.</div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="precioProductoEdit" class="form-label fw-600">
+                                    Precio  <span class="text-danger">*</span>
+                                </label>
+                                <input type="number" class="form-control" id="precioProductoEdit" 
+                                       step="0.01" required>
+                                <div class="invalid-feedback">El precio es requerido.</div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="categoriaProductoEdit" class="form-label fw-600">
+                                    Categoría <span class="text-danger">*</span>
+                                </label>
+                                <select class="form-select" id="categoriaProductoEdit" required>
+                                    <option value="Artesanía">Artesanía</option>
+                                    <option value="Alimentos">Alimentos</option>
+                                    <option value="Textil">Textil</option>
+                                    <option value="Cosmética">Cosmética</option>
+                                    <option value="Servicios">Servicios</option>
+                                </select>
+                                <div class="invalid-feedback">Selecciona una categoría.</div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="stockProductoEdit" class="form-label fw-600">
+                                    Stock <span class="text-danger">*</span>
+                                </label>
+                                <input type="number" class="form-control" id="stockProductoEdit" required>
+                                <div class="invalid-feedback">El stock es requerido.</div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="descripcionProductoEdit" class="form-label fw-600">
+                                Descripción <span class="text-danger">*</span>
+                            </label>
+                            <textarea class="form-control" id="descripcionProductoEdit" rows="3" required></textarea>
+                            <div class="invalid-feedback">La descripción es requerida.</div>
+                        </div>
+
+                        <div class="alert alert-danger d-none" id="alertaEditar" role="alert"></div>
+                    </form>
+                </div>
+                <div class="modal-footer bg-light border-top">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="fas fa-times me-2"></i>Cancelar
+                    </button>
+                    <button type="button" class="btn btn-primary" id="guardarEdicionBtn">
+                        <i class="fas fa-save me-2"></i>Guardar Cambios
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Confirmar Cambio de Estado -->
+    <div class="modal fade" id="confirmarEstadoModal" tabindex="-1">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header bg-warning border-0">
+                    <h5 class="modal-title"><i class="fas fa-exclamation-triangle"></i> Confirmar Cambio de Estado</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="mensajeConfirmacion">¿Estás seguro de que deseas cambiar el estado de este producto?</p>
+                    <div class="alert alert-warning mb-0">
+                        <small><i class="fas fa-info-circle"></i> Esta acción puede afectar a la lista de productos del negocio.</small>
+                    </div>
+                </div>
+                <div class="modal-footer border-top">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" id="btnConfirmarEstado">
+                        <i class="fas fa-check"></i> Confirmar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- FOOTER FRAGMENT -->
+    <footer th:fragment="footer">
+      <div class="footer-container">
+        <div class="footer-grid">
+          <div class="footer-section">
+            <h4>Sobre Nosotros</h4>
+            <ul>
+              <li><a href="#">Misión</a></li>
+              <li><a href="#">Visión</a></li>
+              <li><a href="#">Historia</a></li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h4>Recursos</h4>
+            <ul>
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">Capacitación</a></li>
+              <li><a href="#">Documentos</a></li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h4>Contacto</h4>
+            <ul>
+              <li>
+                <a href="mailto:info@ecoempresarias.mx"
+                  >info@ecoempresarias.mx</a
+                >
+              </li>
+              <li><a href="tel:+525555555555">+52 (555) 555-5555</a></li>
+              <li><a href="#">Redes Sociales</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>
+            &copy; 2025 Conociendo a Nuestras Ecoempresarias. Todos los derechos
+            reservados.
+          </p>
+        </div>
+      </div>
+    </footer>
+  </body>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</html>

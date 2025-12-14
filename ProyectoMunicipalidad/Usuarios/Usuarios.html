@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Ecoempresarias</title>
+    
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="../styles/styles.css">
+</head>
+
+<body>
+
+    
+    <!-- NAVBAR FRAGMENT -->
+    <nav th:fragment="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <img src="../imagenes/logo.png" alt="Logo" class="logo-img">
+                Ecoempresarias
+            </a>
+            <ul class="nav-links">
+                <li><a href="../Emprendedores/EmprendimientosPublic.html">Emprendedores</a></li>
+                <li><a href="#entrepreneurs">Productos</a></li>
+                <li><a href="#contact">Carrito</a></li>
+                <li><a href="/Eventos/eventos.html">Eventos</a></li>
+                <li><a href="#contact">Entregas y seguimientos</a></li>
+                <li><a href="#contact">Mapas</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Administrador
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Usuarios</a></li>
+
+                        <li><a class="dropdown-item" href="#">Gestion de Roles</a></li>
+                        
+                        <li><a class="dropdown-item" href="../Aprobaciones/revisionProductos.html">Revisión de productos</a></li>
+                        <li><a class="dropdown-item" href="#">Aprobacion de solicitudes</a></li>
+                        <li><a class="dropdown-item" href="#">Sistema de Inteligencia Municipal</a></li>
+                        <li><a class="dropdown-item" href="#">Analisis de sectores</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Emprendedor
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Inventario</a></li>
+                        <li><a class="dropdown-item" href="../Productos/AdministracionProductosEmprendedor.html">Mis Productos</a></li>
+                        <li><a class="dropdown-item" href="#">Analiticas del negocio</a></li>
+                        <li><a class="dropdown-item" href="../Eventos/misEventos.html">Mis Eventos</a></li>
+                    </ul>
+                </li>
+                <li><a href="#contact">Iniciar Sesión</a></li>
+
+            </ul>
+        </div>
+    </nav>
+
+
+    <!--Body-->
+    
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="container-fluid py-4">
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <h1 class="h2 mb-1"><i class="fas fa-users text-primary"></i> Gestión de Usuarios</h1>
+                        <p class="text-muted mb-0">Administra todos los usuarios del sistema</p>
+                    </div>
+                    <button class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#modalCrearUsuario">
+                        <i class="fas fa-plus"></i> Crear Usuario
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN DE BÚSQUEDA Y FILTROS -->
+        <div class="row mb-4">
+            <div class="col-md-8">
+                <div class="input-group input-group-lg">
+                    <span class="input-group-text bg-light border-0">
+                        <i class="fas fa-search text-primary"></i>
+                    </span>
+                    <input type="text" class="form-control border-0" id="inputBusqueda" placeholder="Buscar por nombre, correo o cédula...">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <select class="form-select form-select-lg" id="selectRol">
+                    <option value="">Todos los Roles</option>
+                    <option value="administrador">Administrador</option>
+                    <option value="emprendedor">Emprendedor</option>
+                    <option value="revisor">Revisor</option>
+                    <option value="usuario">Usuario</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- TABLA DE USUARIOS -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card shadow-sm border-0">
+                    <div class="card-header bg-white border-bottom">
+                        <h5 class="mb-0">Listado de Usuarios</h5>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Nombre Completo</th>
+                                        <th>Correo</th>
+                                        <th>Cédula</th>
+                                        <th>Teléfono</th>
+                                        <th>Rol</th>
+                                        <th>Estado</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tablaUsuarios">
+                                    <tr>
+                                        <td>001</td>
+                                        <td>Juan Carlos Pérez</td>
+                                        <td>juan.perez@ecoempresarias.mx</td>
+                                        <td>123456789</td>
+                                        <td>+52 555-1234</td>
+                                        <td><span class="badge bg-primary">Administrador</span></td>
+                                        <td><span class="badge bg-success">Activo</span></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-primary" title="Editar" data-bs-toggle="modal" data-bs-target="#modalEditarUsuario">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-danger" title="Cambiar Estado" data-bs-toggle="modal" data-bs-target="#modalConfirmarEstado">
+                                                <i class="fas fa-ban"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>002</td>
+                                        <td>María García López</td>
+                                        <td>maria.garcia@ecoempresarias.mx</td>
+                                        <td>987654321</td>
+                                        <td>+52 555-5678</td>
+                                        <td><span class="badge bg-success">Emprendedor</span></td>
+                                        <td><span class="badge bg-success">Activo</span></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-primary" title="Editar" data-bs-toggle="modal" data-bs-target="#modalEditarUsuario">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-danger" title="Cambiar Estado" data-bs-toggle="modal" data-bs-target="#modalConfirmarEstado">
+                                                <i class="fas fa-ban"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>003</td>
+                                        <td>Carlos Hernández Ruiz</td>
+                                        <td>carlos.hernandez@ecoempresarias.mx</td>
+                                        <td>456789123</td>
+                                        <td>+52 555-9012</td>
+                                        <td><span class="badge bg-info">Revisor</span></td>
+                                        <td><span class="badge bg-danger">Inactivo</span></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-primary" title="Editar" data-bs-toggle="modal" data-bs-target="#modalEditarUsuario">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-success" title="Activar" data-bs-toggle="modal" data-bs-target="#modalConfirmarEstado">
+                                                <i class="fas fa-check"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-light border-top">
+                        <small class="text-muted">Se encontraron <strong id="totalUsuarios">3</strong> usuarios</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+    </main>
+
+    <!-- MODAL CREAR USUARIO-->
+    <div class="modal fade" id="modalCrearUsuario" tabindex="-1" data-bs-backdrop="static">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white border-0">
+                    <h5 class="modal-title"><i class="fas fa-user-plus"></i> Crear Nuevo Usuario</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <form id="formCrearUsuario" novalidate>
+                    <div class="modal-body">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="inputNombre" class="form-label">Nombre <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="inputNombre" placeholder="Ej: Juan" required>
+                                <div class="invalid-feedback">El nombre es requerido.</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="inputApellidos" class="form-label">Apellidos <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="inputApellidos" placeholder="Ej: Pérez García" required>
+                                <div class="invalid-feedback">Los apellidos son requeridos.</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="inputCorreo" class="form-label">Correo <span class="text-danger">*</span></label>
+                                <input type="email" class="form-control" id="inputCorreo" placeholder="correo@ecoempresarias.mx" required>
+                                <div class="invalid-feedback">Ingresa un correo válido.</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="inputTelefono" class="form-label">Teléfono <span class="text-danger">*</span></label>
+                                <input type="tel" class="form-control" id="inputTelefono" placeholder="+52 555-1234" required>
+                                <div class="invalid-feedback">El teléfono es requerido.</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="inputCedula" class="form-label">Cédula <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="inputCedula" placeholder="123456789" required>
+                                <div class="invalid-feedback">La cédula es requerida.</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="selectRolCrear" class="form-label">Rol <span class="text-danger">*</span></label>
+                                <select class="form-select" id="selectRolCrear" required>
+                                    <option value="">Selecciona un rol</option>
+                                    <option value="administrador">Administrador</option>
+                                    <option value="emprendedor">Emprendedor</option>
+                                    <option value="revisor">Revisor</option>
+                                    <option value="usuario">Usuario</option>
+                                </select>
+                                <div class="invalid-feedback">Debes seleccionar un rol.</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer border-top">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Crear Usuario
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL EDITAR USUARIO -->
+    <div class="modal fade" id="modalEditarUsuario" tabindex="-1" data-bs-backdrop="static">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white border-0">
+                    <h5 class="modal-title"><i class="fas fa-user-edit"></i> Editar Usuario</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <form id="formEditarUsuario" novalidate>
+                    <div class="modal-body">
+                        <div class="alert alert-info mb-3">
+                            <i class="fas fa-info-circle"></i> Solo los usuarios activos pueden ser editados.
+                        </div>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="inputNombreEdit" class="form-label">Nombre <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="inputNombreEdit" required>
+                                <div class="invalid-feedback">El nombre es requerido.</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="inputApellidosEdit" class="form-label">Apellidos <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="inputApellidosEdit" required>
+                                <div class="invalid-feedback">Los apellidos son requeridos.</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="inputCorreoEdit" class="form-label">Correo <span class="text-danger">*</span></label>
+                                <input type="email" class="form-control" id="inputCorreoEdit" required>
+                                <div class="invalid-feedback">Ingresa un correo válido.</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="inputTelefonoEdit" class="form-label">Teléfono <span class="text-danger">*</span></label>
+                                <input type="tel" class="form-control" id="inputTelefonoEdit" required>
+                                <div class="invalid-feedback">El teléfono es requerido.</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="inputCedulaEdit" class="form-label">Cédula <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="inputCedulaEdit" required>
+                                <div class="invalid-feedback">La cédula es requerida.</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="selectRolEdit" class="form-label">Rol <span class="text-danger">*</span></label>
+                                <select class="form-select" id="selectRolEdit" required>
+                                    <option value="administrador">Administrador</option>
+                                    <option value="emprendedor">Emprendedor</option>
+                                    <option value="revisor">Revisor</option>
+                                    <option value="usuario">Usuario</option>
+                                </select>
+                                <div class="invalid-feedback">Debes seleccionar un rol.</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer border-top">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Guardar Cambios
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL CONFIRMACIÓN CAMBIO DE ESTADO (RF-001-5) -->
+    <div class="modal fade" id="modalConfirmarEstado" tabindex="-1" data-bs-backdrop="static">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header bg-warning border-0">
+                    <h5 class="modal-title"><i class="fas fa-exclamation-triangle"></i> Confirmar Cambio de Estado</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="mensajeConfirmacion">¿Estás seguro de que deseas cambiar el estado de este usuario?</p>
+                    <div class="alert alert-warning mb-0">
+                        <small><i class="fas fa-info-circle"></i> Esta acción puede afectar el acceso del usuario al sistema.</small>
+                    </div>
+                </div>
+                <div class="modal-footer border-top">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" id="btnConfirmarEstado">
+                        <i class="fas fa-check"></i> Confirmar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- FOOTER FRAGMENT -->
+    <footer th:fragment="footer">
+
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h4>Sobre Nosotros</h4>
+                    <ul>
+                        <li><a href="#">Misión</a></li>
+                        <li><a href="#">Visión</a></li>
+                        <li><a href="#">Historia</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Recursos</h4>
+                    <ul>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Capacitación</a></li>
+                        <li><a href="#">Documentos</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contacto</h4>
+                    <ul>
+                        <li><a href="mailto:info@ecoempresarias.mx">info@ecoempresarias.mx</a></li>
+                        <li><a href="tel:+525555555555">+52 (555) 555-5555</a></li>
+                        <li><a href="#">Redes Sociales</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Conociendo a Nuestras Ecoempresarias. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</html>

@@ -43,12 +43,11 @@ nav {
   text-decoration: none;
 }
 .logo-img {
-    height: 60px;
-    width: auto;
-    margin-right: 8px;
-    vertical-align: middle;
+  height: 60px;
+  width: auto;
+  margin-right: 8px;
+  vertical-align: middle;
 }
-
 
 .nav-links {
   display: flex;
@@ -106,7 +105,6 @@ nav {
   list-style: none !important;
   padding-left: 2 !important;
 }
-
 
 /* HERO SECTION */
 .hero {
@@ -230,7 +228,11 @@ nav {
 .entrepreneur-image {
   width: 100%;
   height: 250px;
-  background: linear-gradient(135deg, var(--azul-principal), var(--naranja-acento));
+  background: linear-gradient(
+    135deg,
+    var(--azul-principal),
+    var(--naranja-acento)
+  );
   display: flex;
   align-items: center;
   justify-content: center;
@@ -364,3 +366,143 @@ footer {
   }
 }
 
+.card {
+  border: none;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+.card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1) !important;
+}
+
+.card-header {
+  background-color: var(--gris-claro) !important;
+  font-weight: 600;
+  color: var(--azul-principal);
+  border-bottom: 2px solid var(--naranja-acento);
+}
+
+.card-footer {
+  background-color: var(--gris-claro) !important;
+}
+
+/* TABLAS */
+.table-hover tbody tr:hover {
+  background-color: rgba(0, 102, 170, 0.05);
+}
+
+.table thead {
+  background-color: var(--gris-claro);
+}
+
+.table thead th {
+  color: var(--azul-principal);
+  font-weight: 600;
+  border-bottom: 2px solid var(--naranja-acento);
+}
+
+/* BADGES */
+.badge.bg-primary {
+  background-color: var(--azul-principal) !important;
+}
+
+.badge.bg-success {
+  background-color: #28a745 !important;
+}
+
+.badge.bg-danger {
+  background-color: #dc3545 !important;
+}
+
+.badge.bg-info {
+  background-color: #17a2b8 !important;
+}
+
+/* MODALES */
+.modal-header.bg-primary {
+  background-color: var(--azul-principal) !important;
+}
+
+.modal-header.bg-warning {
+  background-color: #ffc107 !important;
+}
+
+.modal-content {
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.modal-header {
+  border-bottom: 2px solid var(--naranja-acento);
+}
+
+.modal-footer {
+  background-color: var(--gris-claro);
+}
+
+/* tienda emprendimientos */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.card {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+  padding: 15px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+}
+
+.card h3 {
+  margin-top: 0;
+  color: #333;
+}
+
+.card p {
+  margin: 5px 0;
+  color: #555;
+}
+
+
+.btn:hover {
+  background-color: #333;
+}
+
+/* detalle emprendimeintos */
+.detalle-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+.detalle-box {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    padding: 25px;
+}
+
+.detalle-header h2 {
+    margin: 0 0 20px 0;
+}
+
+.detalle-icon {
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 40px;
+    text-align: center;
+}
+
+.detalle-footer {
+    margin-top: 20px;
+    text-align: right;
+}
