@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -42,23 +42,61 @@
   <script src="../js/auth.js"></script>
 
   <script>
+    // si ya hay sesión activa, redirige según rol
+    document.addEventListener("DOMContentLoaded", function () {
+      const session = (typeof getSession === "function") ? getSession() : null;
+      if (session && session.rol) {
+        if (session.rol === "Administrador") {
+          window.location.href = "Usuarios.html";
+        } else if (session.rol === "Emprendedor") {
+          window.location.href = "../Emprendedores/EmprendedoresAdmin.html";
+        } else {
+          window.location.href = "../Productos/DetalleProductoPublic.html";
+        }
+      }
+    });
+
+    //  Iniciar sesión
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        login();
+      }
+    });
+
+    function showError(msg) {
+      const error = document.getElementById("error");
+      error.textContent = msg;
+      error.classList.remove("d-none");
+    }
+
     function login() {
       const email = document.getElementById("email").value.trim();
       const password = document.getElementById("password").value;
 
+      // limpiar error al intentar de nuevo
+      const errorBox = document.getElementById("error");
+      errorBox.classList.add("d-none");
+      errorBox.textContent = "";
+
+      // validar campos vacíos
+      if (!email || !password) {
+        showError("Debe ingresar correo y contraseña.");
+        return;
+      }
+
       const result = loginUser(email, password);
 
       if (!result.ok) {
-        const error = document.getElementById("error");
-        error.textContent = result.msg;
-        error.classList.remove("d-none");
+        showError(result.msg);
         return;
       }
 
       const rol = result.user.rol;
 
       if (rol === "Administrador") {
-        window.location.href = "../Municipalidad/sistemaDeInteligenciaMunicipal.html";
+        // mejor redirigir a Gestión de Roles
+        window.location.href = "Usuarios.html";
       } else if (rol === "Emprendedor") {
         window.location.href = "../Emprendedores/EmprendedoresAdmin.html";
       } else {
