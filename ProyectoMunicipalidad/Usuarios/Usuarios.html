@@ -27,7 +27,8 @@
                 <li><a href="/Eventos/eventos.html">Eventos</a></li>
                 <li><a href="#contact">Entregas y seguimientos</a></li>
                 <li><a href="#contact">Mapas</a></li>
-                <li class="nav-item dropdown">
+
+                <li class="nav-item dropdown" id="navAdmin">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                         aria-expanded="false">
                         Administrador
@@ -35,7 +36,7 @@
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="#">Usuarios</a></li>
 
-                        <li><a class="dropdown-item" href="#">Gestion de Roles</a></li>
+                        <li><a class="dropdown-item" href="../Usuarios/Usuarios.html">Gestion de Roles</a></li>
                         
                         <li><a class="dropdown-item" href="../Aprobaciones/revisionProductos.html">Revisión de productos</a></li>
                         <li><a class="dropdown-item" href="#">Aprobacion de solicitudes</a></li>
@@ -43,7 +44,8 @@
                         <li><a class="dropdown-item" href="#">Analisis de sectores</a></li>
                     </ul>
                 </li>
-                <li class="nav-item dropdown">
+
+                <li class="nav-item dropdown" id="navEmprendedor">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                         aria-expanded="false">
                         Emprendedor
@@ -55,7 +57,10 @@
                         <li><a class="dropdown-item" href="../Eventos/misEventos.html">Mis Eventos</a></li>
                     </ul>
                 </li>
-                <li><a href="#contact">Iniciar Sesión</a></li>
+
+                <li id="navLogin"><a href="../Usuarios/login.html">Iniciar Sesión</a></li>
+
+                <li id="navLogout" style="display:none;"><a href="#" onclick="handleLogout()">Cerrar Sesión</a></li>
 
             </ul>
         </div>
@@ -81,6 +86,12 @@
             </div>
         </div>
 
+        <div class="row mb-3">
+            <div class="col-12">
+                <div id="rolesMsg" class="alert alert-danger d-none"></div>
+            </div>
+        </div>
+
         <!-- SECCIÓN DE BÚSQUEDA Y FILTROS -->
         <div class="row mb-4">
             <div class="col-md-8">
@@ -94,10 +105,9 @@
             <div class="col-md-4">
                 <select class="form-select form-select-lg" id="selectRol">
                     <option value="">Todos los Roles</option>
-                    <option value="administrador">Administrador</option>
-                    <option value="emprendedor">Emprendedor</option>
-                    <option value="revisor">Revisor</option>
-                    <option value="usuario">Usuario</option>
+                    <option value="Administrador">Administrador</option>
+                    <option value="Emprendedor">Emprendedor</option>
+                    <option value="Comprador">Comprador</option>
                 </select>
             </div>
         </div>
@@ -124,6 +134,7 @@
                                         <th>Acciones</th>
                                     </tr>
                                 </thead>
+                                
                                 <tbody id="tablaUsuarios">
                                     <tr>
                                         <td>001</td>
@@ -139,40 +150,6 @@
                                             </button>
                                             <button class="btn btn-sm btn-outline-danger" title="Cambiar Estado" data-bs-toggle="modal" data-bs-target="#modalConfirmarEstado">
                                                 <i class="fas fa-ban"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>002</td>
-                                        <td>María García López</td>
-                                        <td>maria.garcia@ecoempresarias.mx</td>
-                                        <td>987654321</td>
-                                        <td>+52 555-5678</td>
-                                        <td><span class="badge bg-success">Emprendedor</span></td>
-                                        <td><span class="badge bg-success">Activo</span></td>
-                                        <td>
-                                            <button class="btn btn-sm btn-outline-primary" title="Editar" data-bs-toggle="modal" data-bs-target="#modalEditarUsuario">
-                                                <i class="fas fa-edit"></i>
-                                            </button>
-                                            <button class="btn btn-sm btn-outline-danger" title="Cambiar Estado" data-bs-toggle="modal" data-bs-target="#modalConfirmarEstado">
-                                                <i class="fas fa-ban"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>003</td>
-                                        <td>Carlos Hernández Ruiz</td>
-                                        <td>carlos.hernandez@ecoempresarias.mx</td>
-                                        <td>456789123</td>
-                                        <td>+52 555-9012</td>
-                                        <td><span class="badge bg-info">Revisor</span></td>
-                                        <td><span class="badge bg-danger">Inactivo</span></td>
-                                        <td>
-                                            <button class="btn btn-sm btn-outline-primary" title="Editar" data-bs-toggle="modal" data-bs-target="#modalEditarUsuario">
-                                                <i class="fas fa-edit"></i>
-                                            </button>
-                                            <button class="btn btn-sm btn-outline-success" title="Activar" data-bs-toggle="modal" data-bs-target="#modalConfirmarEstado">
-                                                <i class="fas fa-check"></i>
                                             </button>
                                         </td>
                                     </tr>
@@ -230,10 +207,9 @@
                                 <label for="selectRolCrear" class="form-label">Rol <span class="text-danger">*</span></label>
                                 <select class="form-select" id="selectRolCrear" required>
                                     <option value="">Selecciona un rol</option>
-                                    <option value="administrador">Administrador</option>
-                                    <option value="emprendedor">Emprendedor</option>
-                                    <option value="revisor">Revisor</option>
-                                    <option value="usuario">Usuario</option>
+                                    <option value="Administrador">Administrador</option>
+                                    <option value="Emprendedor">Emprendedor</option>
+                                    <option value="Comprador">Comprador</option>
                                 </select>
                                 <div class="invalid-feedback">Debes seleccionar un rol.</div>
                             </div>
@@ -292,10 +268,9 @@
                             <div class="col-md-6">
                                 <label for="selectRolEdit" class="form-label">Rol <span class="text-danger">*</span></label>
                                 <select class="form-select" id="selectRolEdit" required>
-                                    <option value="administrador">Administrador</option>
-                                    <option value="emprendedor">Emprendedor</option>
-                                    <option value="revisor">Revisor</option>
-                                    <option value="usuario">Usuario</option>
+                                    <option value="Administrador">Administrador</option>
+                                    <option value="Emprendedor">Emprendedor</option>
+                                    <option value="Comprador">Comprador</option>
                                 </select>
                                 <div class="invalid-feedback">Debes seleccionar un rol.</div>
                             </div>
@@ -336,8 +311,6 @@
         </div>
     </div>
 
-
-    <!-- FOOTER FRAGMENT -->
     <footer th:fragment="footer">
 
         <div class="footer-container">
@@ -375,5 +348,211 @@
 </body>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="../js/auth.js"></script>
+
+<script>
+    function handleLogout() {
+        if (typeof logoutUser === "function") {
+            logoutUser("../Usuarios/login.html");
+            return;
+        }
+        localStorage.removeItem("eco_session");
+        window.location.href = "../Usuarios/login.html";
+    }
+
+    function updateNavbarBySession() {
+        const navAdmin = document.getElementById("navAdmin");
+        const navEmp = document.getElementById("navEmprendedor");
+        const navLogin = document.getElementById("navLogin");
+        const navLogout = document.getElementById("navLogout");
+
+        const session = getSession();
+
+        if (navAdmin) navAdmin.style.display = "none";
+        if (navEmp) navEmp.style.display = "none";
+
+        if (!session) {
+            if (navLogin) navLogin.style.display = "list-item";
+            if (navLogout) navLogout.style.display = "none";
+            return;
+        }
+
+        if (navLogin) navLogin.style.display = "none";
+        if (navLogout) navLogout.style.display = "list-item";
+
+        if (session.rol === "Administrador" && navAdmin) navAdmin.style.display = "list-item";
+        if (session.rol === "Emprendedor" && navEmp) navEmp.style.display = "list-item";
+    }
+
+    // Protección: solo Admin
+    function requireAdminOrRedirect() {
+        const msg = document.getElementById("rolesMsg");
+        const session = getSession();
+
+        if (!session) {
+            alert("Debe iniciar sesión.");
+            window.location.href = "../Usuarios/login.html";
+            return false;
+        }
+
+        if (session.rol !== "Administrador") {
+            if (msg) {
+                msg.textContent = "Acceso denegado. Solo Administrador puede gestionar roles.";
+                msg.classList.remove("d-none");
+            }
+            setTimeout(() => window.location.href = "../index.html", 800);
+            return false;
+        }
+        return true;
+    }
+
+    function badgeByRole(rol) {
+        if (rol === "Administrador") return `<span class="badge bg-primary">${rol}</span>`;
+        if (rol === "Emprendedor") return `<span class="badge bg-success">${rol}</span>`;
+        if (rol === "Comprador") return `<span class="badge bg-secondary">${rol}</span>`;
+        return `<span class="badge bg-info">${rol}</span>`;
+    }
+
+    function badgeByEstado(activo) {
+        return activo
+            ? `<span class="badge bg-success">Activo</span>`
+            : `<span class="badge bg-danger">Inactivo</span>`;
+    }
+
+    function renderTablaUsuarios(filterText = "", filterRole = "") {
+        const tbody = document.getElementById("tablaUsuarios");
+        const total = document.getElementById("totalUsuarios");
+
+        const users = getUsers();
+
+        const ft = filterText.toLowerCase();
+        const fr = filterRole;
+
+        const filtered = users.filter(u => {
+            const matchText =
+                !ft ||
+                (u.nombre || "").toLowerCase().includes(ft) ||
+                (u.email || "").toLowerCase().includes(ft);
+
+            const matchRole = !fr || (u.rol === fr);
+
+            return matchText && matchRole;
+                });
+        
+        tbody.innerHTML = "";
+
+        filtered.forEach(u => {
+            const tr = document.createElement("tr");
+
+            const cedula = "N/A";
+            const telefono = "N/A";
+
+            tr.innerHTML = `
+                <td>${String(u.id).padStart(3, "0")}</td>
+                <td>${u.nombre}</td>
+                <td>${u.email}</td>
+                <td>${cedula}</td>
+                <td>${telefono}</td>
+                <td>
+                    <select class="form-select form-select-sm" id="rol_${u.id}">
+                        <option value="Administrador" ${u.rol === "Administrador" ? "selected" : ""}>Administrador</option>
+                        <option value="Emprendedor" ${u.rol === "Emprendedor" ? "selected" : ""}>Emprendedor</option>
+                        <option value="Comprador" ${u.rol === "Comprador" ? "selected" : ""}>Comprador</option>
+                    </select>
+                </td>
+                <td>${badgeByEstado(u.activo)}</td>
+                <td>
+                    <button class="btn btn-sm btn-outline-primary" title="Guardar Rol" onclick="guardarRol(${u.id})">
+                        <i class="fas fa-save"></i>
+                    </button>
+                    <button class="btn btn-sm btn-outline-danger" title="Cambiar Estado" data-bs-toggle="modal" data-bs-target="#modalConfirmarEstado"
+                        onclick="prepToggleEstado(${u.id})">
+                        <i class="fas fa-ban"></i>
+                    </button>
+                </td>
+            `;
+
+            tbody.appendChild(tr);
+        });
+
+        if (total) total.textContent = filtered.length;
+    }
+
+    // Guardar rol
+    function guardarRol(userId) {
+        const select = document.getElementById(`rol_${userId}`);
+        const newRole = select.value;
+
+        if (typeof updateUserRoleById === "function") {
+            const result = updateUserRoleById(userId, newRole);
+            if (!result.ok) {
+                alert(result.msg);
+                return;
+            }
+            alert(`Rol actualizado:\n${result.user.email}\n${result.oldRole} → ${result.newRole}`);
+            renderTablaUsuarios(document.getElementById("inputBusqueda").value, document.getElementById("selectRol").value);
+            return;
+        }
+
+        const users = getUsers();
+        const idx = users.findIndex(u => u.id === userId);
+        const oldRole = users[idx].rol;
+        users[idx].rol = newRole;
+        saveUsers(users);
+        alert(`Rol actualizado:\n${users[idx].email}\n${oldRole} → ${newRole}`);
+        renderTablaUsuarios(document.getElementById("inputBusqueda").value, document.getElementById("selectRol").value);
+    }
+
+    // Cambio de estado (activo/inactivo)
+    let _estadoTargetId = null;
+
+    function prepToggleEstado(userId) {
+        _estadoTargetId = userId;
+
+        const users = getUsers();
+        const u = users.find(x => x.id === userId);
+
+        const mensaje = document.getElementById("mensajeConfirmacion");
+        if (mensaje && u) {
+            mensaje.textContent = u.activo
+                ? `¿Deseas DESACTIVAR a ${u.nombre} (${u.email})?`
+                : `¿Deseas ACTIVAR a ${u.nombre} (${u.email})?`;
+        }
+    }
+
+    document.getElementById("btnConfirmarEstado")?.addEventListener("click", function () {
+        if (_estadoTargetId == null) return;
+
+        const users = getUsers();
+        const idx = users.findIndex(u => u.id === _estadoTargetId);
+        if (idx === -1) return;
+
+        users[idx].activo = !users[idx].activo;
+        saveUsers(users);
+
+        const modalEl = document.getElementById("modalConfirmarEstado");
+        const modal = bootstrap.Modal.getInstance(modalEl);
+        if (modal) modal.hide();
+
+        renderTablaUsuarios(document.getElementById("inputBusqueda").value, document.getElementById("selectRol").value);
+        _estadoTargetId = null;
+    });
+
+    document.getElementById("inputBusqueda")?.addEventListener("input", function () {
+        renderTablaUsuarios(this.value, document.getElementById("selectRol").value);
+    });
+
+    document.getElementById("selectRol")?.addEventListener("change", function () {
+        renderTablaUsuarios(document.getElementById("inputBusqueda").value, this.value);
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+        updateNavbarBySession();
+        if (requireAdminOrRedirect()) {
+            renderTablaUsuarios();
+        }
+    });
+</script>
 
 </html>
