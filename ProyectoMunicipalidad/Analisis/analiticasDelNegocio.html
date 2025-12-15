@@ -66,66 +66,150 @@
     </nav>
 
 
-    <div class="dashboard-container">
+    <div class="dashboard-container container-fluid mt-4">
 
-        <h2 class="text-center mb-4">Panel de Analíticas del Negocio</h2>
+    <div class="row mb-4">
+        <div class="col">
+            <h2 class="fw-bold">Analíticas del Negocio</h2>
+            <p class="text-muted">
+                Resumen del comportamiento económico del mes actual
+            </p>
+        </div>
+    </div>
 
-        <!-- CARDS -->
-        <div class="row g-4">
+    <div class="row g-4 mb-4">
 
-            <div class="col-md-3">
-                <div class="card-stats bg-ventas">
-                    <h4>Ventas Totales</h4>
-                    <p class="display-6">420</p>
+        <div class="col-md-3">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h6 class="text-muted">Ingresos del mes</h6>
+                    <h3 class="fw-bold text-success">₡ 18,450,000</h3>
+                    <span class="badge bg-success">+12%</span>
                 </div>
             </div>
-
-            <div class="col-md-3">
-                <div class="card-stats bg-ingresos">
-                    <h4>Ingresos del Mes</h4>
-                    <p class="display-6">₡850,000</p>
-                </div>
-            </div>
-
-            <div class="col-md-3">
-                <div class="card-stats bg-productos">
-                    <h4>Producto Top</h4>
-                    <p class="display-6">Café Orgánico</p>
-                </div>
-            </div>
-
-            <div class="col-md-3">
-                <div class="card-stats bg-clientes">
-                    <h4>Nuevos Clientes</h4>
-                    <p class="display-6">35</p>
-                </div>
-            </div>
-
         </div>
 
-        <!-- GRÁFICAS -->
-        <div class="row mt-5 g-4">
-
-            <div class="col-md-6">
-                <h5 class="text-center">Ventas Mensuales</h5>
-                <canvas id="graficoVentas"></canvas>
+        <div class="col-md-3">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h6 class="text-muted">Nuevos emprendimientos</h6>
+                    <h3 class="fw-bold">37</h3>
+                    <span class="badge bg-primary">Este mes</span>
+                </div>
             </div>
-
-            <div class="col-md-6">
-                <h5 class="text-center">Ingresos por Producto</h5>
-                <canvas id="graficoProductos"></canvas>
-            </div>
-
         </div>
-        <div>
 
-            <button type="button" class="btn btn-outline-primary">Exportar a PDF</button>
+        <div class="col-md-3">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h6 class="text-muted">Clientes registrados</h6>
+                    <h3 class="fw-bold">1,284</h3>
+                    <span class="badge bg-info">+86</span>
+                </div>
+            </div>
+        </div>
 
-<button type="button" class="btn btn-outline-success">Exportar a Excel</button>
-
+        <div class="col-md-3">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h6 class="text-muted">Total de compras</h6>
+                    <h3 class="fw-bold">4,912</h3>
+                    <span class="badge bg-warning text-dark">Mes actual</span>
+                </div>
+            </div>
         </div>
 
     </div>
+
+ 
+    <div class="row g-4 mb-4">
+
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h6 class="text-muted">Total dinero generado</h6>
+                    <h3 class="fw-bold text-success">₡ 92,300,000</h3>
+                    <p class="text-muted mb-0">
+                        Acumulado entre todos los emprendimientos
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h6 class="text-muted">Emprendimiento más activo</h6>
+                    <h5 class="fw-bold">Café Monte Verde</h5>
+                    <p class="mb-0">₡ 6,200,000 en ventas</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h6 class="text-muted">Promedio de compras</h6>
+                    <h3 class="fw-bold">₡ 18,780</h3>
+                    <p class="text-muted mb-0">
+                        Promedio por compra
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="row">
+        <div class="col">
+            <div class="card shadow-sm">
+                <div class="card-header fw-bold">
+                    Resumen por tipo de emprendimiento
+                </div>
+                <div class="card-body p-0">
+                    <table class="table table-striped mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Tipo</th>
+                                <th>Emprendimientos</th>
+                                <th>Ventas</th>
+                                <th>Ingresos</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Alimentos</td>
+                                <td>58</td>
+                                <td>2,120</td>
+                                <td>₡ 38,400,000</td>
+                            </tr>
+                            <tr>
+                                <td>Servicios</td>
+                                <td>41</td>
+                                <td>1,360</td>
+                                <td>₡ 27,100,000</td>
+                            </tr>
+                            <tr>
+                                <td>Artesanías</td>
+                                <td>29</td>
+                                <td>890</td>
+                                <td>₡ 16,800,000</td>
+                            </tr>
+                            <tr>
+                                <td>Tecnología</td>
+                                <td>12</td>
+                                <td>542</td>
+                                <td>₡ 10,000,000</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
 
 
     <!-- FOOTER -->
