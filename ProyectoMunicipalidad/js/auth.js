@@ -199,3 +199,117 @@ function logoutUser(redirectTo = "../Usuarios/login.html") {
   clearSession();
   window.location.href = redirectTo;
 }
+// =====================================
+// NOTIFICACIONES
+// =====================================
+const NOTIF_KEY = "eco_notifications";
+
+function _getAllNotifs() {
+  return JSON.parse(localStorage.getItem(NOTIF_KEY) || "[]");
+}
+
+function _saveAllNotifs(list) {
+  localStorage.setItem(NOTIF_KEY, JSON.stringify(list));
+}
+
+function seedNotifications() {
+  const existing = JSON.parse(localStorage.getItem(NOTIF_KEY) || "null");
+  if (existing && Array.isArray(existing) && existing.length > 0) return;
+
+  // Asegura que existan users (porque usamos ids)
+  const users = getUsers();
+
+  const admin = users.find(u => u.rol === "Administrador");
+  const empr = users.find(u => u.rol === "Emprendedor");
+  const comp = users.find(u => u.rol === "Comprador");
+
+  const now = new Date();
+  const iso = (d) => d.toISOString();
+
+  const sample = [];
+
+  if (admin) {
+    sample.push(
+      { id: 1, userId: admin.id, rol: "Administrador", tipo: "APROBACION", titulo: "Nueva solicitud pendiente", mensaje: "Hay un emprendimiento pendiente de revisión.", fechaISO: iso(new Date(now.getTime() - 1000*60*60*2)), leida: false },
+      { id: 2, userId: admin.id, rol: "Administrador", tipo: "REVISION_PRODUCTO", titulo: "Producto por aprobar", mensaje: "Un emprendedor envió un producto para aprobación.", fechaISO: iso(new Date(now.getTime() - 1000*60*30)), leida: false }
+    );
+  }
+
+  if (empr) {
+    sample.push(
+      { id: 3, userId: empr.id, rol: "Emprendedor", tipo: "ESTADO_EMPRENDIMIENTO", titulo: "Tu emprendimiento está en revisión", mensaje: "El administrador revisará tu solicitud pronto.", fechaISO: iso(new Date(now.getTime() - 1000*60*80)), leida: false },
+      { id: 4, userId: empr.id, rol: "Emprendedor", tipo: "PRODUCTO_OBSERVADO", titulo: "Producto observado", mensaje: "Hay observaciones en uno de tus productos.", fechaISO: iso(new Date(now.getTime() - 1000*60*10)), leida: true }
+    );
+  }
+
+  if (comp) {
+    sample.push(
+      { id: 5, userId: comp.id, rol: "Comprador", tipo: "EVENTO", titulo: "Nuevo evento disponible", mensaje: "Hay un nuevo evento publicado en la plataforma.", fechaISO: iso(new Date(now.getTime() - 1000*60*120)), leida: false },
+      { id: 6, userId: comp.id, rol: "Comprador", tipo: "CARRITO", titulo: "Recordatorio de carrito", mensaje: "Tienes productos pendientes en tu carrito.", fechaISO: iso(new Date(now.getTime() - 1000*60*15)), leida: true }
+    );
+  }
+
+  _saveAllNotifs(sample);
+}
+
+function getMyNotifications() {
+  seedNotifications();
+  const s = getSession();
+  if (!s) return [];
+  return _getAllNotifs()
+    .filter(n => n.userId === s.id)
+    .sort((a, b) => new Date(b.fechaISO) - new Date(a.fechaISO));
+}
+
+function countUnreadNotifications() {
+  const s = getSession();
+  if (!s) return 0;
+  return getMyNotifications().filter(n => !n.leida).length;
+}
+
+function markNotificationRead(notifId) {
+  const s = getSession();
+  if (!s) return { ok: false, msg: "Debe iniciar sesión." };
+
+  const all = _getAllNotifs();
+  const idx = all.findIndex(n => n.id === notifId && n.userId === s.id);
+  if (idx === -1) return { ok: false, msg: "Notificación no encontrada." };
+
+  all[idx].leida = true;
+  _saveAllNotifs(all);
+  return { ok: true };
+}
+
+function markAllNotificationsRead() {
+  const s = getSession();
+  if (!s) return { ok: false, msg: "Debe iniciar sesión." };
+
+  const all = _getAllNotifs().map(n => {
+    if (n.userId === s.id) n.leida = true;
+    return n;
+  });
+  _saveAllNotifs(all);
+  return { ok: true };
+}
+
+// Para crear notificaciones desde otros módulos
+function createNotificationForUser(userId, rol, tipo, titulo, mensaje) {
+  seedNotifications();
+  const all = _getAllNotifs();
+  const nextId = all.length ? Math.max(...all.map(x => x.id)) + 1 : 1;
+
+  const notif = {
+    id: nextId,
+    userId,
+    rol,
+    tipo,
+    titulo,
+    mensaje,
+    fechaISO: new Date().toISOString(),
+    leida: false
+  };
+
+  all.push(notif);
+  _saveAllNotifs(all);
+  return { ok: true, notif };
+}
