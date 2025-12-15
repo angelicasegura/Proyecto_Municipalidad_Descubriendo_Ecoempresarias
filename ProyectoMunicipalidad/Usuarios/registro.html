@@ -47,6 +47,15 @@
   <script src="../js/auth.js"></script>
 
   <script>
+    
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") {
+        // evita si el navegador intenta "enviar"
+        e.preventDefault();
+        registrar();
+      }
+    });
+
     function showError(texto) {
       const box = document.getElementById("msg");
       box.textContent = texto;
@@ -58,7 +67,19 @@
       const email = document.getElementById("email").value.trim();
       const password = document.getElementById("password").value;
 
-      // Validar si el correo ya está registrado
+      if (typeof registerUser === "function") {
+        const result = registerUser(nombre, email, password, "Comprador");
+        if (!result.ok) {
+          showError(result.msg);
+          return;
+        }
+
+        alert("Registro exitoso. Puedes iniciar sesión ahora.");
+        location.href = "login.html";
+        return;
+      }
+
+      // Valida si el correo ya está registrado
       const users = getUsers();
       if (users.some(user => user.email === email)) {
         showError("El correo ya está registrado.");
