@@ -84,7 +84,7 @@ export function Navbar() {
               Mapas
             </Link>
 
-            {["ADMIN"].includes(user?.rol ?? "") && (
+            {[""].includes(user?.rol ?? "") && (
               <DropdownMenu>
                 <DropdownMenuTrigger className="flex items-center gap-1  font-medium hover:text-accent transition-colors whitespace-nowrap px-2">
                   Administrador
