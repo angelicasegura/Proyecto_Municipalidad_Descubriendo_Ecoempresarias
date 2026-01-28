@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import { Navbar } from "./components/ui/layout/navbar";
 import {Footer} from "./components/ui/layout/footer"
  import Home from "./pages/index/home"; 
+ //import ProtectedRoute from "./auth/ProtectedRoute"
 
 
 function App() {
