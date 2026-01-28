@@ -1,6 +1,6 @@
 import { Navigate, Outlet } from "react-router-dom"
 import { useAuth } from "../auth/AuthContext"
-import {PageLoader } from "../components/auth/pageLoader"
+import {PageLoader } from "../components/ui/layout/pageLoader"
 
 interface ProtectedRouteProps {
   allowedRoles?: Array<"ADMIN" | "EMPRENDEDOR" | "USUARIO">
