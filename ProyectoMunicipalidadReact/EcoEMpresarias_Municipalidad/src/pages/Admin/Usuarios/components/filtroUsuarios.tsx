@@ -34,9 +34,9 @@ export function FiltroUsuarios({
           className="pl-10 h-12"
         />
       </div>
-      <div className="md:flex-1">
-        <Select value={roleFilter} onValueChange={onRoleChange}>
-          <SelectTrigger className="h-12">
+      <div className="md:flex-1 ">
+        <Select value={roleFilter} onValueChange={onRoleChange} >
+          <SelectTrigger className="h-12 cursor-pointer">
             <SelectValue placeholder="Todos los Roles" />
           </SelectTrigger>
           <SelectContent>

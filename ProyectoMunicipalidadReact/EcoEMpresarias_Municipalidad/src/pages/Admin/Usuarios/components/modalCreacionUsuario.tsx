@@ -94,7 +94,7 @@ export function ModalCreacionUsuario({ open, onOpenChange, onSubmit }: ModalCrea
   return (
     <Dialog open={open} onOpenChange={handleClose}>
       <DialogContent className="sm:max-w-150">
-        <DialogHeader className="bg-primary text-primary-foreground -m-6 mb-0 p-6 rounded-t-lg">
+        <DialogHeader className="bg-[#056F94] text-primary-foreground -m-6 mb-0 p-6 rounded-t-lg">
           <DialogTitle className="flex items-center gap-2 text-lg">
             <UserPlus className="h-5 w-5" />
             Crear Nuevo Usuario
@@ -229,10 +229,10 @@ export function ModalCreacionUsuario({ open, onOpenChange, onSubmit }: ModalCrea
           </div>
 
           <DialogFooter className="mt-6 border-t pt-4">
-            <Button type="button" variant="secondary" onClick={() => handleClose(false)}>
+            <Button type="button" variant="secondary" className="bg-[#ff0707] hover:bg-[#790000] text-white cursor-pointer" onClick={() => handleClose(false)}>
               Cancelar
             </Button>
-            <Button type="submit">
+            <Button type="submit" className="bg-[#54b413] hover:bg-[#3c810e] text-white font-semibold cursor-pointer">
               <Save className="h-4 w-4 mr-2" />
               Crear Usuario
             </Button>
