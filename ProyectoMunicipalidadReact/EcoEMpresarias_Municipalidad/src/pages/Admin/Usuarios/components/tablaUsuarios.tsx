@@ -12,8 +12,9 @@ import { Button } from "../../../../components/ui/button"
 import { Pencil, Ban, Check } from "lucide-react"
 import { type User, getRolNombre } from "../../../../types/userType"
 
+
 interface TablaUsuariosProps {
-  users: User[]
+   users: User[]
   onEdit: (user: User) => void
   onToggleStatus: (user: User) => void
 }
@@ -25,6 +26,11 @@ const roleBadgeColors: Record<number, string> = {
 }
 
 export function TablaUsuarios({ users, onEdit, onToggleStatus }: TablaUsuariosProps) {
+  
+
+  
+ 
+
   return (
     <Card className="shadow-sm">
       <CardHeader className="border-b bg-card">
