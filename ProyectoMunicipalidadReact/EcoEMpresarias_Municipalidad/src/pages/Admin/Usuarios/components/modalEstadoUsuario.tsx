@@ -49,13 +49,14 @@ export function ModalEstadoUsuarios({
         </div>
 
         <DialogFooter className="mt-6 border-t pt-4">
-          <Button type="button" variant="secondary" onClick={() => onOpenChange(false)}>
+          <Button type="button" variant="secondary" className="bg-[#ff0707] hover:bg-[#790000] text-white cursor-pointer" onClick={() => onOpenChange(false)}>
             Cancelar
           </Button>
           <Button
             type="button"
             variant={isActivating ? "default" : "destructive"}
             onClick={onConfirm}
+            className={isActivating ? "bg-[#54b413] hover:bg-[#3c810e]" : ""}
           >
             <Check className="h-4 w-4 mr-2" />
             Confirmar

@@ -20,9 +20,9 @@ interface TablaUsuariosProps {
 }
 
 const roleBadgeColors: Record<number, string> = {
-  1: "", // administrador - usa default
+  1: "bg-blue-600 hover:bg-blue-700 text-white", // administrador 
   2: "bg-green-600 hover:bg-green-700 text-white", // emprendedor
-  4: "", // usuario - usa outline
+  4: "bg-gray-600 hover:bg-gray-700 text-white", // usuario 
 }
 
 export function TablaUsuarios({ users, onEdit, onToggleStatus }: TablaUsuariosProps) {

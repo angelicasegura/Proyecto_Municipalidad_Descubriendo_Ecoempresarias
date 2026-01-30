@@ -83,7 +83,7 @@ export function Navbar() {
             >
               Mapas
             </Link>
-
+            {/* Cambiar A ADMIN para Cuando ya este Conectado A APi */}
             {[""].includes(user?.rol ?? "") && (
               <DropdownMenu>
                 <DropdownMenuTrigger className="flex items-center gap-1  font-medium hover:text-accent transition-colors whitespace-nowrap px-2">

@@ -211,10 +211,10 @@ export function ModalEdicionUsuarios({ open, onOpenChange, user, onSubmit }: Mod
           </div>
 
           <DialogFooter className="mt-6 border-t pt-4">
-            <Button type="button" variant="secondary" onClick={() => handleClose(false)}>
+            <Button type="button" className="bg-[#ff0707] hover:bg-[#790000] text-white cursor-pointer" onClick={() => handleClose(false)}>
               Cancelar
             </Button>
-            <Button type="submit">
+            <Button type="submit" className="bg-[#54b413] hover:bg-[#3c810e] text-white cursor-pointer">
               <Save className="h-4 w-4 mr-2" />
               Guardar Cambios
             </Button>
