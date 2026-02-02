@@ -1,0 +1,12 @@
+﻿CREATE TABLE [dbo].[ECOEMPRESARIAS_INVENTARIO_TB] (
+    [Producto_id]     INT             NOT NULL,
+    [Cantidad_actual] DECIMAL (10, 2) NOT NULL,
+    [Cantidad_minima] DECIMAL (10, 2) NOT NULL,
+    [Estado_id]       INT             NOT NULL,
+    CONSTRAINT [ECO_INVENTARIO_PK] PRIMARY KEY CLUSTERED ([Producto_id] ASC),
+    CONSTRAINT [ECO_INVENTARIO_CANT_ACT_CHK] CHECK ([Cantidad_actual]>=(0)),
+    CONSTRAINT [ECO_INVENTARIO_CANT_MIN_CHK] CHECK ([Cantidad_minima]>=(0)),
+    CONSTRAINT [ECO_INVENTARIO_ESTADO_FK] FOREIGN KEY ([Estado_id]) REFERENCES [dbo].[ECOEMPRESARIAS_ESTADOS_TB] ([Estado_id]),
+    CONSTRAINT [ECO_INVENTARIO_PRODUCTO_FK] FOREIGN KEY ([Producto_id]) REFERENCES [dbo].[ECOEMPRESARIAS_PRODUCTO_TB] ([Producto_id])
+);
+

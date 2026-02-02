@@ -1,0 +1,6 @@
+﻿CREATE TABLE [dbo].[ECOEMPRESARIAS_ESTADOS_TB] (
+    [Estado_id] INT           NOT NULL,
+    [Nombre]    VARCHAR (200) NOT NULL,
+    CONSTRAINT [ECO_ESTADOS_PK] PRIMARY KEY CLUSTERED ([Estado_id] ASC)
+);
+
