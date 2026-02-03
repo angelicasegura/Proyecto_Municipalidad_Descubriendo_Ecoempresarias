@@ -56,7 +56,7 @@ namespace DA
         public async Task<UsuarioResponse> InicioSesionUsuario(string email, string contrasena)
         {
             string query = @"ObtenerUsuario";
-            var resultQuery = await _sqlConnection.QueryAsync<UsuarioResponse>(query, new { email, contrasena});
+            var resultQuery = await _sqlConnection.QueryAsync<UsuarioResponse>(query, new { email, contrasena });
 
             return resultQuery.FirstOrDefault();
         }
@@ -71,7 +71,7 @@ namespace DA
 
         public async Task<PagedResult<UsuarioResponse>> GetUsuariosPaginadosAsync(int page, int limit, string search, int? roleId)
         {
-            
+
             var connection = _repositorioDapper.ObtenerRepositorio();
 
             try
@@ -96,9 +96,38 @@ namespace DA
             }
             catch (Exception ex)
             {
-                
+
                 throw new Exception("Error al consultar la base de datos en GetUsuariosPaginadosAsync", ex);
             }
+        }
+
+        public async Task<int> EditarAdmin(int Id, UsuarioResponse usuario)
+        {
+            try
+            {
+                string query = @"sp_EditarUsuarioPorAdmin";
+                var resultadoQuery = await _sqlConnection.ExecuteScalarAsync<int>(query, new
+                {
+                    IdUsuario = usuario.IdUsuario,
+                    Nombre = usuario.Nombre,
+                    Apellidos = usuario.Apellidos,
+                    Telefono = usuario.Telefono,
+                    Email = usuario.Email,
+                    Edad = usuario.Edad,
+                    IdEstado = usuario.IdEstado,
+                    IdRol = usuario.IdRol,
+                });
+
+                if (resultadoQuery != null)
+                {
+                    return 1;
+                }
+                return 0;
+
+            } catch (Exception ex) {
+                throw new Exception("Algo salio mal con la actualizacion"); 
+                    }
+            
         }
     }
 }

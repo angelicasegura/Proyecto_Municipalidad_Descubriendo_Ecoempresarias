@@ -23,7 +23,7 @@ export function ModalEstadoUsuarios({
   user,
   onConfirm,
 }: ModalEstadoUsuariosProps) {
-  const isActivating = user?.estado_id === 2 
+  const isActivating = user?.idEstado === 2 
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -49,14 +49,14 @@ export function ModalEstadoUsuarios({
         </div>
 
         <DialogFooter className="mt-6 border-t pt-4">
-          <Button type="button" variant="secondary" className="bg-[#ff0707] hover:bg-[#790000] text-white cursor-pointer" onClick={() => onOpenChange(false)}>
+          <Button type="button" variant="secondary" className="bg-[#54b413] hover:bg-[#3c810e] text-white cursor-pointer" onClick={() => onOpenChange(false)}>
             Cancelar
           </Button>
           <Button
             type="button"
-            variant={isActivating ? "default" : "destructive"}
+            variant={"secondary"}
             onClick={onConfirm}
-            className={isActivating ? "bg-[#54b413] hover:bg-[#3c810e]" : ""}
+            className="bg-[#ff0707] hover:bg-[#790000] text-white cursor-pointer"
           >
             <Check className="h-4 w-4 mr-2" />
             Confirmar

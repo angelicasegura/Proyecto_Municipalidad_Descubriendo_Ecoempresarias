@@ -87,5 +87,40 @@ namespace API.Controllers
                 return StatusCode(500, "Error interno al obtener los usuarios paginados.");
             }
         }
+        [Authorize(Roles = "ADMIN")]
+        [HttpPut("EditAdmin/{id}")]
+        public async Task<IActionResult> EditarUsuarioAdmin(int id, [FromBody] UsuarioResponse usuario)
+        {
+            try
+    {
+                var busqueda = await _usuarioFlujo.ObtenerUsuario(id);
+                if(busqueda == null)
+                {
+                    return NotFound($"No se encontró el usuario con ID {id}.");
+                }   
+                if (id != usuario.IdUsuario)
+                {
+                    return BadRequest("El ID del usuario no coincide con los datos proporcionados.");
+                }
+
+                // 2. Llamada al flujo/DA
+                // Nota: Asumimos que tu DA devuelve el número de filas afectadas
+                var filasAfectadas = await _usuarioFlujo.EditarAdmin(id, usuario);
+
+                if (filasAfectadas > 0)
+                {
+                    return Ok(new { message = "Usuario actualizado exitosamente." });
+                }
+                else
+                {
+                    return NotFound($"Sucedio un error inesperado");
+                }
+            }
+                    catch (Exception ex)
+                    {
+                                
+                                return StatusCode(500, $"Error interno al intentar actualizar el usuario: {ex.Message}");
+                            }
+        }
     }
 }

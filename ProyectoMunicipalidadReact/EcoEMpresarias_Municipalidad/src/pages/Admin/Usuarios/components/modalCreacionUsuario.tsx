@@ -59,8 +59,11 @@ export function ModalCreacionUsuario({ open, onOpenChange, onSubmit }: ModalCrea
         email: formData.email,
         telefono: formData.telefono,
         contrasena: formData.contrasena,
-        edad: Number(formData.edad),
-        rol_id: Number(formData.rol_id),
+        edad: formData.edad,
+        idRol: Number(formData.rol_id),
+        ruta_Imagen_Perfil: "",
+        idUsuario: 0,
+        idEstado: 1,
       })
       setFormData({
         nombre: "",

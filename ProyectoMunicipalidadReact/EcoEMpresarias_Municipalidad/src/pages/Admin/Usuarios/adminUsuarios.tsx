@@ -3,9 +3,9 @@ import { authFetch } from "../../../auth/AuthFetch";
 import { FiltroUsuarios } from "./components/filtroUsuarios";
 import { HeaderUsuarios } from "./components/headerUsuarios";
 import { TablaUsuarios } from "./components/tablaUsuarios";
-import { Pagination } from "../../../components/ui/layout/pagination";
+import { Pagination } from "../../../components/ui/layout/Pagination";
 import { ModalCreacionUsuario } from "./components/modalCreacionUsuario";
-import { ModalEdicionUsuarios } from "./components/modalEdicionUsuarios";
+import { ModalEdicionUsuario } from "./components/modalEdicionUsuarios";
 import type { User } from "../../../types/userType";
 import { ModalEstadoUsuarios } from "./components/modalEstadoUsuario";
 
@@ -38,6 +38,10 @@ export default function AdminUsuarios() {
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [totalUsers, setTotalUsers] = useState(0);
   const limit = 10;
+
+
+  
+
 
   // ---------- CARGA DE DATOS ----------
   useEffect(() => {
@@ -98,6 +102,7 @@ export default function AdminUsuarios() {
   const onEditUser = handleEditarUser({
     setEditDialogOpen,
     setSelectedUser,
+    onSuccess: () => window.location.reload(),
   });
 
   const onToggleStatus = handleToggleStatus({
@@ -148,10 +153,10 @@ export default function AdminUsuarios() {
           onSubmit={onCreateUser}
         />
 
-        <ModalEdicionUsuarios
+        <ModalEdicionUsuario
           open={editDialogOpen}
           onOpenChange={setEditDialogOpen}
-          user={selectedUser}
+          userToEdit={selectedUser}
           onSubmit={onEditUser}
         />
 

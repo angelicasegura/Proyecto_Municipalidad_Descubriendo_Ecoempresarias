@@ -18,5 +18,7 @@ namespace Abstracciones.Interfaces.DA
         Task<UsuarioResponse> InicioSesionUsuario(string email, string contrasena);
 
         Task<PagedResult<UsuarioResponse>> GetUsuariosPaginadosAsync(int page, int limit, string search, int? roleId);
+
+        Task<int> EditarAdmin(int Id, UsuarioResponse usuario);
     }
 }

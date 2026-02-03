@@ -56,5 +56,10 @@ namespace Flujo
            return await _usuarioDA.GetUsuariosPaginadosAsync(page, limit, search, roleId);
 
         }
+
+        public async Task<int> EditarAdmin(int Id, UsuarioResponse usuario)
+        {
+            return await _usuarioDA.EditarAdmin(Id, usuario);
+        }
     }
 }
