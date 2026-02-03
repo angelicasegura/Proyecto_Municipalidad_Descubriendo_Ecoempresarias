@@ -31,11 +31,11 @@ namespace Abstracciones.Modelos
     }
 
 
-    public class CredencialesRequest
+    public class UsuarioAutenticado
     {
-        public string Email { get; set; }
-        public string Contrasena { get; set; }
+        public int IdUsuario { get; set; }
+        public string Nombre { get; set; }
+        public string Rol { get; set; }
     }
-
 
 }

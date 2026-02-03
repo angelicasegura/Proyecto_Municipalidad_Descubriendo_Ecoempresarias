@@ -4,6 +4,10 @@ using Abstracciones.Interfaces.Flujo;
 using DA.Repositorios;
 using DA;
 using Flujo;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.Text;
+using System.Security.Cryptography;
+using Microsoft.IdentityModel.Tokens;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +15,47 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
+
+
+//Auth
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+    .AddJwtBearer(options =>
+    {
+        // AQUÍ se lee la clave secreta
+        var secret = builder.Configuration["Jwt:Secret"]
+            ?? throw new InvalidOperationException("JWT Secret no configurado.");
+
+        // Asegurar tamaño mínimo de clave
+        var keyBytes = Encoding.UTF8.GetBytes(secret);
+        if (keyBytes.Length < 32)
+        {
+            using var sha = SHA256.Create();
+            keyBytes = sha.ComputeHash(keyBytes);
+        }
+
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = false,     // true en prod
+            ValidateAudience = false,   // true en prod
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+
+            IssuerSigningKey = new SymmetricSecurityKey(keyBytes),
+
+            // Claims personalizados
+            NameClaimType = "nombre",
+            RoleClaimType = "rol",
+
+            ClockSkew = TimeSpan.Zero
+        };
+    });
+
+
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -30,6 +75,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseAuthentication();
 
 app.UseAuthorization();
 
