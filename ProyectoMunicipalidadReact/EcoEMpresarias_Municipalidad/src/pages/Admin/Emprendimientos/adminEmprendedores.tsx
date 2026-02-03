@@ -12,7 +12,7 @@ import { ConfirmStatusDialog } from "../Emprendimientos/components/modalDeConfir
 import { EmprendedoresFilters } from "../Emprendimientos/components/filtrosEmprendedor";
 import type { Emprendedor } from "../../../types/emprendedoresType";
 import { useEffect, useState } from "react";
-import { Pagination } from "../../../components/ui/layout/Paginacion";
+import { Pagination } from "../../../components/ui/layout/pagination";
 import { authFetch } from "../../../auth/AuthFetch";
 
 export default function AdminEmprendedores() {
@@ -115,10 +115,10 @@ export default function AdminEmprendedores() {
         onToggleStatus={onToggleStatusClick}
       />
       <Pagination
-                page={page}
-                totalPages={totalPages}
-                onPageChange={setPage}
-              />
+            currentPage={page}
+            totalPages={totalPages}
+            onPageChange={setPage}
+          />
 
     {/* Modals */}
       <ModalCrearEmprendimiento

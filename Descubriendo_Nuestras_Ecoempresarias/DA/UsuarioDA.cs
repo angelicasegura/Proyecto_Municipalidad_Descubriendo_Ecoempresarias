@@ -1,9 +1,11 @@
 ﻿using Abstracciones.Interfaces.DA;
 using Abstracciones.Modelos;
+using Abstracciones.Modelos.Pagination;
 using Dapper;
 using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -65,6 +67,38 @@ namespace DA
             if (resultadoConsultaUsuario == null)
                 throw new Exception("No se encontro el usuario");
 
+        }
+
+        public async Task<PagedResult<UsuarioResponse>> GetUsuariosPaginadosAsync(int page, int limit, string search, int? roleId)
+        {
+            
+            var connection = _repositorioDapper.ObtenerRepositorio();
+
+            try
+            {
+                if (connection.State == ConnectionState.Closed)
+                    await connection.OpenAsync();
+
+                var parameters = new
+                {
+                    Page = page,
+                    Limit = limit,
+                    Search = search,
+                    Role = roleId
+                };
+
+                using (var multi = await connection.QueryMultipleAsync("sp_GetUsuariosPaginados", parameters, commandType: CommandType.StoredProcedure))
+                {
+                    var items = await multi.ReadAsync<UsuarioResponse>();
+                    var total = await multi.ReadFirstAsync<int>();
+                    return new PagedResult<UsuarioResponse> { Items = items, TotalCount = total };
+                }
+            }
+            catch (Exception ex)
+            {
+                
+                throw new Exception("Error al consultar la base de datos en GetUsuariosPaginadosAsync", ex);
+            }
         }
     }
 }

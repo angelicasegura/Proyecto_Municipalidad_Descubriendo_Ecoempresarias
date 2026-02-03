@@ -12,25 +12,20 @@ import { Button } from "../../../../components/ui/button"
 import { Pencil, Ban, Check } from "lucide-react"
 import { type User, getRolNombre } from "../../../../types/userType"
 
-
 interface TablaUsuariosProps {
-   users: User[]
+  users: User[]
   onEdit: (user: User) => void
   onToggleStatus: (user: User) => void
 }
 
+// Actualizamos las keys para que coincidan con los IDs de tu lógica
 const roleBadgeColors: Record<number, string> = {
-  1: "bg-blue-600 hover:bg-blue-700 text-white", // administrador 
-  2: "bg-green-600 hover:bg-green-700 text-white", // emprendedor
-  4: "bg-gray-600 hover:bg-gray-700 text-white", // usuario 
+  1: "bg-blue-600 hover:bg-blue-700 text-white", // Administrador
+  2: "bg-green-600 hover:bg-green-700 text-white", // Emprendedor
+  3: "bg-gray-600 hover:bg-gray-700 text-white", // Usuario (ajustado de 4 a 3 según tu ROLES const)
 }
 
 export function TablaUsuarios({ users, onEdit, onToggleStatus }: TablaUsuariosProps) {
-  
-
-  
- 
-
   return (
     <Card className="shadow-sm">
       <CardHeader className="border-b bg-card">
@@ -53,8 +48,9 @@ export function TablaUsuarios({ users, onEdit, onToggleStatus }: TablaUsuariosPr
             </TableHeader>
             <TableBody>
               {users.map((user) => (
-                <TableRow key={user.usuario_id} className="hover:bg-muted/30">
-                  <TableCell className="font-mono text-sm">{user.usuario_id}</TableCell>
+                /* Cambio: usuario_id -> idUsuario */
+                <TableRow key={user.idUsuario} className="hover:bg-muted/30">
+                  <TableCell className="font-mono text-sm">{user.idUsuario}</TableCell>
                   <TableCell className="font-medium">
                     {user.nombre} {user.apellidos}
                   </TableCell>
@@ -65,18 +61,20 @@ export function TablaUsuarios({ users, onEdit, onToggleStatus }: TablaUsuariosPr
                   <TableCell className="hidden lg:table-cell">{user.edad}</TableCell>
                   <TableCell>
                     <Badge
-                      variant={user.rol_id === 1 ? "default" : user.rol_id === 4 ? "outline" : "secondary"}
-                      className={roleBadgeColors[user.rol_id] || ""}
+                      /* Cambio: rol_id -> idRol */
+                      variant={user.idRol === 1 ? "default" : user.idRol === 3 ? "outline" : "secondary"}
+                      className={roleBadgeColors[user.idRol] || ""}
                     >
-                      {getRolNombre(user.rol_id)}
+                      {getRolNombre(user.idRol)}
                     </Badge>
                   </TableCell>
                   <TableCell>
                     <Badge
-                      variant={user.estado_id === 1 ? "default" : "destructive"}
-                      className={user.estado_id === 1 ? "bg-green-600 hover:bg-green-700" : ""}
+                      /* Cambio: estado_id -> idEstado */
+                      variant={user.idEstado === 1 ? "default" : "destructive"}
+                      className={user.idEstado === 1 ? "bg-green-600 hover:bg-green-700 text-white" : ""}
                     >
-                      {user.estado_id === 1 ? "Activo" : "Inactivo"}
+                      {user.idEstado === 1 ? "Activo" : "Inactivo"}
                     </Badge>
                   </TableCell>
                   <TableCell className="text-right">
@@ -94,14 +92,14 @@ export function TablaUsuarios({ users, onEdit, onToggleStatus }: TablaUsuariosPr
                         variant="outline"
                         size="icon"
                         className={`h-8 w-8 ${
-                          user.estado_id === 1
+                          user.idEstado === 1
                             ? "text-destructive hover:text-destructive"
                             : "text-green-600 hover:text-green-700"
                         }`}
                         onClick={() => onToggleStatus(user)}
-                        title={user.estado_id === 1 ? "Desactivar" : "Activar"}
+                        title={user.idEstado === 1 ? "Desactivar" : "Activar"}
                       >
-                        {user.estado_id === 1 ? <Ban className="h-4 w-4" /> : <Check className="h-4 w-4" />}
+                        {user.idEstado === 1 ? <Ban className="h-4 w-4" /> : <Check className="h-4 w-4" />}
                       </Button>
                     </div>
                   </TableCell>
@@ -113,7 +111,7 @@ export function TablaUsuarios({ users, onEdit, onToggleStatus }: TablaUsuariosPr
       </CardContent>
       <CardFooter className="bg-muted/30 border-t py-3">
         <p className="text-sm text-muted-foreground">
-          Se encontraron <strong className="text-foreground">{users.length}</strong> usuarios
+          Se encontraron <strong className="text-foreground">{users.length}</strong> usuarios en esta página
         </p>
       </CardFooter>
     </Card>

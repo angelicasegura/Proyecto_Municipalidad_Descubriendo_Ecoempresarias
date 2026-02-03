@@ -1,6 +1,9 @@
 ﻿using Abstracciones.Interfaces.DA;
 using Abstracciones.Interfaces.Flujo;
 using Abstracciones.Modelos;
+using Abstracciones.Modelos.Pagination;
+using Microsoft.Data.SqlClient;
+using System.Data;
 
 
 namespace Flujo
@@ -44,6 +47,14 @@ namespace Flujo
         public Task<UsuarioResponse> InicioSesionUsuario(string email, string contrasena)
         {
             return _usuarioDA.InicioSesionUsuario(email, contrasena);
+        }
+
+        public async Task<PagedResult<UsuarioResponse>> GetUsuariosPaginadosAsync(int page, int limit, string search, int? roleId)
+        {
+
+
+           return await _usuarioDA.GetUsuariosPaginadosAsync(page, limit, search, roleId);
+
         }
     }
 }

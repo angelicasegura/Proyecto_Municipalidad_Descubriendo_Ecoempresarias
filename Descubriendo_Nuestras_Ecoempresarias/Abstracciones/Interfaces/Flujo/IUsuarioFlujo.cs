@@ -1,4 +1,5 @@
 ﻿using Abstracciones.Modelos;
+using Abstracciones.Modelos.Pagination;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace Abstracciones.Interfaces.Flujo
         Task<int> Eliminar(int Id);
         Task<UsuarioResponse> InicioSesionUsuario(string email, string contrasena);
 
-
+        Task<PagedResult<UsuarioResponse>> GetUsuariosPaginadosAsync(int page, int limit, string search, int? roleId);
 
     }
 }
