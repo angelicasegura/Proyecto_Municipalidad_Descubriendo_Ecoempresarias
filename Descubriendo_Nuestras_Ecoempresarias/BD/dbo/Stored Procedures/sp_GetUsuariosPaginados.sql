@@ -1,17 +1,15 @@
 ﻿CREATE PROCEDURE sp_GetUsuariosPaginados
-    @Page INT ,               -- página actual
-    @Limit INT ,             -- registros por página
-    @Search NVARCHAR(200) ,  -- búsqueda por nombre, apellidos o email
-    @Role INT = NULL             -- filtro por rol
+    @Page INT ,               
+    @Limit INT ,             
+    @Search NVARCHAR(200) , 
+    @Role INT = NULL            
 AS
 BEGIN
     SET NOCOUNT ON;
 
     DECLARE @Offset INT = (@Page - 1) * @Limit;
 
-    -- -----------------------------
-    -- Consulta principal: usuarios de la página actual
-    -- -----------------------------
+    --consulta los usuarios con paginación y filtros
     SELECT Usuario_id as IdUsuario,
            Nombre,
            Apellidos,
@@ -31,9 +29,7 @@ BEGIN
     OFFSET @Offset ROWS
     FETCH NEXT @Limit ROWS ONLY;
 
-    -- -----------------------------
-    -- Total de usuarios (para calcular totalPages)
-    -- -----------------------------
+    --calcula las paginas totales disponibles
     SELECT COUNT(*) AS Total
     FROM ECOEMPRESARIAS_USUARIOS_TB
     WHERE (@Search IS NULL 

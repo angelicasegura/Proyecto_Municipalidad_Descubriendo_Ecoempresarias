@@ -12,7 +12,7 @@ import { ConfirmStatusDialog } from "../Emprendimientos/components/modalDeConfir
 import { EmprendedoresFilters } from "../Emprendimientos/components/filtrosEmprendedor";
 import type { Emprendedor } from "../../../types/emprendedoresType";
 import { useEffect, useState } from "react";
-import { Pagination } from "../../../components/ui/layout/pagination";
+import { Pagination } from "../../../components/ui/layout/Pagination";
 import { authFetch } from "../../../auth/AuthFetch";
 
 export default function AdminEmprendedores() {
