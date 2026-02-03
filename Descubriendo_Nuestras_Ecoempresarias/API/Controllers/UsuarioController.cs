@@ -2,6 +2,7 @@
 using Abstracciones.Interfaces.Flujo;
 using Abstracciones.Modelos;
 using Abstracciones.Modelos.Pagination;
+using API.Seguridad;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -140,7 +141,7 @@ namespace API.Controllers
 
                 var busqueda = await _usuarioFlujo.ObtenerUsuario(id);
 
-                if (usuarioId != busqueda.IdUsuario || rolDelToken != "ADMIN")
+                if (usuarioId != busqueda.IdUsuario && rolDelToken != "ADMIN")
                 {
 
                     return Forbid("No tienes permiso para editar un perfil que no es el tuyo.");
@@ -177,5 +178,38 @@ namespace API.Controllers
             }
         }
 
+        [Authorize(Roles = "ADMIN")]
+        [HttpPost("AgregarAdmin")]
+        public async Task<IActionResult> AgregarUsuarioAdmin([FromBody] UsuarioRequest usuario)
+        {
+            try
+            {
+                // Verificar si el usuario ya existe
+                var busqueda = await _usuarioFlujo.ObtenerUsuario(usuario.IdUsuario);
+                if (busqueda != null)
+                {
+                    return NotFound($"Usuario ya existente");
+                }
+
+                usuario.Ruta_Imagen_Perfil = "https://via.placeholder.com/150";
+                usuario.Contrasena = HashGenerator.HashHelper.GenerarHashSHA256("ContrasenaDefault1234_");
+                //Cambiar a que genere una contrasena aleatoria y enviarla por correo
+
+                var filasAfectadas = await _usuarioFlujo.Agregar(usuario);
+
+                if (filasAfectadas > 0)
+                {
+                    return Ok(new { message = "Usuario agregado exitosamente." });
+                }
+                else
+                {
+                    return StatusCode(500, "No se pudo agregar el usuario.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error interno al intentar agregar el usuario: {ex.Message}");
+            }
+        }
     }
 }

@@ -19,9 +19,9 @@ namespace Flujo
         }
 
 
-        public Task<int> Agregar(UsuarioRequest usuario)
+        public async Task<int> Agregar(UsuarioRequest usuario)
         {
-            throw new NotImplementedException();
+            return await _usuarioDA.Agregar(usuario);
         }
 
         public Task<int> Editar(int Id, UsuarioRequest usuario)

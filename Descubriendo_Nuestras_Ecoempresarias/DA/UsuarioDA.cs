@@ -27,7 +27,24 @@ namespace DA
 
         public async Task<int> Agregar(UsuarioRequest usuario)
         {
-            throw new NotImplementedException();
+            string query = @"AgregarUsuario";
+            var resultQuery = await _sqlConnection.ExecuteScalarAsync<int>(query, new
+            {
+                Usuario_id = usuario.IdUsuario,
+                Nombre = usuario.Nombre,
+                Apellidos = usuario.Apellidos,
+                Telefono = usuario.Telefono,
+                Contrasena = usuario.Contrasena, 
+                Email = usuario.Email,
+                Ruta_Imagen_Perfil = usuario.Ruta_Imagen_Perfil,
+                Edad = usuario.Edad,
+                Estado_id = usuario.IdEstado,
+                Rol_id = usuario.IdRol
+
+
+            });
+
+            return resultQuery;
         }
 
         public async Task<int> Editar(int Id, UsuarioRequest usuario)
