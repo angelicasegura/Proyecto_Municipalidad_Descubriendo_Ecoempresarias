@@ -23,68 +23,67 @@ import { type User, ROLES } from "../../../../types/userType"
 interface ModalCreacionUsuarioProps {
   open: boolean
   onOpenChange: (open: boolean) => void
-  onSubmit: (user: Omit<User, "usuario_id" | "estado_id">) => void
+  // Recibimos un objeto que cumple con la interfaz User
+  onSubmit: (userData: User) => void 
 }
 
 export function ModalCreacionUsuario({ open, onOpenChange, onSubmit }: ModalCreacionUsuarioProps) {
   const [formData, setFormData] = useState({
+    idUsuario: "", 
     nombre: "",
     apellidos: "",
     email: "",
     telefono: "",
-    contrasena: "",
     edad: "",
-    rol_id: "",
+    idRol: "",
   })
+  
   const [errors, setErrors] = useState<Record<string, boolean>>({})
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     const newErrors: Record<string, boolean> = {}
 
+    // Validaciones básicas
+    if (!formData.idUsuario) newErrors.idUsuario = true
     if (!formData.nombre) newErrors.nombre = true
     if (!formData.apellidos) newErrors.apellidos = true
     if (!formData.email) newErrors.email = true
     if (!formData.telefono) newErrors.telefono = true
-    if (!formData.contrasena) newErrors.contrasena = true
-    if (!formData.edad || Number(formData.edad) <= 0) newErrors.edad = true
-    if (!formData.rol_id) newErrors.rol_id = true
+    if (!formData.edad) newErrors.edad = true
+    if (!formData.idRol) newErrors.idRol = true
 
     setErrors(newErrors)
 
-    if (Object.keys(newErrors).length === 0 && formData.rol_id) {
+    if (Object.keys(newErrors).length === 0) {
+      // Construimos el objeto final respetando EXACTAMENTE tu interfaz User
       onSubmit({
+        idUsuario: Number(formData.idUsuario),
         nombre: formData.nombre,
         apellidos: formData.apellidos,
         email: formData.email,
         telefono: formData.telefono,
-        contrasena: formData.contrasena,
-        edad: Number(formData.edad),
-        rol_id: Number(formData.rol_id),
+        edad: formData.edad,             // Se envía como string según tu interfaz
+        idRol: Number(formData.idRol),
+        idEstado: 1,                     // Activo por defecto
+        ruta_Imagen_Perfil: "",          // No está en el form, va vacío
+        contrasena: "Temporal123*",     // No está en el form, se envía una genérica para el SP
       })
-      setFormData({
-        nombre: "",
-        apellidos: "",
-        email: "",
-        telefono: "",
-        contrasena: "",
-        edad: "",
-        rol_id: "",
-      })
-      setErrors({})
+
+      handleClose(false)
     }
   }
-  //Todo: manejar handle por aparte
+
   const handleClose = (isOpen: boolean) => {
     if (!isOpen) {
       setFormData({
+        idUsuario: "",
         nombre: "",
         apellidos: "",
         email: "",
         telefono: "",
-        contrasena: "",
         edad: "",
-        rol_id: "",
+        idRol: "",
       })
       setErrors({})
     }
@@ -94,124 +93,94 @@ export function ModalCreacionUsuario({ open, onOpenChange, onSubmit }: ModalCrea
   return (
     <Dialog open={open} onOpenChange={handleClose}>
       <DialogContent className="sm:max-w-150">
-        <DialogHeader className="bg-[#056F94] text-primary-foreground -m-6 mb-0 p-6 rounded-t-lg">
+        <DialogHeader className="bg-[#056F94] text-white -m-6 mb-0 p-6 rounded-t-lg">
           <DialogTitle className="flex items-center gap-2 text-lg">
             <UserPlus className="h-5 w-5" />
             Crear Nuevo Usuario
           </DialogTitle>
         </DialogHeader>
-        <form onSubmit={handleSubmit} className="pt-6">
+
+        <form onSubmit={handleSubmit} className="pt-6 space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            
+            {/* ID Usuario */}
             <div className="space-y-2">
-              <Label htmlFor="nombre">
-                Nombre <span className="text-destructive">*</span>
-              </Label>
+              <Label htmlFor="idUsuario">Identificación <span className="text-destructive">*</span></Label>
+              <Input
+                id="idUsuario"
+                type="number"
+                placeholder="Ej: 119770677"
+                value={formData.idUsuario}
+                onChange={(e) => setFormData({ ...formData, idUsuario: e.target.value })}
+                className={errors.idUsuario ? "border-destructive" : ""}
+              />
+            </div>
+
+            {/* Nombre */}
+            <div className="space-y-2">
+              <Label htmlFor="nombre">Nombre <span className="text-destructive">*</span></Label>
               <Input
                 id="nombre"
-                placeholder="Ej: Juan"
                 value={formData.nombre}
                 onChange={(e) => setFormData({ ...formData, nombre: e.target.value })}
                 className={errors.nombre ? "border-destructive" : ""}
               />
-              {errors.nombre && (
-                <p className="text-sm text-destructive">El nombre es requerido.</p>
-              )}
             </div>
 
+            {/* Apellidos */}
             <div className="space-y-2">
-              <Label htmlFor="apellidos">
-                Apellidos <span className="text-destructive">*</span>
-              </Label>
+              <Label htmlFor="apellidos">Apellidos <span className="text-destructive">*</span></Label>
               <Input
                 id="apellidos"
-                placeholder="Ej: Perez Garcia"
                 value={formData.apellidos}
                 onChange={(e) => setFormData({ ...formData, apellidos: e.target.value })}
                 className={errors.apellidos ? "border-destructive" : ""}
               />
-              {errors.apellidos && (
-                <p className="text-sm text-destructive">Los apellidos son requeridos.</p>
-              )}
             </div>
 
+            {/* Email */}
             <div className="space-y-2">
-              <Label htmlFor="email">
-                Email <span className="text-destructive">*</span>
-              </Label>
+              <Label htmlFor="email">Email <span className="text-destructive">*</span></Label>
               <Input
                 id="email"
                 type="email"
-                placeholder="correo@ecoempresarias.mx"
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 className={errors.email ? "border-destructive" : ""}
               />
-              {errors.email && (
-                <p className="text-sm text-destructive">Ingresa un email valido.</p>
-              )}
             </div>
 
+            {/* Teléfono */}
             <div className="space-y-2">
-              <Label htmlFor="telefono">
-                Telefono <span className="text-destructive">*</span>
-              </Label>
+              <Label htmlFor="telefono">Teléfono <span className="text-destructive">*</span></Label>
               <Input
                 id="telefono"
-                type="tel"
-                placeholder="+52 555-1234"
                 value={formData.telefono}
                 onChange={(e) => setFormData({ ...formData, telefono: e.target.value })}
                 className={errors.telefono ? "border-destructive" : ""}
               />
-              {errors.telefono && (
-                <p className="text-sm text-destructive">El telefono es requerido.</p>
-              )}
             </div>
 
+            {/* Edad */}
             <div className="space-y-2">
-              <Label htmlFor="contrasena">
-                Contrasena <span className="text-destructive">*</span>
-              </Label>
-              <Input
-                id="contrasena"
-                type="password"
-                placeholder="********"
-                value={formData.contrasena}
-                onChange={(e) => setFormData({ ...formData, contrasena: e.target.value })}
-                className={errors.contrasena ? "border-destructive" : ""}
-              />
-              {errors.contrasena && (
-                <p className="text-sm text-destructive">La contrasena es requerida.</p>
-              )}
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="edad">
-                Edad <span className="text-destructive">*</span>
-              </Label>
+              <Label htmlFor="edad">Edad <span className="text-destructive">*</span></Label>
               <Input
                 id="edad"
                 type="number"
-                placeholder="25"
-                min="1"
                 value={formData.edad}
                 onChange={(e) => setFormData({ ...formData, edad: e.target.value })}
                 className={errors.edad ? "border-destructive" : ""}
               />
-              {errors.edad && (
-                <p className="text-sm text-destructive">La edad debe ser mayor a 0.</p>
-              )}
             </div>
 
+            {/* Rol */}
             <div className="space-y-2">
-              <Label htmlFor="rol_id">
-                Rol <span className="text-destructive">*</span>
-              </Label>
+              <Label htmlFor="idRol">Rol <span className="text-destructive">*</span></Label>
               <Select
-                value={formData.rol_id}
-                onValueChange={(value) => setFormData({ ...formData, rol_id: value })}
+                value={formData.idRol}
+                onValueChange={(value) => setFormData({ ...formData, idRol: value })}
               >
-                <SelectTrigger className={errors.rol_id ? "border-destructive" : ""}>
+                <SelectTrigger className={errors.idRol ? "border-destructive" : ""}>
                   <SelectValue placeholder="Selecciona un rol" />
                 </SelectTrigger>
                 <SelectContent>
@@ -222,17 +191,14 @@ export function ModalCreacionUsuario({ open, onOpenChange, onSubmit }: ModalCrea
                   ))}
                 </SelectContent>
               </Select>
-              {errors.rol_id && (
-                <p className="text-sm text-destructive">Debes seleccionar un rol.</p>
-              )}
             </div>
           </div>
 
           <DialogFooter className="mt-6 border-t pt-4">
-            <Button type="button" variant="secondary" className="bg-[#ff0707] hover:bg-[#790000] text-white cursor-pointer" onClick={() => handleClose(false)}>
+            <Button type="button" variant="secondary" className="bg-[#ff0707] hover:bg-[#790000] text-white" onClick={() => handleClose(false)}>
               Cancelar
             </Button>
-            <Button type="submit" className="bg-[#54b413] hover:bg-[#3c810e] text-white font-semibold cursor-pointer">
+            <Button type="submit" className="bg-[#54b413] hover:bg-[#3c810e] text-white">
               <Save className="h-4 w-4 mr-2" />
               Crear Usuario
             </Button>

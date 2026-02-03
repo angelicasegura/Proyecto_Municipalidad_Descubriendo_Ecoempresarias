@@ -10,5 +10,6 @@ namespace Abstracciones.Interfaces.Flujo
     public interface IRolesFlujo
     {
         Task<Roles?> ObtenerRolPorId(int rolId);
+
     }
 }
