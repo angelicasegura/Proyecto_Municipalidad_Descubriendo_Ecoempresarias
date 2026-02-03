@@ -1,13 +1,14 @@
 
 using Abstracciones.Interfaces.DA;
 using Abstracciones.Interfaces.Flujo;
-using DA.Repositorios;
+using API.Seguridad;
 using DA;
+using DA.Repositorios;
 using Flujo;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using System.Text;
-using System.Security.Cryptography;
 using Microsoft.IdentityModel.Tokens;
+using System.Security.Cryptography;
+using System.Text;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +17,17 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowViteApp",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:5173") // La URL de tu frontend
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        });
+});
 
 //Auth
 builder.Services.AddAuthentication(options =>
@@ -61,9 +73,13 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
+builder.Services.AddSingleton<TokenProvider>();
 builder.Services.AddScoped<IUsuarioFlujo, UsuarioFlujo>();
 builder.Services.AddScoped<IUsuarioDA, UsuarioDA>();
+builder.Services.AddScoped<IRolesFlujo, RolesFlujo>();
+builder.Services.AddScoped<IRolesDA, RolesDA>();
 builder.Services.AddScoped<IRepositorioDapper, RepositorioDapper>();
+
 
 var app = builder.Build();
 
@@ -73,6 +89,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors("AllowViteApp");
 
 app.UseHttpsRedirection();
 app.UseAuthentication();

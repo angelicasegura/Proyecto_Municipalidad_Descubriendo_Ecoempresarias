@@ -12,6 +12,7 @@ namespace Abstracciones.Modelos
         public string Apellidos { get; set; }
         public string Telefono { get; set; }
         
+        public string Ruta_Imagen_Perfil { get; set; }
         public string Email { get; set; }
         public string Edad { get; set;}
     }

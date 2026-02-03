@@ -7,7 +7,7 @@ using System.Text;
 
 namespace API.Seguridad
 {
-    internal sealed class TokenProvider
+    public sealed class TokenProvider
     {
         private readonly IConfiguration _configuration;
 

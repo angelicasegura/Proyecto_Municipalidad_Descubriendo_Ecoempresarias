@@ -3,10 +3,11 @@ import { Navbar } from "./components/ui/layout/navbar";
 import { Footer } from "./components/ui/layout/footer";
 import Home from "./pages/index/home";
 import { useAuth } from "./auth/AuthContext";
-/* import { ProtectedRoute } from "./auth/ProtectedRoute"; */
+import { ProtectedRoute } from "./auth/ProtectedRoute";
 import { PageLoader } from "./components/ui/layout/pageLoader";
 import AdminUsuarios from "./pages/Admin/Usuarios/adminUsuarios";
 import AdminEmprendedores from "./pages/Admin/Emprendimientos/adminEmprendedores";
+import LoginPage from "./pages/auth/login/loginPage";
 
 function App() {
   const { loading } = useAuth();
@@ -22,15 +23,15 @@ function App() {
         accione una ruta para cambiar de pagina, esto no es nada del los get o put a 
         la api, esto es solo lo visual */}
           <Route path="/" element={<Home />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route element={<ProtectedRoute allowedRoles={["ADMIN"]} />}>
           <Route path="/usuarios" element={<AdminUsuarios />} />
+        </Route>
           <Route
             path="/emprendimientos-admin"
             element={<AdminEmprendedores />}
           />
-          {/* Esto es solo de prueba a futuro cuando ya este conectado a API, por ahora no es necesario */}
-          {/* <Route element={<ProtectedRoute allowedRoles={["ADMIN"]} />}>
-          <Route path="/usuarios" element={<AdminUsuarios />} />
-        </Route> */}
+          
         </Routes>
       </main>
       <Footer />
