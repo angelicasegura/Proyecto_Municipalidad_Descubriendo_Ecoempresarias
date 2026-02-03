@@ -11,7 +11,7 @@ namespace Abstracciones.Modelos
         public string Nombre { get; set; }
         public string Apellidos { get; set; }
         public string Telefono { get; set; }
-        public string Contrasena { get; set; }
+        
         public string Email { get; set; }
         public string Edad { get; set;}
     }
@@ -19,7 +19,7 @@ namespace Abstracciones.Modelos
     public class UsuarioRequest: UsuariosBase
     {
         public int IdUsuario { get; set; }
-
+        public string Contrasena { get; set; }
     }
 
     public class UsuarioResponse: UsuariosBase
@@ -29,4 +29,13 @@ namespace Abstracciones.Modelos
         public int IdRol { get; set; }
 
     }
+
+
+    public class CredencialesRequest
+    {
+        public string Email { get; set; }
+        public string Contrasena { get; set; }
+    }
+
+
 }
