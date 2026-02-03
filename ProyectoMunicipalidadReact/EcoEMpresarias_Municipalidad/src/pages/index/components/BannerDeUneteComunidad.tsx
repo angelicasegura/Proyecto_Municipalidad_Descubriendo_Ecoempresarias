@@ -10,7 +10,7 @@ export function BannerUneteComunidad() {
         </p>
         <Button
           size="lg"
-          className="bg-[#f2a33c] hover:bg-[#e6932d] text-[#333] font-semibold text-base px-8 shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all"
+          className="bg-[#FFD177] hover:bg-[#E6BC6B] text-[#333] font-semibold text-base px-8 shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all"
         >
           Registrarse Ahora
         </Button>
