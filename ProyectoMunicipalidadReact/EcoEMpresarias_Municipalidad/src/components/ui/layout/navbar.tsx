@@ -12,6 +12,7 @@ import {
 import { ChevronDown, Menu, X } from "lucide-react";
 import logo from "../../../assets/logo.png";
 import { useAuth } from "../../../auth/AuthContext";
+import { logoutUser } from "../../../pages/auth/logout/handleLogout";
 
 export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -305,10 +306,12 @@ export function Navbar() {
               <Button
                 variant="secondary"
                 className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold"
+                onClick={logoutUser}
               >
-                <Link to="/">Logout</Link>
+                Logout
               </Button>
             )}
+
           </div>
 
           {/* Mobile menu button */}
