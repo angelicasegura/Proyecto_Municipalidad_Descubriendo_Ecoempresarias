@@ -14,7 +14,7 @@ interface ModalEstadoUsuariosProps {
   open: boolean
   onOpenChange: (open: boolean) => void
   user: User | null
-  onConfirm: () => void
+  onConfirm: (user: User) => void
 }
 
 export function ModalEstadoUsuarios({
@@ -23,7 +23,7 @@ export function ModalEstadoUsuarios({
   user,
   onConfirm,
 }: ModalEstadoUsuariosProps) {
-  const isActivating = user?.idEstado === 2 
+  const isActivating = user?.idEstado === 0
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -55,8 +55,8 @@ export function ModalEstadoUsuarios({
           <Button
             type="button"
             variant={"secondary"}
-            onClick={onConfirm}
-            className="bg-[#ff0707] hover:bg-[#790000] text-white cursor-pointer"
+            onClick={() => user && onConfirm(user)} 
+            className="bg-[#ff0707]  hover:bg-[#790000] text-white cursor-pointer"
           >
             <Check className="h-4 w-4 mr-2" />
             Confirmar

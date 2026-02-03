@@ -1,3 +1,4 @@
+
 import { authFetch } from "../../../../auth/AuthFetch"
 import type { User } from "../../../../types/userType"
 
@@ -15,7 +16,6 @@ export function handleEditarUser({
   return async (userData: User) => {
     //  API 
     try {
-      
       const response = await authFetch(`https://localhost:7050/api/Usuarios/EditAdmin/${userData.idUsuario}`, {
         method: "PUT",
         headers: {

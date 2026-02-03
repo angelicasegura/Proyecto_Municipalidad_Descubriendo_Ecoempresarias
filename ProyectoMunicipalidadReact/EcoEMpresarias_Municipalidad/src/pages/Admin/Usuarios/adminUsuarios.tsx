@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { authFetch } from "../../../auth/AuthFetch";
 import { FiltroUsuarios } from "./components/filtroUsuarios";
 import { HeaderUsuarios } from "./components/headerUsuarios";
 import { TablaUsuarios } from "./components/tablaUsuarios";
@@ -16,13 +15,8 @@ import { handleEditarUser } from "./Actions/handleEditarUser";
 import { handleToggleStatus } from "./Actions/handleConfirmarEstado";
 import { CardFooter } from "../../../components/ui/card";
 
-interface PaginationResponse<T> {
-  items: T[];
-  totalCount: number;
-  totalPages: number;
-  currentPage: number;
-  pageSize: number;
-}
+import { fetchUsuarios } from "./Actions/fetchUsuarios";
+
 
 
 
@@ -44,43 +38,33 @@ export default function AdminUsuarios() {
 
 
   // ---------- CARGA DE DATOS ----------
-  useEffect(() => {
-  const controller = new AbortController();
-
-  // Tipamos explícitamente los parámetros para el buscador
-  const queryParams: Record<string, string> = {
-    page: page.toString(),
-    limit: limit.toString(),
-  };
-
-  if (searchTerm) queryParams.search = searchTerm;
-  if (roleFilter && roleFilter !== "all") {
-    queryParams.roleId = roleFilter;
-  }
-
-  const params = new URLSearchParams(queryParams);
-
-  // Asumimos que authFetch devuelve una Promise<Response>
-  authFetch(`https://localhost:7050/api/Usuarios/pagination/?${params.toString()}`, {
-    signal: controller.signal
-  })
-    .then((res: Response) => {
-      if (!res.ok) throw new Error("Error en la petición");
-      return res.json() as Promise<PaginationResponse<User>>;
-    })
-    .then((data: PaginationResponse<User>) => {
-      // Ahora TS sabe que 'items' y 'totalCount' son válidos
-      setUsers(data.items); 
-      setTotalUsers(data.totalCount); 
-    })
-    .catch((err: Error) => {
+  const loadData = async (signal?: AbortSignal) => {
+    try {
+      const data = await fetchUsuarios({
+        page,
+        limit,
+        searchTerm,
+        roleFilter,
+        signal
+      });
+      
+      setUsers(data.items);
+      setTotalUsers(data.totalCount);
+    } catch (err: any) {
       if (err.name !== 'AbortError') {
         console.error("Error al cargar usuarios:", err.message);
       }
-    });
+    }
+  };
 
-  return () => controller.abort();
-}, [page, searchTerm, roleFilter, limit]);
+  // 2. El useEffect ahora solo llama a loadData
+  useEffect(() => {
+    const controller = new AbortController();
+    loadData(controller.signal);
+    return () => controller.abort();
+  }, [page, searchTerm, roleFilter, limit]);
+
+
 
   const totalPages = Math.ceil(totalUsers / limit);
   // ---------- ACCIONES ----------
@@ -102,12 +86,13 @@ export default function AdminUsuarios() {
   const onEditUser = handleEditarUser({
     setEditDialogOpen,
     setSelectedUser,
-    onSuccess: () => window.location.reload(),
+    onSuccess: () => loadData(),
   });
 
   const onToggleStatus = handleToggleStatus({
     setStatusDialogOpen,
     setSelectedUser,
+    onSuccess: () => loadData(),
   });
 
   const handleSearchChange = (term: string) => {

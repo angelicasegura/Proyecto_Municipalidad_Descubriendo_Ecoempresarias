@@ -122,5 +122,60 @@ namespace API.Controllers
                                 return StatusCode(500, $"Error interno al intentar actualizar el usuario: {ex.Message}");
                             }
         }
+
+
+        [Authorize(Roles = "ADMIN,USUARIO")]
+        [HttpPut("EditEstado/{id}")]
+        public async Task<IActionResult> EditarEstadoUsuarioAdmin(int id)
+        {
+            try
+            {
+                var idClaim = User.Claims.FirstOrDefault(c => c.Type == "id")?.Value;
+                int usuarioId = int.Parse(idClaim ?? "0");
+                string rolDelToken = User.Claims.FirstOrDefault(c => c.Type == "rol")?.Value;
+
+                int estadoCambio = 0;
+
+
+
+                var busqueda = await _usuarioFlujo.ObtenerUsuario(id);
+
+                if (usuarioId != busqueda.IdUsuario || rolDelToken != "ADMIN")
+                {
+
+                    return Forbid("No tienes permiso para editar un perfil que no es el tuyo.");
+                }
+
+                if (busqueda == null)
+                {
+                    return NotFound($"No se encontró el usuario con ID {id}.");
+                }
+
+                if (busqueda.IdEstado == 0)
+                {
+                    estadoCambio = 1;
+                }
+                
+
+                // 2. Llamada al flujo/DA
+                // Nota: Asumimos que tu DA devuelve el número de filas afectadas
+                var filasAfectadas = await _usuarioFlujo.ActualizarEstadoDeUsuario(id,estadoCambio);
+
+                if (filasAfectadas > 0)
+                {
+                    return Ok(new { message = "Usuario actualizado exitosamente." });
+                }
+                else
+                {
+                    return NotFound($"Sucedio un error inesperado");
+                }
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, $"Error interno al intentar actualizar el usuario: {ex.Message}");
+            }
+        }
+
     }
 }

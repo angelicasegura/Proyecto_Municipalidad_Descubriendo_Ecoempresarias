@@ -48,7 +48,7 @@ namespace DA
         public async Task<UsuarioResponse> ObtenerUsuario(int Id)
         {
             string query = @"ObtenerUsuarioPorId";
-            var resultQuery = await _sqlConnection.QueryAsync<UsuarioResponse>(query, new { Id });
+            var resultQuery = await _sqlConnection.QueryAsync<UsuarioResponse>(query, new { Usuario_id = Id });
 
             return resultQuery.FirstOrDefault();
         }
@@ -128,6 +128,31 @@ namespace DA
                 throw new Exception("Algo salio mal con la actualizacion"); 
                     }
             
+        }
+
+        public async Task<int> ActualizarEstadoDeUsuario(int Id,int estado)
+        {
+            try
+            {
+
+                string query = @"sp_ActualizarEstadoUsuario";
+                var resultadoQuery = await _sqlConnection.ExecuteScalarAsync<int>(query, new
+                {
+                    Usuario_id = Id,
+                    Estado_id = estado
+                });
+
+                if (resultadoQuery != null)
+                {
+                    return 1;
+                }
+                return 0;
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Algo salio mal con la actualizacion");
+            }
         }
     }
 }

@@ -61,5 +61,10 @@ namespace Flujo
         {
             return await _usuarioDA.EditarAdmin(Id, usuario);
         }
+
+        public async Task<int> ActualizarEstadoDeUsuario(int Id, int estado)
+        {
+            return await _usuarioDA.ActualizarEstadoDeUsuario(Id, estado);
+        }
     }
 }

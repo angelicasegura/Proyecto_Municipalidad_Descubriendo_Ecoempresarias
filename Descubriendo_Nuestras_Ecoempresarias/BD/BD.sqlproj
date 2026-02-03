@@ -84,5 +84,6 @@
     <Build Include="dbo\Stored Procedures\ObtenerRolPorId.sql" />
     <Build Include="dbo\Stored Procedures\sp_GetUsuariosPaginados.sql" />
     <Build Include="dbo\Stored Procedures\sp_EditarUsuarioPorAdmin.sql" />
+    <Build Include="dbo\Stored Procedures\sp_ActualizarEstadoUsuario.sql" />
   </ItemGroup>
 </Project>
