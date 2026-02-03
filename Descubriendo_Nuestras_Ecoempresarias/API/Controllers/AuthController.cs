@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace API.Controllers
 {
@@ -17,16 +19,19 @@ namespace API.Controllers
         private ILogger<IUsuarioController> _logger;
         private IRolesFlujo _rolesFlujo;
         private TokenProvider _tokenProvider;
-        public AuthController(IUsuarioFlujo usuarioFlujo, ILogger<IUsuarioController> logger, IRolesFlujo rolesFlujo)
+        public AuthController(IUsuarioFlujo usuarioFlujo, ILogger<IUsuarioController> logger, IRolesFlujo rolesFlujo, TokenProvider tokenProvider)
         {
             _usuarioFlujo = usuarioFlujo;
             _logger = logger;
             _rolesFlujo = rolesFlujo;
+            _tokenProvider = tokenProvider;
         }
 
-        [HttpGet("/login")]
+        [HttpPost("/login")]
         public async Task<IActionResult> IniciarSesion(Abstracciones.Modelos.Autenticacion.LoginRequest loginRequest)
         {
+            
+            loginRequest.Contrasena = HashGenerator.HashHelper.GenerarHashSHA256(loginRequest.Contrasena);
             var resultado = await _usuarioFlujo.InicioSesionUsuario(loginRequest.Email,loginRequest.Contrasena);
             if (resultado == null)
                 return Unauthorized("Credenciales inválidas");
@@ -38,7 +43,7 @@ namespace API.Controllers
             {
                 IdUsuario = resultado.IdUsuario,
                 Nombre = resultado.Nombre,
-                Rol = rol.ToString()
+                Rol = rol.Nombre
             };
             var token = _tokenProvider.CreateToken(usuario);
 
@@ -46,7 +51,7 @@ namespace API.Controllers
             {
                 IdUsuario = resultado.IdUsuario,
                 Nombre = resultado.Nombre,
-                Rol = rol.ToString(),
+                Rol = rol.Nombre,
                 Token = token
             };
             return Ok(respuesta);
@@ -70,5 +75,7 @@ namespace API.Controllers
                 rol = User.FindFirst("rol")!.Value
             });
         }
+
+        
     }
 }

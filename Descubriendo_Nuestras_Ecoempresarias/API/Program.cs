@@ -1,13 +1,14 @@
 
 using Abstracciones.Interfaces.DA;
 using Abstracciones.Interfaces.Flujo;
-using DA.Repositorios;
+using API.Seguridad;
 using DA;
+using DA.Repositorios;
 using Flujo;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using System.Text;
-using System.Security.Cryptography;
 using Microsoft.IdentityModel.Tokens;
+using System.Security.Cryptography;
+using System.Text;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -61,9 +62,13 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
+builder.Services.AddSingleton<TokenProvider>();
 builder.Services.AddScoped<IUsuarioFlujo, UsuarioFlujo>();
 builder.Services.AddScoped<IUsuarioDA, UsuarioDA>();
+builder.Services.AddScoped<IRolesFlujo, RolesFlujo>();
+builder.Services.AddScoped<IRolesDA, RolesDA>();
 builder.Services.AddScoped<IRepositorioDapper, RepositorioDapper>();
+
 
 var app = builder.Build();
 

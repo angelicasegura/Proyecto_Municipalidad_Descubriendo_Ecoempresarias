@@ -25,7 +25,7 @@ namespace DA
         {
             string query = @"ObtenerRolPorId";
 
-            var resultQuery = await _sqlConnection.QueryAsync<Roles>(query, new { rolId });
+            var resultQuery = await _sqlConnection.QueryAsync<Roles>(query, new { Rol_id = rolId });
 
             return resultQuery.FirstOrDefault();
 
