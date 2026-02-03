@@ -81,5 +81,6 @@
     <Build Include="dbo\Stored Procedures\EliminarUsuario.sql" />
     <Build Include="dbo\Stored Procedures\EditarUsuario.sql" />
     <Build Include="dbo\Stored Procedures\AgregarUsuario.sql" />
+    <Build Include="dbo\Stored Procedures\ObtenerRolPorId.sql" />
   </ItemGroup>
 </Project>

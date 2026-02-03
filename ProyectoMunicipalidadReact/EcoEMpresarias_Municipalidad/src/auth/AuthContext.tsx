@@ -15,6 +15,7 @@ interface AuthContextType {
   loading: boolean
 }
 
+const API_URL = import.meta.env.VITE_API_URL
 
 /*  Context  */
 
@@ -37,7 +38,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       return
     }
 
-    fetch("http://localhost:5000/auth/me", {
+    fetch(`${API_URL}/auth/me`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
