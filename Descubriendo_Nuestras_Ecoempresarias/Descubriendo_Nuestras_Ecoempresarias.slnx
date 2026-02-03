@@ -1,1 +1,10 @@
-<Solution />
+<Solution>
+  <Project Path="Abstracciones/Abstracciones.csproj" Id="304b6afa-a511-44e1-b5a7-e8cae2ca1df2" />
+  <Project Path="API/API.csproj" Id="f6b51430-b726-40f8-a156-7e55244c89fc" />
+  <Project Path="BD/BD.sqlproj" Id="c5f3bed1-39d2-4615-a388-061d40accae0">
+    <Build />
+    <Deploy />
+  </Project>
+  <Project Path="DA/DA.csproj" Id="c16a9199-ea6c-4751-b858-a155a316d797" />
+  <Project Path="Flujo/Flujo.csproj" Id="d392a811-a68d-40d5-bdc7-6d5301f9d034" />
+</Solution>

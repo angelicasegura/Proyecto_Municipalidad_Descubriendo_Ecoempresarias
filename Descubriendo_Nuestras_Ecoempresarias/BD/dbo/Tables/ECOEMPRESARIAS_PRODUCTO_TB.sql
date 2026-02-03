@@ -1,0 +1,14 @@
+﻿CREATE TABLE [dbo].[ECOEMPRESARIAS_PRODUCTO_TB] (
+    [Producto_id]    INT             NOT NULL,
+    [NombreProducto] VARCHAR (200)   NOT NULL,
+    [Descripcion]    VARCHAR (500)   NOT NULL,
+    [Ruta_Imagen]    VARCHAR (300)   NOT NULL,
+    [Precio]         DECIMAL (10, 2) NOT NULL,
+    [Categoria_id]   INT             NOT NULL,
+    [Estado_id]      INT             NOT NULL,
+    CONSTRAINT [ECO_PRODUCTO_PK] PRIMARY KEY CLUSTERED ([Producto_id] ASC),
+    CONSTRAINT [ECO_PRODUCTO_PRECIO_CHK] CHECK ([Precio]>=(0)),
+    CONSTRAINT [ECO_PRODUCTO_CATEGORIA_FK] FOREIGN KEY ([Categoria_id]) REFERENCES [dbo].[ECOEMPRESARIAS_CATEGORIA_TB] ([Categoria_id]),
+    CONSTRAINT [ECO_PRODUCTO_ESTADO_FK] FOREIGN KEY ([Estado_id]) REFERENCES [dbo].[ECOEMPRESARIAS_ESTADOS_TB] ([Estado_id])
+);
+

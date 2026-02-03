@@ -1,0 +1,12 @@
+﻿CREATE PROCEDURE EliminarUsuario
+    @Usuario_id INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+	BEGIN TRANSACTION
+    DELETE FROM ECOEMPRESARIAS_USUARIOS_TB
+    WHERE Usuario_id = @Usuario_id;
+	Select @Usuario_id
+
+COMMIT TRANSACTION
+END;

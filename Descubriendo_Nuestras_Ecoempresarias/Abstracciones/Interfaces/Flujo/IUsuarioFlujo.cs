@@ -1,0 +1,23 @@
+﻿using Abstracciones.Modelos;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Abstracciones.Interfaces.Flujo
+{
+    public interface IUsuarioFlujo
+    {
+
+        Task<IEnumerable<UsuarioResponse>> Obtener();
+        Task<UsuarioResponse> ObtenerUsuario(int Id);
+        Task<int> Agregar(UsuarioRequest usuario);
+        Task<int> Editar(int Id, UsuarioRequest usuario);
+        Task<int> Eliminar(int Id);
+        Task<UsuarioResponse> InicioSesionUsuario(string email, string contrasena);
+
+
+
+    }
+}
