@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Abstracciones.Modelos;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,6 @@ namespace Abstracciones.Interfaces.API
         Task<IActionResult> RegistrarUsuario();
         Task<IActionResult> IniciarSesion(Modelos.Autenticacion.LoginRequest loginRequest);
 
-
+        Task<IActionResult> OlvidoContrasena(ForgotPassword forgotPassword);
     }
 }

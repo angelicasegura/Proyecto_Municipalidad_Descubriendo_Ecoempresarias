@@ -1,5 +1,6 @@
 ﻿using Abstracciones.Interfaces.API;
 using Abstracciones.Interfaces.Flujo;
+using Abstracciones.Interfaces.Servicios;
 using Abstracciones.Modelos;
 using API.Seguridad;
 using Microsoft.AspNetCore.Authorization;
@@ -18,13 +19,15 @@ namespace API.Controllers
         private IUsuarioFlujo _usuarioFlujo;
         private ILogger<IUsuarioController> _logger;
         private IRolesFlujo _rolesFlujo;
+        private IEmailService _emailService;
         private TokenProvider _tokenProvider;
-        public AuthController(IUsuarioFlujo usuarioFlujo, ILogger<IUsuarioController> logger, IRolesFlujo rolesFlujo, TokenProvider tokenProvider)
+        public AuthController(IUsuarioFlujo usuarioFlujo, ILogger<IUsuarioController> logger, IRolesFlujo rolesFlujo, TokenProvider tokenProvider, IEmailService emailService)
         {
             _usuarioFlujo = usuarioFlujo;
             _logger = logger;
             _rolesFlujo = rolesFlujo;
             _tokenProvider = tokenProvider;
+            _emailService = emailService;
         }
 
         [HttpPost("/login")]
@@ -76,6 +79,42 @@ namespace API.Controllers
             });
         }
 
-        
+        [HttpPost("olvido-contrasena")]
+        public async Task<IActionResult> OlvidoContrasena([FromBody] ForgotPassword forgotPassword)
+        {
+            var user = await _usuarioFlujo.BuscarUsuarioPorEmail(forgotPassword.Email);
+
+            if (user == null)
+            {
+                
+                return Ok(new { message = "Si el correo es correcto, recibirás un email" });
+            }
+
+            // Generar contraseña temporal
+            string tempPassword = GenerateTemporaryPassword();
+
+            user.Contrasena = tempPassword;
+            await _usuarioFlujo.Editar(user.IdUsuario, user);
+
+            // Enviar email
+            string emailBody = $@"
+            <h2>Recuperación de Contraseña</h2>
+            <p>Tu contraseña temporal es: <strong>{tempPassword}</strong></p>
+            <p>Por favor, cámbiala después de iniciar sesión.</p>
+        ";
+
+            await _emailService.SendEmailAsync(user.Email, "Recuperación de Contraseña", emailBody);
+
+            return Ok(new { message = "Si el correo existe, recibirás un email" });
+        }
+
+
+        private string GenerateTemporaryPassword()
+        {
+            const string chars = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789";
+            var random = new Random();
+            return new string(Enumerable.Repeat(chars, 8)
+                .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
     }
 }

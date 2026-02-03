@@ -16,8 +16,7 @@ namespace Abstracciones.Interfaces.Flujo
         Task<int> Editar(int Id, UsuarioRequest usuario);
         Task<int> Eliminar(int Id);
         Task<UsuarioResponse> InicioSesionUsuario(string email, string contrasena);
-
-
+        Task<UsuarioRequest> BuscarUsuarioPorEmail(string email);
 
     }
 }
