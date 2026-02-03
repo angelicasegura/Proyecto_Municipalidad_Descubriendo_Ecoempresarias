@@ -15,7 +15,7 @@ interface AuthContextType {
   loading: boolean
 }
 
-const API_URL = import.meta.env.VITE_API_URL
+
 
 /*  Context  */
 
@@ -38,7 +38,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       return
     }
 
-    fetch(`${API_URL}/auth/me`, {
+    fetch(`https://localhost:7050/auth/me`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -60,7 +60,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const login = async (token: string) => {
   localStorage.setItem("token", token)
 
-  const res = await fetch("http://localhost:5000/auth/me", {
+  const res = await fetch("http://localhost:7050/auth/me", {
     headers: { Authorization: `Bearer ${token}` },
   })
 

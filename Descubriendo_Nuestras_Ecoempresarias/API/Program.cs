@@ -18,6 +18,17 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowViteApp",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:5173") // La URL de tu frontend
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        });
+});
+
 //Auth
 builder.Services.AddAuthentication(options =>
 {
@@ -78,6 +89,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors("AllowViteApp");
 
 app.UseHttpsRedirection();
 app.UseAuthentication();
