@@ -1,0 +1,18 @@
+﻿CREATE TABLE [dbo].[ECOEMPRESARIAS_EMPRENDIMIENTOS_TB] (
+    [Emprendimiento_id] INT           NOT NULL,
+    [Cedula_Juridica]   VARCHAR (12)  NOT NULL,
+    [Telefono]          VARCHAR (15)  NOT NULL,
+    [Email]             VARCHAR (200) NOT NULL,
+    [Estado_id]         INT           NOT NULL,
+    [Nombre]            VARCHAR (200) NOT NULL,
+    [Direccion]         VARCHAR (500) NULL,
+    [TipoActividad_id]  INT           NOT NULL,
+    [Usuario_id]        INT           NOT NULL,
+    CONSTRAINT [ECO_EMPRENDIMIENTO_PK] PRIMARY KEY CLUSTERED ([Emprendimiento_id] ASC),
+    CONSTRAINT [ECO_EMPRENDIMIENTO_ESTADO_FK] FOREIGN KEY ([Estado_id]) REFERENCES [dbo].[ECOEMPRESARIAS_ESTADOS_TB] ([Estado_id]),
+    CONSTRAINT [ECO_EMPRENDIMIENTO_TIPO_ACTIVIDAD_FK] FOREIGN KEY ([TipoActividad_id]) REFERENCES [dbo].[ECOEMPRESARIAS_TIPO_ACTIVIDAD_TB] ([TipoActividad_id]),
+    CONSTRAINT [FK_EMPRENDIMIENTO_USUARIO_DIRECTO] FOREIGN KEY ([Usuario_id]) REFERENCES [dbo].[ECOEMPRESARIAS_USUARIOS_TB] ([Usuario_id]),
+    CONSTRAINT [ECO_CEDULA_EMPRENDIMIENTO_UNQ] UNIQUE NONCLUSTERED ([Cedula_Juridica] ASC),
+    CONSTRAINT [ECO_EMAIL_EMPRENDIMIENTO_UNQ] UNIQUE NONCLUSTERED ([Email] ASC)
+);
+

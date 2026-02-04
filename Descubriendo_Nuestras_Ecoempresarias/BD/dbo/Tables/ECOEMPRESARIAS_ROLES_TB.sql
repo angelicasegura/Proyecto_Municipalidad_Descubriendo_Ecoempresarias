@@ -1,0 +1,8 @@
+﻿CREATE TABLE [dbo].[ECOEMPRESARIAS_ROLES_TB] (
+    [Rol_id]    INT           NOT NULL,
+    [Nombre]    VARCHAR (200) NOT NULL,
+    [Estado_id] INT           NOT NULL,
+    CONSTRAINT [ECO_ROLES_PK] PRIMARY KEY CLUSTERED ([Rol_id] ASC),
+    CONSTRAINT [ECO_ROLES_ESTADO_FK] FOREIGN KEY ([Estado_id]) REFERENCES [dbo].[ECOEMPRESARIAS_ESTADOS_TB] ([Estado_id])
+);
+
