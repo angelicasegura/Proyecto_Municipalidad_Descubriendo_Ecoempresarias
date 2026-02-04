@@ -8,6 +8,7 @@ import { PageLoader } from "./components/ui/layout/pageLoader";
 import AdminUsuarios from "./pages/Admin/Usuarios/adminUsuarios";
 import AdminEmprendedores from "./pages/Admin/Emprendimientos/adminEmprendedores";
 import LoginPage from "./pages/auth/login/loginPage";
+import RegisterPage from "./pages/auth/register/registerPage";
 
 function App() {
   const { loading } = useAuth();
@@ -24,14 +25,18 @@ function App() {
         la api, esto es solo lo visual */}
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<LoginPage />} />
+
+          {/* HU-28: Ruta de registro */}
+          <Route path="/registro" element={<RegisterPage />} />
+
           <Route element={<ProtectedRoute allowedRoles={["ADMIN"]} />}>
-          <Route path="/usuarios" element={<AdminUsuarios />} />
-        </Route>
+            <Route path="/usuarios" element={<AdminUsuarios />} />
+          </Route>
+
           <Route
             path="/emprendimientos-admin"
             element={<AdminEmprendedores />}
           />
-          
         </Routes>
       </main>
       <Footer />
