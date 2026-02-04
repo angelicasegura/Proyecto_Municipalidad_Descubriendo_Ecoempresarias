@@ -1,6 +1,9 @@
 ﻿using Abstracciones.Interfaces.DA;
 using Abstracciones.Interfaces.Flujo;
 using Abstracciones.Modelos;
+using Abstracciones.Modelos.Pagination;
+using Microsoft.Data.SqlClient;
+using System.Data;
 
 
 namespace Flujo
@@ -16,9 +19,9 @@ namespace Flujo
         }
 
 
-        public Task<int> Agregar(UsuarioRequest usuario)
+        public async Task<int> Agregar(UsuarioRequest usuario)
         {
-            throw new NotImplementedException();
+            return await _usuarioDA.Agregar(usuario);
         }
 
         public Task<int> Editar(int Id, UsuarioRequest usuario)
@@ -46,9 +49,28 @@ namespace Flujo
             return _usuarioDA.InicioSesionUsuario(email, contrasena);
         }
 
+
         public Task<UsuarioRequest> BuscarUsuarioPorEmail(string email)
         {
             return _usuarioDA.BuscarUsuarioPorEmail(email);
+        }
+
+        public async Task<PagedResult<UsuarioResponse>> GetUsuariosPaginadosAsync(int page, int limit, string search, int? roleId)
+        {
+
+
+            return await _usuarioDA.GetUsuariosPaginadosAsync(page, limit, search, roleId);
+
+        }
+
+        public async Task<int> EditarAdmin(int Id, UsuarioResponse usuario)
+        {
+            return await _usuarioDA.EditarAdmin(Id, usuario);
+        }
+
+        public async Task<int> ActualizarEstadoDeUsuario(int Id, int estado)
+        {
+            return await _usuarioDA.ActualizarEstadoDeUsuario(Id, estado);
         }
     }
 }

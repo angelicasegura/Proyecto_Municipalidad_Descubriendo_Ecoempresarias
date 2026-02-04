@@ -41,7 +41,6 @@ namespace API.Controllers
             if (resultado.IdEstado != 1)
                 return Unauthorized("Usuario inactivo");
             var rol = await _rolesFlujo.ObtenerRolPorId(resultado.IdRol);
-            //AQUI VA A IR LA LOGICA DE LOS PERMISOS Y ESO DE MOMENTO ESTA ASI 
             UsuarioAutenticado usuario = new UsuarioAutenticado
             {
                 IdUsuario = resultado.IdUsuario,

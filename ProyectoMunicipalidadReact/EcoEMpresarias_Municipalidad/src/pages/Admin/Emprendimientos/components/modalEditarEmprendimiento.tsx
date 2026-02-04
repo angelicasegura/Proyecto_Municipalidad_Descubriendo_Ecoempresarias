@@ -19,16 +19,23 @@ import {
   SelectValue,
 } from "../../../../components/ui/select"
 import { Pencil, Save, AlertTriangle } from "lucide-react"
-import { type Emprendedor, TIPOS_ACTIVIDAD } from "../../../../types/emprendedoresType"
+import { type Emprendedor, type TipoActividad } from "../../../../types/emprendedoresType"
 
 interface EditEmprendedorDialogProps {
   open: boolean
   onOpenChange: (open: boolean) => void
   emprendedor: Emprendedor | null
+  tiposActividad: TipoActividad[]
   onSubmit: (emprendedor: Emprendedor) => void
 }
 
-export function EditarEmprendedor({ open, onOpenChange, emprendedor, onSubmit }: EditEmprendedorDialogProps) {
+export function EditarEmprendedor({ 
+  open, 
+  onOpenChange, 
+  emprendedor, 
+  tiposActividad, 
+  onSubmit 
+}: EditEmprendedorDialogProps) {
   const [formData, setFormData] = useState({
     nombre: "",
     cedula_juridica: "",
@@ -39,17 +46,17 @@ export function EditarEmprendedor({ open, onOpenChange, emprendedor, onSubmit }:
   })
   const [errors, setErrors] = useState<Record<string, boolean>>({})
 
-  const isInactive = emprendedor?.estado_id === 2
+  const isInactive = emprendedor?.estadoId === 2
 
   useEffect(() => {
     if (emprendedor) {
       setFormData({
         nombre: emprendedor.nombre,
-        cedula_juridica: emprendedor.cedula_juridica,
+        cedula_juridica: emprendedor.cedulaJuridica,
         telefono: emprendedor.telefono,
-        correo: emprendedor.correo,
+        correo: emprendedor.email,
         direccion: emprendedor.direccion,
-        tipo_actividad_id: String(emprendedor.tipo_actividad_id),
+        tipo_actividad_id: String(emprendedor.tipoActividadId),
       })
     }
   }, [emprendedor])
@@ -59,7 +66,6 @@ export function EditarEmprendedor({ open, onOpenChange, emprendedor, onSubmit }:
     if (!emprendedor || isInactive) return
 
     const newErrors: Record<string, boolean> = {}
-
     if (!formData.nombre) newErrors.nombre = true
     if (!formData.cedula_juridica) newErrors.cedula_juridica = true
     if (!formData.telefono) newErrors.telefono = true
@@ -73,46 +79,44 @@ export function EditarEmprendedor({ open, onOpenChange, emprendedor, onSubmit }:
       onSubmit({
         ...emprendedor,
         nombre: formData.nombre,
-        cedula_juridica: formData.cedula_juridica,
+        cedulaJuridica: formData.cedula_juridica,
         telefono: formData.telefono,
-        correo: formData.correo,
+        email: formData.correo,
         direccion: formData.direccion,
-        tipo_actividad_id: Number(formData.tipo_actividad_id),
+        tipoActividadId: Number(formData.tipo_actividad_id),
       })
       setErrors({})
     }
   }
 
   const handleClose = (isOpen: boolean) => {
-    if (!isOpen) {
-      setErrors({})
-    }
+    if (!isOpen) setErrors({})
     onOpenChange(isOpen)
   }
 
   return (
     <Dialog open={open} onOpenChange={handleClose}>
       <DialogContent className="sm:max-w-[600px]">
-        <DialogHeader className="bg-primary -m-6 mb-0 p-6 rounded-t-lg">
-          <DialogTitle className="flex items-center gap-2 text-primary-foreground">
+        <DialogHeader className="bg-[#056F94] -m-6 mb-0 p-6 rounded-t-lg">
+          <DialogTitle className="flex items-center gap-2 text-white">
             <Pencil className="h-5 w-5" />
             Editar Emprendedor
           </DialogTitle>
         </DialogHeader>
+
         <form onSubmit={handleSubmit} className="space-y-4 pt-4">
           {isInactive && (
             <Alert variant="destructive" className="bg-yellow-50 border-yellow-200 text-yellow-800">
               <AlertTriangle className="h-4 w-4" />
               <AlertDescription>
-                No se puede editar un emprendedor inactivo
+                No se puede editar un emprendedor inactivo. Actívelo primero para realizar cambios.
               </AlertDescription>
             </Alert>
           )}
 
+          
           <div className="space-y-2">
-            <Label htmlFor="nombre-edit">
-              Nombre <span className="text-destructive">*</span>
-            </Label>
+            <Label htmlFor="nombre-edit">Nombre <span className="text-destructive">*</span></Label>
             <Input
               id="nombre-edit"
               value={formData.nombre}
@@ -120,16 +124,13 @@ export function EditarEmprendedor({ open, onOpenChange, emprendedor, onSubmit }:
               className={errors.nombre ? "border-destructive" : ""}
               disabled={isInactive}
             />
-            {errors.nombre && (
-              <p className="text-sm text-destructive">El nombre es obligatorio</p>
-            )}
+            {errors.nombre && <p className="text-sm text-destructive">El nombre es obligatorio</p>}
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            
             <div className="space-y-2">
-              <Label htmlFor="cedula_juridica-edit">
-                Cédula Jurídica <span className="text-destructive">*</span>
-              </Label>
+              <Label htmlFor="cedula_juridica-edit">Cédula Jurídica <span className="text-destructive">*</span></Label>
               <Input
                 id="cedula_juridica-edit"
                 value={formData.cedula_juridica}
@@ -137,15 +138,12 @@ export function EditarEmprendedor({ open, onOpenChange, emprendedor, onSubmit }:
                 className={errors.cedula_juridica ? "border-destructive" : ""}
                 disabled={isInactive}
               />
-              {errors.cedula_juridica && (
-                <p className="text-sm text-destructive">Cédula jurídica inválida</p>
-              )}
+              {errors.cedula_juridica && <p className="text-sm text-destructive">La cédula es obligatoria</p>}
             </div>
 
+           
             <div className="space-y-2">
-              <Label htmlFor="telefono-edit">
-                Teléfono <span className="text-destructive">*</span>
-              </Label>
+              <Label htmlFor="telefono-edit">Teléfono <span className="text-destructive">*</span></Label>
               <Input
                 id="telefono-edit"
                 type="tel"
@@ -154,16 +152,13 @@ export function EditarEmprendedor({ open, onOpenChange, emprendedor, onSubmit }:
                 className={errors.telefono ? "border-destructive" : ""}
                 disabled={isInactive}
               />
-              {errors.telefono && (
-                <p className="text-sm text-destructive">El teléfono es obligatorio</p>
-              )}
+              {errors.telefono && <p className="text-sm text-destructive">El teléfono es obligatorio</p>}
             </div>
           </div>
 
+          
           <div className="space-y-2">
-            <Label htmlFor="correo-edit">
-              Correo Electrónico <span className="text-destructive">*</span>
-            </Label>
+            <Label htmlFor="correo-edit">Correo Electrónico <span className="text-destructive">*</span></Label>
             <Input
               id="correo-edit"
               type="email"
@@ -172,15 +167,12 @@ export function EditarEmprendedor({ open, onOpenChange, emprendedor, onSubmit }:
               className={errors.correo ? "border-destructive" : ""}
               disabled={isInactive}
             />
-            {errors.correo && (
-              <p className="text-sm text-destructive">Correo inválido</p>
-            )}
+            {errors.correo && <p className="text-sm text-destructive">Correo inválido o vacío</p>}
           </div>
 
+          
           <div className="space-y-2">
-            <Label htmlFor="direccion-edit">
-              Dirección <span className="text-destructive">*</span>
-            </Label>
+            <Label htmlFor="direccion-edit">Dirección <span className="text-destructive">*</span></Label>
             <Input
               id="direccion-edit"
               value={formData.direccion}
@@ -188,15 +180,12 @@ export function EditarEmprendedor({ open, onOpenChange, emprendedor, onSubmit }:
               className={errors.direccion ? "border-destructive" : ""}
               disabled={isInactive}
             />
-            {errors.direccion && (
-              <p className="text-sm text-destructive">La dirección es obligatoria</p>
-            )}
+            {errors.direccion && <p className="text-sm text-destructive">La dirección es obligatoria</p>}
           </div>
 
+          
           <div className="space-y-2">
-            <Label htmlFor="tipo_actividad_id-edit">
-              Tipo de Actividad <span className="text-destructive">*</span>
-            </Label>
+            <Label htmlFor="tipo_actividad_id-edit">Tipo de Actividad <span className="text-destructive">*</span></Label>
             <Select
               value={formData.tipo_actividad_id}
               onValueChange={(value) => setFormData({ ...formData, tipo_actividad_id: value })}
@@ -206,23 +195,30 @@ export function EditarEmprendedor({ open, onOpenChange, emprendedor, onSubmit }:
                 <SelectValue placeholder="Selecciona un tipo" />
               </SelectTrigger>
               <SelectContent>
-                {TIPOS_ACTIVIDAD.map((tipo) => (
-                  <SelectItem key={tipo.tipo_actividad_id} value={String(tipo.tipo_actividad_id)}>
+                {tiposActividad.map((tipo) => (
+                  <SelectItem key={tipo.tipoActividadId} value={String(tipo.tipoActividadId)}>
                     {tipo.nombre}
                   </SelectItem>
                 ))}
               </SelectContent>
             </Select>
-            {errors.tipo_actividad_id && (
-              <p className="text-sm text-destructive">Selecciona un tipo de actividad</p>
-            )}
+            {errors.tipo_actividad_id && <p className="text-sm text-destructive">Seleccione una actividad</p>}
           </div>
 
           <DialogFooter className="gap-2 pt-4">
-            <Button type="button"  className="bg-[#ff0707] hover:bg-[#790000] text-white cursor-pointer" variant="secondary" onClick={() => handleClose(false)} >
+            <Button 
+              type="button" 
+              variant="secondary" 
+              className="bg-[#ff0707] hover:bg-[#790000] text-white cursor-pointer" 
+              onClick={() => handleClose(false)}
+            >
               Cancelar
             </Button>
-            <Button type="submit" disabled={isInactive} className={isInactive ? "" : "bg-[#54b413] hover:bg-[#3c810e] text-white cursor-pointer"}>
+            <Button 
+              type="submit" 
+              disabled={isInactive} 
+              className={isInactive ? "opacity-50 cursor-not-allowed" : "bg-[#54b413] hover:bg-[#3c810e] text-white cursor-pointer"}
+            >
               <Save className="h-4 w-4 mr-2" />
               Guardar Cambios
             </Button>

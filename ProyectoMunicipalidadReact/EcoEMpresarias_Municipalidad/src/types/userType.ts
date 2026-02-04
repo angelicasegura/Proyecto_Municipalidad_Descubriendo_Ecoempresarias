@@ -1,14 +1,19 @@
 export interface User {
-  usuario_id: number
-  nombre: string
-  apellidos: string
-  telefono: string
-  contrasena?: string
-  email: string
-  ruta_imagen_perfil?: string
-  edad: number
-  estado_id: number // 1 = activo, 2 = inactivo
-  rol_id: number // 1 = administrador, 2 = emprendedor, 3 = usuario
+  // Propiedades de UsuariosBase
+  nombre: string;
+  apellidos: string;
+  telefono: string;
+  ruta_Imagen_Perfil: string; // Nota: Respeta las mayúsculas de C# si no usas camelCase
+  email: string;
+  edad: string; // En tu C# es string, asegúrate de que así venga del SP
+
+  // Propiedades de UsuarioResponse
+  idUsuario: number;
+  idEstado: number;
+  idRol: number;
+
+  // Opcional para procesos de login/registro
+  contrasena?: string; 
 }
 
 export interface Rol {
@@ -32,10 +37,10 @@ export const ESTADOS: Estado[] = [
   { estado_id: 2, nombre: "Inactivo" },
 ]
 
-export const getRolNombre = (rol_id: number): string => {
-  return ROLES.find((r) => r.rol_id === rol_id)?.nombre ?? "Desconocido"
-}
+export const getRolNombre = (idRol: number): string => {
+  return ROLES.find((r) => r.rol_id === idRol)?.nombre ?? "Desconocido";
+};
 
-export const getEstadoNombre = (estado_id: number): string => {
-  return ESTADOS.find((e) => e.estado_id === estado_id)?.nombre ?? "Desconocido"
-}
+export const getEstadoNombre = (idEstado: number): string => {
+  return ESTADOS.find((e) => e.estado_id === idEstado)?.nombre ?? "Desconocido";
+};
