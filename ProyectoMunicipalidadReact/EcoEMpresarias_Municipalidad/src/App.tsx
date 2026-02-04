@@ -10,9 +10,6 @@ import AdminEmprendedores from "./pages/Admin/Emprendimientos/adminEmprendedores
 import LoginPage from "./pages/auth/login/loginPage";
 import RegisterPage from "./pages/auth/register/registerPage";
 
-// Registro (nuevo)
-import RegisterPage from "./pages/auth/register/registerPage";
-
 function App() {
   const { loading } = useAuth();
   if (loading) {
@@ -40,7 +37,6 @@ function App() {
             path="/emprendimientos-admin"
             element={<AdminEmprendedores />}
           />
-          
         </Routes>
       </main>
       <Footer />
