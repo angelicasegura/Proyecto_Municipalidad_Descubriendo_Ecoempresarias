@@ -87,5 +87,6 @@
     <Build Include="dbo\Tables\ECOEMPRESARIAS_TIPO_ACTIVIDAD_TB.sql" />
     <Build Include="dbo\Stored Procedures\sp_GetEmprendimientosPaginados.sql" />
     <Build Include="dbo\Stored Procedures\sp_ObtenerTiposActividad.sql" />
+    <Build Include="dbo\Stored Procedures\sp_CrearEmprendimiento.sql" />
   </ItemGroup>
 </Project>

@@ -22,5 +22,6 @@ namespace Abstracciones.Interfaces.DA
         Task<int> EditarAdmin(int Id, UsuarioResponse usuario);
 
         Task<int> ActualizarEstadoDeUsuario(int Id, int estado);
+
     }
 }

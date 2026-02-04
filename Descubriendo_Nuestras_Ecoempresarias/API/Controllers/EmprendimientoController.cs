@@ -1,4 +1,5 @@
 ﻿using Abstracciones.Interfaces.Flujo;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
@@ -6,6 +7,7 @@ using static Abstracciones.Modelos.Emprendimiento;
 
 namespace API.Controllers
 {
+
     [Route("api/emprendimientos")]
     [ApiController]
     public class EmprendimientoController : ControllerBase
@@ -17,6 +19,7 @@ namespace API.Controllers
         {
             _emprendimientoFlujo = emprendimientoFlujo;
         }
+
 
         [HttpGet("paginados")]
         public async Task<IActionResult> GetEmprendimientosPaginados(
@@ -71,6 +74,24 @@ namespace API.Controllers
         }
 
 
+        [Authorize(Roles = "ADMIN")]
+        [HttpPost("crearAdmin")]
+        public async Task<IActionResult> crearEmprendimientoAdmin([FromBody] EmprendimientoRequest request)
+        {
+            try
+            {
+                //implementar que busque antes de crear, pero se pone despues
+
+                var resultado = await _emprendimientoFlujo.CrearEmprendimientoAsync(request);
+                return Ok(resultado);
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error interno al crear emprendimientos: {ex.Message}");
+            }
+
+        }
 
     }
 }

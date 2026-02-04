@@ -32,33 +32,33 @@ export default function AdminEmprendedores() {
   const [totalPages, setTotalPages] = useState(1);
   const limit = 10;
 
+  const fetchEmprendedores = async () => {
+    const params = new URLSearchParams({
+      page: String(page),
+      limit: String(limit),
+      search: searchTerm || "", 
+      tipoActividadId: tipoFilter === "all" || !tipoFilter ? "" : String(tipoFilter),
+      estadoId: estadoFilter === "all" || !estadoFilter ? "" : String(estadoFilter),
+    });
+
+    const res = await authFetch(
+      `https://localhost:7050/api/emprendimientos/paginados?${params.toString()}`,
+    );
+    const data = await res.json();
+
+    setEmprendedores(data.items || []);
+    setTotalPages(Math.ceil((data.totalCount || 0) / limit));
+  };
+
+
+
+
   useEffect(() => {
     fetchTiposActividad().then((data) => setTiposActividad(data));
   }, []);
 
   // ---------- 2. CARGA DE DATOS PAGINADOS ----------
   useEffect(() => {
-    const fetchEmprendedores = async () => {
-      const params = new URLSearchParams({
-        page: String(page),
-        limit: String(limit),
-        search: searchTerm || "", 
-        tipoActividadId:
-          tipoFilter === "all" || !tipoFilter ? "" : String(tipoFilter),
-        estadoId:
-          estadoFilter === "all" || !estadoFilter ? "" : String(estadoFilter),
-      });
-
-      const res = await authFetch(
-        `https://localhost:7050/api/emprendimientos/paginados?${params.toString()}`,
-      );
-      const data = await res.json();
-
-      setEmprendedores(data.items || []);
-
-      setTotalPages(Math.ceil((data.totalCount || 0) / limit));
-    };
-
     fetchEmprendedores();
   }, [page, searchTerm, tipoFilter, estadoFilter]);
 
@@ -68,6 +68,7 @@ export default function AdminEmprendedores() {
 
   const onCreateEmprendedor = handleCrearEmprendedor({
     setCreateDialogOpen,
+    refreshData: fetchEmprendedores,
   });
 
   const onEditEmprendedor = handleEditarEmprendedor({
