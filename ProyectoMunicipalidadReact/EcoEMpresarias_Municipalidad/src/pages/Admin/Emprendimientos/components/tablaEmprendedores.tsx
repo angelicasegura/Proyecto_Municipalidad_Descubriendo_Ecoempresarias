@@ -11,15 +11,22 @@ import { Badge } from "../../../../components/ui/badge"
 import { Button } from "../../../../components/ui/button"
 import { Alert, AlertDescription } from "../../../../components/ui/alert"
 import { Pencil, Ban, Check, Inbox } from "lucide-react"
-import { type Emprendedor, getTipoActividadNombre } from "../../../../types/emprendedoresType"
+import { type Emprendedor, type TipoActividad, getTipoActividadNombre } from "../../../../types/emprendedoresType"
 
 interface EmprendedoresTableProps {
   emprendedores: Emprendedor[]
+  tiposActividad: TipoActividad[] 
   onEdit: (emprendedor: Emprendedor) => void
   onToggleStatus: (emprendedor: Emprendedor) => void
 }
 
-export function EmprendedoresTable({ emprendedores, onEdit, onToggleStatus }: EmprendedoresTableProps) {
+export function EmprendedoresTable({ 
+  emprendedores, 
+  tiposActividad, 
+  onEdit, 
+  onToggleStatus 
+}: EmprendedoresTableProps) {
+  
   if (emprendedores.length === 0) {
     return (
       <Card className="shadow-sm">
@@ -61,18 +68,23 @@ export function EmprendedoresTable({ emprendedores, onEdit, onToggleStatus }: Em
               {emprendedores.map((emprendedor) => (
                 <TableRow key={emprendedor.emprendedor_id} className="hover:bg-muted/30">
                   <TableCell className="font-medium">{emprendedor.nombre}</TableCell>
-                  <TableCell className="font-mono text-sm">{emprendedor.cedula_juridica}</TableCell>
-                  <TableCell>{getTipoActividadNombre(emprendedor.tipo_actividad_id)}</TableCell>
+                  <TableCell className="font-mono text-sm">{emprendedor.cedulaJuridica}</TableCell>
+                  
+                  
+                  <TableCell>
+                    {getTipoActividadNombre(emprendedor.tipoActividadId, tiposActividad)}
+                  </TableCell>
+
                   <TableCell className="hidden md:table-cell text-muted-foreground">
-                    {emprendedor.correo}
+                    {emprendedor.email}
                   </TableCell>
                   <TableCell className="hidden lg:table-cell">{emprendedor.telefono}</TableCell>
                   <TableCell>
                     <Badge
-                      variant={emprendedor.estado_id === 1 ? "default" : "destructive"}
-                      className={emprendedor.estado_id === 1 ? "bg-green-600 hover:bg-green-700" : ""}
+                      variant={emprendedor.estadoId === 1 ? "default" : "destructive"}
+                      className={emprendedor.estadoId=== 1 ? "bg-green-600 hover:bg-green-700" : ""}
                     >
-                      {emprendedor.estado_id === 1 ? "Activo" : "Inactivo"}
+                      {emprendedor.estadoId === 1 ? "Activo" : "Inactivo"}
                     </Badge>
                   </TableCell>
                   <TableCell className="text-right">
@@ -90,14 +102,14 @@ export function EmprendedoresTable({ emprendedores, onEdit, onToggleStatus }: Em
                         variant="outline"
                         size="icon"
                         className={`h-8 w-8 bg-transparent ${
-                          emprendedor.estado_id === 1
+                          emprendedor.estadoId === 1
                             ? "text-destructive hover:text-destructive"
                             : "text-green-600 hover:text-green-700"
                         }`}
                         onClick={() => onToggleStatus(emprendedor)}
-                        title={emprendedor.estado_id === 1 ? "Desactivar" : "Activar"}
+                        title={emprendedor.estadoId === 1 ? "Desactivar" : "Activar"}
                       >
-                        {emprendedor.estado_id === 1 ? <Ban className="h-4 w-4" /> : <Check className="h-4 w-4" />}
+                        {emprendedor.estadoId === 1 ? <Ban className="h-4 w-4" /> : <Check className="h-4 w-4" />}
                       </Button>
                     </div>
                   </TableCell>

@@ -26,7 +26,7 @@ namespace DA
 
         public async Task<PagedResult<Emprendimiento.EmprendimientoResponse>> GetEmprendimientosPaginadosAsync(int page, int limit, string? search, int? tipoActividadId, int? estadoId)
         {
-            string query = @"GetEmprendimientosPaginados";
+            string query = @"sp_GetEmprendimientosPaginados";
             var parameters = new
             {
                 Page = page,
