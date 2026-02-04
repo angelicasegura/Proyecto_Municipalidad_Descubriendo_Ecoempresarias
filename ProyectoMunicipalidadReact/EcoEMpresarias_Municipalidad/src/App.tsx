@@ -8,6 +8,7 @@ import { PageLoader } from "./components/ui/layout/pageLoader";
 import AdminUsuarios from "./pages/Admin/Usuarios/adminUsuarios";
 import AdminEmprendedores from "./pages/Admin/Emprendimientos/adminEmprendedores";
 import LoginPage from "./pages/auth/login/loginPage";
+import RegisterPage from "./pages/auth/register/registerPage";
 
 // Registro (nuevo)
 import RegisterPage from "./pages/auth/register/registerPage";
