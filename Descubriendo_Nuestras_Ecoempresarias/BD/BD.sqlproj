@@ -70,7 +70,6 @@
     <Build Include="dbo\Tables\ECOEMPRESARIAS_EVENTOS_TB.sql" />
     <Build Include="dbo\Tables\ECOEMPRESARIAS_ESTADOS_TB.sql" />
     <Build Include="dbo\Tables\ECOEMPRESARIAS_EMPRENDIMIENTOS_TB.sql" />
-    <Build Include="dbo\Tables\ECOEMPRESARIAS_EMPRENDEDOR_TB.sql" />
     <Build Include="dbo\Tables\ECOEMPRESARIAS_DETALLE_FACTURAS_TB.sql" />
     <Build Include="dbo\Tables\ECOEMPRESARIAS_COMENTARIOS_TB.sql" />
     <Build Include="dbo\Tables\ECOEMPRESARIAS_CATEGORIA_TB.sql" />
@@ -82,5 +81,10 @@
     <Build Include="dbo\Stored Procedures\EditarUsuario.sql" />
     <Build Include="dbo\Stored Procedures\AgregarUsuario.sql" />
     <Build Include="dbo\Stored Procedures\ObtenerRolPorId.sql" />
+    <Build Include="dbo\Stored Procedures\sp_GetUsuariosPaginados.sql" />
+    <Build Include="dbo\Stored Procedures\sp_EditarUsuarioPorAdmin.sql" />
+    <Build Include="dbo\Stored Procedures\sp_ActualizarEstadoUsuario.sql" />
+    <Build Include="dbo\Tables\ECOEMPRESARIAS_TIPO_ACTIVIDAD_TB.sql" />
+    <Build Include="dbo\Stored Procedures\sp_GetEmprendimientosPaginados.sql" />
   </ItemGroup>
 </Project>

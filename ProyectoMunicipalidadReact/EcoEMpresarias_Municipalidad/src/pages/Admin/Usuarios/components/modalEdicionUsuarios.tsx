@@ -1,5 +1,5 @@
 import type React from "react"
-import { useEffect, useState } from "react"
+import { useState, useEffect } from "react"
 import {
   Dialog,
   DialogContent,
@@ -10,7 +10,6 @@ import {
 import { Button } from "../../../../components/ui/button"
 import { Input } from "../../../../components/ui/input"
 import { Label } from "../../../../components/ui/label"
-import { Alert, AlertDescription } from "../../../../components/ui/alert"
 import {
   Select,
   SelectContent,
@@ -18,44 +17,44 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../../../../components/ui/select"
-import { UserCog, Save, Info } from "lucide-react"
-import { type User, ROLES } from "../../../../types/userType"
+import { Pencil, Save } from "lucide-react"
+import { type User, ROLES, ESTADOS } from "../../../../types/userType"
 
-interface ModalEdicionUsuariosProps {
+interface ModalEdicionUsuarioProps {
   open: boolean
   onOpenChange: (open: boolean) => void
-  user: User | null
   onSubmit: (user: User) => void
+  userToEdit: User | null 
 }
 
-export function ModalEdicionUsuarios({ open, onOpenChange, user, onSubmit }: ModalEdicionUsuariosProps) {
-  const [formData, setFormData] = useState({
+export function ModalEdicionUsuario({ open, onOpenChange, onSubmit, userToEdit }: ModalEdicionUsuarioProps) {
+  const [formData, setFormData] = useState<User>({
+    idUsuario: 0,
     nombre: "",
     apellidos: "",
     email: "",
     telefono: "",
+    contrasena: "",
     edad: "",
-    rol_id: "",
+    idRol: 3,
+    idEstado: 1,
+    ruta_Imagen_Perfil: ""
   })
+
   const [errors, setErrors] = useState<Record<string, boolean>>({})
 
+  
   useEffect(() => {
-    if (user) {
+    if (userToEdit) {
       setFormData({
-        nombre: user.nombre,
-        apellidos: user.apellidos,
-        email: user.email,
-        telefono: user.telefono,
-        edad: String(user.edad),
-        rol_id: String(user.rol_id),
+        ...userToEdit,
+        contrasena: "" 
       })
     }
-  }, [user])
+  }, [userToEdit, open])
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    if (!user) return
-
     const newErrors: Record<string, boolean> = {}
 
     if (!formData.nombre) newErrors.nombre = true
@@ -63,138 +62,96 @@ export function ModalEdicionUsuarios({ open, onOpenChange, user, onSubmit }: Mod
     if (!formData.email) newErrors.email = true
     if (!formData.telefono) newErrors.telefono = true
     if (!formData.edad || Number(formData.edad) <= 0) newErrors.edad = true
-    if (!formData.rol_id) newErrors.rol_id = true
 
     setErrors(newErrors)
 
     if (Object.keys(newErrors).length === 0) {
-      onSubmit({
-        ...user,
-        nombre: formData.nombre,
-        apellidos: formData.apellidos,
-        email: formData.email,
-        telefono: formData.telefono,
-        edad: Number(formData.edad),
-        rol_id: Number(formData.rol_id),
-      })
-      setErrors({})
+      onSubmit(formData)
+      onOpenChange(false)
     }
-  }
-
-  const handleClose = (isOpen: boolean) => {
-    if (!isOpen) {
-      setErrors({})
-    }
-    onOpenChange(isOpen)
   }
 
   return (
-    <Dialog open={open} onOpenChange={handleClose}>
-      <DialogContent className="sm:max-w-150">
-        <DialogHeader className="bg-primary text-primary-foreground -m-6 mb-0 p-6 rounded-t-lg">
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="sm:max-w-[600px]">
+        <DialogHeader className="bg-[#056F94] text-primary-foreground -m-6 mb-0 p-6 rounded-t-lg">
           <DialogTitle className="flex items-center gap-2 text-lg">
-            <UserCog className="h-5 w-5" />
-            Editar Usuario
+            <Pencil className="h-5 w-5" />
+            Editar Usuario: {userToEdit?.nombre}
           </DialogTitle>
         </DialogHeader>
+        
         <form onSubmit={handleSubmit} className="pt-6">
-          <Alert className="mb-4">
-            <Info className="h-4 w-4" />
-            <AlertDescription>
-              Solo los usuarios activos pueden ser editados.
-            </AlertDescription>
-          </Alert>
-
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            
+            {/* Nombre */}
             <div className="space-y-2">
-              <Label htmlFor="nombre-edit">
-                Nombre <span className="text-destructive">*</span>
-              </Label>
+              <Label htmlFor="edit-nombre">Nombre <span className="text-destructive">*</span></Label>
               <Input
-                id="nombre-edit"
+                id="edit-nombre"
                 value={formData.nombre}
                 onChange={(e) => setFormData({ ...formData, nombre: e.target.value })}
                 className={errors.nombre ? "border-destructive" : ""}
               />
-              {errors.nombre && (
-                <p className="text-sm text-destructive">El nombre es requerido.</p>
-              )}
             </div>
 
+            {/* Apellidos */}
             <div className="space-y-2">
-              <Label htmlFor="apellidos-edit">
-                Apellidos <span className="text-destructive">*</span>
-              </Label>
+              <Label htmlFor="edit-apellidos">Apellidos <span className="text-destructive">*</span></Label>
               <Input
-                id="apellidos-edit"
+                id="edit-apellidos"
                 value={formData.apellidos}
                 onChange={(e) => setFormData({ ...formData, apellidos: e.target.value })}
                 className={errors.apellidos ? "border-destructive" : ""}
               />
-              {errors.apellidos && (
-                <p className="text-sm text-destructive">Los apellidos son requeridos.</p>
-              )}
             </div>
 
+            {/* Email */}
             <div className="space-y-2">
-              <Label htmlFor="email-edit">
-                Email <span className="text-destructive">*</span>
-              </Label>
+              <Label htmlFor="edit-email">Email <span className="text-destructive">*</span></Label>
               <Input
-                id="email-edit"
+                id="edit-email"
                 type="email"
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 className={errors.email ? "border-destructive" : ""}
               />
-              {errors.email && (
-                <p className="text-sm text-destructive">Ingresa un email valido.</p>
-              )}
             </div>
 
+            {/* Teléfono */}
             <div className="space-y-2">
-              <Label htmlFor="telefono-edit">
-                Telefono <span className="text-destructive">*</span>
-              </Label>
+              <Label htmlFor="edit-telefono">Teléfono <span className="text-destructive">*</span></Label>
               <Input
-                id="telefono-edit"
-                type="tel"
+                id="edit-telefono"
                 value={formData.telefono}
                 onChange={(e) => setFormData({ ...formData, telefono: e.target.value })}
                 className={errors.telefono ? "border-destructive" : ""}
               />
-              {errors.telefono && (
-                <p className="text-sm text-destructive">El telefono es requerido.</p>
-              )}
             </div>
 
+            
+
+            {/* Edad */}
             <div className="space-y-2">
-              <Label htmlFor="edad-edit">
-                Edad <span className="text-destructive">*</span>
-              </Label>
+              <Label htmlFor="edit-edad">Edad <span className="text-destructive">*</span></Label>
               <Input
-                id="edad-edit"
+                id="edit-edad"
                 type="number"
-                min="1"
                 value={formData.edad}
                 onChange={(e) => setFormData({ ...formData, edad: e.target.value })}
                 className={errors.edad ? "border-destructive" : ""}
               />
-              {errors.edad && (
-                <p className="text-sm text-destructive">La edad debe ser mayor a 0.</p>
-              )}
             </div>
 
+            {/* Rol */}
             <div className="space-y-2">
-              <Label htmlFor="rol_id-edit">
-                Rol <span className="text-destructive">*</span>
-              </Label>
+              <Label htmlFor="edit-rol">Rol <span className="text-destructive">*</span></Label>
               <Select
-                value={formData.rol_id}
-                onValueChange={(value) => setFormData({ ...formData, rol_id: value })}
+                value={String(formData.idRol)}
+                onValueChange={(val) => setFormData({ ...formData, idRol: Number(val) })}
               >
-                <SelectTrigger className={errors.rol_id ? "border-destructive" : ""}>
-                  <SelectValue placeholder="Selecciona un rol" />
+                <SelectTrigger id="edit-rol">
+                  <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
                   {ROLES.map((rol) => (
@@ -204,17 +161,34 @@ export function ModalEdicionUsuarios({ open, onOpenChange, user, onSubmit }: Mod
                   ))}
                 </SelectContent>
               </Select>
-              {errors.rol_id && (
-                <p className="text-sm text-destructive">Debes seleccionar un rol.</p>
-              )}
+            </div>
+
+            {/* Estado (AÑADIDO) */}
+            <div className="space-y-2">
+              <Label htmlFor="edit-estado">Estado <span className="text-destructive">*</span></Label>
+              <Select
+                value={String(formData.idEstado)}
+                onValueChange={(val) => setFormData({ ...formData, idEstado: Number(val) })}
+              >
+                <SelectTrigger id="edit-estado">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {ESTADOS.map((est) => (
+                    <SelectItem key={est.estado_id} value={String(est.estado_id)}>
+                      {est.nombre}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
           </div>
 
           <DialogFooter className="mt-6 border-t pt-4">
-            <Button type="button" className="bg-[#ff0707] hover:bg-[#790000] text-white cursor-pointer" onClick={() => handleClose(false)}>
+            <Button type="button" variant="secondary" className="bg-[#ff0707] hover:bg-[#790000] text-white" onClick={() => onOpenChange(false)}>
               Cancelar
             </Button>
-            <Button type="submit" className="bg-[#54b413] hover:bg-[#3c810e] text-white cursor-pointer">
+            <Button type="submit" className="bg-[#056F94] hover:bg-[#045a78] text-white font-semibold">
               <Save className="h-4 w-4 mr-2" />
               Guardar Cambios
             </Button>

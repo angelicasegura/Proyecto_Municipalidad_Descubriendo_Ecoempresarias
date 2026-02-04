@@ -14,13 +14,15 @@ namespace Abstracciones.Modelos
         
         public string Ruta_Imagen_Perfil { get; set; }
         public string Email { get; set; }
-        public string Edad { get; set;}
+        public int Edad { get; set;}
     }
 
     public class UsuarioRequest: UsuariosBase
     {
         public int IdUsuario { get; set; }
         public string Contrasena { get; set; }
+        public int IdEstado { get; set; }
+        public int IdRol { get; set; }
     }
 
     public class UsuarioResponse: UsuariosBase
@@ -28,6 +30,7 @@ namespace Abstracciones.Modelos
         public int IdUsuario { get; set; }
         public int IdEstado { get; set; }
         public int IdRol { get; set; }
+
 
     }
 
