@@ -1,4 +1,5 @@
 ﻿using Abstracciones.Interfaces.Flujo;
+using API.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -14,10 +15,13 @@ namespace API.Controllers
     {
 
         private readonly IEmprendimientoFlujo _emprendimientoFlujo;
+        private GuardarImagenes _guardarImagen;
 
-        public EmprendimientoController(IEmprendimientoFlujo emprendimientoFlujo)
+        
+        public EmprendimientoController(IEmprendimientoFlujo emprendimientoFlujo, GuardarImagenes guardarImagen)
         {
             _emprendimientoFlujo = emprendimientoFlujo;
+            _guardarImagen = guardarImagen;
         }
 
 
@@ -76,12 +80,22 @@ namespace API.Controllers
 
         [Authorize(Roles = "ADMIN")]
         [HttpPost("crearAdmin")]
-        public async Task<IActionResult> crearEmprendimientoAdmin([FromBody] EmprendimientoRequest request)
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> crearEmprendimientoAdmin([FromForm] EmprendimientoRequest request)
         {
             try
             {
                 //implementar que busque antes de crear, pero se pone despues
-
+                string carpeta = "emprendimientos";
+                if (request.Imagen != null) { 
+                string rutaImagen = await _guardarImagen.GuardarImagen(request.Imagen, carpeta);
+                    if (rutaImagen != null)
+                    {
+                        request.Ruta_Imagen_Logo = rutaImagen;
+                    }
+                }
+                
+                
                 var resultado = await _emprendimientoFlujo.CrearEmprendimientoAsync(request);
                 return Ok(resultado);
 

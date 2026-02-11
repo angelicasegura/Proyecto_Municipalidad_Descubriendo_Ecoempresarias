@@ -7,6 +7,8 @@ export interface Emprendedor {
   telefono: string
   direccion: string
   estadoId: number // 1 = activo, 2 = inactivo
+  rutaImagenLogo?: string
+  descripcion?: string
 }
 
 export interface TipoActividad {

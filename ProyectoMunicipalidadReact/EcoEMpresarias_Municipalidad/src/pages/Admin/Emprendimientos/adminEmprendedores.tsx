@@ -6,7 +6,7 @@ import { handleToggleEstado } from "./Actions/handleConfirmarEstado";
 
 import { EmprendedoresHeader } from "./components/emprendedorHeader";
 import { EmprendedoresTable } from "./components/tablaEmprendedores";
-import { ModalCrearEmprendimiento } from "../Emprendimientos/components/modalCrearEmprendimeinto";
+import { ModalCrearEmprendimiento} from "../Emprendimientos/components/modalCrearEmprendimeinto";
 import { EditarEmprendedor } from "../Emprendimientos/components/modalEditarEmprendimiento";
 import { ConfirmStatusDialog } from "../Emprendimientos/components/modalDeConfirmacionDeEstado";
 import { EmprendedoresFilters } from "../Emprendimientos/components/filtrosEmprendedor";
@@ -132,9 +132,9 @@ export default function AdminEmprendedores() {
       {/* Modals */}
       <ModalCrearEmprendimiento
         open={createDialogOpen}
-        onOpenChange={setCreateDialogOpen}
         onSubmit={onCreateEmprendedor}
         tiposActividad={tiposActividad}
+        onOpenChange={setCreateDialogOpen}
       />
 
       <EditarEmprendedor

@@ -1,52 +1,41 @@
 import { authFetch } from "../../../../auth/AuthFetch";
 
 
+
 interface Props {
   setCreateDialogOpen: (open: boolean) => void;
-  refreshData: () => Promise<void>; // <-- Agregamos esto
+  refreshData: () => Promise<void>;
 }
 
 export function handleCrearEmprendedor({
   setCreateDialogOpen,
   refreshData,
 }: Props) {
-  return async (newEmprendedor: any) => {
+  return async (emprendimientoData: any) => {
     try {
-      const requestBody = {
-        nombre: newEmprendedor.nombre,
-        cedulaJuridica: newEmprendedor.cedulaJuridica,
-        telefono: newEmprendedor.telefono,
-        email: newEmprendedor.email,
-        direccion: newEmprendedor.direccion ,
-        tipoActividadId: Number(newEmprendedor.tipoActividadId),
-
-        usuarioId: Number(newEmprendedor.usuarioId ),
-        estadoId: 1,
-      };
-
+      console.log([...emprendimientoData.entries()]);
       const response = await authFetch(
         "https://localhost:7050/api/emprendimientos/crearAdmin",
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(requestBody),
-        },
-      );
+          body: emprendimientoData,
+        }
+      )
 
-      if (response.ok) {
-        const idGenerado = await response.json();
-        console.log("Emprendedor creado con ID:", idGenerado);
-
-        setCreateDialogOpen(false);
-        await refreshData(); 
-      } else {
-        const errorData = await response.text();
-        console.log("error", errorData);
+      if (!response.ok) {
+        const errorData = await response.json()
+  console.log("ERROR BACKEND:", errorData)
+  throw new Error("Error en la creación")
       }
+
+      console.log("Emprendimiento creado correctamente")
+
+      setCreateDialogOpen(false)
+      await refreshData()
+
     } catch (error) {
-      console.error("Error en la petición:", error);
+      console.error("Error en la creación:", error)
+      alert("No se pudo crear el emprendimiento. Revisa la consola.")
     }
-  };
+  }
 }

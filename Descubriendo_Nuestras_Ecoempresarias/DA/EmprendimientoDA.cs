@@ -26,7 +26,7 @@ namespace DA
 
         public async Task<int> CrearEmprendimientoAsync(Emprendimiento.EmprendimientoRequest emprendimiento)
         {
-            string query = @"sp_CrearEmprendimiento";
+            string query = @"spCrearEmprendimiento";
             var parameters = new
             {
                 Usuario_id = emprendimiento.UsuarioId,
@@ -36,7 +36,9 @@ namespace DA
                 Cedula_Juridica = emprendimiento.CedulaJuridica,
                 Telefono = emprendimiento.Telefono,
                 Email = emprendimiento.Email,
-                Direccion = emprendimiento.Direccion
+                Direccion = emprendimiento.Direccion,
+                Descripcion= emprendimiento.Descripcion,
+                Ruta_Imagen_Logo = emprendimiento.Ruta_Imagen_Logo
             };
 
             try
