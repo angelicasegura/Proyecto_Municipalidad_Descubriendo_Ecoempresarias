@@ -49,7 +49,22 @@ namespace DA
 
         public async Task<int> Editar(int Id, UsuarioRequest usuario)
         {
-            throw new NotImplementedException();
+            //await verificarUsuarioExiste(Id);
+            string query = @"EditarUsuario";
+
+            var resultQuery = await _sqlConnection.ExecuteScalarAsync<int>(query, new
+            {
+                Usuario_id = usuario.IdUsuario,
+                Nombre = usuario.Nombre,
+                Apellidos = usuario.Apellidos,
+                Telefono = usuario.Telefono,
+                Contrasena = usuario.Contrasena,
+                Email = usuario.Email,
+                Ruta_Imagen_Perfil = usuario.Ruta_Imagen_Perfil,
+                Edad = usuario.Edad
+            }); //ExecuteScalarAsync INDICAMOS QUE ESPERAMOS UN VALOR DE RETORNO DEL QUERY
+
+            return resultQuery;
         }
 
         public async Task<int> Eliminar(int Id)
@@ -74,6 +89,14 @@ namespace DA
         {
             string query = @"ObtenerUsuario";
             var resultQuery = await _sqlConnection.QueryAsync<UsuarioResponse>(query, new { email, contrasena });
+
+            return resultQuery.FirstOrDefault();
+        }
+
+        public async Task<UsuarioRequest> BuscarUsuarioPorEmail(string email)
+        {
+            string query = @"ObtenerUsuarioPorEmail";
+            var resultQuery = await _sqlConnection.QueryAsync<UsuarioRequest>(query, new { email });
 
             return resultQuery.FirstOrDefault();
         }
@@ -172,4 +195,4 @@ namespace DA
             }
         }
     }
-}
+

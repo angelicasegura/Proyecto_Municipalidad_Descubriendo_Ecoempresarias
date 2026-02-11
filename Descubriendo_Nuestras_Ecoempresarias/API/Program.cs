@@ -1,10 +1,13 @@
 
 using Abstracciones.Interfaces.DA;
 using Abstracciones.Interfaces.Flujo;
+using Abstracciones.Interfaces.Servicios;
+using Abstracciones.Modelos;
 using API.Seguridad;
 using DA;
 using DA.Repositorios;
 using Flujo;
+using Flujo.EmaiService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Cryptography;
@@ -66,6 +69,10 @@ builder.Services.AddAuthentication(options =>
         };
     });
 
+builder.Services.Configure<EmailSettings>(
+    builder.Configuration.GetSection("EmailSettings"));
+
+builder.Services.AddScoped<IEmailService, EmailService>();
 
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

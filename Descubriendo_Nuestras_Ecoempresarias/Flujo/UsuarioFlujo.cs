@@ -26,7 +26,7 @@ namespace Flujo
 
         public Task<int> Editar(int Id, UsuarioRequest usuario)
         {
-            throw new NotImplementedException();
+            return _usuarioDA.Editar(Id, usuario);
         }
 
         public Task<int> Eliminar(int Id)
@@ -49,6 +49,9 @@ namespace Flujo
             return _usuarioDA.InicioSesionUsuario(email, contrasena);
         }
 
+        public Task<UsuarioRequest> BuscarUsuarioPorEmail(string email)
+        {
+            return _usuarioDA.BuscarUsuarioPorEmail(email);
         public async Task<PagedResult<UsuarioResponse>> GetUsuariosPaginadosAsync(int page, int limit, string search, int? roleId)
         {
 

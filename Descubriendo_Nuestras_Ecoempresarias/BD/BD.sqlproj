@@ -81,6 +81,7 @@
     <Build Include="dbo\Stored Procedures\EditarUsuario.sql" />
     <Build Include="dbo\Stored Procedures\AgregarUsuario.sql" />
     <Build Include="dbo\Stored Procedures\ObtenerRolPorId.sql" />
+    <Build Include="dbo\Stored Procedures\ObtenerUsuarioPorEmail.sql" />
     <Build Include="dbo\Stored Procedures\sp_GetUsuariosPaginados.sql" />
     <Build Include="dbo\Stored Procedures\sp_EditarUsuarioPorAdmin.sql" />
     <Build Include="dbo\Stored Procedures\sp_ActualizarEstadoUsuario.sql" />
