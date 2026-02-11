@@ -1,4 +1,6 @@
 ﻿using Abstracciones.Interfaces.Flujo;
+using API.Helpers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
@@ -6,17 +8,22 @@ using static Abstracciones.Modelos.Emprendimiento;
 
 namespace API.Controllers
 {
+
     [Route("api/emprendimientos")]
     [ApiController]
     public class EmprendimientoController : ControllerBase
     {
 
         private readonly IEmprendimientoFlujo _emprendimientoFlujo;
+        private GuardarImagenes _guardarImagen;
 
-        public EmprendimientoController(IEmprendimientoFlujo emprendimientoFlujo)
+        
+        public EmprendimientoController(IEmprendimientoFlujo emprendimientoFlujo, GuardarImagenes guardarImagen)
         {
             _emprendimientoFlujo = emprendimientoFlujo;
+            _guardarImagen = guardarImagen;
         }
+
 
         [HttpGet("paginados")]
         public async Task<IActionResult> GetEmprendimientosPaginados(
@@ -71,6 +78,34 @@ namespace API.Controllers
         }
 
 
+        [Authorize(Roles = "ADMIN")]
+        [HttpPost("crearAdmin")]
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> crearEmprendimientoAdmin([FromForm] EmprendimientoRequest request)
+        {
+            try
+            {
+                //implementar que busque antes de crear, pero se pone despues
+                string carpeta = "emprendimientos";
+                if (request.Imagen != null) { 
+                string rutaImagen = await _guardarImagen.GuardarImagen(request.Imagen, carpeta);
+                    if (rutaImagen != null)
+                    {
+                        request.Ruta_Imagen_Logo = rutaImagen;
+                    }
+                }
+                
+                
+                var resultado = await _emprendimientoFlujo.CrearEmprendimientoAsync(request);
+                return Ok(resultado);
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error interno al crear emprendimientos: {ex.Message}");
+            }
+
+        }
 
     }
 }

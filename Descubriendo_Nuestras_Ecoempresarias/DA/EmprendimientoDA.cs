@@ -24,6 +24,39 @@ namespace DA
             _sqlConnection = _repositorioDapper.ObtenerRepositorio();
         }
 
+        public async Task<int> CrearEmprendimientoAsync(Emprendimiento.EmprendimientoRequest emprendimiento)
+        {
+            string query = @"spCrearEmprendimiento";
+            var parameters = new
+            {
+                Usuario_id = emprendimiento.UsuarioId,
+                TipoActividad_id = emprendimiento.TipoActividadId,
+                Estado_id = emprendimiento.EstadoId,
+                Nombre = emprendimiento.Nombre,
+                Cedula_Juridica = emprendimiento.CedulaJuridica,
+                Telefono = emprendimiento.Telefono,
+                Email = emprendimiento.Email,
+                Direccion = emprendimiento.Direccion,
+                Descripcion= emprendimiento.Descripcion,
+                Ruta_Imagen_Logo = emprendimiento.Ruta_Imagen_Logo
+            };
+
+            try
+            {
+                return await _sqlConnection.QuerySingleAsync<int>(
+                "spCrearEmprendimiento",
+                parameters,
+                commandType: CommandType.StoredProcedure
+            );
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al insertar el emprendimiento");
+            }
+
+        }
+
         public async Task<PagedResult<Emprendimiento.EmprendimientoResponse>> GetEmprendimientosPaginadosAsync(int page, int limit, string? search, int? tipoActividadId, int? estadoId)
         {
             string query = @"sp_GetEmprendimientosPaginados";

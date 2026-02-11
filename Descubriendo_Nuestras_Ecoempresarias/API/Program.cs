@@ -1,6 +1,7 @@
 
 using Abstracciones.Interfaces.DA;
 using Abstracciones.Interfaces.Flujo;
+using API.Helpers;
 using API.Seguridad;
 using DA;
 using DA.Repositorios;
@@ -74,6 +75,7 @@ builder.Services.AddSwaggerGen();
 
 
 builder.Services.AddSingleton<TokenProvider>();
+builder.Services.AddScoped<GuardarImagenes>();
 builder.Services.AddScoped<IEmprendimientoFlujo, EmprendimientoFlujo>();
 builder.Services.AddScoped<ITiposActividadFlujo, TiposActividadFlujo>();
 builder.Services.AddScoped<ITiposActividadDA, TiposActividadDA>();
