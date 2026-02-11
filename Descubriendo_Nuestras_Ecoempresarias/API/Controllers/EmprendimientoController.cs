@@ -14,6 +14,9 @@ namespace API.Controllers
     public class EmprendimientoController : ControllerBase
     {
 
+        //TODO: Implementar que cuando se actualiza usuario, ya sea se le quita el rol emmprendedor o se inactive, que el emprendimiento relacionado se inactive tambien
+
+
         private readonly IEmprendimientoFlujo _emprendimientoFlujo;
         private GuardarImagenes _guardarImagen;
 
