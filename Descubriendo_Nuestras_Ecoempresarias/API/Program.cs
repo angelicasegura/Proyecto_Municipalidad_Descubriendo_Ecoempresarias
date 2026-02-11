@@ -81,6 +81,10 @@ builder.Services.AddSwaggerGen();
 
 
 builder.Services.AddSingleton<TokenProvider>();
+builder.Services.AddScoped<IEmprendimientoFlujo, EmprendimientoFlujo>();
+builder.Services.AddScoped<ITiposActividadFlujo, TiposActividadFlujo>();
+builder.Services.AddScoped<ITiposActividadDA, TiposActividadDA>();
+builder.Services.AddScoped<IEmprendimientoDA, EmprendimientoDA>();
 builder.Services.AddScoped<IUsuarioFlujo, UsuarioFlujo>();
 builder.Services.AddScoped<IUsuarioDA, UsuarioDA>();
 builder.Services.AddScoped<IRolesFlujo, RolesFlujo>();

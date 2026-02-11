@@ -23,7 +23,7 @@ export function ConfirmStatusDialog({
   emprendedor,
   onConfirm,
 }: ConfirmStatusDialogProps) {
-  const isActivating = emprendedor?.estado_id === 2 // 2 = inactivo
+  const isActivating = emprendedor?.estadoId === 2 // 2 = inactivo
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
