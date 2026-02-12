@@ -89,19 +89,14 @@ builder.Services.AddScoped<IUsuarioDA, UsuarioDA>();
 builder.Services.AddScoped<IRolesFlujo, RolesFlujo>();
 builder.Services.AddScoped<IRolesDA, RolesDA>();
 builder.Services.AddScoped<IRepositorioDapper, RepositorioDapper>();
+builder.Services.AddScoped<IDocumentoDA, DocumentosDA>();
+builder.Services.AddScoped<IDocumentoFlujo, DocumentoFlujo>();
 
 
 
 var app = builder.Build();
 
-//para exponer la carpeta donde se guardan las imagenes que se guardan en el servidor de la pagina
-app.UseStaticFiles();
-app.UseStaticFiles(new StaticFileOptions
-{
-    FileProvider = new PhysicalFileProvider(
-        Path.Combine(builder.Environment.ContentRootPath, "wwwroot", "uploads")),
-    RequestPath = "/uploads"
-});
+
 
 
 

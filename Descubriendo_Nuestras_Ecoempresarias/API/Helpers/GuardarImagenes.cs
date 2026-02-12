@@ -2,7 +2,7 @@
 {
     public class GuardarImagenes
     {
-        public async Task<string> GuardarImagen(IFormFile imagen, string carpeta)
+        public async Task<string> GuardarImagen(String RutaBase,IFormFile imagen, String carpeta)
         {
             var extensionesPermitidas = new[] { ".jpg", ".jpeg", ".png", ".webp" };
             var extension = Path.GetExtension(imagen.FileName).ToLower();
@@ -17,8 +17,7 @@
 
             var rutaCarpeta = Path.Combine(
                 Directory.GetCurrentDirectory(),
-                "wwwroot",
-                "uploads",
+                RutaBase,
                 carpeta
             );
 
@@ -33,7 +32,7 @@
             }
 
             // URL pública
-            return $"/uploads/{carpeta}/{nombreArchivo}";
+            return nombreArchivo;
         }
     }
 }
