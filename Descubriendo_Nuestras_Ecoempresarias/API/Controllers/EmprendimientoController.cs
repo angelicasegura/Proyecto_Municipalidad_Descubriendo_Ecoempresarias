@@ -18,15 +18,17 @@ namespace API.Controllers
 
 
         private readonly IEmprendimientoFlujo _emprendimientoFlujo;
-        private GuardarImagenes _guardarImagen;
+        private readonly GuardarImagenes _guardarImagen;
+        private readonly IConfiguration _configuration;
+        private readonly IDocumentoFlujo _documentoFlujo;
 
-        
-        public EmprendimientoController(IEmprendimientoFlujo emprendimientoFlujo, GuardarImagenes guardarImagen)
+        public EmprendimientoController(IEmprendimientoFlujo emprendimientoFlujo, GuardarImagenes guardarImagen, IConfiguration configuration, IDocumentoFlujo documentoFlujo)
         {
             _emprendimientoFlujo = emprendimientoFlujo;
             _guardarImagen = guardarImagen;
+            _configuration = configuration;
+            _documentoFlujo = documentoFlujo;
         }
-
 
         [HttpGet("paginados")]
         public async Task<IActionResult> GetEmprendimientosPaginados(
@@ -38,7 +40,8 @@ namespace API.Controllers
         {
             try
             {
-                
+                string carpeta = _configuration["Carpetas:Emprendimientos"];
+
                 if (page <= 0) page = 1;
                 if (limit <= 0 || limit > 100) limit = 10;
 
@@ -49,6 +52,8 @@ namespace API.Controllers
                     tipoActividadId,
                     estadoId
                 );
+
+                
 
                 var totalRecord = resultado.TotalCount;
                 var totalPages = (int)Math.Ceiling((double)totalRecord / limit);
@@ -63,7 +68,15 @@ namespace API.Controllers
                         pageSize = limit
                     });
                 }
+                foreach (var item in resultado.Items)
+                {
+          
+                    if (!string.IsNullOrEmpty(item.Ruta_Imagen_Logo))
+                    {
 
+                        item.ImagenData = await _documentoFlujo.EncontrarImagen(item.Ruta_Imagen_Logo, carpeta);
+                    }
+                }
                 return Ok(new
                 {
                     items = resultado.Items,
@@ -75,7 +88,7 @@ namespace API.Controllers
             }
             catch (Exception ex)
             {
-                
+                Console.WriteLine(ex);
                 return StatusCode(500, $"Error interno al obtener emprendimientos: {ex.Message}");
             }
         }
@@ -89,9 +102,10 @@ namespace API.Controllers
             try
             {
                 //implementar que busque antes de crear, pero se pone despues
-                string carpeta = "emprendimientos";
+                string rutaBase = _configuration["LinksDocument:DocumentosLink"];
+                string carpeta = _configuration["Carpetas:Emprendimientos"];
                 if (request.Imagen != null) { 
-                string rutaImagen = await _guardarImagen.GuardarImagen(request.Imagen, carpeta);
+                string rutaImagen = await _guardarImagen.GuardarImagen(rutaBase,request.Imagen, carpeta);
                     if (rutaImagen != null)
                     {
                         request.Ruta_Imagen_Logo = rutaImagen;
@@ -105,6 +119,7 @@ namespace API.Controllers
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex);
                 return StatusCode(500, $"Error interno al crear emprendimientos: {ex.Message}");
             }
 
