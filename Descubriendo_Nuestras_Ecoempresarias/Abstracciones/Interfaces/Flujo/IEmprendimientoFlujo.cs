@@ -20,6 +20,6 @@ namespace Abstracciones.Interfaces.Flujo
 
 
 
-
+        Task<int> CrearEmprendimientoAsync(EmprendimientoRequest emprendimiento);
     }
 }
