@@ -1,3 +1,4 @@
+import { toast } from "react-hot-toast";
 import { authFetch } from "../../../../auth/AuthFetch";
 
 
@@ -12,26 +13,32 @@ export function handleCrearEmprendedor({
   refreshData,
 }: Props) {
   return async (emprendimientoData: any) => {
-    try {
+    
       console.log([...emprendimientoData.entries()]);
-      const response = await authFetch(
+      const response = authFetch(
         "https://localhost:7050/api/emprendimientos/crearAdmin",
         {
           method: "POST",
           body: emprendimientoData,
         }
-      )
+      ).then(async (response) => {
+        if (!response.ok) {
+          const errorText = await response.text();
+          throw new Error(errorText || "Error al cambiar el estado del usuario");
+        }
+        return response;
+      });
 
-      if (!response.ok) {
-        const errorData = await response.json()
-  console.log("ERROR BACKEND:", errorData)
-  throw new Error("Error en la creación")
-      }
-
-      console.log("Emprendimiento creado correctamente")
-
-      setCreateDialogOpen(false)
-      await refreshData()
+    toast.promise(response, {
+      loading: "Creaciond e emprendimiento en proceso...",
+      success: "Emprendimiento creado correctamente 🎉",
+      error: (err) => err.message || "No se pudo crear el emprendimiento",
+    });  
+      
+    try {
+      await response;
+      setCreateDialogOpen(false);
+      await refreshData();
 
     } catch (error) {
       console.error("Error en la creación:", error)

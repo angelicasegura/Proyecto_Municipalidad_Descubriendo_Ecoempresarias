@@ -14,6 +14,10 @@ import RegisterPage from "./pages/auth/register/registerPage";
 import EmprendimientosPage from "./pages/public/ListaEmprendimientos/listaEmprendimientosPublic";
 
 
+
+
+import { Toaster } from "react-hot-toast";
+
 function App() {
   const { loading } = useAuth();
   if (loading) {
@@ -24,6 +28,7 @@ function App() {
     <div className="flex min-h-screen flex-col">
       <Navbar />
       <main className="flex-1">
+        <Toaster position="top-center" reverseOrder={false} />
         <Routes>
           {/* Esta parte es la del router aqui se define el link que se quiere que 
         accione una ruta para cambiar de pagina, esto no es nada del los get o put a 
@@ -40,10 +45,12 @@ function App() {
           <Route path="/emprendimientos" element={<EmprendimientosPage />} />
 
           {/* admin routes */}
+          
           <Route element={<ProtectedRoute allowedRoles={["ADMIN"]} />}>
             <Route path="/usuarios" element={<AdminUsuarios />} />
             <Route path="/emprendimientos-admin" element={<AdminEmprendedores />} />
           </Route>
+            
 
           {/* Emprendedores routes */}
         </Routes>

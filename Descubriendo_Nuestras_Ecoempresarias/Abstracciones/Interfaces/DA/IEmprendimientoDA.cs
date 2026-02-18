@@ -21,5 +21,7 @@ namespace Abstracciones.Interfaces.DA
 
         Task<int> CrearEmprendimientoAsync(EmprendimientoRequest emprendimiento);
 
+        Task<bool> VerificarExistenciaEmprendimiento(string CedulaJuridica);
+
     }
 }

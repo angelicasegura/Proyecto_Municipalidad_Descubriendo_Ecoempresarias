@@ -2,6 +2,7 @@
 import { authFetch } from "../../../../auth/AuthFetch"
 import type { User } from "../../../../types/userType"
 
+import toast from "react-hot-toast";
 interface Props {
   setEditDialogOpen: (open: boolean) => void
   setSelectedUser: (user: User | null) => void
@@ -15,23 +16,30 @@ export function handleEditarUser({
 }: Props) {
   return async (userData: User) => {
     //  API 
-    try {
-      const response = await authFetch(`https://localhost:7050/api/Usuarios/EditAdmin/${userData.idUsuario}`, {
+    
+      const response =  authFetch(`https://localhost:7050/api/Usuarios/EditAdmin/${userData.idUsuario}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(userData),
-      })
+      }).then(async (response) => {
+        if (!response.ok) {
+          const errorText = await response.text();
+          throw new Error(errorText || "Error al crear el usuario");
+        }
 
-      if (!response.ok) {
-        const errorText = await response.text()
-        throw new Error(errorText || "Error al actualizar el usuario")
-      }
+      });
 
-      console.log("Usuario actualizado correctamente")
+      toast.promise(response, {
+      loading: "Editando usuario...",
+      success: "Usuario editado correctamente 🎉",
+      error: (err) => err.message || "No se pudo editar el usuario",
+    });
+      
 
-
+      try {
+        await response;
     setEditDialogOpen(false)
     setSelectedUser(null)
 
