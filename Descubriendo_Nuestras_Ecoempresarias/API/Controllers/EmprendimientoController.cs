@@ -116,6 +116,11 @@ namespace API.Controllers
                         request.Ruta_Imagen_Logo = rutaImagen;
                     }
                 }
+                if (usuario.IdRol != 2)
+                {
+                    usuario.IdRol = 2;
+                    var UpdateUser = await _usuarioFlujo.EditarAdmin(usuario.IdUsuario, usuario);
+                }
                 
                 
                 var resultado = await _emprendimientoFlujo.CrearEmprendimientoAsync(request);
@@ -139,30 +144,6 @@ namespace API.Controllers
 
 
 
-        [HttpGet("imagen/{nombreArchivo}")]
-        [AllowAnonymous]
-        public async Task<IActionResult> ObtenerImagen(string nombreArchivo)
-        {
-            try
-            {
-                if (string.IsNullOrWhiteSpace(nombreArchivo))
-                    return BadRequest("Nombre inválido.");
-
-                nombreArchivo = Path.GetFileName(nombreArchivo);
-
-                string carpeta = _configuration["Carpetas:Emprendimientos"];
-
-                var imagenBytes = await _documentoFlujo.EncontrarImagen(nombreArchivo, carpeta);
-                if (imagenBytes == null)
-                    return NotFound("Imagen no encontrada.");
-
-                string contentType = _documentoFlujo.ObtenerContentType(nombreArchivo);
-                return File(imagenBytes, contentType);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Error al obtener imagen: {ex.Message}");
-            }
-        }
+        
     }
 }

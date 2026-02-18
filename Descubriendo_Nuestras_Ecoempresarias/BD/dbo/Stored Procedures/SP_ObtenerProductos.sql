@@ -1,6 +1,8 @@
 ﻿CREATE PROCEDURE [dbo].[SP_ObtenerProductos]
     @Nombre NVARCHAR(100) = NULL,
-    @Categoria_id UNIQUEIDENTIFIER = NULL
+    @Categoria_id UNIQUEIDENTIFIER = NULL,
+    @Emprendimiento_id INT = NULL,
+    @Estado_id INT = NULL
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -15,7 +17,8 @@ BEGIN
         Productos.Estado_id,
         Estado.Nombre AS NombreEstado,
         Categoria.Nombre AS CategoriaNombre,
-        Productos.Emprendimiento_id
+        Productos.Emprendimiento_id,
+        Productos.Descuento
     FROM ECOEMPRESARIAS_PRODUCTO_TB Productos
     INNER JOIN ECOEMPRESARIAS_ESTADOS_TB Estado 
         ON Productos.Estado_id = Estado.Estado_id
@@ -25,5 +28,9 @@ BEGIN
         (@Nombre IS NULL OR Productos.NombreProducto LIKE '%' + @Nombre + '%')
         AND
         (@Categoria_id IS NULL OR Productos.Categoria_id = @Categoria_id)
+        AND
+        (@Emprendimiento_id IS NULL OR Productos.Emprendimiento_id = @Emprendimiento_id)
+        AND
+        (@Estado_id IS NULL OR Productos.Estado_id = @Estado_id);
 END
 GO

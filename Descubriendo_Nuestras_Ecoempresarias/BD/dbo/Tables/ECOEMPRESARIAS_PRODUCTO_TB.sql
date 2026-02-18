@@ -7,6 +7,7 @@
     [Categoria_id]   UNIQUEIDENTIFIER NOT NULL,
     [Estado_id]      INT              NOT NULL,
     [Emprendimiento_id] INT NOT NULL, 
+    [Descuento] DECIMAL(5, 2) NULL, 
     CONSTRAINT [ECO_PRODUCTO_PK] PRIMARY KEY CLUSTERED ([Producto_id] ASC),
     CONSTRAINT [ECO_PRODUCTO_PRECIO_CHK] CHECK ([Precio]>=(0)),
     CONSTRAINT [ECO_PRODUCTO_CATEGORIA_FK] FOREIGN KEY ([Categoria_id]) REFERENCES [dbo].[ECOEMPRESARIAS_CATEGORIA_TB] ([Categoria_id]),

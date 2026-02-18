@@ -16,6 +16,8 @@ namespace Abstracciones.Modelos
         public string Ruta_Imagen { get; set; }
 
         public int Emprendimiento_id { get; set; }
+
+        public decimal? Descuento { get; set; }
     }
 
     public class ProductoRequest : ProductoBase

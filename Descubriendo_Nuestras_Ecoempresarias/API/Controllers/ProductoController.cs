@@ -88,11 +88,12 @@ namespace API.Controllers
 
         [HttpGet("ObtenerProductos")]
         public async Task<IActionResult> ObtenerProductos([FromQuery] Guid? categoria_id,
-                                                          [FromQuery] string? nombre)
+                                                          [FromQuery] string? nombre,
+                                                          [FromQuery] int? emprendimiento_id)
         {
             try
             {
-                var resultado = await _productoFlujo.ObtenerProductos(categoria_id, nombre);
+                var resultado = await _productoFlujo.ObtenerProductos(categoria_id, nombre, emprendimiento_id,1);
                 string carpeta = _configuration["Carpetas:Productos"];
                 
                 if (!resultado.Any())

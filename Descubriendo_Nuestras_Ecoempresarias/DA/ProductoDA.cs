@@ -71,12 +71,14 @@ namespace DA
             return resultQuery.FirstOrDefault();
         }
 
-        public async Task<IEnumerable<ProductoResponse>> ObtenerProductos(Guid? categoria_id, String? nombre )
+        public async Task<IEnumerable<ProductoResponse>> ObtenerProductos(Guid? categoria_id, String? nombre , int? emprendimiento_id, int? estado_id)
         {
             var parameters = new
             {
                 Categoria_id = categoria_id,
-                Nombre = nombre
+                Nombre = nombre,
+                Emprendimiento_id = emprendimiento_id,
+                Estado_id = estado_id
             };
             string query = @"SP_ObtenerProductos";  
             var resultQuery = await _sqlConnection.QueryAsync<ProductoResponse>(

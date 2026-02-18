@@ -13,7 +13,7 @@ namespace Abstracciones.Interfaces.API
         public Task<IActionResult> AgregarProducto(ProductoRequest producto);
         public Task<IActionResult> EditarProducto(Guid id, ProductoRequest producto);
         public Task<IActionResult> ElimnarProducto(Guid id);
-        Task<IActionResult> ObtenerProductos(Guid? categoria_id, String? nombre);
+        Task<IActionResult> ObtenerProductos(Guid? categoria_id, String? nombre,int? emprendimiento_id);
         public Task<IActionResult> ObtenerProducto(Guid id);
 
 
