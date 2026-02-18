@@ -18,20 +18,33 @@ namespace API.Controllers
             _configuration = configuration;
         }
 
-        [HttpGet("Buscar/{nombreArchivo}")]
+        [HttpGet("Buscar/{id}/{nombreArchivo}")]
         [AllowAnonymous]
-        public async Task<IActionResult> ObtenerImagen(string nombreArchivo)
+        public async Task<IActionResult> ObtenerImagen(string nombreArchivo, int id)
         {
             try
             {
                 if (string.IsNullOrWhiteSpace(nombreArchivo))
                     return BadRequest("Nombre inválido.");
-
+                string carpeta = "";
                 nombreArchivo = Path.GetFileName(nombreArchivo);
-
-                string carpeta = _configuration["Carpetas:Emprendimientos"];
-
-                var imagenBytes = await _documentoFlujo.EncontrarImagen(nombreArchivo, carpeta);
+                if (id == 1)
+                {
+                     carpeta = _configuration["Carpetas:Emprendimientos"];
+                }
+                if (id == 2)
+                {
+                     carpeta = _configuration["Carpetas:Usuarios"];
+                }
+                if (id == 3)
+                {
+                     carpeta = _configuration["Carpetas:Productos"];
+                }
+                else
+                {
+                    return NotFound("Imagen no encontrada.");
+                }
+                    var imagenBytes = await _documentoFlujo.EncontrarImagen(nombreArchivo, carpeta);
                 if (imagenBytes == null)
                     return NotFound("Imagen no encontrada.");
 
