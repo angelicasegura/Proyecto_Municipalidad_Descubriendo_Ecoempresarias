@@ -8,7 +8,11 @@ import { PageLoader } from "./components/ui/layout/pageLoader";
 import AdminUsuarios from "./pages/Admin/Usuarios/adminUsuarios";
 import AdminEmprendedores from "./pages/Admin/Emprendimientos/adminEmprendedores";
 import LoginPage from "./pages/auth/login/loginPage";
+
+import RegisterPage from "./pages/auth/register/registerPage";
+
 import EmprendimientosPage from "./pages/public/ListaEmprendimientos/listaEmprendimientosPublic";
+
 
 function App() {
   const { loading } = useAuth();
@@ -16,6 +20,7 @@ function App() {
     return <PageLoader />;
   }
   return (
+    <>
     <div className="flex min-h-screen flex-col">
       <Navbar />
       <main className="flex-1">
@@ -25,25 +30,27 @@ function App() {
         la api, esto es solo lo visual */}
           
 
-
           {/* public routes */}
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<LoginPage />} />
+
+          {/* HU-28: Ruta de registro */}
+          <Route path="/registro" element={<RegisterPage />} />
+
           <Route path="/emprendimientos" element={<EmprendimientosPage />} />
 
-
           {/* admin routes */}
-          <Route element={<ProtectedRoute allowedRoles={["ADMIN"]} />}><Route path="/usuarios" element={<AdminUsuarios />} /></Route >
-          <Route element={<ProtectedRoute allowedRoles={["ADMIN"]} />}><Route path="/emprendimientos-admin" element={<AdminEmprendedores />} /></Route >
-            
+          <Route element={<ProtectedRoute allowedRoles={["ADMIN"]} />}>
+            <Route path="/usuarios" element={<AdminUsuarios />} />
+            <Route path="/emprendimientos-admin" element={<AdminEmprendedores />} />
+          </Route>
 
           {/* Emprendedores routes */}
-          
-          
-          </Routes>
+        </Routes>
       </main>
       <Footer />
     </div>
+    </>
   );
 }
 
