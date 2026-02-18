@@ -6,9 +6,7 @@
     @Contrasena VARCHAR(200),
     @Email VARCHAR(200),
     @Ruta_Imagen_Perfil VARCHAR(300),
-    @Edad INT,
-    @Estado_id INT,
-    @Rol_id INT
+    @Edad INT
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -21,9 +19,7 @@ BEGIN
         Contrasena = @Contrasena,
         Email = @Email,
         Ruta_Imagen_Perfil = @Ruta_Imagen_Perfil,
-        Edad = @Edad,
-        Estado_id = @Estado_id,
-        Rol_id = @Rol_id
+        Edad = @Edad
     WHERE Usuario_id = @Usuario_id;
 	SELECT @Usuario_id 
 	COMMIT TRANSACTION

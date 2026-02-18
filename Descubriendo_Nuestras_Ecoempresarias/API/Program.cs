@@ -1,11 +1,16 @@
 
+using Abstracciones.Interfaces.API;
 using Abstracciones.Interfaces.DA;
 using Abstracciones.Interfaces.Flujo;
+using Abstracciones.Interfaces.Servicios;
+using Abstracciones.Modelos;
+using API.Controllers;
 using API.Helpers;
 using API.Seguridad;
 using DA;
 using DA.Repositorios;
 using Flujo;
+using Flujo.EmaiService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
@@ -68,6 +73,10 @@ builder.Services.AddAuthentication(options =>
         };
     });
 
+builder.Services.Configure<EmailSettings>(
+    builder.Configuration.GetSection("EmailSettings"));
+
+builder.Services.AddScoped<IEmailService, EmailService>();
 
 
 
@@ -91,7 +100,9 @@ builder.Services.AddScoped<IRolesDA, RolesDA>();
 builder.Services.AddScoped<IRepositorioDapper, RepositorioDapper>();
 builder.Services.AddScoped<IDocumentoDA, DocumentosDA>();
 builder.Services.AddScoped<IDocumentoFlujo, DocumentoFlujo>();
-
+builder.Services.AddScoped<IProductoController, ProductoController>();
+builder.Services.AddScoped<IProductoDA, ProductoDA>();
+builder.Services.AddScoped<IProductoFlujo, ProductoFlujo>();
 
 
 var app = builder.Build();

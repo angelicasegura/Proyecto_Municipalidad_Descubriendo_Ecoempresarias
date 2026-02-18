@@ -8,6 +8,9 @@ import { PageLoader } from "./components/ui/layout/pageLoader";
 import AdminUsuarios from "./pages/Admin/Usuarios/adminUsuarios";
 import AdminEmprendedores from "./pages/Admin/Emprendimientos/adminEmprendedores";
 import LoginPage from "./pages/auth/login/loginPage";
+
+import RegisterPage from "./pages/auth/register/registerPage";
+
 import EmprendimientosPage from "./pages/public/ListaEmprendimientos/listaEmprendimientosPublic";
 
 
@@ -21,6 +24,7 @@ function App() {
     return <PageLoader />;
   }
   return (
+    <>
     <div className="flex min-h-screen flex-col">
       <Navbar />
       <main className="flex-1">
@@ -31,12 +35,14 @@ function App() {
         la api, esto es solo lo visual */}
           
 
-
           {/* public routes */}
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/emprendimientos" element={<EmprendimientosPage />} />
 
+          {/* HU-28: Ruta de registro */}
+          <Route path="/registro" element={<RegisterPage />} />
+
+          <Route path="/emprendimientos" element={<EmprendimientosPage />} />
 
           {/* admin routes */}
           
@@ -47,12 +53,11 @@ function App() {
             
 
           {/* Emprendedores routes */}
-          
-          
-          </Routes>
+        </Routes>
       </main>
       <Footer />
     </div>
+    </>
   );
 }
 

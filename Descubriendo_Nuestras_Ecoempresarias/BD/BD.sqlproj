@@ -81,6 +81,7 @@
     <Build Include="dbo\Stored Procedures\EditarUsuario.sql" />
     <Build Include="dbo\Stored Procedures\AgregarUsuario.sql" />
     <Build Include="dbo\Stored Procedures\ObtenerRolPorId.sql" />
+    <Build Include="dbo\Stored Procedures\ObtenerUsuarioPorEmail.sql" />
     <Build Include="dbo\Stored Procedures\sp_GetUsuariosPaginados.sql" />
     <Build Include="dbo\Stored Procedures\sp_EditarUsuarioPorAdmin.sql" />
     <Build Include="dbo\Stored Procedures\sp_ActualizarEstadoUsuario.sql" />
@@ -89,6 +90,11 @@
     <Build Include="dbo\Stored Procedures\sp_ObtenerTiposActividad.sql" />
     <Build Include="dbo\Stored Procedures\sp_CrearEmprendimiento.sql" />
     <Build Include="dbo\Stored Procedures\sp_ObtenerEmprendimientoPorCedulaJuridica.sql" />
+    <Build Include="dbo\Stored Procedures\SP_ObtenerProductos.sql" />
+    <Build Include="dbo\Stored Procedures\SP_ObtenerProductoPorId.sql" />
+    <Build Include="dbo\Stored Procedures\SP_InactivarProducto.sql" />
+    <Build Include="dbo\Stored Procedures\SP_EditarProducto.sql" />
+    <Build Include="dbo\Stored Procedures\SP_AgregarProducto.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="BD.refactorlog" />

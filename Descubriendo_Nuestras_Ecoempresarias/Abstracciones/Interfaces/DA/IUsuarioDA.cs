@@ -17,6 +17,8 @@ namespace Abstracciones.Interfaces.DA
         Task<int> Eliminar(int Id);
         Task<UsuarioResponse> InicioSesionUsuario(string email, string contrasena);
 
+        Task<UsuarioRequest> BuscarUsuarioPorEmail(string email);
+
         Task<PagedResult<UsuarioResponse>> GetUsuariosPaginadosAsync(int page, int limit, string search, int? roleId);
 
         Task<int> EditarAdmin(int Id, UsuarioResponse usuario);

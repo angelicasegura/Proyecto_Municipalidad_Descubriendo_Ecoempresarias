@@ -1,0 +1,19 @@
+﻿CREATE PROCEDURE [dbo].[SP_ObtenerProductos]
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT
+        Productos.Producto_id,
+        Productos.NombreProducto,
+        Productos.Descripcion,
+        Productos.Ruta_Imagen,
+        Productos.Precio,
+        Productos.Categoria_id,
+        Productos.Estado_id,
+        Estado.Nombre AS NombreEstado,
+        Categoria.Nombre AS CategoriaNombre
+    FROM ECOEMPRESARIAS_PRODUCTO_TB Productos INNER JOIN 
+    ECOEMPRESARIAS_ESTADOS_TB Estado ON Productos.Estado_id = Estado.Estado_id INNER JOIN
+    ECOEMPRESARIAS_CATEGORIA_TB Categoria ON Productos.Categoria_id = Categoria.Categoria_id
+END
