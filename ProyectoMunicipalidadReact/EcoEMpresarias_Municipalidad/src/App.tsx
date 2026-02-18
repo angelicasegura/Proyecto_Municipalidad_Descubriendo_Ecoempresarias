@@ -8,7 +8,11 @@ import { PageLoader } from "./components/ui/layout/pageLoader";
 import AdminUsuarios from "./pages/Admin/Usuarios/adminUsuarios";
 import AdminEmprendedores from "./pages/Admin/Emprendimientos/adminEmprendedores";
 import LoginPage from "./pages/auth/login/loginPage";
+<<<<<<< HEAD
+import RegisterPage from "./pages/auth/register/registerPage";
+=======
 import EmprendimientosPage from "./pages/public/ListaEmprendimientos/listaEmprendimientosPublic";
+>>>>>>> main
 
 function App() {
   const { loading } = useAuth();
@@ -29,6 +33,21 @@ function App() {
           {/* public routes */}
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<LoginPage />} />
+<<<<<<< HEAD
+
+          {/* HU-28: Ruta de registro */}
+          <Route path="/registro" element={<RegisterPage />} />
+
+          <Route element={<ProtectedRoute allowedRoles={["ADMIN"]} />}>
+            <Route path="/usuarios" element={<AdminUsuarios />} />
+          </Route>
+
+          <Route
+            path="/emprendimientos-admin"
+            element={<AdminEmprendedores />}
+          />
+        </Routes>
+=======
           <Route path="/emprendimientos" element={<EmprendimientosPage />} />
 
 
@@ -41,6 +60,7 @@ function App() {
           
           
           </Routes>
+>>>>>>> main
       </main>
       <Footer />
     </div>
