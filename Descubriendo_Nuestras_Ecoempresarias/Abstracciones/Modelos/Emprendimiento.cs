@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +14,11 @@ namespace Abstracciones.Modelos
 
         public class EmprendimientoBase
         {
+            [Required(ErrorMessage = "El Nombre es obligatorio.")]
             public string Nombre { get; set; }
+            [Required(ErrorMessage = "La cédula jurídica es obligatoria.")]
+            [RegularExpression(@"^\d-\d{3}-\d{6}$",
+        ErrorMessage = "La cédula jurídica debe tener el formato X-XXX-XXXXXX.")]
             public string CedulaJuridica { get; set; }
             public string Telefono { get; set; }
             public string Email { get; set; }

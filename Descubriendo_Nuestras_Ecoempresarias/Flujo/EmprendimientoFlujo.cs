@@ -28,5 +28,10 @@ namespace Flujo
         {
            return await _emprendimientoDA.GetEmprendimientosPaginadosAsync(page, limit, search, tipoActividadId, estadoId);
         }
+
+        public async Task<bool> VerificarExistenciaEmprendimiento(string CedulaJuridica)
+        {
+            return await _emprendimientoDA.VerificarExistenciaEmprendimiento(CedulaJuridica);
+        }
     }
 }

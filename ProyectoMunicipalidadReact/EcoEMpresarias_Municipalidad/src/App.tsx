@@ -39,8 +39,11 @@ function App() {
 
 
           {/* admin routes */}
-          <Route element={<ProtectedRoute allowedRoles={["ADMIN"]} />}><Route path="/usuarios" element={<AdminUsuarios />} /></Route >
-          <Route element={<ProtectedRoute allowedRoles={["ADMIN"]} />}><Route path="/emprendimientos-admin" element={<AdminEmprendedores />} /></Route >
+          
+          <Route element={<ProtectedRoute allowedRoles={["ADMIN"]} />}>
+            <Route path="/usuarios" element={<AdminUsuarios />} />
+            <Route path="/emprendimientos-admin" element={<AdminEmprendedores />} />
+          </Route>
             
 
           {/* Emprendedores routes */}

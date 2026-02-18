@@ -88,6 +88,7 @@
     <Build Include="dbo\Stored Procedures\sp_GetEmprendimientosPaginados.sql" />
     <Build Include="dbo\Stored Procedures\sp_ObtenerTiposActividad.sql" />
     <Build Include="dbo\Stored Procedures\sp_CrearEmprendimiento.sql" />
+    <Build Include="dbo\Stored Procedures\sp_ObtenerEmprendimientoPorCedulaJuridica.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="BD.refactorlog" />

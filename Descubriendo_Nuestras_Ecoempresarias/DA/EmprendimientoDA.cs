@@ -86,5 +86,28 @@ namespace DA
             }
 
         }
+
+        public async Task<bool> VerificarExistenciaEmprendimiento(string CedulaJuridica)
+        {
+            string query = @"sp_ObtenerEmprendimientoPorCedulaJuridica";
+            var parameters = new
+            {
+                Cedula_Juridica = CedulaJuridica
+            };
+            try
+            {
+                var emprendimiento = await _sqlConnection.QueryAsync(query, parameters, commandType: CommandType.StoredProcedure);
+
+                if (emprendimiento != null)
+                {
+                    return false;
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
     }
 }
