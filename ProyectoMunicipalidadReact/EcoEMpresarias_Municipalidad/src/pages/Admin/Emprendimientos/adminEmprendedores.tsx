@@ -6,7 +6,7 @@ import { handleToggleEstado } from "./Actions/handleConfirmarEstado";
 
 import { EmprendedoresHeader } from "./components/emprendedorHeader";
 import { EmprendedoresTable } from "./components/tablaEmprendedores";
-import { ModalCrearEmprendimiento } from "../Emprendimientos/components/modalCrearEmprendimeinto";
+import { ModalCrearEmprendimiento} from "../Emprendimientos/components/modalCrearEmprendimeinto";
 import { EditarEmprendedor } from "../Emprendimientos/components/modalEditarEmprendimiento";
 import { ConfirmStatusDialog } from "../Emprendimientos/components/modalDeConfirmacionDeEstado";
 import { EmprendedoresFilters } from "../Emprendimientos/components/filtrosEmprendedor";
@@ -15,56 +15,52 @@ import { useEffect, useState } from "react";
 import { Pagination } from "../../../components/ui/layout/Pagination";
 import { authFetch } from "../../../auth/AuthFetch";
 
+import type { TipoActividad } from "../../../types/emprendedoresType";
+import { fetchTiposActividad } from "../../../types/emprendedoresType";
+
 export default function AdminEmprendedores() {
   const [emprendedores, setEmprendedores] = useState<Emprendedor[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [tipoFilter, setTipoFilter] = useState("all");
+  const [tipoFilter, setTipoFilter] = useState<"all" | string>("all");
   const [estadoFilter, setEstadoFilter] = useState("all");
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [statusDialogOpen, setStatusDialogOpen] = useState(false);
+  const [tiposActividad, setTiposActividad] = useState<TipoActividad[]>([]);
 
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const limit = 10;
 
-    const [page, setPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(1)
-    const limit = 10
+  const fetchEmprendedores = async () => {
+    const params = new URLSearchParams({
+      page: String(page),
+      limit: String(limit),
+      search: searchTerm || "", 
+      tipoActividadId: tipoFilter === "all" || !tipoFilter ? "" : String(tipoFilter),
+      estadoId: estadoFilter === "all" || !estadoFilter ? "" : String(estadoFilter),
+    });
 
+    const res = await authFetch(
+      `https://localhost:7050/api/emprendimientos/paginados?${params.toString()}`,
+    );
+    const data = await res.json();
 
-    // ---------- CARGA DE DATOS ----------
-      useEffect(() => {
-        
-        const params = new URLSearchParams({
-          page: String(page),
-          limit: String(limit),
-          search: searchTerm,
-          tipo: tipoFilter,
-          estado: estadoFilter,
-        })
-        
-    
-        authFetch(`http://localhost:5000/emprendedores?${params.toString()}`)
-          .then(res => res.json())
-          .then(data => {
-            setEmprendedores(data.data)
-            setTotalPages(data.pagination.totalPages)
-          })
-      }, [page])
+    setEmprendedores(data.items || []);
+    setTotalPages(Math.ceil((data.totalCount || 0) / limit));
+  };
 
 
 
-  //Filtros
-  const filteredEmprendedores = emprendedores.filter((emprendedor) => {
-    const matchesSearch =
-      emprendedor.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      emprendedor.correo.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      emprendedor.cedula_juridica.includes(searchTerm);
-    const matchesTipo =
-      tipoFilter === "all" ||
-      emprendedor.tipo_actividad_id === Number(tipoFilter);
-    const matchesEstado =
-      estadoFilter === "all" || emprendedor.estado_id === Number(estadoFilter);
-    return matchesSearch && matchesTipo && matchesEstado;
-  });
+
+  useEffect(() => {
+    fetchTiposActividad().then((data) => setTiposActividad(data));
+  }, []);
+
+  // ---------- 2. CARGA DE DATOS PAGINADOS ----------
+  useEffect(() => {
+    fetchEmprendedores();
+  }, [page, searchTerm, tipoFilter, estadoFilter]);
 
   //handles
   const [selectedEmprendedor, setSelectedEmprendedor] =
@@ -72,6 +68,7 @@ export default function AdminEmprendedores() {
 
   const onCreateEmprendedor = handleCrearEmprendedor({
     setCreateDialogOpen,
+    refreshData: fetchEmprendedores,
   });
 
   const onEditEmprendedor = handleEditarEmprendedor({
@@ -101,30 +98,43 @@ export default function AdminEmprendedores() {
 
       <EmprendedoresFilters
         searchTerm={searchTerm}
-        onSearchChange={setSearchTerm}
+        onSearchChange={(val) => {
+          setSearchTerm(val);
+          setPage(1);
+        }}
         tipoFilter={tipoFilter}
-        onTipoChange={setTipoFilter}
+        onTipoChange={(val) => {
+          setTipoFilter(val);
+          setPage(1);
+        }}
         estadoFilter={estadoFilter}
-        onEstadoChange={setEstadoFilter}
+        onEstadoChange={(val) => {
+          setEstadoFilter(val);
+          setPage(1);
+        }}
         onSearch={() => {}}
+        tiposActividad={tiposActividad}
       />
 
       <EmprendedoresTable
-        emprendedores={filteredEmprendedores}
+        emprendedores={emprendedores}
+        tiposActividad={tiposActividad}
         onEdit={onEdit}
         onToggleStatus={onToggleStatusClick}
       />
-      <Pagination
-            currentPage={page}
-            totalPages={totalPages}
-            onPageChange={setPage}
-          />
 
-    {/* Modals */}
+      <Pagination
+        currentPage={page}
+        totalPages={totalPages}
+        onPageChange={setPage}
+      />
+
+      {/* Modals */}
       <ModalCrearEmprendimiento
         open={createDialogOpen}
-        onOpenChange={setCreateDialogOpen}
         onSubmit={onCreateEmprendedor}
+        tiposActividad={tiposActividad}
+        onOpenChange={setCreateDialogOpen}
       />
 
       <EditarEmprendedor
@@ -132,6 +142,7 @@ export default function AdminEmprendedores() {
         onOpenChange={setEditDialogOpen}
         emprendedor={selectedEmprendedor}
         onSubmit={onEditEmprendedor}
+        tiposActividad={tiposActividad}
       />
 
       <ConfirmStatusDialog

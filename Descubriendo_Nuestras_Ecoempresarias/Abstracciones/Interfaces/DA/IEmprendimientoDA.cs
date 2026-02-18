@@ -19,5 +19,7 @@ namespace Abstracciones.Interfaces.DA
     int? estadoId
         );
 
+        Task<int> CrearEmprendimientoAsync(EmprendimientoRequest emprendimiento);
+
     }
 }

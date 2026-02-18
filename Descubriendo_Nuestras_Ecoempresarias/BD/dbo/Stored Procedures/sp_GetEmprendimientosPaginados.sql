@@ -19,6 +19,8 @@ BEGIN
         E.[Telefono],
         E.[Email],
         E.[Direccion],
+        E.[Descripcion],
+        E.[Ruta_Imagen_Logo],
         E.[Usuario_id] AS UsuarioId,
         E.[Estado_id] AS EstadoId,
         E.[TipoActividad_id] AS TipoActividadId,

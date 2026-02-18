@@ -1,220 +1,332 @@
-import type React from "react"
-import { useState } from "react"
+import type React from "react";
+import { useState } from "react";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogFooter,
-} from "../../../../components/ui/dialog"
-import { Button } from "../../../../components/ui/button"
-import { Input } from "../../../../components/ui/input"
-import { Label } from "../../../../components/ui/label"
+} from "../../../../components/ui/dialog";
+import { Button } from "../../../../components/ui/button";
+import { Input } from "../../../../components/ui/input";
+import { Label } from "../../../../components/ui/label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../../../../components/ui/select"
-import { PlusCircle, Save } from "lucide-react"
-import { type Emprendedor, TIPOS_ACTIVIDAD } from "../../../../types/emprendedoresType"
+} from "../../../../components/ui/select";
+import {
+  PlusCircle,
+  Save,
+  Building2,
+  Phone,
+  Mail,
+  MapPin,
+  Fingerprint,
+  User,
+  Image as ImageIcon,
+  FileText,
+} from "lucide-react";
 
-interface modalCrearEmprendimientoProps {
-  open: boolean
-  onOpenChange: (open: boolean) => void
-  onSubmit: (emprendedor: Omit<Emprendedor, "emprendedor_id" | "estado_id">) => void
+import { type TipoActividad } from "../../../../types/emprendedoresType";
+
+interface ModalCrearEmprendimientoProps {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  tiposActividad: TipoActividad[];
+  onSubmit: (data: any) => Promise<void>;
 }
 
-export function ModalCrearEmprendimiento({ open, onOpenChange, onSubmit }: modalCrearEmprendimientoProps) {
+export function ModalCrearEmprendimiento({
+  open,
+  onOpenChange,
+  tiposActividad,
+  onSubmit,
+}: ModalCrearEmprendimientoProps) {
   const [formData, setFormData] = useState({
     nombre: "",
-    cedula_juridica: "",
+    cedulaJuridica: "",
     telefono: "",
-    correo: "",
+    email: "",
     direccion: "",
-    tipo_actividad_id: "",
-  })
-  const [errors, setErrors] = useState<Record<string, boolean>>({})
+    descripcion: "",
+    tipoActividadId: "",
+    usuarioId: "",
+  });
+
+  const [imagen, setImagen] = useState<File | null>(null);
+  const [errors, setErrors] = useState<Record<string, boolean>>({});
+
+  const validate = () => {
+    const newErrors: Record<string, boolean> = {};
+    if (!formData.nombre) newErrors.nombre = true;
+    if (!formData.cedulaJuridica) newErrors.cedulaJuridica = true;
+    if (!formData.telefono) newErrors.telefono = true;
+    if (!formData.email) newErrors.email = true;
+    if (!formData.tipoActividadId) newErrors.tipoActividadId = true;
+    if (!formData.usuarioId) newErrors.usuarioId = true;
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    const newErrors: Record<string, boolean> = {}
+    e.preventDefault();
+    if (!validate()) return;
 
-    if (!formData.nombre) newErrors.nombre = true
-    if (!formData.cedula_juridica) newErrors.cedula_juridica = true
-    if (!formData.telefono) newErrors.telefono = true
-    if (!formData.correo) newErrors.correo = true
-    if (!formData.direccion) newErrors.direccion = true
-    if (!formData.tipo_actividad_id) newErrors.tipo_actividad_id = true
+    const formDataToSend = new FormData();
 
-    setErrors(newErrors)
+    formDataToSend.append("Nombre", formData.nombre);
+    formDataToSend.append("CedulaJuridica", formData.cedulaJuridica);
+    formDataToSend.append("Telefono", formData.telefono);
+    formDataToSend.append("Email", formData.email);
+    formDataToSend.append("Direccion", formData.direccion);
+    formDataToSend.append("Descripcion", formData.descripcion);
+    
+    formDataToSend.append("TipoActividadId", String(formData.tipoActividadId));
+    formDataToSend.append("UsuarioId", String(formData.usuarioId));
+    formDataToSend.append("EstadoId", "1");
 
-    if (Object.keys(newErrors).length === 0 && formData.tipo_actividad_id) {
-      onSubmit({
-        nombre: formData.nombre,
-        cedula_juridica: formData.cedula_juridica,
-        telefono: formData.telefono,
-        correo: formData.correo,
-        direccion: formData.direccion,
-        tipo_actividad_id: Number(formData.tipo_actividad_id),
-      })
-      setFormData({
-        nombre: "",
-        cedula_juridica: "",
-        telefono: "",
-        correo: "",
-        direccion: "",
-        tipo_actividad_id: "",
-      })
-      setErrors({})
+    if (imagen) {
+      formDataToSend.append("Imagen", imagen);
     }
-  }
+
+    onSubmit(formDataToSend);
+    handleClose(false);
+  };
 
   const handleClose = (isOpen: boolean) => {
     if (!isOpen) {
       setFormData({
         nombre: "",
-        cedula_juridica: "",
+        cedulaJuridica: "",
         telefono: "",
-        correo: "",
+        email: "",
         direccion: "",
-        tipo_actividad_id: "",
-      })
-      setErrors({})
+        descripcion: "",
+        tipoActividadId: "",
+        usuarioId: "",
+      });
+      setImagen(null);
+      setErrors({});
     }
-    onOpenChange(isOpen)
-  }
+    onOpenChange(isOpen);
+  };
 
   return (
     <Dialog open={open} onOpenChange={handleClose}>
-      <DialogContent className="sm:max-w-[600px]">
-        <DialogHeader className="bg-[#056F94] -m-6 mb-0 p-6 rounded-t-lg">
-          <DialogTitle className="flex items-center gap-2 text-white">
-            <PlusCircle className="h-5 w-5" />
-            Registrar Nuevo Emprendedor
+      <DialogContent className="sm:max-w-[650px] max-h-[95vh] overflow-y-auto">
+        <DialogHeader className="bg-[#056F94] -m-6 mb-2 p-6 rounded-t-lg">
+          <DialogTitle className="flex items-center gap-2 text-white text-xl">
+            <PlusCircle className="h-6 w-6" />
+            Registrar Nuevo Emprendimiento
           </DialogTitle>
         </DialogHeader>
-        <form onSubmit={handleSubmit} className="space-y-4 pt-4">
-          <div className="space-y-2">
-            <Label htmlFor="nombre">
-              Nombre <span className="text-destructive">*</span>
-            </Label>
-            <Input
-              id="nombre"
-              placeholder="Nombre completo"
-              value={formData.nombre}
-              onChange={(e) => setFormData({ ...formData, nombre: e.target.value })}
-              className={errors.nombre ? "border-destructive" : ""}
-            />
-            {errors.nombre && (
-              <p className="text-sm text-destructive">El nombre es obligatorio</p>
-            )}
-          </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="cedula_juridica">
-                Cédula Jurídica <span className="text-destructive">*</span>
-              </Label>
-              <Input
-                id="cedula_juridica"
-                placeholder="Ej: 3-101-456789"
-                value={formData.cedula_juridica}
-                onChange={(e) => setFormData({ ...formData, cedula_juridica: e.target.value })}
-                className={errors.cedula_juridica ? "border-destructive" : ""}
-              />
-              {errors.cedula_juridica && (
-                <p className="text-sm text-destructive">Cédula jurídica inválida o ya existe</p>
-              )}
-            </div>
+        <form onSubmit={handleSubmit} className="space-y-6 pt-4">
+          {/* SECCIÓN 1 */}
+          <div className="bg-slate-50 p-4 rounded-lg border border-slate-200 space-y-4">
+            <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wider flex items-center gap-2">
+              <User className="h-4 w-4" /> Datos del Propietario
+            </h3>
 
             <div className="space-y-2">
-              <Label htmlFor="telefono">
-                Teléfono <span className="text-destructive">*</span>
+              <Label>
+                ID de Usuario (Dueño) <span className="text-red-500">*</span>
               </Label>
               <Input
-                id="telefono"
-                type="tel"
-                placeholder="Ej: +506 2222-2222"
-                value={formData.telefono}
-                onChange={(e) => setFormData({ ...formData, telefono: e.target.value })}
-                className={errors.telefono ? "border-destructive" : ""}
+                placeholder="Ej: 119770693"
+                className={errors.usuarioId ? "border-red-500 shadow-sm" : ""}
+                value={formData.usuarioId}
+                onChange={(e) =>
+                  setFormData({ ...formData, usuarioId: e.target.value })
+                }
               />
-              {errors.telefono && (
-                <p className="text-sm text-destructive">El teléfono es obligatorio</p>
-              )}
             </div>
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="correo">
-              Correo Electrónico <span className="text-destructive">*</span>
-            </Label>
-            <Input
-              id="correo"
-              type="email"
-              placeholder="correo@ejemplo.com"
-              value={formData.correo}
-              onChange={(e) => setFormData({ ...formData, correo: e.target.value })}
-              className={errors.correo ? "border-destructive" : ""}
-            />
-            {errors.correo && (
-              <p className="text-sm text-destructive">Correo inválido o ya existe</p>
-            )}
+          {/* SECCIÓN 2 */}
+          <div className="space-y-4">
+            <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wider flex items-center gap-2">
+              <Building2 className="h-4 w-4" /> Detalles del Negocio
+            </h3>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label>
+                  Nombre Comercial <span className="text-red-500">*</span>
+                </Label>
+                <Input
+                  placeholder="Nombre del emprendimiento"
+                  className={errors.nombre ? "border-red-500" : ""}
+                  value={formData.nombre}
+                  onChange={(e) =>
+                    setFormData({ ...formData, nombre: e.target.value })
+                  }
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label>
+                  Cédula Jurídica <span className="text-red-500">*</span>
+                </Label>
+                <div className="relative">
+                  <Fingerprint className="absolute left-3 top-3 h-4 w-4 text-slate-400" />
+                  <Input
+                    placeholder="X-XXX-XXXXXX"
+                    maxLength={12}
+                    className={`pl-10 ${errors.cedulaJuridica ? "border-red-500" : ""}`}
+                    value={formData.cedulaJuridica}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        cedulaJuridica: e.target.value,
+                      })
+                    }
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Tipo actividad + Teléfono */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label>
+                  Tipo de Actividad <span className="text-red-500">*</span>
+                </Label>
+                <Select
+                  value={formData.tipoActividadId}
+                  onValueChange={(value) =>
+                    setFormData({ ...formData, tipoActividadId: value })
+                  }
+                >
+                  <SelectTrigger
+                    className={errors.tipoActividadId ? "border-red-500" : ""}
+                  >
+                    <SelectValue placeholder="Seleccione una actividad" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {tiposActividad.map((tipo) => (
+                      <SelectItem
+                        key={`modal-act-${tipo.tipoActividadId}`}
+                        value={String(tipo.tipoActividadId)}
+                      >
+                        {tipo.nombre}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="space-y-2">
+                <Label>
+                  Teléfono <span className="text-red-500">*</span>
+                </Label>
+                <div className="relative">
+                  <Phone className="absolute left-3 top-3 h-4 w-4 text-slate-400" />
+                  <Input
+                    placeholder="8888-8888"
+                    className={`pl-10 ${errors.telefono ? "border-red-500" : ""}`}
+                    value={formData.telefono}
+                    onChange={(e) =>
+                      setFormData({ ...formData, telefono: e.target.value })
+                    }
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Email */}
+            <div className="space-y-2">
+              <Label>
+                Correo Electrónico <span className="text-red-500">*</span>
+              </Label>
+              <div className="relative">
+                <Mail className="absolute left-3 top-3 h-4 w-4 text-slate-400" />
+                <Input
+                  type="email"
+                  placeholder="contacto@ejemplo.com"
+                  className={`pl-10 ${errors.email ? "border-red-500" : ""}`}
+                  value={formData.email}
+                  onChange={(e) =>
+                    setFormData({ ...formData, email: e.target.value })
+                  }
+                />
+              </div>
+            </div>
+
+            {/* Dirección */}
+            <div className="space-y-2">
+              <Label>Dirección Física</Label>
+              <div className="relative">
+                <MapPin className="absolute left-3 top-3 h-4 w-4 text-slate-400" />
+                <Input
+                  placeholder="Provincia, Cantón, señas exactas..."
+                  className="pl-10"
+                  value={formData.direccion}
+                  onChange={(e) =>
+                    setFormData({ ...formData, direccion: e.target.value })
+                  }
+                />
+              </div>
+            </div>
+
+            {/* NUEVOS CAMPOS SIN CAMBIAR DISEÑO */}
+            <div className="space-y-2">
+              <Label>Descripción</Label>
+              <div className="relative">
+                <FileText className="absolute left-3 top-3 h-4 w-4 text-slate-400" />
+                <Input
+                  className="pl-10"
+                  placeholder="Descripción del emprendimiento"
+                  value={formData.descripcion}
+                  onChange={(e) =>
+                    setFormData({ ...formData, descripcion: e.target.value })
+                  }
+                />
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label>Imagen / Logo</Label>
+              <div className="relative">
+                <ImageIcon className="absolute left-3 top-3 h-4 w-4 text-slate-400" />
+                <Input
+                  type="file"
+                  accept="image/*"
+                  className="pl-10"
+                  onChange={(e) => {
+                    if (e.target.files && e.target.files[0]) {
+                      setImagen(e.target.files[0]);
+                    }
+                  }}
+                />
+              </div>
+            </div>
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="direccion">
-              Dirección <span className="text-destructive">*</span>
-            </Label>
-            <Input
-              id="direccion"
-              placeholder="Dirección completa"
-              value={formData.direccion}
-              onChange={(e) => setFormData({ ...formData, direccion: e.target.value })}
-              className={errors.direccion ? "border-destructive" : ""}
-            />
-            {errors.direccion && (
-              <p className="text-sm text-destructive">La dirección es obligatoria</p>
-            )}
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="tipo_actividad_id">
-              Tipo de Actividad <span className="text-destructive">*</span>
-            </Label>
-            <Select
-              value={formData.tipo_actividad_id}
-              onValueChange={(value) => setFormData({ ...formData, tipo_actividad_id: value })}
+          <DialogFooter className="gap-3 pt-2">
+            <Button
+              type="button"
+              variant="outline"
+              className="border-red-200 text-red-600 hover:bg-red-50"
+              onClick={() => handleClose(false)}
             >
-              <SelectTrigger className={errors.tipo_actividad_id ? "border-destructive" : ""}>
-                <SelectValue placeholder="Selecciona un tipo" />
-              </SelectTrigger>
-              <SelectContent>
-                {TIPOS_ACTIVIDAD.map((tipo) => (
-                  <SelectItem key={tipo.tipo_actividad_id} value={String(tipo.tipo_actividad_id)}>
-                    {tipo.nombre}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            {errors.tipo_actividad_id && (
-              <p className="text-sm text-destructive">Selecciona un tipo de actividad</p>
-            )}
-          </div>
-
-          <DialogFooter className="gap-2 pt-4">
-            <Button type="button" variant="secondary" className="bg-[#ff0707] hover:bg-[#790000] text-white cursor-pointer" onClick={() => handleClose(false)}>
               Cancelar
             </Button>
-            <Button type="submit" className="bg-[#54b413] hover:bg-[#3c810e] text-white cursor-pointer">
+
+            <Button
+              type="submit"
+              className="bg-[#54b413] hover:bg-[#3c810e] text-white px-8"
+            >
               <Save className="h-4 w-4 mr-2" />
-              Registrar
+              Guardar Emprendimiento
             </Button>
           </DialogFooter>
         </form>
       </DialogContent>
     </Dialog>
-  )
+  );
 }
