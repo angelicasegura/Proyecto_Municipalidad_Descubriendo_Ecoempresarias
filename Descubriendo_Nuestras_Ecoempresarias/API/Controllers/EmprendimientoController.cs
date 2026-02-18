@@ -72,15 +72,7 @@ namespace API.Controllers
                         pageSize = limit
                     });
                 }
-                foreach (var item in resultado.Items)
-                {
-          
-                    if (!string.IsNullOrEmpty(item.Ruta_Imagen_Logo))
-                    {
-
-                        item.ImagenData = await _documentoFlujo.EncontrarImagen(item.Ruta_Imagen_Logo, carpeta);
-                    }
-                }
+               
                 return Ok(new
                 {
                     items = resultado.Items,
@@ -144,5 +136,33 @@ namespace API.Controllers
             return await _emprendimientoFlujo.VerificarExistenciaEmprendimiento(CedulaJuridica);
         }
 
+
+
+
+        [HttpGet("imagen/{nombreArchivo}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ObtenerImagen(string nombreArchivo)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(nombreArchivo))
+                    return BadRequest("Nombre inválido.");
+
+                nombreArchivo = Path.GetFileName(nombreArchivo);
+
+                string carpeta = _configuration["Carpetas:Emprendimientos"];
+
+                var imagenBytes = await _documentoFlujo.EncontrarImagen(nombreArchivo, carpeta);
+                if (imagenBytes == null)
+                    return NotFound("Imagen no encontrada.");
+
+                string contentType = _documentoFlujo.ObtenerContentType(nombreArchivo);
+                return File(imagenBytes, contentType);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al obtener imagen: {ex.Message}");
+            }
+        }
     }
 }

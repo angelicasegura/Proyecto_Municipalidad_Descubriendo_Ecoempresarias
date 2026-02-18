@@ -12,6 +12,7 @@ BEGIN
         [dbo].[ECOEMPRESARIAS_PRODUCTO_TB].Precio,
         [dbo].[ECOEMPRESARIAS_PRODUCTO_TB].Categoria_id,
         [dbo].[ECOEMPRESARIAS_PRODUCTO_TB].Estado_id,
+        [dbo].[ECOEMPRESARIAS_PRODUCTO_TB].Emprendimiento_id,
         Estado.Nombre AS NombreEstado,
         Categoria.Nombre AS CategoriaNombre
     FROM ECOEMPRESARIAS_PRODUCTO_TB INNER JOIN 

@@ -9,7 +9,6 @@ export interface Emprendedor {
   estadoId: number // 1 = activo, 2 = inactivo
   ruta_Imagen_Logo?: string
   descripcion?: string
-  imagenData: undefined
 }
 
 export interface TipoActividad {

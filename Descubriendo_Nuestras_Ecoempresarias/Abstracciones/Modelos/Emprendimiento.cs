@@ -45,7 +45,7 @@ namespace Abstracciones.Modelos
             public int UsuarioId { get; set; }
             public int EstadoId { get; set; }
 
-            public Byte[] ImagenData { get; set; }
+            
             public string NombreTipoActividad { get; set; }
             public string NombreEstado { get; set; }
             public string NombreDuenio { get; set; } 

@@ -8,6 +8,7 @@ namespace Abstracciones.Interfaces.DA
 {
     public interface IDocumentoDA
     {
-        Task<Byte[]> EncontrarImagen(String nombreImagen, String carpeta);
+        public Task<Byte[]> EncontrarImagen(String nombreImagen, String carpeta);
+        public string ObtenerContentType(string fileName);
     }
 }

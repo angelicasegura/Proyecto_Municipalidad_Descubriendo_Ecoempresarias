@@ -9,5 +9,6 @@ namespace Abstracciones.Interfaces.Flujo
         public interface IDocumentoFlujo
     {
         Task<Byte[]> EncontrarImagen(String nombreImagen, String carpeta);
+        public string ObtenerContentType(string fileName);
     }
 }

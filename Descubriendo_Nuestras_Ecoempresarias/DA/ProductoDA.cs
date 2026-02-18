@@ -1,7 +1,8 @@
 ﻿using Abstracciones.Interfaces.DA;
 using Abstracciones.Modelos;
-using Microsoft.Data.SqlClient;
 using Dapper;
+using Microsoft.Data.SqlClient;
+using System.Data;
 
 
 
@@ -70,10 +71,19 @@ namespace DA
             return resultQuery.FirstOrDefault();
         }
 
-        public async Task<IEnumerable<ProductoResponse>> ObtenerProductos()
+        public async Task<IEnumerable<ProductoResponse>> ObtenerProductos(Guid? categoria_id, String? nombre )
         {
-            string query = @"SP_ObtenerProductos";
-            var resultQuery = await _sqlConnection.QueryAsync<ProductoResponse>(query);
+            var parameters = new
+            {
+                Categoria_id = categoria_id,
+                Nombre = nombre
+            };
+            string query = @"SP_ObtenerProductos";  
+            var resultQuery = await _sqlConnection.QueryAsync<ProductoResponse>(
+                query,
+                parameters,
+                commandType: CommandType.StoredProcedure
+    );
             return resultQuery;
         }
     }

@@ -87,16 +87,24 @@ namespace API.Controllers
         }
 
         [HttpGet("ObtenerProductos")]
-        public async Task<IActionResult> ObtenerProductos()
+        public async Task<IActionResult> ObtenerProductos([FromQuery] Guid? categoria_id,
+                                                          [FromQuery] string? nombre)
         {
-            var resultado = await _productoFlujo.ObtenerProductos();
-
-            if (!resultado.Any())
+            try
             {
-                return NoContent();
-            }
+                var resultado = await _productoFlujo.ObtenerProductos(categoria_id, nombre);
+                string carpeta = _configuration["Carpetas:Productos"];
+                
+                if (!resultado.Any())
+                    return NoContent();
 
-            return Ok(resultado);
+                return Ok(resultado);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return StatusCode(500, $"Error interno al obtener productos es: {ex.Message}");
+            }
         }
     }
 }

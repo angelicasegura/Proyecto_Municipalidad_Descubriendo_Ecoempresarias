@@ -24,7 +24,7 @@ export function EmprendimientoCard({ emprendedor, tiposActividad }: Emprendimien
       <div className="relative aspect-[16/10] overflow-hidden bg-muted">
         {emprendedor.ruta_Imagen_Logo ? (
           <img
-            src={`data:image/jpeg;base64,${emprendedor.imagenData}`}
+            src={`https://localhost:7050/api/emprendimientos/imagen/${emprendedor.ruta_Imagen_Logo}`}
             alt={emprendedor.nombre}
             className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
           />
