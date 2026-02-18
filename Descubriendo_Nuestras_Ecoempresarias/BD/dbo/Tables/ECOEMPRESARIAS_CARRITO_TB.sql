@@ -1,8 +1,8 @@
 ﻿CREATE TABLE [dbo].[ECOEMPRESARIAS_CARRITO_TB] (
-    [Carrito_id]  INT             NOT NULL,
-    [Cantidad]    DECIMAL (10, 2) NOT NULL,
-    [Usuario_id]  INT             NOT NULL,
-    [Producto_id] INT             NOT NULL,
+    [Carrito_id]  INT              NOT NULL,
+    [Cantidad]    DECIMAL (10, 2)  NOT NULL,
+    [Usuario_id]  INT              NOT NULL,
+    [Producto_id] UNIQUEIDENTIFIER NOT NULL,
     CONSTRAINT [ECO_CARRITO_PK] PRIMARY KEY CLUSTERED ([Carrito_id] ASC),
     CONSTRAINT [ECO_CARRITO_CANTIDAD_CHK] CHECK ([Cantidad]>(0)),
     CONSTRAINT [ECO_CARRITO_PRODUCTO_FK] FOREIGN KEY ([Producto_id]) REFERENCES [dbo].[ECOEMPRESARIAS_PRODUCTO_TB] ([Producto_id]),
