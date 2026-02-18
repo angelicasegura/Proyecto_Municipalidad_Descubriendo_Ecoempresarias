@@ -1,11 +1,13 @@
 
 using Abstracciones.Interfaces.DA;
 using Abstracciones.Interfaces.Flujo;
+using API.Helpers;
 using API.Seguridad;
 using DA;
 using DA.Repositorios;
 using Flujo;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Cryptography;
 using System.Text;
@@ -68,20 +70,35 @@ builder.Services.AddAuthentication(options =>
 
 
 
+
+
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
 builder.Services.AddSingleton<TokenProvider>();
+builder.Services.AddScoped<GuardarImagenes>();
+builder.Services.AddScoped<IEmprendimientoFlujo, EmprendimientoFlujo>();
+builder.Services.AddScoped<ITiposActividadFlujo, TiposActividadFlujo>();
+builder.Services.AddScoped<ITiposActividadDA, TiposActividadDA>();
+builder.Services.AddScoped<IEmprendimientoDA, EmprendimientoDA>();
 builder.Services.AddScoped<IUsuarioFlujo, UsuarioFlujo>();
 builder.Services.AddScoped<IUsuarioDA, UsuarioDA>();
 builder.Services.AddScoped<IRolesFlujo, RolesFlujo>();
 builder.Services.AddScoped<IRolesDA, RolesDA>();
 builder.Services.AddScoped<IRepositorioDapper, RepositorioDapper>();
+builder.Services.AddScoped<IDocumentoDA, DocumentosDA>();
+builder.Services.AddScoped<IDocumentoFlujo, DocumentoFlujo>();
+
 
 
 var app = builder.Build();
+
+
+
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

@@ -8,7 +8,11 @@ import { PageLoader } from "./components/ui/layout/pageLoader";
 import AdminUsuarios from "./pages/Admin/Usuarios/adminUsuarios";
 import AdminEmprendedores from "./pages/Admin/Emprendimientos/adminEmprendedores";
 import LoginPage from "./pages/auth/login/loginPage";
+<<<<<<< HEAD
 import RegisterPage from "./pages/auth/register/registerPage";
+=======
+import EmprendimientosPage from "./pages/public/ListaEmprendimientos/listaEmprendimientosPublic";
+>>>>>>> main
 
 function App() {
   const { loading } = useAuth();
@@ -23,8 +27,13 @@ function App() {
           {/* Esta parte es la del router aqui se define el link que se quiere que 
         accione una ruta para cambiar de pagina, esto no es nada del los get o put a 
         la api, esto es solo lo visual */}
+          
+
+
+          {/* public routes */}
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<LoginPage />} />
+<<<<<<< HEAD
 
           {/* HU-28: Ruta de registro */}
           <Route path="/registro" element={<RegisterPage />} />
@@ -38,6 +47,20 @@ function App() {
             element={<AdminEmprendedores />}
           />
         </Routes>
+=======
+          <Route path="/emprendimientos" element={<EmprendimientosPage />} />
+
+
+          {/* admin routes */}
+          <Route element={<ProtectedRoute allowedRoles={["ADMIN"]} />}><Route path="/usuarios" element={<AdminUsuarios />} /></Route >
+          <Route element={<ProtectedRoute allowedRoles={["ADMIN"]} />}><Route path="/emprendimientos-admin" element={<AdminEmprendedores />} /></Route >
+            
+
+          {/* Emprendedores routes */}
+          
+          
+          </Routes>
+>>>>>>> main
       </main>
       <Footer />
     </div>

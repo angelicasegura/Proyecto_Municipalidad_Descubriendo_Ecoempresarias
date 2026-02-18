@@ -8,6 +8,8 @@
     [Direccion]         VARCHAR (500) NULL,
     [TipoActividad_id]  INT           NOT NULL,
     [Usuario_id]        INT           NOT NULL,
+    [Ruta_Imagen_Logo] NVARCHAR(MAX) NULL, 
+    [Descripcion] NVARCHAR(100) NULL, 
     CONSTRAINT [ECO_EMPRENDIMIENTO_PK] PRIMARY KEY CLUSTERED ([Emprendimiento_id] ASC),
     CONSTRAINT [ECO_EMPRENDIMIENTO_ESTADO_FK] FOREIGN KEY ([Estado_id]) REFERENCES [dbo].[ECOEMPRESARIAS_ESTADOS_TB] ([Estado_id]),
     CONSTRAINT [ECO_EMPRENDIMIENTO_TIPO_ACTIVIDAD_FK] FOREIGN KEY ([TipoActividad_id]) REFERENCES [dbo].[ECOEMPRESARIAS_TIPO_ACTIVIDAD_TB] ([TipoActividad_id]),

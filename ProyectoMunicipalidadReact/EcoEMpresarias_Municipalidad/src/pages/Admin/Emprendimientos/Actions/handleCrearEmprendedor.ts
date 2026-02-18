@@ -1,17 +1,41 @@
-// TODO: Conectar con API - POST /api/emprendedores
+import { authFetch } from "../../../../auth/AuthFetch";
 
-import type { Emprendedor } from "../../../../types/emprendedoresType"
+
 
 interface Props {
-  setCreateDialogOpen: (open: boolean) => void
+  setCreateDialogOpen: (open: boolean) => void;
+  refreshData: () => Promise<void>;
 }
 
-  export function handleCrearEmprendedor({ setCreateDialogOpen }: Props) {
-  return async (
-    newEmprendedor: Omit<Emprendedor, "emprendedor_id" | "estado_id">
-  ) => {
-    // API 
+export function handleCrearEmprendedor({
+  setCreateDialogOpen,
+  refreshData,
+}: Props) {
+  return async (emprendimientoData: any) => {
+    try {
+      console.log([...emprendimientoData.entries()]);
+      const response = await authFetch(
+        "https://localhost:7050/api/emprendimientos/crearAdmin",
+        {
+          method: "POST",
+          body: emprendimientoData,
+        }
+      )
 
-    setCreateDialogOpen(false)
+      if (!response.ok) {
+        const errorData = await response.json()
+  console.log("ERROR BACKEND:", errorData)
+  throw new Error("Error en la creación")
+      }
+
+      console.log("Emprendimiento creado correctamente")
+
+      setCreateDialogOpen(false)
+      await refreshData()
+
+    } catch (error) {
+      console.error("Error en la creación:", error)
+      alert("No se pudo crear el emprendimiento. Revisa la consola.")
+    }
   }
 }
