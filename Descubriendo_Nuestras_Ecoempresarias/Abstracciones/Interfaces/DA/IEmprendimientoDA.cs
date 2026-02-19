@@ -23,5 +23,6 @@ namespace Abstracciones.Interfaces.DA
 
         Task<bool> VerificarExistenciaEmprendimiento(string CedulaJuridica);
 
+        Task<EmprendimientoResponse> GetEmprendimientoPorId(string cedulaJuridica);
     }
 }

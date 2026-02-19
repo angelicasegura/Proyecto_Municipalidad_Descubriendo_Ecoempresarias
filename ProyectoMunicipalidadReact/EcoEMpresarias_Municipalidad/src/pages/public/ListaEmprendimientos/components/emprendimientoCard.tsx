@@ -1,6 +1,7 @@
 import { Card, CardContent } from "../../../../components/ui/card";
 import { Badge } from "../../../../components/ui/badge";
-import { Link, MapPin } from "lucide-react";
+import { MapPin } from "lucide-react";
+import { Link } from "react-router-dom";
 import type {
   Emprendedor,
   TipoActividad,
@@ -25,8 +26,9 @@ export function EmprendimientoCard({
   );
 
   return (
-    <Link to={`/emprendimiento/${emprendedor.emprendedor_id}`} className="block">
-      <Card className="group overflow-hidden border-border hover:shadow-lg transition-all duration-300 hover:-translate-y-1 cursor-pointer">
+    
+      <Card  className="group overflow-hidden border-border hover:shadow-lg transition-all duration-300 hover:-translate-y-1 cursor-pointer">
+        <Link to={`/emprendimiento/${emprendedor.emprendedorId}/${emprendedor.cedulaJuridica}`} className="block w-full h'">
         <div className="relative aspect-[16/10] overflow-hidden bg-muted">
           {emprendedor.ruta_Imagen_Logo ? (
             <img
@@ -63,7 +65,8 @@ export function EmprendimientoCard({
             </div>
           )}
         </CardContent>
+        </Link>
       </Card>
-    </Link>
+    
   );
 }

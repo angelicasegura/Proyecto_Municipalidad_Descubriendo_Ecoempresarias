@@ -58,3 +58,7 @@ export const obtenerTextoDescuento = (descuento?: number): string => {
   if (!descuento) return ""
   return `${descuento}% OFF`
 }
+
+export function formatearPrecio(precio: number): string {
+  return `₡${precio.toLocaleString("es-CR")}`;
+}

@@ -9,6 +9,6 @@ namespace Abstracciones.Interfaces.Flujo
 {
     public interface ICategoriaProductosFlujo
     {
-        Task<List<CategoriaProducto>> ObtenerCategoriasProductos();
+        Task<List<CategoriaProducto>> ObtenerCategoriasProductos(int? emprendimiento_id);
     }
 }

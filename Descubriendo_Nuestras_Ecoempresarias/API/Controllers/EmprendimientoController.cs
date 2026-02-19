@@ -135,6 +135,27 @@ namespace API.Controllers
 
         }
 
+
+        [HttpGet("Obtener")]
+        public async Task<IActionResult> obtenerEmprendimientoPorId([FromQuery] string cedulaJuridica)
+        {
+            try
+            {
+                if(cedulaJuridica == null)
+                {
+                    return BadRequest("Cedula Juridica no indicada");
+                }
+                var emprendimiento = await _emprendimientoFlujo.GetEmprendimientoPorId(cedulaJuridica);
+
+
+                return Ok(emprendimiento);
+            }catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+        }
+
         private async Task<bool> verificarSiEmprendimientoYaExiste(string CedulaJuridica)
         {
 

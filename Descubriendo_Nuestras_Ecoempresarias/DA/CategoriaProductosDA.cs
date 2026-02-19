@@ -22,14 +22,18 @@ namespace DA
 
         }
 
-        public async Task<List<CategoriaProducto>> ObtenerCategoriasProductos()
+        public async Task<List<CategoriaProducto>> ObtenerCategoriasProductos(int? emprendimiento_id)
         {
             try
             {
                 string query = @"sp_ObtenerCategoriasActivas";
-
+                var parameters = new
+                {
+                    Emprendimiento_id = emprendimiento_id
+                };
                 var lista = await _sqlConnection.QueryAsync<CategoriaProducto>(
                     query,
+                    parameters,
                     commandType: System.Data.CommandType.StoredProcedure
                 ).ConfigureAwait(false);
 

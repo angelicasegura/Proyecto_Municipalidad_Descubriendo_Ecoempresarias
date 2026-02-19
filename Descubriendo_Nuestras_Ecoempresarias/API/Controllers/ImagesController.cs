@@ -40,10 +40,7 @@ namespace API.Controllers
                 {
                      carpeta = _configuration["Carpetas:Productos"];
                 }
-                else
-                {
-                    return NotFound("Imagen no encontrada.");
-                }
+                
                     var imagenBytes = await _documentoFlujo.EncontrarImagen(nombreArchivo, carpeta);
                 if (imagenBytes == null)
                     return NotFound("Imagen no encontrada.");

@@ -18,9 +18,9 @@ namespace Flujo
             _categoriaProductosDA = categoriaProductosDA;
         }
 
-        public async  Task<List<CategoriaProducto>> ObtenerCategoriasProductos()
+        public async  Task<List<CategoriaProducto>> ObtenerCategoriasProductos(int? emprendimiento_id)
         {
-            return await _categoriaProductosDA.ObtenerCategoriasProductos();
+            return await _categoriaProductosDA.ObtenerCategoriasProductos( emprendimiento_id);
         }
     }
 }

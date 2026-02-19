@@ -17,11 +17,11 @@ namespace API.Controllers
 
 
         [HttpGet("Obtener")]
-        public async Task<IActionResult> ObtenerCategoriasProductos()
+        public async Task<IActionResult> ObtenerCategoriasProductos([FromQuery] int? emprendimiento_id)
         {
             try
             {
-                var resultado = await _categoriaProductoFlujo.ObtenerCategoriasProductos();
+                var resultado = await _categoriaProductoFlujo.ObtenerCategoriasProductos(emprendimiento_id);
                 return Ok(resultado);
             }
             catch (Exception ex)

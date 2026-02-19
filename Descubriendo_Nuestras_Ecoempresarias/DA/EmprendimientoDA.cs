@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using static Abstracciones.Modelos.Emprendimiento;
 
 namespace DA
 {
@@ -107,6 +108,24 @@ namespace DA
             catch (Exception ex)
             {
                 return false;
+            }
+        }
+
+
+        public async Task<EmprendimientoResponse> GetEmprendimientoPorId(string cedulaJuridica)
+        {
+            try
+            {
+                string query = @"sp_ObtenerEmprendimientoPorCedulaJuridica";
+                var parameters = new
+                {
+                    Cedula_Juridica = cedulaJuridica
+                };
+                return await _sqlConnection.QueryFirstOrDefaultAsync<EmprendimientoResponse>(query, parameters, commandType: CommandType.StoredProcedure);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex);
             }
         }
     }
