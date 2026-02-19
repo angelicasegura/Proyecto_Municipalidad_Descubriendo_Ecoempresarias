@@ -20,10 +20,23 @@ export interface CategoriaProducto {
 }
 
 export interface Inventario {
-  productoId: string;       
-  cantidadActual: number;   
+  productoId: string;        
+  cantidadActual: number;    
+  nombreProducto?: string;   
+  descripcion?: string;      
+  ruta_Imagen?: string;       
+  precio: number;            
+  descuento: number;         
   cantidadMinima: number;   
-  estadoId: number;         
+  estadoId: number;          
+}
+
+
+export interface InventarioRequest {
+  productoId: string
+  cantidadActual: number
+  cantidadMinima: number
+  estadoId: number
 }
 
 

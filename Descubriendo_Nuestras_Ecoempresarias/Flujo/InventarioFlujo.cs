@@ -22,7 +22,7 @@ namespace Flujo
             return await _inventarioDA.AgregarInventario(inventario);
         }
 
-        public async Task<Guid> EditarInventario(Guid id, Inventario inventario)
+        public async Task<Guid> EditarInventario(Guid id, InventarioRequest inventario)
         {
            return await _inventarioDA.EditarInventario(id, inventario);
         }
