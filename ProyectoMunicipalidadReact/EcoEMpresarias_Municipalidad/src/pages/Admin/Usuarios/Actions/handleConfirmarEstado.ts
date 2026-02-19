@@ -1,6 +1,6 @@
 import { authFetch } from "../../../../auth/AuthFetch"
 import type { User } from "../../../../types/userType"
-
+import toast from "react-hot-toast";
 interface Props {
   setStatusDialogOpen: (open: boolean) => void
   setSelectedUser: (user: User | null) => void
@@ -14,23 +14,29 @@ export function handleToggleStatus({
 }: Props) {
   return async(userData: User) => {
     // AQUÍ VA LA API EN EL FUTURO
-    try {
-          const response = await authFetch(`https://localhost:7050/api/Usuarios/EditEstado/${userData.idUsuario}`, {
+    
+          const response =  authFetch(`https://localhost:7050/api/Usuarios/EditEstado/${userData.idUsuario}`, {
             method: "PUT",
             headers: {
               "Content-Type": "application/json",
             },
             body: JSON.stringify(userData),
-          })
+          }).then(async (response) => {
+        if (!response.ok) {
+          const errorText = await response.text();
+          throw new Error(errorText || "Error al cambiar el estado del usuario");
+        }});
     
-          if (!response.ok) {
-            const errorText = await response.text()
-            throw new Error(errorText || "Error al actualizar el usuario")
-          }
+        toast.promise(response, {
+      loading: "Actualizando estado del usuario...",
+      success: "Estado del usuario actualizado correctamente 🎉",
+      error: (err) => err.message || "No se pudo actualizar el estado del usuario",
+    });  
     
-          console.log("Usuario actualizado correctamente")
     
     
+        try {
+          await response;
         setStatusDialogOpen(false)
       setSelectedUser(null)
     

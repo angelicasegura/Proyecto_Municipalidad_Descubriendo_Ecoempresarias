@@ -49,15 +49,18 @@ namespace Flujo
             return _usuarioDA.InicioSesionUsuario(email, contrasena);
         }
 
+
+
         public Task<UsuarioRequest> BuscarUsuarioPorEmail(string email)
         {
             return _usuarioDA.BuscarUsuarioPorEmail(email);
         }
+
         public async Task<PagedResult<UsuarioResponse>> GetUsuariosPaginadosAsync(int page, int limit, string search, int? roleId)
         {
 
 
-           return await _usuarioDA.GetUsuariosPaginadosAsync(page, limit, search, roleId);
+            return await _usuarioDA.GetUsuariosPaginadosAsync(page, limit, search, roleId);
 
         }
 

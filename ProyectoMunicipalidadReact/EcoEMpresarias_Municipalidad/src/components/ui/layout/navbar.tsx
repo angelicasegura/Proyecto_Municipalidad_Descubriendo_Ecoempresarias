@@ -40,10 +40,10 @@ export function Navbar() {
           {/* Desktop Navigation */}
           <div className="hidden lg:flex lg:items-center lg:gap-4">
             <Link
-              to="/emprendedores"
+              to="/emprendimientos"
               className="text-white font-medium hover:text-accent transition-colors whitespace-nowrap px-2"
             >
-              Emprendedores
+              Emprendimientos
             </Link>
             <Link
               to="/productos"
@@ -232,7 +232,7 @@ export function Navbar() {
                 >
                   <DropdownMenuItem asChild>
                     <Link
-                      to="/inventario"
+                      to="/emprendimientos-propio"
                       className="
             text-white
             cursor-pointer
@@ -331,10 +331,10 @@ export function Navbar() {
         {mobileMenuOpen && (
           <div className="lg:hidden py-4 space-y-2 border-t border-white/20">
             <Link
-              to="/emprendedores"
+              to="/emprendimientos"
               className="block py-2 px-2 text-white font-medium hover:text-accent"
             >
-              Emprendedores
+              Emprendimientos
             </Link>
 
             <Link
@@ -438,7 +438,7 @@ export function Navbar() {
                 </p>
 
                 <Link
-                  to="/inventario"
+                  to="/emprendimientos-propio"
                   className="block py-2 px-4 text-white hover:text-accent"
                 >
                   Inventario

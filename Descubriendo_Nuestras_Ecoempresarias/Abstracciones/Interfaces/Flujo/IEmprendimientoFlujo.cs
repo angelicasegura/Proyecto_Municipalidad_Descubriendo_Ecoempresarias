@@ -20,6 +20,12 @@ namespace Abstracciones.Interfaces.Flujo
 
 
 
+        Task<int> CrearEmprendimientoAsync(EmprendimientoRequest emprendimiento);
 
+        Task<bool> VerificarExistenciaEmprendimiento(string CedulaJuridica);
+
+        Task<EmprendimientoResponse> GetEmprendimientoPorId(string cedulaJuridica);
+
+        Task<List<EmprendimientoResponse>> GetEmprendimientoPorCedulaUsuario(int cedula, int estado_id);
     }
 }

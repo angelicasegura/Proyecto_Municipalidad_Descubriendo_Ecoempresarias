@@ -6,7 +6,7 @@ import { Input } from "../../../components/ui/input"
 import { Label } from "../../../components/ui/label"
 import { Alert, AlertDescription } from "../../../components/ui/alert"
 import { Leaf, LogIn, AlertCircle, Loader2 } from "lucide-react"
-import Link from "next/link"
+import { Link } from "react-router-dom"
 import { loginUser } from "../../auth/login/Actions/handleLogin"
 import { ForgotPasswordModal } from "./components/ForgotPasswordModal"
 
@@ -146,7 +146,7 @@ export default function LoginPage() {
             <div className="mt-6 text-center text-sm text-muted-foreground">
               No tienes una cuenta?{" "}
               <Link
-                href="/registro"
+                to="/registro"
                 className="text-[var(--azul-principal)] hover:underline font-medium"
               >
                 Registrate aqui

@@ -1,5 +1,5 @@
 export interface Emprendedor {
-  emprendedor_id: number
+  emprendimientoId: number
   nombre: string
   cedulaJuridica: string
   tipoActividadId: number
@@ -7,6 +7,8 @@ export interface Emprendedor {
   telefono: string
   direccion: string
   estadoId: number // 1 = activo, 2 = inactivo
+  ruta_Imagen_Logo?: string
+  descripcion?: string
 }
 
 export interface TipoActividad {
