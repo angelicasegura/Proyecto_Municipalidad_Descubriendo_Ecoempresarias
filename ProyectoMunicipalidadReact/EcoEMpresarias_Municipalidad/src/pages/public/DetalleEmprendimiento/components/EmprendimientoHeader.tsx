@@ -47,7 +47,7 @@ export default function EmprendimientoHeader({ emprendedor, loading }: Props) {
           {/* Logo */}
           <div className="shrink-0 overflow-hidden rounded-2xl">
             <img
-              src={emprendedor.ruta_Imagen_Logo || "/placeholder.svg"}
+              src={`https://localhost:7050/api/Images/Buscar/1/${emprendedor.ruta_Imagen_Logo}`}
               alt={emprendedor.nombre}
               className="h-40 w-40 object-cover md:h-48 md:w-48"
             />

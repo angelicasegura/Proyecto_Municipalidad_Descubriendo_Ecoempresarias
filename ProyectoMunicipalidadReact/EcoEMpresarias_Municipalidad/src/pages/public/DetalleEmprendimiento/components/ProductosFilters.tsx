@@ -8,7 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../../../../components/ui/select";
-import { Search, X } from "lucide-react";
+import { Search } from "lucide-react";
 
 interface Props {
   busqueda: string;
@@ -25,10 +25,8 @@ export default function ProductosFilters({
   categoriaSeleccionada,
   setCategoriaSeleccionada,
   categorias,
-  onLimpiar,
 }: Props) {
-  const hayFiltros = busqueda.length > 0 || categoriaSeleccionada !== "all";
-
+ 
   return (
     <div className="flex flex-col gap-3 rounded-2xl bg-card p-4 shadow-sm md:flex-row md:items-center md:gap-4">
       {/* Búsqueda */}
@@ -43,31 +41,30 @@ export default function ProductosFilters({
       </div>
 
       {/* Categoría */}
-      <Select value={categoriaSeleccionada} onValueChange={setCategoriaSeleccionada}>
-        <SelectTrigger className="w-full rounded-xl border-0 bg-muted md:w-52">
-          <SelectValue placeholder="Categoría" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="all">Todas las categorías</SelectItem>
-          {categorias.map((cat) => (
-            <SelectItem key={cat.categoria_id} value={cat.nombre}>
-              {cat.nombre}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
+      <div className="sm:w-56">
+      <Select
+  value={categoriaSeleccionada}
+  onValueChange={setCategoriaSeleccionada}
+>
+  <SelectTrigger className="h-11 w-full md:w-52 bg-card border-border min-w-0">
+    <SelectValue placeholder="Todas las categorías" className="truncate"/>
+  </SelectTrigger>
 
-      {/* Limpiar */}
-      {hayFiltros && (
-        <Button
-          variant="outline"
-          onClick={onLimpiar}
-          className="rounded-xl gap-1"
-        >
-          <X className="h-4 w-4" />
-          Limpiar
-        </Button>
-      )}
+  <SelectContent>
+    <SelectItem value="all">Todas las categorías</SelectItem>
+
+    {categorias.map((cat) => (
+      <SelectItem
+        key={cat.categoria_Id}
+        value={String(cat.categoria_Id)}  
+      >
+        {cat.nombre}
+      </SelectItem>
+    ))}
+  </SelectContent>
+</Select>
+</div>
+      
     </div>
   );
 }

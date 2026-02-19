@@ -1,5 +1,5 @@
 export interface Emprendedor {
-  emprendedorId: number
+  emprendimientoId: number
   nombre: string
   cedulaJuridica: string
   tipoActividadId: number

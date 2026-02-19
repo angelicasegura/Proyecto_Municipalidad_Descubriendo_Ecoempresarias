@@ -24,11 +24,11 @@ export function EmprendimientoCard({
   const tipoActividad = tiposActividad.find(
     (t) => t.tipoActividadId === emprendedor.tipoActividadId,
   );
-
+  
   return (
     
       <Card  className="group overflow-hidden border-border hover:shadow-lg transition-all duration-300 hover:-translate-y-1 cursor-pointer">
-        <Link to={`/emprendimiento/${emprendedor.emprendedorId}/${emprendedor.cedulaJuridica}`} className="block w-full h'">
+        <Link to={`/emprendimiento/${emprendedor.emprendimientoId}/${emprendedor.cedulaJuridica}`} className="block w-full h-full">
         <div className="relative aspect-[16/10] overflow-hidden bg-muted">
           {emprendedor.ruta_Imagen_Logo ? (
             <img

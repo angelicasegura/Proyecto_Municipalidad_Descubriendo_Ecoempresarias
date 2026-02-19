@@ -1,10 +1,12 @@
 import { useState, useEffect, useMemo } from "react";
 import { useParams } from "react-router-dom";
-import type { Emprendedor} from "../../../types/emprendedoresType";
+import type { Emprendedor } from "../../../types/emprendedoresType";
 import type { Producto, CategoriaProducto } from "../../../types/productosType";
+
 import { handleFetchEmprendimiento } from "./Actions/handleFecthEmprendimiento";
 import { handleFetchProductos } from "./Actions/handleFecthProductos";
 import { handleFetchCategorias } from "./Actions/handleFetchCategorias";
+
 import EmprendimientoHeader from "./components/EmprendimientoHeader";
 import EmprendimientoMap from "./components/EmprendimientoMap";
 import ProductosFilters from "./components/ProductosFilters";
@@ -13,122 +15,96 @@ import ProductosGrid from "./components/ProductosGrid";
 export default function DetalleEmprendimiento() {
   const { id, cedulaJuridica } = useParams<{ id: string; cedulaJuridica: string }>();
   
+  // Estados de Datos
   const [emprendedor, setEmprendedor] = useState<Emprendedor | null>(null);
   const [productos, setProductos] = useState<Producto[]>([]);
   const [categorias, setCategorias] = useState<CategoriaProducto[]>([]);
-  const [loadingEmprendedor, setLoadingEmprendedor] = useState(true);
-  const [loadingProductos, setLoadingProductos] = useState(true);
+  
+  // Estados de UI
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Filtros
-  const [busqueda, setBusqueda] = useState("");
-  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState("all");
+  // Filtros (Como en tu ejemplo)
+  const [searchTerm, setSearchTerm] = useState("");
+  const [categoriaFilter, setCategoriaFilter] = useState("all");
 
-  // Modal detalle
-  const [productoSeleccionado, setProductoSeleccionado] = useState<Producto | null>(null);
-  const [dialogOpen, setDialogOpen] = useState(false);
+  const numericId = useMemo(() => Number(id) || null, [id]);
 
-  // Validar id
-  const numericId = useMemo(() => {
-    const parsed = Number(id);
-    return !isNaN(parsed) && Number.isFinite(parsed) && parsed > 0 ? parsed : null;
-  }, [id]);
-
+  // 
   useEffect(() => {
-    if (!numericId || !cedulaJuridica) {
-      setError("ID de emprendimiento inválido");
-      setLoadingEmprendedor(false);
-      setLoadingProductos(false);
-      return;
-    }
+    if (!numericId || !cedulaJuridica) return;
 
-    const fetchData = async () => {
+    const loadInitialData = async () => {
       try {
-        setLoadingEmprendedor(true);
-        setLoadingProductos(true);
-        setError(null);
-
-        const [empData, prodData, catData] = await Promise.all([
+        const [empData, catData] = await Promise.all([
           handleFetchEmprendimiento(cedulaJuridica),
-          handleFetchProductos(numericId),
-          handleFetchCategorias(numericId),
+          handleFetchCategorias(numericId)
         ]);
-
         setEmprendedor(empData);
-        setProductos(prodData);
         setCategorias(catData);
       } catch (err) {
-        setError("Error al cargar los datos del emprendimiento");
-        console.error(err);
-      } finally {
-        setLoadingEmprendedor(false);
-        setLoadingProductos(false);
+        console.error("Error cargando info base:", err);
       }
     };
 
-    fetchData();
+    loadInitialData();
   }, [numericId, cedulaJuridica]);
 
-  // Filtrado local
-  const productosFiltrados = useMemo(() => {
-    return productos.filter((p) => {
-      const matchNombre = p.nombreProducto
-        .toLowerCase()
-        .includes(busqueda.toLowerCase());
-      const matchCategoria =
-        categoriaSeleccionada === "all" || p.categoriaNombre === categoriaSeleccionada;
-      return matchNombre && matchCategoria;
-    });
-  }, [productos, busqueda, categoriaSeleccionada]);
+  // 2. 
+  useEffect(() => {
+    if (!numericId) return;
 
-  const handleLimpiarFiltros = () => {
-    setBusqueda("");
-    setCategoriaSeleccionada("all");
-  };
+    const getFilteredProductos = async () => {
+      try {
+        setLoading(true);
+        const data = await handleFetchProductos(numericId, categoriaFilter == "all" ? undefined : Number(categoriaFilter), searchTerm);
+        console.log(categoriaFilter)
+        setProductos(Array.isArray(data) ? data : []);
+      } catch (err) {
+        setError("Error al filtrar productos");
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const handleVerDetalle = (producto: Producto) => {
-    setProductoSeleccionado(producto);
-    setDialogOpen(true);
-  };
+    // Debounce para no saturar la API mientras escribes
+    const timer = setTimeout(getFilteredProductos, 400);
+    return () => clearTimeout(timer);
 
-  if (error) {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-emprendimiento-bg p-4">
-        <div className="rounded-2xl bg-card p-8 text-center shadow-md">
-          <p className="text-lg font-medium text-destructive">{error}</p>
-        </div>
-      </div>
-    );
-  }
+  }, [searchTerm, categoriaFilter, numericId]);
+
+  if (error) return <div className="p-10 text-center text-red-500">{error}</div>;
 
   return (
     <main className="min-h-screen bg-emprendimiento-bg">
       <div className="mx-auto max-w-6xl space-y-6 px-4 py-6 md:py-10">
-        {/* 1. Hero */}
-        <EmprendimientoHeader emprendedor={emprendedor} loading={loadingEmprendedor} />
+        
+        <EmprendimientoHeader emprendedor={emprendedor} loading={!emprendedor} />
 
-        {/* 2. Mapa */}
-        {emprendedor?.direccion && (
-          <EmprendimientoMap direccion={emprendedor.direccion} />
-        )}
+        {emprendedor?.direccion && <EmprendimientoMap direccion={emprendedor.direccion} />}
 
-        {/* 3. Filtros */}
         <ProductosFilters
-          busqueda={busqueda}
-          setBusqueda={setBusqueda}
-          categoriaSeleccionada={categoriaSeleccionada}
-          setCategoriaSeleccionada={setCategoriaSeleccionada}
+          busqueda={searchTerm}
+          setBusqueda={setSearchTerm}
+          categoriaSeleccionada={categoriaFilter}
+          setCategoriaSeleccionada={setCategoriaFilter}
           categorias={categorias}
-          onLimpiar={handleLimpiarFiltros}
+          onLimpiar={() => {
+            setSearchTerm("");
+            setCategoriaFilter("all");
+          }}
         />
 
-        {/* 4. Grid de Productos */}
+        <div className="mb-4">
+          <p className="text-sm text-muted-foreground">
+            {productos.length} {productos.length === 1 ? "producto encontrado" : "productos encontrados"}
+          </p>
+        </div>
+
         <ProductosGrid
-          productos={productosFiltrados}
-          loading={loadingProductos}
-          onVerDetalle={handleVerDetalle}
+          productos={productos}
+          loading={loading}
         />
-
         
       </div>
     </main>

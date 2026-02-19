@@ -21,6 +21,7 @@ BEGIN
                 WHERE 
                     P.Categoria_id = C.Categoria_id
                     AND P.Emprendimiento_id = @Emprendimiento_id
+                    And P.Estado_id = 1
             )
         );
 END

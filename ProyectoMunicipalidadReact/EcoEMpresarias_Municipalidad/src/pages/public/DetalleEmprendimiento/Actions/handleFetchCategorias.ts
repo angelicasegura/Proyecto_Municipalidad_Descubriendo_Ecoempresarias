@@ -9,8 +9,8 @@ export async function handleFetchCategorias(emprendimiento_id: number): Promise<
      });
 
 
-      const response = await fetch(`https://localhost:7050/api/CategoriasProductos/Obtener${params}`);
-     if (!response.ok) throw new Error("Error al obtener emprendimiento");
+      const response = await fetch(`https://localhost:7050/api/CategoriasProductos/Obtener?${params.toString()}`);
+     if (!response.ok) throw new Error("Error al obtener categorías");
      return await response.json(); 
 
     

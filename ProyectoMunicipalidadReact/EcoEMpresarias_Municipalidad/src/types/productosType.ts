@@ -13,7 +13,7 @@ export interface Producto {
 }
 
 export interface CategoriaProducto {
-  categoria_id: string
+  categoria_Id: string
   nombre: string
   ruta_imagen?: string
   estado_id: number

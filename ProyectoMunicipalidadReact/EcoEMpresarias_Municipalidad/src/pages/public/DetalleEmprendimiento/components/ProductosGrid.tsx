@@ -6,10 +6,9 @@ import { PackageOpen } from "lucide-react";
 interface Props {
   productos: Producto[];
   loading: boolean;
-  onVerDetalle: (producto: Producto) => void;
 }
 
-export default function ProductosGrid({ productos, loading, onVerDetalle }: Props) {
+export default function ProductosGrid({ productos, loading}: Props) {
   if (loading) {
     return (
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
@@ -51,7 +50,6 @@ export default function ProductosGrid({ productos, loading, onVerDetalle }: Prop
         <ProductoCard
           key={producto.producto_id}
           producto={producto}
-          onVerDetalle={onVerDetalle}
         />
       ))}
     </div>

@@ -7,20 +7,19 @@ import { Eye } from "lucide-react";
 
 interface Props {
   producto: Producto;
-  onVerDetalle: (producto: Producto) => void;
 }
 
-export default function ProductoCard({ producto, onVerDetalle }: Props) {
+export default function ProductoCard({ producto }: Props) {
   const tieneDescuento = !!producto.descuento && producto.descuento > 0;
   const precioFinal = calcularPrecioFinal(producto.precio, producto.descuento);
   const textoDescuento = obtenerTextoDescuento(producto.descuento);
-
+  
   return (
     <Card className="group overflow-hidden rounded-2xl border-0 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg">
       {/* Imagen */}
       <div className="relative aspect-[4/3] overflow-hidden">
         <img
-          src={producto.ruta_Imagen || "/placeholder.svg"}
+          src={`https://localhost:7050/api/Images/Buscar/3/${producto.ruta_Imagen}`}
           alt={producto.nombreProducto}
           className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
           loading="lazy"
@@ -57,7 +56,7 @@ export default function ProductoCard({ producto, onVerDetalle }: Props) {
         </div>
         <Button
           size="sm"
-          onClick={() => onVerDetalle(producto)}
+          onClick={() => {}}
           className="rounded-xl bg-emprendimiento-primary text-emprendimiento-text hover:bg-emprendimiento-hover"
         >
           <Eye className="mr-1 h-4 w-4" />
