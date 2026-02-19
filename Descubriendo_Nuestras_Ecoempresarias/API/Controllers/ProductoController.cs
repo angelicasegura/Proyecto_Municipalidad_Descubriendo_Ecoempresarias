@@ -37,7 +37,7 @@ namespace API.Controllers
             try
             {
                 //implementar que busque antes de crear, pero se pone despues
-                string rutaBase = _configuration["LinksDocument:DocumentosLinkaAle"];
+                string rutaBase = _configuration["LinksDocument:DocumentosLink"];
                 string carpeta = _configuration["Carpetas:Productos"];
 
                 if (producto.Imagen != null)

@@ -6,7 +6,7 @@ BEGIN
     SET NOCOUNT ON;
 
     SELECT
-        Usuario.Usuario_id,
+        Usuario.Usuario_id IdUsuario,
         Usuario.Nombre,
         Usuario.Apellidos,
         Usuario.Telefono,
@@ -14,8 +14,8 @@ BEGIN
         Usuario.Email,
         Usuario.Ruta_Imagen_Perfil,
         Usuario.Edad,
-        Usuario.Estado_id,
-        Usuario.Rol_id,
+        Usuario.Estado_id IdEstado,
+        Usuario.Rol_id IdRol,
         Estado.Nombre AS Estado,
         Rol.Nombre AS Rol
     FROM ECOEMPRESARIAS_USUARIOS_TB Usuario
