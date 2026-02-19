@@ -38,9 +38,9 @@ namespace Flujo
             return await _productoDA.ObtenerProducto(id);
         }
 
-        public async Task<IEnumerable<ProductoResponse>> ObtenerProductos()
+        public async Task<IEnumerable<ProductoResponse>> ObtenerProductos(Guid? categoria_id, String? nombre, int? emprendimiento_id, int? estado_id)
         {
-            return await _productoDA.ObtenerProductos();
+            return await _productoDA.ObtenerProductos(categoria_id,nombre,emprendimiento_id,estado_id);
         }
     }
 }

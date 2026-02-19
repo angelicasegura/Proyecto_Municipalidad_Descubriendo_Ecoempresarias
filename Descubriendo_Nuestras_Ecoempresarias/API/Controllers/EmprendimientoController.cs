@@ -72,15 +72,7 @@ namespace API.Controllers
                         pageSize = limit
                     });
                 }
-                foreach (var item in resultado.Items)
-                {
-          
-                    if (!string.IsNullOrEmpty(item.Ruta_Imagen_Logo))
-                    {
-
-                        item.ImagenData = await _documentoFlujo.EncontrarImagen(item.Ruta_Imagen_Logo, carpeta);
-                    }
-                }
+               
                 return Ok(new
                 {
                     items = resultado.Items,
@@ -124,6 +116,11 @@ namespace API.Controllers
                         request.Ruta_Imagen_Logo = rutaImagen;
                     }
                 }
+                if (usuario.IdRol != 2)
+                {
+                    usuario.IdRol = 2;
+                    var UpdateUser = await _usuarioFlujo.EditarAdmin(usuario.IdUsuario, usuario);
+                }
                 
                 
                 var resultado = await _emprendimientoFlujo.CrearEmprendimientoAsync(request);
@@ -138,11 +135,36 @@ namespace API.Controllers
 
         }
 
+
+        [HttpGet("Obtener")]
+        public async Task<IActionResult> obtenerEmprendimientoPorId([FromQuery] string cedulaJuridica)
+        {
+            try
+            {
+                if(cedulaJuridica == null)
+                {
+                    return BadRequest("Cedula Juridica no indicada");
+                }
+                var emprendimiento = await _emprendimientoFlujo.GetEmprendimientoPorId(cedulaJuridica);
+
+
+                return Ok(emprendimiento);
+            }catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+        }
+
         private async Task<bool> verificarSiEmprendimientoYaExiste(string CedulaJuridica)
         {
 
             return await _emprendimientoFlujo.VerificarExistenciaEmprendimiento(CedulaJuridica);
         }
 
+
+
+
+        
     }
 }

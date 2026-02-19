@@ -13,7 +13,7 @@ import RegisterPage from "./pages/auth/register/registerPage";
 
 import EmprendimientosPage from "./pages/public/ListaEmprendimientos/listaEmprendimientosPublic";
 
-
+import DetalleEmprendimiento from "./pages/public/DetalleEmprendimiento/DetalleEmprendimiento";
 
 
 import { Toaster } from "react-hot-toast";
@@ -38,11 +38,13 @@ function App() {
           {/* public routes */}
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/emprendimientos" element={<EmprendimientosPage />} />
+          <Route path="/emprendimiento/:id/:cedulaJuridica" element={<DetalleEmprendimiento />} /> 
 
           {/* HU-28: Ruta de registro */}
           <Route path="/registro" element={<RegisterPage />} />
 
-          <Route path="/emprendimientos" element={<EmprendimientosPage />} />
+          
 
           {/* admin routes */}
           

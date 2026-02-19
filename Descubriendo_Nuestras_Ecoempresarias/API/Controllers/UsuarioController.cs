@@ -107,7 +107,6 @@ namespace API.Controllers
                 }
 
                 // 2. Llamada al flujo/DA
-                // Nota: Asumimos que tu DA devuelve el número de filas afectadas
                 var filasAfectadas = await _usuarioFlujo.EditarAdmin(id, usuario);
 
                 if (filasAfectadas > 0)

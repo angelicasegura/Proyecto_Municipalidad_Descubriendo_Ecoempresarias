@@ -2,13 +2,16 @@
     [Producto_id]    UNIQUEIDENTIFIER NOT NULL,
     [NombreProducto] VARCHAR (200)    NOT NULL,
     [Descripcion]    VARCHAR (500)    NOT NULL,
-    [Ruta_Imagen]    VARCHAR (300)    NOT NULL,
+    [Ruta_Imagen]    VARCHAR (300)    NULL,
     [Precio]         DECIMAL (10, 2)  NOT NULL,
     [Categoria_id]   UNIQUEIDENTIFIER NOT NULL,
     [Estado_id]      INT              NOT NULL,
+    [Emprendimiento_id] INT NOT NULL, 
+    [Descuento] DECIMAL(5, 2) NULL, 
     CONSTRAINT [ECO_PRODUCTO_PK] PRIMARY KEY CLUSTERED ([Producto_id] ASC),
     CONSTRAINT [ECO_PRODUCTO_PRECIO_CHK] CHECK ([Precio]>=(0)),
     CONSTRAINT [ECO_PRODUCTO_CATEGORIA_FK] FOREIGN KEY ([Categoria_id]) REFERENCES [dbo].[ECOEMPRESARIAS_CATEGORIA_TB] ([Categoria_id]),
-    CONSTRAINT [ECO_PRODUCTO_ESTADO_FK] FOREIGN KEY ([Estado_id]) REFERENCES [dbo].[ECOEMPRESARIAS_ESTADOS_TB] ([Estado_id])
+    CONSTRAINT [ECO_PRODUCTO_ESTADO_FK] FOREIGN KEY ([Estado_id]) REFERENCES [dbo].[ECOEMPRESARIAS_ESTADOS_TB] ([Estado_id]),
+    CONSTRAINT [ECO_PRODUCTO_EMPRENDIMIENTO_FK] FOREIGN KEY ([Emprendimiento_id]) REFERENCES [dbo].[ECOEMPRESARIAS_EMPRENDIMIENTOS_TB] ([Emprendimiento_id])
 );
 
