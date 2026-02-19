@@ -34,7 +34,7 @@ namespace DA
                 Nombre = usuario.Nombre,
                 Apellidos = usuario.Apellidos,
                 Telefono = usuario.Telefono,
-                Contrasena = usuario.Contrasena, 
+                Contrasena = usuario.Contrasena,
                 Email = usuario.Email,
                 Ruta_Imagen_Perfil = usuario.Ruta_Imagen_Perfil,
                 Edad = usuario.Edad,
@@ -54,7 +54,7 @@ namespace DA
 
             var resultQuery = await _sqlConnection.ExecuteScalarAsync<int>(query, new
             {
-                Usuario_id = usuario.IdUsuario,
+                Usuario_id = Id,
                 Nombre = usuario.Nombre,
                 Apellidos = usuario.Apellidos,
                 Telefono = usuario.Telefono,
@@ -88,7 +88,13 @@ namespace DA
         public async Task<UsuarioResponse> InicioSesionUsuario(string email, string contrasena)
         {
             string query = @"ObtenerUsuario";
-            var resultQuery = await _sqlConnection.QueryAsync<UsuarioResponse>(query, new { email, contrasena });
+            var resultQuery = await _sqlConnection.QueryAsync<UsuarioResponse>(query, 
+                new { 
+                Email = email, 
+                Contrasena = contrasena },
+                commandType: CommandType.StoredProcedure
+             );
+
 
             return resultQuery.FirstOrDefault();
         }
@@ -164,13 +170,15 @@ namespace DA
                 }
                 return 0;
 
-            } catch (Exception ex) {
-                throw new Exception("Algo salio mal con la actualizacion"); 
-                    }
-            
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Algo salio mal con la actualizacion");
+            }
+
         }
 
-        public async Task<int> ActualizarEstadoDeUsuario(int Id,int estado)
+        public async Task<int> ActualizarEstadoDeUsuario(int Id, int estado)
         {
             try
             {
@@ -195,4 +203,5 @@ namespace DA
             }
         }
     }
+}
 

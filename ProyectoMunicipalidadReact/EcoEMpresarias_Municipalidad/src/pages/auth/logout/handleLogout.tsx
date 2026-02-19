@@ -4,4 +4,4 @@ export function handleLogout() {
 
   window.location.href = "/login";
 };
-gi
+ 

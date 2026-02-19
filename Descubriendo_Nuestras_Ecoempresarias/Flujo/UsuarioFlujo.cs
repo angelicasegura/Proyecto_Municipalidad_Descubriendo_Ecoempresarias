@@ -52,6 +52,7 @@ namespace Flujo
         public Task<UsuarioRequest> BuscarUsuarioPorEmail(string email)
         {
             return _usuarioDA.BuscarUsuarioPorEmail(email);
+        }
         public async Task<PagedResult<UsuarioResponse>> GetUsuariosPaginadosAsync(int page, int limit, string search, int? roleId)
         {
 
@@ -69,5 +70,7 @@ namespace Flujo
         {
             return await _usuarioDA.ActualizarEstadoDeUsuario(Id, estado);
         }
+        
+
     }
 }
