@@ -15,22 +15,25 @@ export function EmprendimientosGrid({ emprendedores, tiposActividad }: Emprendim
           <Store className="h-10 w-10 text-muted-foreground" />
         </div>
         <h3 className="text-lg font-semibold text-foreground mb-1">No se encontraron emprendimientos</h3>
-        <p className="text-sm text-muted-foreground max-w-md">
-          Intenta cambiar los filtros de busqueda o vuelve mas tarde.
-        </p>
+        
       </div>
     )
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-      {emprendedores.map((emprendedor) => (
-        <EmprendimientoCard
-          key={emprendedor.emprendimientoId}
-          emprendedor={emprendedor}
-          tiposActividad={tiposActividad}
-        />
-      ))}
-    </div>
-  )
+  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+    <p className="col-span-full text-center text-[#056F94] font-medium mb-4">
+      Tus emprendimientos se muestran aquí. Para ver el inventario de cada emprendimiento, haz clic en la tarjeta correspondiente.
+    </p>
+
+    {emprendedores.map((emprendedor) => (
+      <EmprendimientoCard
+        key={emprendedor.emprendimientoId}
+        emprendedor={emprendedor}
+        tiposActividad={tiposActividad}
+      />
+    ))}
+  </div>
+)
+
 }

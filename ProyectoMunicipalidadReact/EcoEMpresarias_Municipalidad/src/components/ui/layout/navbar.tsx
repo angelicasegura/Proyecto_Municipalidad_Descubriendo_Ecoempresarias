@@ -232,7 +232,7 @@ export function Navbar() {
                 >
                   <DropdownMenuItem asChild>
                     <Link
-                      to="/inventario"
+                      to="/emprendimientos-propio"
                       className="
             text-white
             cursor-pointer
@@ -437,7 +437,7 @@ export function Navbar() {
                 </p>
 
                 <Link
-                  to="/inventario"
+                  to="/emprendimientos-propio"
                   className="block py-2 px-4 text-white hover:text-accent"
                 >
                   Inventario

@@ -18,6 +18,7 @@ import DetalleEmprendimiento from "./pages/public/DetalleEmprendimiento/DetalleE
 
 import { Toaster } from "react-hot-toast";
 import DetalleProductoPage from "./pages/public/DetalleProducto/DetalleProducto";
+import EmprendimientosPropios from "./pages/Emprendedores/ListaEmprendimientosPropiosInventario/ListaEmprendientosPropios";
 
 function App() {
   const { loading } = useAuth();
@@ -57,6 +58,9 @@ function App() {
             
 
           {/* Emprendedores routes */}
+          <Route element={<ProtectedRoute allowedRoles={["EMPRENDEDOR"]} />}>
+            <Route path="/emprendimientos-propio" element={<EmprendimientosPropios />} />
+          </Route>
         </Routes>
       </main>
       <Footer />

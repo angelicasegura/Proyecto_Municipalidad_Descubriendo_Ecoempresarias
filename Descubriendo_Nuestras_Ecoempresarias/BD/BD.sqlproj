@@ -96,6 +96,10 @@
     <Build Include="dbo\Stored Procedures\SP_EditarProducto.sql" />
     <Build Include="dbo\Stored Procedures\SP_AgregarProducto.sql" />
     <Build Include="dbo\Stored Procedures\sp_ObtenerCategoriasActivas.sql" />
+    <Build Include="dbo\Stored Procedures\sp_ObtenerInventarioPorEmprendimiento.sql" />
+    <Build Include="dbo\Stored Procedures\sp_editarInventario.sql" />
+    <Build Include="dbo\Stored Procedures\sp_agregarInventario.sql" />
+    <Build Include="dbo\Stored Procedures\sp_ObtenerEmprendimientoPorCedula.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="BD.refactorlog" />

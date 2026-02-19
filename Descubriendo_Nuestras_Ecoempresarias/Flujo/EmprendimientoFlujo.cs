@@ -24,6 +24,11 @@ namespace Flujo
             return await _emprendimientoDA.CrearEmprendimientoAsync(emprendimiento);
         }
 
+        public async Task<List<EmprendimientoResponse>> GetEmprendimientoPorCedulaUsuario(int cedula, int estado_id)
+        {
+            return await _emprendimientoDA.GetEmprendimientoPorCedulaUsuario(cedula, estado_id);
+        }
+
         public async Task<EmprendimientoResponse> GetEmprendimientoPorId(string cedulaJuridica)
         {
             return await _emprendimientoDA.GetEmprendimientoPorId(cedulaJuridica);

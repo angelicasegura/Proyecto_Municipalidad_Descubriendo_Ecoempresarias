@@ -128,5 +128,28 @@ namespace DA
                 throw new Exception(ex.Message, ex);
             }
         }
+
+
+        public async Task<List<EmprendimientoResponse>> GetEmprendimientoPorCedulaUsuario(int cedula, int estado_id)
+        {
+            try
+            {
+                string query = @"sp_ObtenerEmprendimientoPorCedula";
+                var parameters = new
+                {
+                    Cedula = cedula,
+                    Estado_id = estado_id
+                };
+                var result = await _sqlConnection.QueryAsync<EmprendimientoResponse>(query, parameters, commandType: CommandType.StoredProcedure);
+                return result.ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex);
+            }
+        }
+
+
+
     }
 }
