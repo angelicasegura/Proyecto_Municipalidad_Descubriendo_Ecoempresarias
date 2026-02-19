@@ -12,7 +12,7 @@ namespace Abstracciones.Interfaces.Flujo
         public Task<Guid> AgregarProducto(ProductoRequest producto);
         public Task<Guid> EditarProducto(Guid id, ProductoRequest producto);
         public Task<Guid> ElimnarProducto(Guid id);
-        public Task<IEnumerable<ProductoResponse>> ObtenerProductos();
+        public Task<IEnumerable<ProductoResponse>> ObtenerProductos(Guid? categoria_id, String? nombre, int? emprendimiento_id, int? estado_id);
         public Task<ProductoRequest> ObtenerProducto(Guid id);
     }
 }

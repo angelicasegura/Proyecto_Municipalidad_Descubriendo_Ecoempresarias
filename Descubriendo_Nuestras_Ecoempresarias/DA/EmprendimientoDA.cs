@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using static Abstracciones.Modelos.Emprendimiento;
 
 namespace DA
 {
@@ -86,5 +87,69 @@ namespace DA
             }
 
         }
+
+        public async Task<bool> VerificarExistenciaEmprendimiento(string CedulaJuridica)
+        {
+            string query = @"sp_ObtenerEmprendimientoPorCedulaJuridica";
+            var parameters = new
+            {
+                Cedula_Juridica = CedulaJuridica
+            };
+            try
+            {
+                var emprendimiento = await _sqlConnection.QueryAsync(query, parameters, commandType: CommandType.StoredProcedure);
+
+                if (emprendimiento != null)
+                {
+                    return false;
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+
+        public async Task<EmprendimientoResponse> GetEmprendimientoPorId(string cedulaJuridica)
+        {
+            try
+            {
+                string query = @"sp_ObtenerEmprendimientoPorCedulaJuridica";
+                var parameters = new
+                {
+                    Cedula_Juridica = cedulaJuridica
+                };
+                return await _sqlConnection.QueryFirstOrDefaultAsync<EmprendimientoResponse>(query, parameters, commandType: CommandType.StoredProcedure);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex);
+            }
+        }
+
+
+        public async Task<List<EmprendimientoResponse>> GetEmprendimientoPorCedulaUsuario(int cedula, int estado_id)
+        {
+            try
+            {
+                string query = @"sp_ObtenerEmprendimientoPorCedula";
+                var parameters = new
+                {
+                    Cedula = cedula,
+                    Estado_id = estado_id
+                };
+                var result = await _sqlConnection.QueryAsync<EmprendimientoResponse>(query, parameters, commandType: CommandType.StoredProcedure);
+                return result.ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex);
+            }
+        }
+
+
+
     }
 }

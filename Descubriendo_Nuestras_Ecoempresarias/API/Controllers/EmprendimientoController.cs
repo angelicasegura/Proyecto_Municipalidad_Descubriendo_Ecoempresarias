@@ -1,9 +1,11 @@
 ﻿using Abstracciones.Interfaces.Flujo;
+using Abstracciones.Modelos;
 using API.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel;
 using static Abstracciones.Modelos.Emprendimiento;
 
 namespace API.Controllers
@@ -21,13 +23,15 @@ namespace API.Controllers
         private readonly GuardarImagenes _guardarImagen;
         private readonly IConfiguration _configuration;
         private readonly IDocumentoFlujo _documentoFlujo;
+        private readonly IUsuarioFlujo _usuarioFlujo;
 
-        public EmprendimientoController(IEmprendimientoFlujo emprendimientoFlujo, GuardarImagenes guardarImagen, IConfiguration configuration, IDocumentoFlujo documentoFlujo)
+        public EmprendimientoController(IEmprendimientoFlujo emprendimientoFlujo, GuardarImagenes guardarImagen, IConfiguration configuration, IDocumentoFlujo documentoFlujo, IUsuarioFlujo usuarioFlujo)
         {
             _emprendimientoFlujo = emprendimientoFlujo;
             _guardarImagen = guardarImagen;
             _configuration = configuration;
             _documentoFlujo = documentoFlujo;
+            _usuarioFlujo = usuarioFlujo;
         }
 
         [HttpGet("paginados")]
@@ -68,15 +72,7 @@ namespace API.Controllers
                         pageSize = limit
                     });
                 }
-                foreach (var item in resultado.Items)
-                {
-          
-                    if (!string.IsNullOrEmpty(item.Ruta_Imagen_Logo))
-                    {
-
-                        item.ImagenData = await _documentoFlujo.EncontrarImagen(item.Ruta_Imagen_Logo, carpeta);
-                    }
-                }
+               
                 return Ok(new
                 {
                     items = resultado.Items,
@@ -104,12 +100,26 @@ namespace API.Controllers
                 //implementar que busque antes de crear, pero se pone despues
                 string rutaBase = _configuration["LinksDocument:DocumentosLink"];
                 string carpeta = _configuration["Carpetas:Emprendimientos"];
+                UsuarioResponse usuario = await _usuarioFlujo.ObtenerUsuario(request.UsuarioId);
+                if(usuario==null || usuario.IdEstado == 0)
+                {
+                    return BadRequest("Usuario inexistente o inactivo");
+                }
+                if (await verificarSiEmprendimientoYaExiste(request.CedulaJuridica))
+                {
+                    return BadRequest("Emprendimiento ya existente");
+                }
                 if (request.Imagen != null) { 
                 string rutaImagen = await _guardarImagen.GuardarImagen(rutaBase,request.Imagen, carpeta);
                     if (rutaImagen != null)
                     {
                         request.Ruta_Imagen_Logo = rutaImagen;
                     }
+                }
+                if (usuario.IdRol != 2)
+                {
+                    usuario.IdRol = 2;
+                    var UpdateUser = await _usuarioFlujo.EditarAdmin(usuario.IdUsuario, usuario);
                 }
                 
                 
@@ -125,5 +135,60 @@ namespace API.Controllers
 
         }
 
+
+        [HttpGet("Obtener")]
+        public async Task<IActionResult> obtenerEmprendimientoPorId([FromQuery] string cedulaJuridica)
+        {
+            try
+            {
+                if(cedulaJuridica == null)
+                {
+                    return BadRequest("Cedula Juridica no indicada");
+                }
+                var emprendimiento = await _emprendimientoFlujo.GetEmprendimientoPorId(cedulaJuridica);
+
+
+                return Ok(emprendimiento);
+            }catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+        }
+
+
+
+        [HttpGet("Obtener/Cedula")]
+        public async Task<IActionResult> obtenerEmprendimientosPorCedulaUsuario([FromQuery] int cedula)
+        {
+            try
+            {
+                if (cedula == null)
+                {
+                    return BadRequest("Cedula no indicada");
+                }
+                var emprendimientos = await _emprendimientoFlujo.GetEmprendimientoPorCedulaUsuario(cedula,1);
+
+
+                return Ok(emprendimientos);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+        }
+
+
+        private async Task<bool> verificarSiEmprendimientoYaExiste(string CedulaJuridica)
+        {
+
+            return await _emprendimientoFlujo.VerificarExistenciaEmprendimiento(CedulaJuridica);
+        }
+
+
+
+
+        
     }
 }

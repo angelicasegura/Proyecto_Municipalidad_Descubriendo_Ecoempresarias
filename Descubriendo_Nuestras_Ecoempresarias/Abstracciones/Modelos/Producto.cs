@@ -14,6 +14,10 @@ namespace Abstracciones.Modelos
         public string Descripcion { get; set; }
         public Decimal Precio { get; set; }
         public string Ruta_Imagen { get; set; }
+
+        public int Emprendimiento_id { get; set; }
+
+        public decimal? Descuento { get; set; }
     }
 
     public class ProductoRequest : ProductoBase

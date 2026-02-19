@@ -232,7 +232,7 @@ export function Navbar() {
                 >
                   <DropdownMenuItem asChild>
                     <Link
-                      to="/inventario"
+                      to="/emprendimientos-propio"
                       className="
             text-white
             cursor-pointer
@@ -303,13 +303,14 @@ export function Navbar() {
               </Button>
             )}
             {user && (
-              <Button
-                variant="secondary"
-                className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold"
-              >
-                <Link to="/">Cerrar sesion</Link>
-              </Button>
-            )}
+                <Button
+                  variant="secondary"
+                  className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold"
+                  onClick={handleLogout}
+                >
+                  Cerrar Sesión
+                </Button>
+              )}
           </div>
 
           {/* Mobile menu button */}
@@ -437,7 +438,7 @@ export function Navbar() {
                 </p>
 
                 <Link
-                  to="/inventario"
+                  to="/emprendimientos-propio"
                   className="block py-2 px-4 text-white hover:text-accent"
                 >
                   Inventario
@@ -479,7 +480,7 @@ export function Navbar() {
                   className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold"
                   onClick={handleLogout}
                 >
-                  Cerrar sesión
+                  Cerrar Sesión
                 </Button>
               )}
 

@@ -84,15 +84,11 @@ namespace API.Controllers
             var user = await _usuarioFlujo.BuscarUsuarioPorEmail(forgotPassword.Email);
 
             if (user == null)
-            {
-                
                 return Ok(new { message = "Si el correo es correcto, recibirás un email" });
-            }
 
-            // Generar contraseña temporal
-            string tempPassword = GenerateTemporaryPassword();
-
-            user.Contrasena = tempPassword;
+            string tempPassword = GenerateTemporaryPassword().Trim();
+            string hash = HashGenerator.HashHelper.GenerarHashSHA256(tempPassword);
+            user.Contrasena = hash;
             await _usuarioFlujo.Editar(user.IdUsuario, user);
 
             // Enviar email

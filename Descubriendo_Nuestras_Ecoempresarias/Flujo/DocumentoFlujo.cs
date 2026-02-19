@@ -21,5 +21,10 @@ namespace Flujo
         {
             return await _documentoDA.EncontrarImagen(nombreImagen, carpeta);
         }
+
+        public string ObtenerContentType(string fileName)
+        {
+            return _documentoDA.ObtenerContentType(fileName);
+        }
     }
 }

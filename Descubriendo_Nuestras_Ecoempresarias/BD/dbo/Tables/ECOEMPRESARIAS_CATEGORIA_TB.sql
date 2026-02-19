@@ -1,7 +1,7 @@
 ﻿CREATE TABLE [dbo].[ECOEMPRESARIAS_CATEGORIA_TB] (
     [Categoria_id] UNIQUEIDENTIFIER NOT NULL,
     [Nombre]       VARCHAR (200)    NOT NULL,
-    [Ruta_imagen]  VARCHAR (300)    NOT NULL,
+    [Ruta_imagen]  VARCHAR (300)    NULL,
     [Estado_id]    INT              NOT NULL,
     CONSTRAINT [ECO_CATEGORIA_PK] PRIMARY KEY CLUSTERED ([Categoria_id] ASC),
     CONSTRAINT [ECO_CATEGORIA_ESTADO_FK] FOREIGN KEY ([Estado_id]) REFERENCES [dbo].[ECOEMPRESARIAS_ESTADOS_TB] ([Estado_id])

@@ -34,7 +34,7 @@ export const ROLES: Rol[] = [
 
 export const ESTADOS: Estado[] = [
   { estado_id: 1, nombre: "Activo" },
-  { estado_id: 2, nombre: "Inactivo" },
+  { estado_id: 0, nombre: "Inactivo" },
 ]
 
 export const getRolNombre = (idRol: number): string => {

@@ -13,6 +13,8 @@ namespace API.Controllers
 {
     [Route("api/Usuarios")]
     [ApiController]
+    //agregar verificaciones y todo tipo si un uusario existe o no
+
     public class UsuarioController : ControllerBase, IUsuarioController
     {
         private IUsuarioFlujo _usuarioFlujo;
@@ -105,7 +107,6 @@ namespace API.Controllers
                 }
 
                 // 2. Llamada al flujo/DA
-                // Nota: Asumimos que tu DA devuelve el número de filas afectadas
                 var filasAfectadas = await _usuarioFlujo.EditarAdmin(id, usuario);
 
                 if (filasAfectadas > 0)
@@ -159,7 +160,6 @@ namespace API.Controllers
                 
 
                 // 2. Llamada al flujo/DA
-                // Nota: Asumimos que tu DA devuelve el número de filas afectadas
                 var filasAfectadas = await _usuarioFlujo.ActualizarEstadoDeUsuario(id,estadoCambio);
 
                 if (filasAfectadas > 0)

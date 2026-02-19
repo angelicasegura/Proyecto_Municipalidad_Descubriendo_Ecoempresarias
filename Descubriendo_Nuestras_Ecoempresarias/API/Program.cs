@@ -103,6 +103,10 @@ builder.Services.AddScoped<IDocumentoFlujo, DocumentoFlujo>();
 builder.Services.AddScoped<IProductoController, ProductoController>();
 builder.Services.AddScoped<IProductoDA, ProductoDA>();
 builder.Services.AddScoped<IProductoFlujo, ProductoFlujo>();
+builder.Services.AddScoped<ICategoriaProductosDA, CategoriaProductosDA>();
+builder.Services.AddScoped<ICategoriaProductosFlujo, CategoriaProductosFlujo>();
+builder.Services.AddScoped<IInventarioDA, InventarioDA>();
+builder.Services.AddScoped<IInventarioFlujo, InventarioFlujo>();
 
 
 var app = builder.Build();

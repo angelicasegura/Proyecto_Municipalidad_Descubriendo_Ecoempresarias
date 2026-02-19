@@ -32,5 +32,22 @@ namespace DA
 
             return archivoBytes;
         }
+
+
+        public string ObtenerContentType(string fileName)
+        {
+            var extension = Path.GetExtension(fileName).ToLowerInvariant();
+
+            return extension switch
+            {
+                ".jpg" or ".jpeg" => "image/jpeg",
+                ".png" => "image/png",
+                ".webp" => "image/webp",
+                ".gif" => "image/gif",
+                _ => "application/octet-stream"
+            };
+        }
+
+       
     }
 }
