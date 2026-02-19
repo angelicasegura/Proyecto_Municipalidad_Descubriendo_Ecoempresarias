@@ -6,15 +6,16 @@ BEGIN
     SET NOCOUNT ON;
 
     SELECT 
-        P.Producto_id,
+        P.Producto_id as ProductoId,
         P.NombreProducto,
         P.Descripcion,
         P.Ruta_Imagen,
         P.Precio,
         P.Descuento,
 
-        I.Cantidad_actual,
-        I.Cantidad_minima,
+        I.Cantidad_actual as CantidadActual,
+        I.Cantidad_minima as CantidadMinima,
+        I.Estado_id as EstadoId,
 
         EP.Nombre AS NombreEmprendimiento
 

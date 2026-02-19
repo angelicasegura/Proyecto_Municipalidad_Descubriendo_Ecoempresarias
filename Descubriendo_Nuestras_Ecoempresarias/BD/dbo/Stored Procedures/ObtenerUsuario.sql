@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE ObtenerUsuario
+﻿    CREATE PROCEDURE ObtenerUsuario
     @Email VARCHAR(200),
     @Contrasena VARCHAR(200)
 AS

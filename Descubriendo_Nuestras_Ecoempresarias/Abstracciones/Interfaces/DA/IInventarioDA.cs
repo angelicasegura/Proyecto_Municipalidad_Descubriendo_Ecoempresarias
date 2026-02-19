@@ -10,7 +10,7 @@ namespace Abstracciones.Interfaces.DA
     public interface IInventarioDA
     {
         Task<Guid> AgregarInventario(Inventario inventario);
-        Task<Guid> EditarInventario(Guid id, Inventario inventario);
+        Task<Guid> EditarInventario(Guid id, InventarioRequest inventario);
         Task<List<Inventario>> ObtenerInventarios(int emprendimiento_id);
     }
 }

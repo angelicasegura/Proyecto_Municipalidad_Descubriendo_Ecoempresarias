@@ -44,16 +44,15 @@ namespace DA
             }
         }
 
-        public async Task<Guid> EditarInventario(Guid id, Inventario inventario)
+        public async Task<Guid> EditarInventario(Guid id, InventarioRequest inventario)
         {
             try
             {
                 string query = @"sp_editarInventario";
                 var resultQuery = await _sqlConnection.ExecuteScalarAsync<Guid>(query, new
                 {
-                    Inventario_id = id,
-                    Producto_id = inventario.ProductoId,
-                    @Cantidad_actual = inventario.CantidadActual,
+                    Producto_id=id,
+                    Cantidad_actual = inventario.CantidadActual,
                     Cantidad_minima = inventario.CantidadMinima,
                     Estado_id = inventario.EstadoId
                 });
