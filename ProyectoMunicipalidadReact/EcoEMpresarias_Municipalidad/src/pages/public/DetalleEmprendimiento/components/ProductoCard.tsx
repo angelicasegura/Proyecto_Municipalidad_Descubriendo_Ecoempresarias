@@ -4,6 +4,7 @@ import { Badge } from "../../../../components/ui/badge";
 import { Button } from "../../../../components/ui/button";
 import { calcularPrecioFinal, obtenerTextoDescuento, formatearPrecio } from "../../../../types/productosType";
 import { Eye } from "lucide-react";
+import { Link } from "react-router-dom";
 
 interface Props {
   producto: Producto;
@@ -16,6 +17,7 @@ export default function ProductoCard({ producto }: Props) {
   
   return (
     <Card className="group overflow-hidden rounded-2xl border-0 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg">
+      <Link to={`/producto/${producto.producto_id}`} className="block w-full h-full">
       {/* Imagen */}
       <div className="relative aspect-[4/3] overflow-hidden">
         <img
@@ -63,6 +65,7 @@ export default function ProductoCard({ producto }: Props) {
           Ver
         </Button>
       </CardFooter>
+      </Link>
     </Card>
   );
 }

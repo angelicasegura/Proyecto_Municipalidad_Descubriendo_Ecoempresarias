@@ -17,6 +17,7 @@ import DetalleEmprendimiento from "./pages/public/DetalleEmprendimiento/DetalleE
 
 
 import { Toaster } from "react-hot-toast";
+import DetalleProductoPage from "./pages/public/DetalleProducto/DetalleProducto";
 
 function App() {
   const { loading } = useAuth();
@@ -40,6 +41,7 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/emprendimientos" element={<EmprendimientosPage />} />
           <Route path="/emprendimiento/:id/:cedulaJuridica" element={<DetalleEmprendimiento />} /> 
+          <Route path="/producto/:id" element={<DetalleProductoPage />} />
 
           {/* HU-28: Ruta de registro */}
           <Route path="/registro" element={<RegisterPage />} />
