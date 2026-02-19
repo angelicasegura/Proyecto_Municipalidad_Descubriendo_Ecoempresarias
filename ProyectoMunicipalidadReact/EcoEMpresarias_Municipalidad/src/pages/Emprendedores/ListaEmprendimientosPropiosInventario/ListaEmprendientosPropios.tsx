@@ -48,6 +48,7 @@ export default function EmprendimientosPropios() {
   console.log("Emprendedores obtenidos:", emprendedoresData);
   return (
     <>
+    
       <BannerDeSeccionInventario />
       <EmprendimientosGrid
         emprendedores={emprendedores}

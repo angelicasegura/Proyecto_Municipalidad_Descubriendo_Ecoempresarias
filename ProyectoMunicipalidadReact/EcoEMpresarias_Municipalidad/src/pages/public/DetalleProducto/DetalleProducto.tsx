@@ -12,14 +12,13 @@ import { Button } from "../../../components/ui/button";
 
 import { PageLoader } from "../../../components/ui/layout/pageLoader";
 
-import { useNavigate } from "react-router-dom";
 
 export default function DetalleProductoPage() {
   const { id } = useParams<{ id: string }>();
 
   const [producto, setProducto] = useState<Producto | null>(null);
   const [cantidad, setCantidad] = useState(1);
-  const navigate = useNavigate();
+
 
   useEffect(() => {
   if (!id) return;
@@ -42,13 +41,7 @@ export default function DetalleProductoPage() {
 
   return (
       <div className="mx-auto max-w-6xl space-y-6 px-4 py-6 md:py-10">
-        <Button
-  variant="ghost"
-  className="mb-6 pl-0 text-muted-foreground"
-  onClick={() => navigate(-1)}
->
-  ← Volver
-</Button>
+        
       <div className="grid md:grid-cols-2 gap-12 items-start">
 
       {/* IZQUIERDA — IMAGEN */}

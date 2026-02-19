@@ -1,6 +1,8 @@
+import { useNavigate } from "react-router-dom"
 import { EmprendimientoCard } from "./emprendimientoCard"
 import { Store } from "lucide-react"
 import type { Emprendedor, TipoActividad } from "../../../../types/emprendedoresType"
+import { Button } from "../../../../components/ui/button"
 
 interface EmprendimientosGridProps {
   emprendedores: Emprendedor[]
@@ -8,6 +10,7 @@ interface EmprendimientosGridProps {
 }
 
 export function EmprendimientosGrid({ emprendedores, tiposActividad }: EmprendimientosGridProps) {
+  const navigate = useNavigate()
   if (emprendedores.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-20 text-center">
@@ -21,7 +24,14 @@ export function EmprendimientosGrid({ emprendedores, tiposActividad }: Emprendim
   }
 
   return (
-  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 p-3">
+    <Button
+      variant="ghost"
+      className="mb-6 pl-0 text-muted-foreground"
+      onClick={() => navigate(-1)}
+    >
+      ← Volver
+    </Button> 
     <p className="col-span-full text-center text-[#056F94] font-medium mb-4">
       Tus emprendimientos se muestran aquí. Para ver el inventario de cada emprendimiento, haz clic en la tarjeta correspondiente.
     </p>
