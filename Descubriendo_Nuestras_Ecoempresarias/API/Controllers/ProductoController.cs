@@ -3,6 +3,7 @@ using Abstracciones.Interfaces.Flujo;
 using Abstracciones.Modelos;
 using API.Helpers;
 using Azure.Core;
+using DA;
 using Flujo;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -19,14 +20,16 @@ namespace API.Controllers
         private readonly GuardarImagenes _guardarImagen;
         private readonly IConfiguration _configuration;
         private readonly IDocumentoFlujo _documentoFlujo;
+        private readonly IInventarioFlujo _inventarioFlujo;
 
-        public ProductoController(IProductoFlujo productoFlujo, ILogger<IUsuarioController> logger, GuardarImagenes guardarImagen, IConfiguration configuration, IDocumentoFlujo documentoFlujo)
+        public ProductoController(IProductoFlujo productoFlujo, ILogger<IUsuarioController> logger, GuardarImagenes guardarImagen, IConfiguration configuration, IDocumentoFlujo documentoFlujo, IInventarioFlujo inventarioFlujo)
         {
             _productoFlujo = productoFlujo;
             _logger = logger;
             _guardarImagen = guardarImagen;
             _configuration = configuration;
             _documentoFlujo = documentoFlujo;
+            _inventarioFlujo = inventarioFlujo;
         }
 
         [Authorize(Roles = "EMPRENDEDOR")]
@@ -51,6 +54,15 @@ namespace API.Controllers
 
 
                 var resultado = await _productoFlujo.AgregarProducto(producto);
+                
+                Inventario inventario = new Inventario
+                {
+                    ProductoId = resultado,
+                    CantidadActual = 0,
+                    CantidadMinima = 10
+
+                };
+                await _inventarioFlujo.AgregarInventario(inventario);
                 return Ok(resultado);
 
             }

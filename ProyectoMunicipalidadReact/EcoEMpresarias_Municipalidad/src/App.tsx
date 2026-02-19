@@ -17,6 +17,8 @@ import DetalleEmprendimiento from "./pages/public/DetalleEmprendimiento/DetalleE
 
 
 import { Toaster } from "react-hot-toast";
+import DetalleProductoPage from "./pages/public/DetalleProducto/DetalleProducto";
+import EmprendimientosPropios from "./pages/Emprendedores/ListaEmprendimientosPropiosInventario/ListaEmprendientosPropios";
 
 function App() {
   const { loading } = useAuth();
@@ -40,6 +42,7 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/emprendimientos" element={<EmprendimientosPage />} />
           <Route path="/emprendimiento/:id/:cedulaJuridica" element={<DetalleEmprendimiento />} /> 
+          <Route path="/producto/:id" element={<DetalleProductoPage />} />
 
           {/* HU-28: Ruta de registro */}
           <Route path="/registro" element={<RegisterPage />} />
@@ -55,6 +58,9 @@ function App() {
             
 
           {/* Emprendedores routes */}
+          <Route element={<ProtectedRoute allowedRoles={["EMPRENDEDOR"]} />}>
+            <Route path="/emprendimientos-propio" element={<EmprendimientosPropios />} />
+          </Route>
         </Routes>
       </main>
       <Footer />

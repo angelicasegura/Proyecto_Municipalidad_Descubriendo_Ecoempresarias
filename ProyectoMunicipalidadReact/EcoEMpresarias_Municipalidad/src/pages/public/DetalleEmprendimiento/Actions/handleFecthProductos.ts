@@ -2,7 +2,7 @@ import type { Producto } from "../../../../types/productosType";
 
 export async function handleFetchProductos(
   emprendimiento_id: number, 
-  categoria_id?: number, 
+  categoria_id?: string, 
   nombre?: string
 ): Promise<Producto[]> { // Cambiamos a Promise<Producto[]> para mayor seguridad
   try {
