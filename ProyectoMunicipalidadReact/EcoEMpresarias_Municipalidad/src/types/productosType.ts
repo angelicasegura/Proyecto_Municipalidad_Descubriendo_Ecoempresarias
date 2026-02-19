@@ -19,6 +19,12 @@ export interface CategoriaProducto {
   estado_id: number
 }
 
+export interface Inventario {
+  productoId: string;       
+  cantidadActual: number;   
+  cantidadMinima: number;   
+  estadoId: number;         
+}
 
 
 
