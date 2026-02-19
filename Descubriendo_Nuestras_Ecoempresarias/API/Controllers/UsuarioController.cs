@@ -13,7 +13,8 @@ namespace API.Controllers
 {
     [Route("api/Usuarios")]
     [ApiController]
-    //agregar verificaciones y todo tipo si un uusario existe o no
+    //agregar verificaciones y todo tipo si un uusario existe o no que si se inactiva un usuario
+    // se inactive todo lo relacionado a el tipo emprendimeintos, productos, inventario etc
 
     public class UsuarioController : ControllerBase, IUsuarioController
     {
