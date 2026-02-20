@@ -29,9 +29,9 @@ namespace Flujo
             return _comentarioDA.Editar(Id, comentario);
         }
 
-        public Task<Guid> Eliminar(Guid Id)
+        public Task<int> Eliminar(int Comentario_id)
         {
-            return _comentarioDA.Eliminar(Id);
+            return _comentarioDA.Eliminar(Comentario_id);
         }
 
         public Task<List<ComentarioResponse>> ObtenerPorEmprendedor(int Emprendimiento_id)

@@ -4,6 +4,7 @@ using Dapper;
 using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -58,22 +59,31 @@ namespace DA
             return resultadoConsulta;
         }
 
-        public async Task<Guid> Eliminar(Guid Id)
+        
+
+        public async Task<int> Eliminar(int Comentario_id)
         {
             string query = @"sp_EliminarComentario";
-            var resultadoConsulta = await _sqlConnection.ExecuteScalarAsync<Guid>(
+            var resultadoConsulta = await _sqlConnection.ExecuteScalarAsync<int>(
                 query,
                 new
                 {
-                    Id = Id
+                    Comentario_id = Comentario_id
                 }
             );
             return resultadoConsulta;
         }
 
-        public Task<List<ComentarioResponse>> ObtenerPorEmprendedor(int Emprendimiento_id)
+        public async Task<List<ComentarioResponse>> ObtenerPorEmprendedor(int Emprendimiento_id)
         {
-            throw new NotImplementedException();
+            string query = @"sp_ObtenerComentariosPorEmprendimiento";
+            var resultado = await _sqlConnection.QueryAsync<ComentarioResponse>( query, new
+            {
+                Emprendimiento_id = Emprendimiento_id
+            }, commandType: CommandType.StoredProcedure
+
+            );
+            return resultado.ToList();
         }
 
         //public Task<List<ComentarioResponse>> ObtenerPorEmprendedor(int Emprendimiento_id)

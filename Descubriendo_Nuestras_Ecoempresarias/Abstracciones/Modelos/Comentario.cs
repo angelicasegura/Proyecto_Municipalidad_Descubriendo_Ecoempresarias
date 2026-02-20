@@ -8,7 +8,7 @@ namespace Abstracciones.Modelos
 {
     public class ComentarioBase
     {
-        public int Emprendimiento_id { get; set; }
+        
         public string Texto { get; set; }
         public int Calificacion { get; set; }
         
@@ -22,11 +22,12 @@ namespace Abstracciones.Modelos
     {
         public int Estado_id { get; set; }
         public int Usuario_id { get; set; }
+        public int Emprendimiento_id { get; set; }
     }
 
     public class ComentarioResponse : ComentarioBase
     {
-        public Guid Comentario_id { get; set; }
+        public int Comentario_id { get; set; }
         public string UsuarioNombre { get; set; }
         public string NombreEstado { get; set; }
     }

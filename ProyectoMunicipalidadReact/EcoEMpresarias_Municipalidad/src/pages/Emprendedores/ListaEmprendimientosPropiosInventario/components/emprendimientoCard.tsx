@@ -28,7 +28,7 @@ export function EmprendimientoCard({
   return (
     
       <Card  className="group overflow-hidden border-border hover:shadow-lg transition-all duration-300 hover:-translate-y-1 cursor-pointer">
-        <Link to={`/inventario/${emprendedor.emprendimientoId}/${emprendedor.cedulaJuridica}`} className="block w-full h-full">
+          <Link to={`/inventario/${emprendedor.emprendimientoId}/${emprendedor.cedulaJuridica}`} className="block w-full h-full">
         <div className="relative aspect-16/10 overflow-hidden bg-muted">
           {emprendedor.ruta_Imagen_Logo ? (
             <img

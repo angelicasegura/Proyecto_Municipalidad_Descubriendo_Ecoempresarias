@@ -12,7 +12,7 @@ namespace Abstracciones.Interfaces.DA
         Task <List<ComentarioResponse>> ObtenerPorEmprendedor(int Emprendimiento_id);
         Task<int> Agregar(ComentarioRequest comentario); 
         Task <Guid>Editar (Guid Id, ComentarioRequest comentario);
-        Task <Guid>Eliminar (Guid Id);
+       Task <int>Eliminar (int Comentario_id);
 
     }
 }
