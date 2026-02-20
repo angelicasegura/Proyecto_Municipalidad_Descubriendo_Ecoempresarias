@@ -11,5 +11,8 @@ namespace Abstracciones.Interfaces.DA
     {
         SqlConnection ObtenerRepositorio();
 
+        Task<int> EjecutarSp(string nombreSp, object? parametros = null);
+
+        Task<IEnumerable<T>> ObtenerInfo<T>(string nombreSp, object? parametros = null);
     }
 }

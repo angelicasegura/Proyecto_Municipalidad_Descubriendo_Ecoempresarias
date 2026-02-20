@@ -100,6 +100,10 @@
     <Build Include="dbo\Stored Procedures\sp_editarInventario.sql" />
     <Build Include="dbo\Stored Procedures\sp_agregarInventario.sql" />
     <Build Include="dbo\Stored Procedures\sp_ObtenerEmprendimientoPorCedula.sql" />
+    <Build Include="dbo\Stored Procedures\sp_AgregarCarrito.sql" />
+    <Build Include="dbo\Stored Procedures\sp_ObtenerCarritoPorUsuario.sql" />
+    <Build Include="dbo\Stored Procedures\sp_ActualizarCantidadCarrito.sql" />
+    <Build Include="dbo\Stored Procedures\sp_EliminarCarrito.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="BD.refactorlog" />
