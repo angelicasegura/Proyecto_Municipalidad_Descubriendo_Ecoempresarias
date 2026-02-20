@@ -100,6 +100,7 @@
     <Build Include="dbo\Stored Procedures\sp_editarInventario.sql" />
     <Build Include="dbo\Stored Procedures\sp_agregarInventario.sql" />
     <Build Include="dbo\Stored Procedures\sp_ObtenerEmprendimientoPorCedula.sql" />
+    <Build Include="dbo\Stored Procedures\sp_AgregarComentario.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="BD.refactorlog" />

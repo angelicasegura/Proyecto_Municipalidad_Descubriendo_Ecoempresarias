@@ -107,6 +107,8 @@ builder.Services.AddScoped<ICategoriaProductosDA, CategoriaProductosDA>();
 builder.Services.AddScoped<ICategoriaProductosFlujo, CategoriaProductosFlujo>();
 builder.Services.AddScoped<IInventarioDA, InventarioDA>();
 builder.Services.AddScoped<IInventarioFlujo, InventarioFlujo>();
+builder.Services.AddScoped<IComentarioDA, ComentarioDA>();
+builder.Services.AddScoped<IComentarioFlujo, ComentarioFlujo>();
 
 
 var app = builder.Build();
