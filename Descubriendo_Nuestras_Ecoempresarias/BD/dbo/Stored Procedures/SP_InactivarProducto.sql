@@ -1,6 +1,5 @@
 ﻿CREATE PROCEDURE [dbo].[SP_InactivarProducto]
-    @Producto_id UNIQUEIDENTIFIER,
-	@Estado_id INT
+    @Producto_id UNIQUEIDENTIFIER
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -8,7 +7,7 @@ BEGIN
 
         UPDATE ECOEMPRESARIAS_PRODUCTO_TB
         SET
-            Estado_id = @Estado_id
+            Estado_id = 2
         WHERE Producto_id = @Producto_id;
 
 		SELECT @Producto_id;

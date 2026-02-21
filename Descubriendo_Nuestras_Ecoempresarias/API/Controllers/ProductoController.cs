@@ -54,7 +54,7 @@ namespace API.Controllers
 
 
                 var resultado = await _productoFlujo.AgregarProducto(producto);
-                
+
                 Inventario inventario = new Inventario
                 {
                     ProductoId = resultado,
@@ -74,15 +74,50 @@ namespace API.Controllers
         }
 
         [HttpPut("EditarProducto/{id}")]
-        public async Task<IActionResult> EditarProducto(Guid id, ProductoRequest producto)
+        public async Task<IActionResult> EditarProducto([FromRoute] Guid id, [FromForm] ProductoRequest producto)
         {
-            throw new NotImplementedException();
+            try
+            {
+                //implementar que busque antes de crear, pero se pone despues
+                string rutaBase = _configuration["LinksDocument:DocumentosLink"];
+                string carpeta = _configuration["Carpetas:Productos"];
+
+                if (producto.Imagen != null)
+                {
+                    string rutaImagen = await _guardarImagen.GuardarImagen(rutaBase, producto.Imagen, carpeta);
+
+                    if (rutaImagen != null)
+                    {
+                        producto.Ruta_Imagen = rutaImagen;
+                    }
+                }
+
+                    var resultado = await _productoFlujo.EditarProducto(id, producto);
+                    return Ok(resultado);
+                
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return StatusCode(500, $"Error interno al editar producto es: {ex.Message}");
+            }
+
         }
 
-        [HttpDelete("EliminarProducto/{id}")]
-        public async Task<IActionResult> ElimnarProducto(Guid id)
+        [HttpPut("InactivarProducto/{id}")]
+        public async Task<IActionResult> ElimnarProducto([FromRoute] Guid id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var resultado = await _productoFlujo.ElimnarProducto(id);
+                return Ok(resultado);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return StatusCode(500, $"Error interno al eliminar producto es: {ex.Message}");
+            }
         }
 
 
@@ -105,9 +140,9 @@ namespace API.Controllers
         {
             try
             {
-                var resultado = await _productoFlujo.ObtenerProductos(categoria_id, nombre, emprendimiento_id,1);
+                var resultado = await _productoFlujo.ObtenerProductos(categoria_id, nombre, emprendimiento_id, 1);
                 string carpeta = _configuration["Carpetas:Productos"];
-                
+
                 if (!resultado.Any())
                     return NoContent();
 
@@ -118,6 +153,18 @@ namespace API.Controllers
                 Console.WriteLine(ex);
                 return StatusCode(500, $"Error interno al obtener productos es: {ex.Message}");
             }
+        }
+
+        private async Task<bool> VerificarProductoExiste(Guid Id)
+        {
+            var resultadoValidacion = false;
+
+            var prodcutoExiste = await _productoFlujo.ObtenerProducto(Id);
+            if (prodcutoExiste != null)
+                resultadoValidacion = true;
+
+            return resultadoValidacion;
+
         }
     }
 }

@@ -15,6 +15,9 @@ import EmprendimientosPage from "./pages/public/ListaEmprendimientos/listaEmpren
 
 import DetalleEmprendimiento from "./pages/public/DetalleEmprendimiento/DetalleEmprendimiento";
 
+import ProductosPage from "./pages/Productos/ProductoPage";
+import DetalleProductoPages from "./pages/Productos/Detalle/DetalleProductoPages";
+
 
 import { Toaster } from "react-hot-toast";
 import DetalleProductoPage from "./pages/public/DetalleProducto/DetalleProducto";
@@ -63,6 +66,10 @@ function App() {
             <Route path="/emprendimientos-propio" element={<EmprendimientosPropios />} />
             <Route path="/inventario/:id/:cedulaJuridica" element={<InventarioEmprendimiento />} />
           </Route>
+
+          {/* Productos routes */}
+            <Route path="/productos" element={<ProductosPage />} />
+            <Route path="/productos/:id" element={<DetalleProductoPages/>} />
         </Routes>
       </main>
       <Footer />
