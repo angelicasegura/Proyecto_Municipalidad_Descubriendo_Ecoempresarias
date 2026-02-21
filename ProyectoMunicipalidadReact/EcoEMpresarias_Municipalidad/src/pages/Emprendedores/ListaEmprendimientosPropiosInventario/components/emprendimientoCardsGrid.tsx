@@ -43,7 +43,9 @@ export function EmprendimientosGrid({ emprendedores, tiposActividad }: Emprendim
         tiposActividad={tiposActividad}
       />
     ))}
+    
   </div>
+ 
 )
 
 }
