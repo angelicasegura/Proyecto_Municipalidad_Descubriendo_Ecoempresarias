@@ -2,9 +2,11 @@
     @Producto_id UNIQUEIDENTIFIER,
     @NombreProducto VARCHAR(200),
     @Descripcion VARCHAR(500),
+    @Descuento DECIMAL(5,2),
     @Ruta_Imagen VARCHAR(300),
     @Precio DECIMAL(10,2),
     @Categoria_id UNIQUEIDENTIFIER,
+    @Emprendimiento_id INT,
     @Estado_id INT
 AS
 BEGIN
@@ -30,9 +32,11 @@ BEGIN
             Producto_id,
             NombreProducto,
             Descripcion,
+            Descuento,
             Ruta_Imagen,
             Precio,
             Categoria_id,
+            Emprendimiento_id,
             Estado_id
         )
         VALUES
@@ -40,12 +44,14 @@ BEGIN
             @Producto_id,
             @NombreProducto,
             @Descripcion,
+            @Descuento,
             @Ruta_Imagen,
             @Precio,
             @Categoria_id,
+            @Emprendimiento_id,
             @Estado_id
         );
-		 SELECT @Producto_id
+		SELECT @Producto_id
 
 		COMMIT TRANSACTION
 

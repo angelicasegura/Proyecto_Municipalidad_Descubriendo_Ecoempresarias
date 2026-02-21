@@ -31,7 +31,7 @@ export function handleToggleStatus({
       loading: "Actualizando estado del usuario...",
       success: "Estado del usuario actualizado correctamente 🎉",
       error: (err) => err.message || "No se pudo actualizar el estado del usuario",
-    });  
+    },{ duration: 4000 });  
     
     
     
