@@ -23,6 +23,7 @@ import { Toaster } from "react-hot-toast";
 import DetalleProductoPage from "./pages/public/DetalleProducto/DetalleProducto";
 import EmprendimientosPropios from "./pages/Emprendedores/ListaEmprendimientosPropiosInventario/ListaEmprendientosPropios";
 import InventarioEmprendimiento from "./pages/Emprendedores/Inventario/InvetarioEmprendimiento";
+import { Breadcrumbs } from "./components/ui/layout/Breadcrumbs";
 
 function App() {
   const { loading } = useAuth();
@@ -33,6 +34,9 @@ function App() {
     <>
     <div className="flex min-h-screen flex-col">
       <Navbar />
+      <div className="gradient-hero text-white px-4 py-2 ">
+        <Breadcrumbs />
+      </div>
       <main className="flex-1">
         <Toaster position="top-center" reverseOrder={false} />
         <Routes>

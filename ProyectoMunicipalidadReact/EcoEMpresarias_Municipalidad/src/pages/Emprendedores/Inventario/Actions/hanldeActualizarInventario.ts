@@ -1,6 +1,7 @@
 // lib/api.ts
 import { authFetch } from "../../../../auth/AuthFetch";
 import { type InventarioRequest } from "../../../../types/productosType";
+import toast from "react-hot-toast";
 
 export async function handleActualizarInventario(
   payload: InventarioRequest,
@@ -15,7 +16,7 @@ export async function handleActualizarInventario(
   if (!CedulaJuridica) throw new Error("Falta CedulaJuridica");
   if (!emprendimientoId) throw new Error("Falta emprendimientoId");
 
-  // Verificar usuario (opcional, pero útil para debug)
+  
   const userRes = await authFetch("https://localhost:7050/auth/me");
   if (!userRes.ok) throw new Error("No autenticado");
   const user = await userRes.json();
@@ -31,24 +32,24 @@ export async function handleActualizarInventario(
   const url = `https://localhost:7050/api/Inventario/Editar?${params.toString()}`;
   console.debug("handleActualizarInventario -> URL:", url, "BODY:", payload);
 
-  const res = await authFetch(url, {
+  const res = authFetch(url, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload),
+  }).then(async (response) => {
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(errorText || "Error al actualizar el inventario");
+    }
+    return response.json();
   });
 
-  if (!res.ok) {
-    const text = await res.text();
-    console.error(
-      "handleActualizarInventario - status:",
-      res.status,
-      "body:",
-      text,
-    );
-    throw new Error(
-      text || `Error actualizando inventario (status ${res.status})`,
-    );
-  }
+  toast.promise(res, {
+    loading: "Actualizando inventario...",
+    success: "Inventario actualizado correctamente 🎉",
+    error: (err) => err.message || "No se pudo actualizar el inventario",
+  },
+{ duration: 4000 });
 
-  return res.json();
+  return res;
 }
