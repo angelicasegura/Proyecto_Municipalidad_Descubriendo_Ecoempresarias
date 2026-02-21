@@ -13,6 +13,8 @@ namespace Abstracciones.Interfaces.DA
         Task<int> Agregar(ComentarioRequest comentario); 
         Task <Guid>Editar (Guid Id, ComentarioRequest comentario);
        Task <int>Eliminar (int Comentario_id);
+        Task<ComentarioResponse> ObtenerPorId(int Id);
+       Task<int?> ObtenerUsuarioIdPorComentario(int Comentario_id);
 
     }
 }

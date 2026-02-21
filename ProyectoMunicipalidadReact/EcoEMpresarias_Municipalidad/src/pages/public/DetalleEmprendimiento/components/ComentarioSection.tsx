@@ -2,13 +2,15 @@ import { useEffect, useState } from "react";
 
 import { handleAgregarComentario } from "../Actions/handleAgregarComentario";
 import { handleObtenerComentarios } from "../Actions/handleObtenerComentarios";
-
+import { useAuth } from "../../../../auth/AuthContext";
+import { handleEliminarComentario } from "../Actions/handleEliminarComentario";
 interface Comentario {
   comentario_id: number;
   texto: string;
   calificacion: number;
   fecha: string;
   usuarioNombre: string;
+  usuario_id: number;
 }
 
 interface Props {
@@ -21,6 +23,7 @@ export default function ComentariosSection({ emprendimientoId }: Props) {
   const [contenido, setContenido] = useState("");
   const [calificacion, setCalificacion] = useState(0);
   const [hover, setHover] = useState(0);
+  const { user } = useAuth();
 
 
   const obtenerComentarios = async () => {
@@ -53,10 +56,11 @@ export default function ComentariosSection({ emprendimientoId }: Props) {
     }
   };
   const promedio =
-  comentarios.length > 0
-    ? comentarios.reduce((acc, c) => acc + c.calificacion, 0) /
+    comentarios.length > 0
+      ? comentarios.reduce((acc, c) => acc + c.calificacion, 0) /
       comentarios.length
-    : 0;
+      : 0;
+
   return (
     <div className="mt-10">
       <div className="flex justify-between items-center mb-4">
@@ -87,31 +91,53 @@ export default function ComentariosSection({ emprendimientoId }: Props) {
         </p>
       )}
 
-      {comentarios.map((c) => (
-        <div
-          key={c.comentario_id}
-          className="border rounded-md p-3 mb-3 bg-white shadow-sm"
-        >
-          {/* Estrellas */}
-          <div className="text-yellow-500 text-sm mb-1">
-            {"⭐".repeat(c.calificacion)}
-            {"☆".repeat(5 - c.calificacion)}
-          </div>
+      {comentarios.map((c) => {
+        const puedeEliminar =
+          user &&
+          (Number(user.id) === Number(c.usuario_id) || user.rol === "ADMIN");
 
-          {/* Texto del comentario */}
-          <p className="text-sm text-muted-foreground">
-            {c.texto}
-          </p>
+        return (
+          <div
+            key={c.comentario_id}
+            className="border rounded-md p-3 mb-3 bg-white shadow-sm"
+          >
+            {/* Estrellas */}
+            <div className="text-yellow-500 text-sm mb-1">
+              {"⭐".repeat(c.calificacion)}
+              {"☆".repeat(5 - c.calificacion)}
+            </div>
 
-          {/* Usuario y fecha */}
-          <div className="flex justify-between items-center mt-2 text-xs text-gray-400">
-            <span>{c.usuarioNombre}</span>
-            <span>
-              {new Date(c.fecha).toLocaleDateString()}
-            </span>
+            {/* Texto */}
+            <p className="text-sm text-muted-foreground">
+              {c.texto}
+            </p>
+
+            {/* Usuario, fecha y botón */}
+            <div className="flex justify-between items-center mt-2 text-xs text-gray-400">
+              <div className="flex gap-3 items-center">
+                <span>{c.usuarioNombre}</span>
+                <span>
+                  {new Date(c.fecha).toLocaleDateString()}
+                </span>
+              </div>
+
+              {puedeEliminar && (
+                <button
+                  onClick={async () => {
+                    if (confirm("¿Seguro que deseas eliminar este comentario?")) {
+                      await handleEliminarComentario(c.comentario_id);
+                      await obtenerComentarios();
+                    }
+                  }}
+                  className="text-red-500 hover:text-red-700 text-xs font-medium"
+                >
+                  Eliminar
+                </button>
+              )}
+            </div>
           </div>
-        </div>
-      ))}
+        );
+      })}
       {/* Modal */}
       {open && (
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
@@ -129,22 +155,21 @@ export default function ComentariosSection({ emprendimientoId }: Props) {
             />
 
             <div className="flex gap-1 mb-4">
-  {[1, 2, 3, 4, 5].map((num) => (
-    <span
-      key={num}
-      onClick={() => setCalificacion(num)}
-      onMouseEnter={() => setHover(num)}
-      onMouseLeave={() => setHover(0)}
-      className={`cursor-pointer text-3xl transition-colors duration-200 ${
-        num <= (hover || calificacion)
-          ? "text-yellow-500"
-          : "text-gray-300"
-      }`}
-    >
-      ★
-    </span>
-  ))}
-</div>
+              {[1, 2, 3, 4, 5].map((num) => (
+                <span
+                  key={num}
+                  onClick={() => setCalificacion(num)}
+                  onMouseEnter={() => setHover(num)}
+                  onMouseLeave={() => setHover(0)}
+                  className={`cursor-pointer text-3xl transition-colors duration-200 ${num <= (hover || calificacion)
+                    ? "text-yellow-500"
+                    : "text-gray-300"
+                    }`}
+                >
+                  ★
+                </span>
+              ))}
+            </div>
 
 
             <div className="flex justify-end gap-2">

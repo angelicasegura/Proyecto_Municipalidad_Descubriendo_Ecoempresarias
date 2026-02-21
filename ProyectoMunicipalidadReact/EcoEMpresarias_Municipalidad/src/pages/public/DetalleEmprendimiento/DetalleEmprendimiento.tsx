@@ -24,7 +24,7 @@ export default function DetalleEmprendimiento() {
 
   // Estados de UI
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null)
 
   // Filtros (Como en tu ejemplo)
   const [searchTerm, setSearchTerm] = useState("");
@@ -75,7 +75,7 @@ export default function DetalleEmprendimiento() {
 
   }, [searchTerm, categoriaFilter, numericId]);
 
-
+ 
 
   return (
     <main className="min-h-screen bg-emprendimiento-bg">
@@ -117,6 +117,7 @@ export default function DetalleEmprendimiento() {
         />
         <div className="px-4 pb-4 bg-white">
           <h3 className="text-xl font-semibold">Comentarios</h3>
+         
           <div className="px-4 pb-4">
             {numericId && (
               <ComentariosSection emprendimientoId={numericId} />

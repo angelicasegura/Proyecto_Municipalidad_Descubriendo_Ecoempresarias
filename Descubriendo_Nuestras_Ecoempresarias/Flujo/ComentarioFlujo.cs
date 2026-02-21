@@ -38,5 +38,17 @@ namespace Flujo
         {
             return _comentarioDA.ObtenerPorEmprendedor(Emprendimiento_id);
         }
+
+       
+
+        public Task<int?> ObtenerUsuarioIdPorComentario(int Comentario_id)
+        {
+            return _comentarioDA.ObtenerUsuarioIdPorComentario(Comentario_id);
+        }
+
+        Task<ComentarioResponse> IComentarioFlujo.ObtenerPorId(int Id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

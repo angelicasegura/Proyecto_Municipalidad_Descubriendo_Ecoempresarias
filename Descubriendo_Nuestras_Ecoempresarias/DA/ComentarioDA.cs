@@ -86,6 +86,34 @@ namespace DA
             return resultado.ToList();
         }
 
+        public async Task<int?> ObtenerPorId(int Id)
+        {
+            string query = @"sp_ObtenerComentarioPorId";
+            var resultado = await _sqlConnection.QueryFirstOrDefaultAsync<int?>(query, new
+            {
+                Comentario_id = Id
+            }, commandType: CommandType.StoredProcedure
+            );
+            return resultado;
+        }
+        public async Task<int?> ObtenerUsuarioIdPorComentario(int comentarioId)
+        {
+            string query = @"sp_ObtenerUsuarioIdPorComentario";
+
+            var resultado = await _sqlConnection.QueryFirstOrDefaultAsync<int?>(
+                query,
+                new { Comentario_id = comentarioId },
+                commandType: CommandType.StoredProcedure
+            );
+
+            return resultado;
+        }
+
+        Task<ComentarioResponse> IComentarioDA.ObtenerPorId(int Id)
+        {
+            throw new NotImplementedException();
+        }
+
         //public Task<List<ComentarioResponse>> ObtenerPorEmprendedor(int Emprendimiento_id)
         //{
         //    string query = @"sp_ObtenerComentariosPorEmprendimiento";
