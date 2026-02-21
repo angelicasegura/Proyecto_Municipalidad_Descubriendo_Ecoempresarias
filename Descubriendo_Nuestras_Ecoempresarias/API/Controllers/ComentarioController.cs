@@ -55,11 +55,31 @@ namespace API.Controllers
 
 
 
-        [HttpDelete("{Comentario_id}")]
-        public async Task<int>Eliminar (int Comentario_id)
+
+        [Authorize]
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Eliminar(int id)
         {
-           var resultado = await _comentarioFlujo.Eliminar(Comentario_id);
-            return resultado;
+            var usuarioIdClaim = User.FindFirst("id");
+
+            if (usuarioIdClaim == null)
+                return Unauthorized("Usuario no encontrado en token");
+
+            var usuarioId = int.Parse(usuarioIdClaim.Value);
+
+            var usuarioIdComentario = await _comentarioFlujo.ObtenerUsuarioIdPorComentario(id);
+
+            if (usuarioIdComentario == null)
+                return NotFound();
+
+            var rol = User.FindFirst("rol")?.Value;
+
+            if (usuarioIdComentario != usuarioId && rol != "ADMIN")
+                return Forbid();
+
+            await _comentarioFlujo.Eliminar(id);
+
+            return Ok();
         }
 
         [HttpGet("emprendimiento/{Emprendimiento_id}")]
