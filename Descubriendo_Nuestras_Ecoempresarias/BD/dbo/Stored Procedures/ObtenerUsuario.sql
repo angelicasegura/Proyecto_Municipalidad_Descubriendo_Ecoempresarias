@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE ObtenerUsuario
+﻿    CREATE PROCEDURE ObtenerUsuario
     @Email VARCHAR(200),
     @Contrasena VARCHAR(200)
 AS
@@ -6,6 +6,7 @@ BEGIN
     SET NOCOUNT ON;
 
     SELECT
+
         Usuario.Usuario_id as IdUsuario,
         Usuario.Nombre,
         Usuario.Apellidos,

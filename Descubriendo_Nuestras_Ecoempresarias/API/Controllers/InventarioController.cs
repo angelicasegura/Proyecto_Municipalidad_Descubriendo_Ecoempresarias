@@ -49,8 +49,8 @@ namespace API.Controllers
         }
 
         [Authorize(Roles = "EMPRENDEDOR")]
-        [HttpGet("Editar")]
-        public async Task<IActionResult> EditarInventario([FromQuery] Guid Inventarioid, [FromQuery] int emprendimiento_id, [FromQuery] string CedulaJuridica, [FromBody] Inventario inventario)
+        [HttpPut("Editar")]
+        public async Task<IActionResult> EditarInventario([FromQuery] Guid Inventarioid, [FromQuery] int emprendimiento_id, [FromQuery] string CedulaJuridica, [FromBody] InventarioRequest inventario)
         {
             try
             {

@@ -1,4 +1,4 @@
-
+import  { authFetch } from "../auth/AuthFetch";
 
 export interface Producto {
   producto_id: string 
@@ -10,6 +10,7 @@ export interface Producto {
   descuento?: number
   categoriaNombre: string
   nombreEstado: string
+  usuarioDueño: number
 }
 
 export interface CategoriaProducto {
@@ -19,6 +20,25 @@ export interface CategoriaProducto {
   estado_id: number
 }
 
+export interface Inventario {
+  productoId: string;        
+  cantidadActual: number;    
+  nombreProducto?: string;   
+  descripcion?: string;      
+  ruta_Imagen?: string;       
+  precio: number;            
+  descuento: number;         
+  cantidadMinima: number;   
+  estadoId: number;          
+}
+
+
+export interface InventarioRequest {
+  productoId: string
+  cantidadActual: number
+  cantidadMinima: number
+  estadoId: number
+}
 
 
 
@@ -39,12 +59,6 @@ export const fetchCategoriasProductos = async (): Promise<CategoriaProducto[]> =
   }
 }
 
-
-
-
-
-
-
 export const calcularPrecioFinal = (
   precio: number,
   descuento?: number
@@ -61,4 +75,32 @@ export const obtenerTextoDescuento = (descuento?: number): string => {
 
 export function formatearPrecio(precio: number): string {
   return `₡${precio.toLocaleString("es-CR")}`;
+}
+
+
+
+const BASE_URL = "https://localhost:7050"
+
+// Trae todos los productos
+export async function obtenerProductos(): Promise<Producto[]> {
+  const res = await authFetch(`${BASE_URL}/api/Producto/ObtenerProductos`)
+
+  if (!res.ok) {
+    throw new Error("Error al obtener los productos")
+  }
+
+  return res.json()
+}
+
+// Trae un solo producto por su ID
+// Usamos el mismo endpoint pero filtrando — ajusta si tu API tiene un endpoint distinto
+export async function obtenerProductoPorId(id: string): Promise<Producto> {
+  // Si tu API tiene GET /api/Producto/ObtenerProducto/{id}, úsalo así:
+  const res = await authFetch(`${BASE_URL}/api/Producto/ObtenerProducto/${id}`)
+
+  if (!res.ok) {
+    throw new Error("Error al obtener el producto")
+  }
+
+  return res.json()
 }

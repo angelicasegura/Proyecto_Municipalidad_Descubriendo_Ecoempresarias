@@ -11,7 +11,6 @@ import EmprendimientoHeader from "./components/EmprendimientoHeader";
 import EmprendimientoMap from "./components/EmprendimientoMap";
 import ProductosFilters from "./components/ProductosFilters";
 import ProductosGrid from "./components/ProductosGrid";
-import { useNavigate } from "react-router-dom";
 
 import { Button } from "../../../components/ui/button";
 import ComentariosSection from "./components/ComentarioSection";
@@ -30,7 +29,7 @@ export default function DetalleEmprendimiento() {
   // Filtros (Como en tu ejemplo)
   const [searchTerm, setSearchTerm] = useState("");
   const [categoriaFilter, setCategoriaFilter] = useState("all");
-  const navigate = useNavigate();
+
   const numericId = useMemo(() => Number(id) || null, [id]);
 
   // 
@@ -82,6 +81,7 @@ export default function DetalleEmprendimiento() {
     <main className="min-h-screen bg-emprendimiento-bg">
 
       <div className="mx-auto max-w-6xl space-y-6 px-4 py-6 md:py-10">
+        
         <Button
           variant="ghost"
           className="mb-6 pl-0 text-muted-foreground"
