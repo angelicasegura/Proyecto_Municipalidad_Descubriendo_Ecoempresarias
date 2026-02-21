@@ -32,5 +32,6 @@ namespace Abstracciones.Modelos
         public Guid Producto_id { get; set; }
         public string CategoriaNombre { get; set; }
         public string NombreEstado { get; set; }
+        public int UsuarioDueño { get; set; }
     }
 }

@@ -303,13 +303,14 @@ export function Navbar() {
               </Button>
             )}
             {user && (
-              <Button
-                variant="secondary"
-                className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold"
-              >
-                <Link to="/">Cerrar sesion</Link>
-              </Button>
-            )}
+                <Button
+                  variant="secondary"
+                  className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold"
+                  onClick={handleLogout}
+                >
+                  Cerrar Sesión
+                </Button>
+              )}
           </div>
 
           {/* Mobile menu button */}
@@ -479,7 +480,7 @@ export function Navbar() {
                   className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold"
                   onClick={handleLogout}
                 >
-                  Cerrar sesión
+                  Cerrar Sesión
                 </Button>
               )}
 

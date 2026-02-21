@@ -2,6 +2,7 @@
     @Producto_id UNIQUEIDENTIFIER,
     @NombreProducto VARCHAR(200),
     @Descripcion VARCHAR(500),
+    @Descuento DECIMAL(5,2),
     @Ruta_Imagen VARCHAR(300),
     @Precio DECIMAL(10,2),
     @Categoria_id UNIQUEIDENTIFIER,
@@ -20,6 +21,7 @@ BEGIN
             Ruta_Imagen = @Ruta_Imagen,
             Precio = @Precio,
             Categoria_id = @Categoria_id,
+            Descuento = @Descuento,
             Estado_id = @Estado_id
         WHERE Producto_id = @Producto_id;
 

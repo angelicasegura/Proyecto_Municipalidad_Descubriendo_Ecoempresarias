@@ -28,9 +28,11 @@ namespace DA
                 Producto_id = Guid.NewGuid(),
                 NombreProducto = producto.NombreProducto,
                 Descripcion = producto.Descripcion,
+                Descuento = producto.Descuento,
                 Ruta_Imagen = producto.Ruta_Imagen,
                 Precio = producto.Precio,
                 Categoria_id = producto.Categoria_id,
+                Emprendimiento_id = producto.Emprendimiento_id,
                 Estado_id = 3
             });
             return resultQuery;
@@ -38,28 +40,35 @@ namespace DA
 
         public async Task<Guid> EditarProducto(Guid id, ProductoRequest producto)
         {
+            int estado;
+
+            bool verificacion = await VerificarDatosModificados(id, producto);
+
+            if (verificacion == true && producto.Estado_id == 1)
+                estado = 1;
+            else
+                estado = 4;
+
             string query = @"SP_EditarInformacionGeneralProducto";
-            var resultQuery = await _sqlConnection.ExecuteScalarAsync<Guid>(query, new
-            {
-                Producto_id = id,
-                NombreProducto = producto.NombreProducto,
-                Descripcion = producto.Descripcion,
-                RutaImagen = producto.Ruta_Imagen,
-                Precio = producto.Precio,
-                Categoria_id = producto.Categoria_id,
-                Estado = 4
-            });
-            return resultQuery;
-
+                var resultQuery = await _sqlConnection.ExecuteScalarAsync<Guid>(query, new
+                {
+                    Producto_id = id,
+                    NombreProducto = producto.NombreProducto,
+                    Descripcion = producto.Descripcion,
+                    Descuento = producto.Descuento,
+                    Ruta_Imagen = producto.Ruta_Imagen,
+                    Precio = producto.Precio,
+                    Categoria_id = producto.Categoria_id,
+                    Estado_id = estado
+                });
+                return resultQuery;
         }
-
         public async Task<Guid> ElimnarProducto(Guid id)
         {
             string query = @"SP_InactivarProducto";
             var resultQuery = await _sqlConnection.ExecuteScalarAsync<Guid>(query, new
             {
-                Producto_id = id,
-                Estado = 2
+                Producto_id = id
             });
             return resultQuery;
         }
@@ -71,7 +80,7 @@ namespace DA
             return resultQuery.FirstOrDefault();
         }
 
-        public async Task<IEnumerable<ProductoResponse>> ObtenerProductos(Guid? categoria_id, String? nombre , int? emprendimiento_id, int? estado_id)
+        public async Task<IEnumerable<ProductoResponse>> ObtenerProductos(Guid? categoria_id, String? nombre, int? emprendimiento_id, int? estado_id)
         {
             var parameters = new
             {
@@ -80,7 +89,7 @@ namespace DA
                 Emprendimiento_id = emprendimiento_id,
                 Estado_id = estado_id
             };
-            string query = @"SP_ObtenerProductos";  
+            string query = @"SP_ObtenerProductos";
             var resultQuery = await _sqlConnection.QueryAsync<ProductoResponse>(
                 query,
                 parameters,
@@ -88,5 +97,25 @@ namespace DA
     );
             return resultQuery;
         }
+
+        private async Task<bool> VerificarDatosModificados(Guid id, ProductoRequest producto) {
+
+            try
+            {
+                var resultado = await ObtenerProducto(id);
+                if (producto.NombreProducto == resultado.NombreProducto && producto.Descripcion == resultado.Descripcion && producto.Ruta_Imagen == resultado.Ruta_Imagen)
+                    return true;
+                else
+                    return false;
+            }
+            catch (Exception ex) {
+
+                throw new Exception($"Error verificando al recuperar el producto para modificar: {ex.Message}", ex);
+
+            }
+
+        }
+
+
     }
 }

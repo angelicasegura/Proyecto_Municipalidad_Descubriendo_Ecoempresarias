@@ -100,6 +100,11 @@
     <Build Include="dbo\Stored Procedures\sp_editarInventario.sql" />
     <Build Include="dbo\Stored Procedures\sp_agregarInventario.sql" />
     <Build Include="dbo\Stored Procedures\sp_ObtenerEmprendimientoPorCedula.sql" />
+    <Build Include="dbo\Stored Procedures\sp_AgregarComentario.sql" />
+    <Build Include="dbo\Stored Procedures\sp_EliminarComentario.sql" />
+    <Build Include="dbo\Stored Procedures\sp_ObtenerComentariosPorEmprendimiento.sql" />
+    <Build Include="dbo\Stored Procedures\sp_ObtenerComentarioPorId.sql" />
+    <Build Include="dbo\Stored Procedures\sp_ObtenerUsuarioIdPorComentario.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="BD.refactorlog" />
