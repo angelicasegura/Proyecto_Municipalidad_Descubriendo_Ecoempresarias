@@ -27,7 +27,7 @@ export default function ProductoCard({ producto }: Props) {
           loading="lazy"
         />
         {tieneDescuento && (
-          <Badge className="absolute right-3 top-3 bg-white text-emprendimiento-text hover:bg-emprendimiento-hover font-bold shadow-md">
+          <Badge className="absolute right-3 top-3 bg-[#FF0000] text-white hover:bg-emprendimiento-hover font-bold shadow-md">
             {textoDescuento}
           </Badge>
         )}
