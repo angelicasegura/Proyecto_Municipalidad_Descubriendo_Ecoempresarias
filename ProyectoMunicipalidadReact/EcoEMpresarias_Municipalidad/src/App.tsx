@@ -14,7 +14,8 @@ import RegisterPage from "./pages/auth/register/registerPage";
 import EmprendimientosPage from "./pages/public/ListaEmprendimientos/listaEmprendimientosPublic";
 
 import DetalleEmprendimiento from "./pages/public/DetalleEmprendimiento/DetalleEmprendimiento";
-
+import ProductosPage from "./pages/Productos/ProductoPage";
+import DetalleProductoPages from "./pages/Productos/Detalle/DetalleProductoPages";
 import { Toaster } from "react-hot-toast";
 import DetalleProductoPage from "./pages/public/DetalleProducto/DetalleProducto";
 import EmprendimientosPropios from "./pages/Emprendedores/ListaEmprendimientosPropiosInventario/ListaEmprendientosPropios";
@@ -68,21 +69,19 @@ function App() {
               />
             </Route>
 
-            {/* Emprendedores routes */}
-            <Route element={<ProtectedRoute allowedRoles={["EMPRENDEDOR"]} />}>
-              <Route
-                path="/emprendimientos-propio"
-                element={<EmprendimientosPropios />}
-              />
-              <Route
-                path="/inventario/:id/:cedulaJuridica"
-                element={<InventarioEmprendimiento />}
-              />
-            </Route>
-          </Routes>
-        </main>
-        <Footer />
-      </div>
+          {/* Emprendedores routes */}
+          <Route element={<ProtectedRoute allowedRoles={["EMPRENDEDOR"]} />}>
+            <Route path="/emprendimientos-propio" element={<EmprendimientosPropios />} />
+            <Route path="/inventario/:id/:cedulaJuridica" element={<InventarioEmprendimiento />} />
+          </Route>
+
+          {/* Productos routes */}
+            <Route path="/productos" element={<ProductosPage />} />
+            <Route path="/productos/:id" element={<DetalleProductoPages/>} />
+        </Routes>
+      </main>
+      <Footer />
+    </div>
     </>
   );
 }

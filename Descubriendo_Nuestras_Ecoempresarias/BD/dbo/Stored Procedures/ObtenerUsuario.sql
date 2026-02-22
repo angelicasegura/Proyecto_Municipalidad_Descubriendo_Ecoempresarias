@@ -6,6 +6,7 @@ BEGIN
     SET NOCOUNT ON;
 
     SELECT
+
         Usuario.Usuario_id as IdUsuario,
         Usuario.Nombre,
         Usuario.Apellidos,

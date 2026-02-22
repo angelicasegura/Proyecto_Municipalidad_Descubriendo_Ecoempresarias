@@ -1,4 +1,4 @@
-import {  useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { Leaf } from "lucide-react"
 
 import { fetchTiposActividad, type Emprendedor, type TipoActividad } from "../../../types/emprendedoresType"
@@ -9,10 +9,11 @@ import { Pagination } from "../../../components/ui/layout/Pagination"
 import { authFetch } from "../../../auth/AuthFetch"
 
 import { useQuery } from "@tanstack/react-query"
+import ComentariosSection from "../DetalleEmprendimiento/components/ComentarioSection"
 
 export default function EmprendimientosPage() {
   const [emprendedores, setEmprendedores] = useState<Emprendedor[]>([])
-  
+
   const [searchTerm, setSearchTerm] = useState("")
   const [actividadFilter, setActividadFilter] = useState("all")
   const [tiposActividad, setTiposActividad] = useState<TipoActividad[]>([])
@@ -23,7 +24,7 @@ export default function EmprendimientosPage() {
       !actividadFilter || actividadFilter === "all" || emp.tipoActividadId === Number(actividadFilter)
     return matchesSearch && matchesActividad
   })
-  
+
   const [page, setPage] = useState(1);
   const limit = 10;
 
@@ -59,17 +60,17 @@ export default function EmprendimientosPage() {
 
 
 
-   useEffect(() => {
-       fetchTiposActividad().then((data) => setTiposActividad(data));
-     }, []);
+  useEffect(() => {
+    fetchTiposActividad().then((data) => setTiposActividad(data));
+  }, []);
 
-     useEffect(() => {
-  if (data?.items) {
-    setEmprendedores(data.items);
-  }
-}, [data]);
+  useEffect(() => {
+    if (data?.items) {
+      setEmprendedores(data.items);
+    }
+  }, [data]);
 
-     console.log("Emprendedores cargados:", emprendedores);
+  console.log("Emprendedores cargados:", emprendedores);
 
   return (
     <main className="min-h-screen bg-background">
@@ -117,13 +118,16 @@ export default function EmprendimientosPage() {
             tiposActividad={tiposActividad}
           />
         )}
-
+       
         <Pagination
           currentPage={page}
           totalPages={data?.totalPages || 1}
           onPageChange={setPage}
         />
       </section>
+
+
     </main>
   )
 }
+

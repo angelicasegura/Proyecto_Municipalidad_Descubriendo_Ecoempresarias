@@ -47,11 +47,11 @@ builder.Services.AddAuthentication(options =>
 })
 .AddJwtBearer(options =>
 {
-    // AQUÍ se lee la clave secreta
+    // AQUï¿½ se lee la clave secreta
     var secret = builder.Configuration["Jwt:Secret"]
         ?? throw new InvalidOperationException("JWT Secret no configurado.");
 
-    // Asegurar tamaño mínimo de clave
+    // Asegurar tamaï¿½o mï¿½nimo de clave
     var keyBytes = Encoding.UTF8.GetBytes(secret);
     if (keyBytes.Length < 32)
     {
@@ -140,6 +140,9 @@ builder.Services.AddScoped<IInventarioDA, InventarioDA>();
 builder.Services.AddScoped<IInventarioFlujo, InventarioFlujo>();
 builder.Services.AddScoped<ICarritoDA, CarritoDA>();
 builder.Services.AddScoped<ICarritoFlujo, CarritoFlujo>();
+builder.Services.AddScoped<IComentarioDA, ComentarioDA>();
+builder.Services.AddScoped<IComentarioFlujo, ComentarioFlujo>();
+
 
 var app = builder.Build();
 
