@@ -149,7 +149,20 @@ namespace DA
             }
         }
 
+        public async  Task<IEnumerable<EmprendimientoResponse>> ObtenerEmprendimientoPorUsuario(int Usuarioid)
+        {
+            try
+            {
+                string query = @"SP_ObtenerEmprendimientoPorUsuarioId";
+                var resultQuery = await _sqlConnection.QueryAsync<EmprendimientoResponse>(query, new { Usuarioid });
+                return resultQuery;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex);
+            }
 
+        }
 
     }
 }

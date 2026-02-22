@@ -13,7 +13,7 @@ namespace Abstracciones.Modelos
         public string NombreProducto { get; set; }
         public string Descripcion { get; set; }
         public Decimal Precio { get; set; }
-        public string Ruta_Imagen { get; set; }
+        public string? Ruta_Imagen { get; set; }
 
         public int Emprendimiento_id { get; set; }
 

@@ -45,6 +45,11 @@ export function Navbar() {
             >
               Emprendimientos
             </Link>
+            {["EMPRENDEDOR"].includes(user?.rol ?? "") && (
+              <Link to="/mis-productos" className="text-white font-medium hover:text-accent transition-colors whitespace-nowrap px-2">
+                Mis productos
+              </Link>
+            )}
             <Link
               to="/productos"
               className="text-white font-medium hover:text-accent transition-colors whitespace-nowrap px-2"
@@ -303,14 +308,14 @@ export function Navbar() {
               </Button>
             )}
             {user && (
-                <Button
-                  variant="secondary"
-                  className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold"
-                  onClick={handleLogout}
-                >
-                  Cerrar Sesión
-                </Button>
-              )}
+              <Button
+                variant="secondary"
+                className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold"
+                onClick={handleLogout}
+              >
+                Cerrar Sesión
+              </Button>
+            )}
           </div>
 
           {/* Mobile menu button */}

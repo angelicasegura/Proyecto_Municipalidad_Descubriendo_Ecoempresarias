@@ -179,6 +179,21 @@ namespace API.Controllers
 
         }
 
+        [HttpGet("ObtenerPorUsuario/{usuarioId}")]
+        public async Task<IActionResult> ObtenerEmprendimientoPorUsuario([FromRoute] int usuarioId)
+        {
+            try
+            {
+                var resultado = await _emprendimientoFlujo.ObtenerEmprendimientoPorUsuario(usuarioId);
+                if (resultado == null)
+                    return NoContent();
+                return Ok(resultado);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error interno: {ex.Message}");
+            }
+        }
 
         private async Task<bool> verificarSiEmprendimientoYaExiste(string CedulaJuridica)
         {

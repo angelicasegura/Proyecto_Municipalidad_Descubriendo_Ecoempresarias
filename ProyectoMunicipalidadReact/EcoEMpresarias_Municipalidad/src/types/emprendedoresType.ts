@@ -1,3 +1,5 @@
+import { authFetch } from "../auth/AuthFetch"
+
 export interface Emprendedor {
   emprendimientoId: number
   nombre: string
@@ -21,6 +23,18 @@ export interface Estado {
   nombre: string
 }
 
+export interface Emprendimiento {
+  emprendimientoId: number
+  nombre: string
+  cedulaJuridica: string
+  tipoActividadId: number
+  email: string
+  telefono: string
+  direccion: string
+  estadoId: number // 1 = activo, 2 = inactivo
+  ruta_Imagen_Logo?: string
+  descripcion?: string
+}
 
 
 export const fetchTiposActividad = async (): Promise<TipoActividad[]> => {
@@ -49,3 +63,12 @@ export const getTipoActividadNombre = (id: number, listaTipos: TipoActividad[]):
   if (!listaTipos || listaTipos.length === 0) return "Cargando...";
   return listaTipos.find((t) => t.tipoActividadId === id)?.nombre ?? "Desconocido";
 };
+
+
+const BASE_URL = "https://localhost:7050"
+
+export async function obtenerEmprendimientosPorUsuario(usuarioId: number): Promise<Emprendimiento[]> {
+  const res = await authFetch(`${BASE_URL}/api/Emprendimientos/ObtenerPorUsuario/${usuarioId}`)
+  if (!res.ok) throw new Error("Error al obtener emprendimientos")
+  return res.json()
+}

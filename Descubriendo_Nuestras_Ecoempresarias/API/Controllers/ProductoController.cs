@@ -54,16 +54,17 @@ namespace API.Controllers
 
 
                 var resultado = await _productoFlujo.AgregarProducto(producto);
-
-                Inventario inventario = new Inventario
-                {
-                    ProductoId = resultado,
-                    CantidadActual = 0,
-                    CantidadMinima = 10
-
-                };
-                await _inventarioFlujo.AgregarInventario(inventario);
                 return Ok(resultado);
+
+                //    Inventario inventario = new Inventario
+                //    {
+                //        ProductoId = resultado,
+                //        CantidadActual = 0,
+                //        CantidadMinima = 10
+
+                //    };
+                //    await _inventarioFlujo.AgregarInventario(inventario);
+                //    return Ok(resultado);
 
             }
             catch (Exception ex)
