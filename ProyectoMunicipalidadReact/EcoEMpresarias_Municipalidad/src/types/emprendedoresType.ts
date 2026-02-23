@@ -8,7 +8,8 @@ export interface Emprendedor {
   email: string
   telefono: string
   direccion: string
-  estadoId: number // 1 = activo, 2 = inactivo
+  estadoId: number
+  usuarioId: number        // 👈 agregá esto si no está
   ruta_Imagen_Logo?: string
   descripcion?: string
 }
@@ -63,6 +64,25 @@ export const getTipoActividadNombre = (id: number, listaTipos: TipoActividad[]):
   if (!listaTipos || listaTipos.length === 0) return "Cargando...";
   return listaTipos.find((t) => t.tipoActividadId === id)?.nombre ?? "Desconocido";
 };
+
+export async function editarEmprendimiento(id: number, formData: FormData): Promise<void> {
+  const token = localStorage.getItem("token")
+  const res = await fetch(`https://localhost:7050/api/Emprendimientos/EditarEmprendimiento/${id}`, {
+    method: "PUT",
+    headers: { Authorization: `Bearer ${token}` },
+    body: formData,
+  })
+  if (!res.ok) throw new Error("Error al editar el emprendimiento")
+}
+
+// Inactivar/activar emprendimiento
+export async function toggleEstadoEmprendimiento(id: number): Promise<void> {
+  const res = await authFetch(
+    `https://localhost:7050/api/Emprendimientos/EliminarEmprendimiento/${id}`,
+    { method: "PUT" }
+  )
+  if (!res.ok) throw new Error("Error al cambiar estado del emprendimiento")
+}
 
 
 const BASE_URL = "https://localhost:7050"

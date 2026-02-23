@@ -1,12 +1,10 @@
 import { handleCrearEmprendedor } from "./Actions/handleCrearEmprendedor";
-import { handleEditarEmprendedor } from "./Actions/handleEditarEmprendedor";
 import { handleEditar } from "./Actions/handleEditar";
 import { handleToggleEstadoClick } from "./Actions/handleEstado";
-import { handleToggleEstado } from "./Actions/handleConfirmarEstado";
 
 import { EmprendedoresHeader } from "./components/emprendedorHeader";
 import { EmprendedoresTable } from "./components/tablaEmprendedores";
-import { ModalCrearEmprendimiento} from "../Emprendimientos/components/modalCrearEmprendimeinto";
+import { ModalCrearEmprendimiento } from "../Emprendimientos/components/modalCrearEmprendimeinto";
 import { EditarEmprendedor } from "../Emprendimientos/components/modalEditarEmprendimiento";
 import { ConfirmStatusDialog } from "../Emprendimientos/components/modalDeConfirmacionDeEstado";
 import { EmprendedoresFilters } from "../Emprendimientos/components/filtrosEmprendedor";
@@ -17,6 +15,10 @@ import { authFetch } from "../../../auth/AuthFetch";
 
 import type { TipoActividad } from "../../../types/emprendedoresType";
 import { fetchTiposActividad } from "../../../types/emprendedoresType";
+
+import {toggleEstadoEmprendimiento } from "../../../types/emprendedoresType";
+import toast from "react-hot-toast"
+
 
 export default function AdminEmprendedores() {
   const [emprendedores, setEmprendedores] = useState<Emprendedor[]>([]);
@@ -36,7 +38,7 @@ export default function AdminEmprendedores() {
     const params = new URLSearchParams({
       page: String(page),
       limit: String(limit),
-      search: searchTerm || "", 
+      search: searchTerm || "",
       tipoActividadId: tipoFilter === "all" || !tipoFilter ? "" : String(tipoFilter),
       estadoId: estadoFilter === "all" || !estadoFilter ? "" : String(estadoFilter),
     });
@@ -71,16 +73,22 @@ export default function AdminEmprendedores() {
     refreshData: fetchEmprendedores,
   });
 
-  const onEditEmprendedor = handleEditarEmprendedor({
-    setEditDialogOpen,
-    setSelectedEmprendedor,
-  });
+  const onEditConfirmado = async () => {
+    await fetchEmprendedores()  // refresca la tabla
+  }
 
-  const onToggleStatus = handleToggleEstado({
-    selectedEmprendedor,
-    setStatusDialogOpen,
-    setSelectedEmprendedor,
-  });
+  const onToggleStatus = async () => {
+    if (!selectedEmprendedor) return
+    try {
+      await toggleEstadoEmprendimiento(selectedEmprendedor.emprendimientoId)
+      const accion = selectedEmprendedor.estadoId === 1 ? "inactivado" : "activado"
+      toast.success(`Emprendimiento ${accion} correctamente`)
+      await fetchEmprendedores()
+    } catch (err) {
+      toast.error("Error al cambiar el estado")
+      console.error(err)
+    }
+  }
 
   const onEdit = handleEditar({
     setSelectedEmprendedor,
@@ -112,7 +120,7 @@ export default function AdminEmprendedores() {
           setEstadoFilter(val);
           setPage(1);
         }}
-        onSearch={() => {}}
+        onSearch={() => { }}
         tiposActividad={tiposActividad}
       />
 
@@ -141,15 +149,15 @@ export default function AdminEmprendedores() {
         open={editDialogOpen}
         onOpenChange={setEditDialogOpen}
         emprendedor={selectedEmprendedor}
-        onSubmit={onEditEmprendedor}
         tiposActividad={tiposActividad}
+        onSubmit={onEditConfirmado}  // 👈 ahora solo refresca
       />
 
       <ConfirmStatusDialog
         open={statusDialogOpen}
         onOpenChange={setStatusDialogOpen}
         emprendedor={selectedEmprendedor}
-        onConfirm={onToggleStatus}
+        onConfirm={onToggleStatus}  // 👈 ahora es async
       />
     </div>
   );

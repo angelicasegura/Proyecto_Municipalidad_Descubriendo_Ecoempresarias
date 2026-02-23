@@ -9,12 +9,13 @@ import { Button } from "../../../../components/ui/button"
 import { Alert, AlertDescription } from "../../../../components/ui/alert"
 import { AlertTriangle, Info } from "lucide-react"
 import type { Emprendedor } from "../../../../types/emprendedoresType"
+import { useState } from "react"
 
 interface ConfirmStatusDialogProps {
   open: boolean
   onOpenChange: (open: boolean) => void
   emprendedor: Emprendedor | null
-  onConfirm: () => void
+  onConfirm: () => Promise<void>  // 👈 ahora es async
 }
 
 export function ConfirmStatusDialog({
@@ -24,6 +25,7 @@ export function ConfirmStatusDialog({
   onConfirm,
 }: ConfirmStatusDialogProps) {
   const isActivating = emprendedor?.estadoId === 2 // 2 = inactivo
+  const [loading, setLoading] = useState(false)
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -52,10 +54,19 @@ export function ConfirmStatusDialog({
           </Button>
           <Button
             variant={isActivating ? "default" : "destructive"}
-            onClick={onConfirm}
+            disabled={loading}
+            onClick={async () => {
+              setLoading(true)
+              try {
+                await onConfirm()
+                onOpenChange(false)
+              } finally {
+                setLoading(false)
+              }
+            }}
             className={isActivating ? "bg-[#54b413] hover:bg-[#3c810e]" : ""}
           >
-            Confirmar
+            {loading ? "Procesando..." : "Confirmar"}
           </Button>
         </DialogFooter>
       </DialogContent>
