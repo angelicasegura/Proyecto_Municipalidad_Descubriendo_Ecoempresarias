@@ -2,6 +2,7 @@
 using Abstracciones.Modelos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace API.Controllers
 {
@@ -27,9 +28,9 @@ namespace API.Controllers
         }
 
         [HttpGet("MiCarrito")]
-        public async Task<IActionResult> MiCarrito()
+        public async Task<IActionResult> MiCarrito([FromQuery] int emprendimientoId)
         {
-            var result = await _carritoFlujo.ObtenerMiCarrito(GetUsuarioId());
+            var result = await _carritoFlujo.ObtenerMiCarrito(GetUsuarioId(), emprendimientoId);
             return Ok(result);
         }
 
@@ -40,10 +41,10 @@ namespace API.Controllers
             return Ok(result);
         }
 
-        [HttpDelete("Eliminar/{carritoId}")]
-        public async Task<IActionResult> Eliminar(int carritoId)
+        [HttpDelete("Eliminar")]
+        public async Task<IActionResult> Eliminar([FromBody] CarritoEliminarRequest request)
         {
-            var result = await _carritoFlujo.Eliminar(GetUsuarioId(), carritoId);
+            var result = await _carritoFlujo.Eliminar(GetUsuarioId(), request);
             return Ok(result);
         }
     }

@@ -1,36 +1,51 @@
-CREATE PROCEDURE [dbo].[sp_AgregarCarrito]
-    @UsuarioId INT,
-    @ProductoId UNIQUEIDENTIFIER,
-    @Cantidad DECIMAL(10,2)
+﻿CREATE   PROCEDURE dbo.sp_AgregarCarrito
+    @Usuario_id INT,
+    @Emprendimiento_id INT,
+    @Producto_id UNIQUEIDENTIFIER,
+    @Cantidad INT
 AS
 BEGIN
     SET NOCOUNT ON;
 
-    -- Si ya existe el producto en el carrito del usuario, se va sumar a la cantidad
-    IF EXISTS (
-        SELECT 1
-        FROM dbo.ECOEMPRESARIAS_CARRITO_TB
-        WHERE Usuario_id = @UsuarioId
-          AND Producto_id = @ProductoId
-    )
-    BEGIN
-        UPDATE dbo.ECOEMPRESARIAS_CARRITO_TB
-        SET Cantidad = Cantidad + @Cantidad
-        WHERE Usuario_id = @UsuarioId
-          AND Producto_id = @ProductoId;
+    DECLARE @Carrito_id UNIQUEIDENTIFIER;
 
-        RETURN 1;
+
+    SELECT @Carrito_id = Carrito_id
+    FROM dbo.ECOEMPRESARIAS_CARRITO_TB
+    WHERE Usuario_id = @Usuario_id
+      AND Emprendimiento_id = @Emprendimiento_id;
+
+
+    IF @Carrito_id IS NULL
+    BEGIN
+        SET @Carrito_id = NEWID();
+
+        INSERT INTO dbo.ECOEMPRESARIAS_CARRITO_TB
+            (Carrito_id, Usuario_id, Emprendimiento_id, FechaCreacion)
+        VALUES
+            (@Carrito_id, @Usuario_id, @Emprendimiento_id, GETDATE());
     END
 
-    -- Si no existe, crea un nuevo registro
-    DECLARE @NuevoCarritoId INT;
-
-    SELECT @NuevoCarritoId = ISNULL(MAX(Carrito_id), 0) + 1
-    FROM dbo.ECOEMPRESARIAS_CARRITO_TB;
-
-    INSERT INTO dbo.ECOEMPRESARIAS_CARRITO_TB (Carrito_id, Cantidad, Usuario_id, Producto_id)
-    VALUES (@NuevoCarritoId, @Cantidad, @UsuarioId, @ProductoId);
+    IF EXISTS (
+        SELECT 1
+        FROM dbo.ECOEMPRESARIAS_PRODUCTOS_POR_CARRITO_TB
+        WHERE Carrito_id = @Carrito_id
+          AND Producto_id = @Producto_id
+    )
+    BEGIN
+        UPDATE dbo.ECOEMPRESARIAS_PRODUCTOS_POR_CARRITO_TB
+        SET Cantidad = Cantidad + @Cantidad
+        WHERE Carrito_id = @Carrito_id
+          AND Producto_id = @Producto_id;
+    END
+    ELSE
+    BEGIN
+        INSERT INTO dbo.ECOEMPRESARIAS_PRODUCTOS_POR_CARRITO_TB
+            (Carrito_id, Producto_id, Cantidad)
+        VALUES
+            (@Carrito_id, @Producto_id, @Cantidad);
+    END
 
     RETURN 1;
-END;
+END
 GO

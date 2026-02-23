@@ -3,24 +3,35 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System;
+using System.Text.Json.Serialization;
+
 
 namespace Abstracciones.Modelos
 {
     public class CarritoAgregarRequest
     {
+        public int EmprendimientoId { get; set; }
         public Guid ProductoId { get; set; }
-        public decimal Cantidad { get; set; }
+        public int Cantidad { get; set; }
     }
 
     public class CarritoActualizarRequest
     {
-        public int CarritoId { get; set; }
-        public decimal Cantidad { get; set; }
+        public int EmprendimientoId { get; set; }
+        public Guid ProductoId { get; set; }
+        public int Cantidad { get; set; }
+    }
+
+    public class CarritoEliminarRequest
+    {
+        public int EmprendimientoId { get; set; }
+        public Guid ProductoId { get; set; }
     }
 
     public class CarritoItemResponse
     {
-        public int Carrito_id { get; set; }
+        public Guid Carrito_id { get; set; }
         public decimal Cantidad { get; set; }
 
         public Guid Producto_id { get; set; }
