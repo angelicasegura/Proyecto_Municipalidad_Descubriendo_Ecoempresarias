@@ -101,6 +101,9 @@
     <Build Include="dbo\Stored Procedures\sp_agregarInventario.sql" />
     <Build Include="dbo\Stored Procedures\sp_ObtenerEmprendimientoPorCedula.sql" />
     <Build Include="dbo\Stored Procedures\SP_ObtenerEmprendimientoPorUsuarioId.sql" />
+    <Build Include="dbo\Stored Procedures\SP_ObtenerProductosEmprendedor.sql" />
+    <Build Include="dbo\Stored Procedures\SP_ObtenerProductosPorEstado.sql" />
+    <Build Include="dbo\Stored Procedures\SP_CambiarEstadoProducto.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="BD.refactorlog" />

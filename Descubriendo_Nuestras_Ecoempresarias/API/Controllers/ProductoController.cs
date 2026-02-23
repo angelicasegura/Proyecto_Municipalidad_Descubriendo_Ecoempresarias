@@ -74,6 +74,7 @@ namespace API.Controllers
             }
         }
 
+        [Authorize(Roles = "EMPRENDEDOR")]
         [HttpPut("EditarProducto/{id}")]
         public async Task<IActionResult> EditarProducto([FromRoute] Guid id, [FromForm] ProductoRequest producto)
         {
@@ -106,6 +107,7 @@ namespace API.Controllers
 
         }
 
+        [Authorize(Roles = "EMPRENDEDOR")]
         [HttpPut("InactivarProducto/{id}")]
         public async Task<IActionResult> ElimnarProducto([FromRoute] Guid id)
         {
@@ -155,6 +157,106 @@ namespace API.Controllers
                 return StatusCode(500, $"Error interno al obtener productos es: {ex.Message}");
             }
         }
+
+
+        [Authorize(Roles = "EMPRENDEDOR")]
+        [HttpGet("ObtenerProductosEmprendedor")]
+        public async Task<IActionResult> ObtenerProductosEmprendedor([FromQuery] Guid? categoria_id,
+                                                  [FromQuery] string? nombre,
+                                                  [FromQuery] int? emprendimiento_id)
+        {
+            try
+            {
+                var resultado = await _productoFlujo.ObtenerProductosEmprendedor(categoria_id, nombre, emprendimiento_id);
+                string carpeta = _configuration["Carpetas:Productos"];
+
+                if (!resultado.Any())
+                    return NoContent();
+
+                return Ok(resultado);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return StatusCode(500, $"Error interno al obtener productos es: {ex.Message}");
+            }
+        }
+
+        [Authorize(Roles = "ADMIN")]
+        [HttpGet("ObtenerProductosCreadosPendientes")]
+        public async Task<IActionResult> ObtenerProductosCreadosPendientes()
+        {
+            try
+            {
+                var resultado = await _productoFlujo.ObtenerProductosPendientesDeAprobacion(3);
+                string carpeta = _configuration["Carpetas:Productos"];
+
+                if (!resultado.Any())
+                    return NoContent();
+
+                return Ok(resultado);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return StatusCode(500, $"Error interno al obtener productos es: {ex.Message}");
+            }
+        }
+
+        [Authorize(Roles = "ADMIN")]
+        [HttpGet("ObtenerProductosEditadosPendientes")]
+        public async Task<IActionResult> ObtenerProductosEditadosPendientes()
+        {
+            try
+            {
+                var resultado = await _productoFlujo.ObtenerProductosPendientesDeAprobacion(4);
+                string carpeta = _configuration["Carpetas:Productos"];
+
+                if (!resultado.Any())
+                    return NoContent();
+
+                return Ok(resultado);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return StatusCode(500, $"Error interno al obtener productos es: {ex.Message}");
+            }
+        }
+
+        [Authorize(Roles = "ADMIN")]
+        [HttpGet("AprobarProducto/{id}")]
+        public async Task<IActionResult> AprobarProducto([FromRoute] Guid id)
+        {
+            try
+            {
+                var resultado = await _productoFlujo.CambiarEstadoProducto(id, 1);
+                return Ok(resultado);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return StatusCode(500, $"Error interno al eliminar producto es: {ex.Message}");
+            }
+        }
+
+        [Authorize(Roles = "ADMIN")]
+        [HttpGet("RechazarProducto/{id}")]
+        public async Task<IActionResult> RechazarProducto([FromRoute] Guid id)
+        {
+            try
+            {
+                var resultado = await _productoFlujo.CambiarEstadoProducto(id, 5);
+                return Ok(resultado);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return StatusCode(500, $"Error interno al eliminar producto es: {ex.Message}");
+            }
+        }
+
+
 
         private async Task<bool> VerificarProductoExiste(Guid Id)
         {

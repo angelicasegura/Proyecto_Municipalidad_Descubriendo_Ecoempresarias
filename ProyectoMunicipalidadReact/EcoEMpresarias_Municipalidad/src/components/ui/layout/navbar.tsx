@@ -45,11 +45,7 @@ export function Navbar() {
             >
               Emprendimientos
             </Link>
-            {["EMPRENDEDOR"].includes(user?.rol ?? "") && (
-              <Link to="/mis-productos" className="text-white font-medium hover:text-accent transition-colors whitespace-nowrap px-2">
-                Mis productos
-              </Link>
-            )}
+
             <Link
               to="/productos"
               className="text-white font-medium hover:text-accent transition-colors whitespace-nowrap px-2"

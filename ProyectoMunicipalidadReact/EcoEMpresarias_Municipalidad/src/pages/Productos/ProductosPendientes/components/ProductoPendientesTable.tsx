@@ -1,29 +1,27 @@
-// Tabla que lista todos los productos del emprendedor.
-// Cada fila tiene botones de Ver detalle, Editar y Eliminar.
+// Tabla que muestra los productos pendientes con botones de aprobar, rechazar y ver detalle.
 
 import { useNavigate } from "react-router-dom"
 import type { Producto } from "../../../../types/productosType"
 import { Button } from "../../../../components/ui/button"
 import {
     Table, TableBody, TableCell,
-    TableHead, TableHeader, TableRow
+    TableHead, TableHeader, TableRow,
 } from "../../../../components/ui/table"
-import { Eye, Pencil, Trash2 } from "lucide-react"
+import { Eye, Check, X } from "lucide-react"
 
 interface Props {
     productos: Producto[]
-    onEditar: (producto: Producto) => void
-    onEliminar: (producto: Producto) => void
+    onAprobar: (producto: Producto) => void
+    onRechazar: (producto: Producto) => void
 }
 
-export function MisProductosTable({ productos, onEditar, onEliminar }: Props) {
+export function ProductosPendientesTable({ productos, onAprobar, onRechazar }: Props) {
     const navigate = useNavigate()
 
-    if (productos.length === 0 || productos.every(p => p.nombreEstado !== "Activo")) {
+    if (productos.length === 0) {
         return (
             <div className="flex flex-col items-center justify-center gap-2 rounded-xl border bg-muted/30 py-16">
-                <p className="text-muted-foreground font-medium">Aún no tenés productos registrados</p>
-                <p className="text-sm text-muted-foreground">Usá el botón "Agregar producto" para comenzar</p>
+                <p className="text-muted-foreground font-medium">No hay productos pendientes</p>
             </div>
         )
     }
@@ -35,9 +33,9 @@ export function MisProductosTable({ productos, onEditar, onEliminar }: Props) {
                     <TableRow className="bg-muted/50">
                         <TableHead>Imagen</TableHead>
                         <TableHead>Nombre</TableHead>
+                        <TableHead>Emprendimiento</TableHead>
                         <TableHead>Categoría</TableHead>
                         <TableHead>Precio</TableHead>
-                        <TableHead>Descuento</TableHead>
                         <TableHead>Estado</TableHead>
                         <TableHead className="text-right">Acciones</TableHead>
                     </TableRow>
@@ -46,7 +44,7 @@ export function MisProductosTable({ productos, onEditar, onEliminar }: Props) {
                     {productos.map((producto) => (
                         <TableRow key={producto.producto_id}>
 
-                            {/* Imagen miniatura */}
+                            {/* Imagen */}
                             <TableCell>
                                 {producto.ruta_Imagen ? (
                                     <img
@@ -62,8 +60,13 @@ export function MisProductosTable({ productos, onEditar, onEliminar }: Props) {
                             </TableCell>
 
                             {/* Nombre */}
-                            <TableCell className="font-medium max-w-[180px] truncate">
+                            <TableCell className="font-medium max-w-[160px] truncate">
                                 {producto.nombreProducto}
+                            </TableCell>
+
+                            {/* Emprendimiento — necesitamos este campo en el tipo */}
+                            <TableCell className="text-muted-foreground">
+                                {producto.emprendimientoNombre ?? "—"}
                             </TableCell>
 
                             {/* Categoría */}
@@ -74,33 +77,14 @@ export function MisProductosTable({ productos, onEditar, onEliminar }: Props) {
                             {/* Precio */}
                             <TableCell>₡{producto.precio.toLocaleString()}</TableCell>
 
-                            {/* Descuento */}
-                            <TableCell>
-                                {producto.descuento ? (
-                                    <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full">
-                                        -{producto.descuento}%
-                                    </span>
-                                ) : (
-                                    <span className="text-muted-foreground text-xs">—</span>
-                                )}
-                            </TableCell>
-
                             {/* Estado */}
                             <TableCell>
-                                <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${producto.nombreEstado === "Activo"
-                                        ? "bg-green-100 text-green-700"
-                                        : producto.nombreEstado === "Producto editado pendiente de aprobación" ||
-                                            producto.nombreEstado === "Producto creado pendiente de aprobación"
-                                            ? "bg-yellow-100 text-yellow-700"
-                                            : producto.nombreEstado === "Rechazado"
-                                                ? "bg-red-100 text-red-700"
-                                                : "bg-gray-100 text-gray-500"  // fallback para cualquier otro estado
-                                    }`}>
+                                <span className="text-xs px-2 py-0.5 rounded-full font-medium bg-yellow-100 text-yellow-700">
                                     {producto.nombreEstado}
                                 </span>
                             </TableCell>
 
-                            {/* Botones de acción */}
+                            {/* Acciones */}
                             <TableCell className="text-right">
                                 <div className="flex items-center justify-end gap-2">
                                     <Button
@@ -114,19 +98,20 @@ export function MisProductosTable({ productos, onEditar, onEliminar }: Props) {
                                     <Button
                                         variant="ghost"
                                         size="sm"
-                                        onClick={() => onEditar(producto)}
-                                        title="Editar"
+                                        className="text-green-600 hover:text-green-700 hover:bg-green-50"
+                                        onClick={() => onAprobar(producto)}
+                                        title="Aprobar"
                                     >
-                                        <Pencil className="h-4 w-4" />
+                                        <Check className="h-4 w-4" />
                                     </Button>
                                     <Button
                                         variant="ghost"
                                         size="sm"
                                         className="text-red-500 hover:text-red-700 hover:bg-red-50"
-                                        onClick={() => onEliminar(producto)}
-                                        title="Eliminar"
+                                        onClick={() => onRechazar(producto)}
+                                        title="Rechazar"
                                     >
-                                        <Trash2 className="h-4 w-4" />
+                                        <X className="h-4 w-4" />
                                     </Button>
                                 </div>
                             </TableCell>

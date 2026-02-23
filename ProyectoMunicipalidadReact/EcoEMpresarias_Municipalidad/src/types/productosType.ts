@@ -12,6 +12,7 @@ export interface Producto {
   nombreEstado: string
   usuarioDueño: number
   categoria_id: string
+  emprendimientoNombre?: string
 }
 
 export interface CategoriaProducto {
@@ -90,6 +91,13 @@ export async function obtenerProductos(emprendimientoId?: number): Promise<Produ
   return res.json()
 }
 
+export async function obtenerProductosEmprendedor(emprendimientoId?: number): Promise<Producto[]> {
+  const params = emprendimientoId ? `?emprendimiento_id=${emprendimientoId}` : ""
+  const res = await authFetch(`${BASE_URL}/api/Producto/ObtenerProductosEmprendedor${params}`)
+  if (!res.ok) throw new Error("Error al obtener productos")
+  return res.json()
+}
+
 // Trae un solo producto por su ID
 // Usamos el mismo endpoint pero filtrando — ajusta si tu API tiene un endpoint distinto
 export async function obtenerProductoPorId(id: string): Promise<Producto> {
@@ -103,32 +111,13 @@ export async function obtenerProductoPorId(id: string): Promise<Producto> {
 
 // Crear producto — usa multipart/form-data porque puede incluir imagen
 export async function crearProducto(formData: FormData): Promise<void> {
-  console.log("=== Intentando crear producto ===")
-  
-  // 👇 Verificamos qué hay en el formData antes de enviarlo
-  for (const [key, value] of formData.entries()) {
-    console.log(`${key}:`, value)
-  }
-
   const token = localStorage.getItem("token")
-  console.log("Token existe:", !!token)
-
-  try {
-    const res = await fetch(`https://localhost:7050/api/Producto/CrearProducto`, {
-      method: "POST",
-      headers: { Authorization: `Bearer ${token}` },
-      body: formData,
-    })
-    console.log("Status:", res.status)
-    if (!res.ok) {
-      const errorBody = await res.text()
-      console.error("Error body:", errorBody)
-      throw new Error(`Error ${res.status}: ${errorBody}`)
-    }
-  } catch (err) {
-    console.error("Error en crearProducto:", err)
-    throw err
-  }
+  const res = await fetch(`${BASE_URL}/api/Producto/CrearProducto`, {
+    method: "POST",
+    headers: { Authorization: `Bearer ${token}` },
+    body: formData, // NO ponemos Content-Type, el browser lo pone automático con el boundary
+  })
+  if (!res.ok) throw new Error("Error al crear el producto")
 }
 
 // Editar producto — también multipart/form-data
@@ -154,6 +143,34 @@ export async function obtenerCategorias(): Promise<CategoriaProducto[]> {
     const res = await authFetch(`${BASE_URL}/api/CategoriasProductos/Obtener`)
     if (!res.ok) throw new Error("Error al obtener categorías")
     return res.json()
+}
+
+// Productos creados pendientes (estado 3)
+export async function obtenerProductosCreadosPendientes(): Promise<Producto[]> {
+  const res = await authFetch(`${BASE_URL}/api/Producto/ObtenerProductosCreadosPendientes`)
+  if (res.status === 204) return []
+  if (!res.ok) throw new Error("Error al obtener productos pendientes")
+  return res.json()
+}
+
+// Productos editados pendientes (estado 4)
+export async function obtenerProductosEditadosPendientes(): Promise<Producto[]> {
+  const res = await authFetch(`${BASE_URL}/api/Producto/ObtenerProductosEditadosPendientes`)
+  if (res.status === 204) return []
+  if (!res.ok) throw new Error("Error al obtener productos pendientes")
+  return res.json()
+}
+
+// Aprobar producto
+export async function aprobarProducto(id: string): Promise<void> {
+  const res = await authFetch(`${BASE_URL}/api/Producto/AprobarProducto/${id}`)
+  if (!res.ok) throw new Error("Error al aprobar producto")
+}
+
+// Rechazar producto
+export async function rechazarProducto(id: string): Promise<void> {
+  const res = await authFetch(`${BASE_URL}/api/Producto/RechazarProducto/${id}`)
+  if (!res.ok) throw new Error("Error al rechazar producto")
 }
 
 

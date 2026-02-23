@@ -26,6 +26,8 @@ import InventarioEmprendimiento from "./pages/Emprendedores/Inventario/Invetario
 import { Breadcrumbs } from "./components/ui/layout/Breadcrumbs";
 import MisProductosPage from "./pages/Productos/MisProductos/MisProductosPage";
 import MisEmprendimientosPage from "./pages/Productos/MisProductos/MisEmprendimientosPage";
+import ListaPendientesPage from "./pages/Productos/ProductosPendientes/ListaPendientesPage";
+import ProductosPendientesPage from "./pages/Productos/ProductosPendientes/ProductosPendientesPage";
 
 function App() {
   const { loading } = useAuth();
@@ -78,6 +80,9 @@ function App() {
             <Route path="/productos/:id" element={<DetalleProductoPages/>} />
             <Route path="/mis-productos" element={<MisEmprendimientosPage />} />
             <Route path="/mis-productos/:emprendimientoId" element={<MisProductosPage />} />
+
+            <Route path="/revision-productos" element={<ProductosPendientesPage />} />
+            <Route path="/productos-pendientes/:tipo" element={<ListaPendientesPage />} />
         </Routes>
       </main>
       <Footer />

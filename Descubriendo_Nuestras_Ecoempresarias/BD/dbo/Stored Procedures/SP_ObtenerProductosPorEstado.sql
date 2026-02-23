@@ -1,10 +1,10 @@
-﻿CREATE PROCEDURE [dbo].[SP_ObtenerProductoPorId]
-    @Producto_id UNIQUEIDENTIFIER
+﻿CREATE PROCEDURE [dbo].[SP_ObtenerProductosPorEstado]
+@Estado_id int 
 AS
 BEGIN
     SET NOCOUNT ON;
 
-   SELECT
+    SELECT
         Productos.Producto_id,
         Productos.NombreProducto,
         Productos.Descripcion,
@@ -25,5 +25,5 @@ BEGIN
         ON Productos.Categoria_id = Categoria.Categoria_id
     INNER JOIN ECOEMPRESARIAS_EMPRENDIMIENTOS_TB Emprendimiento  
         ON Productos.Emprendimiento_id = Emprendimiento.Emprendimiento_id
-	WHERE Productos.Producto_id = @Producto_id;
+    WHERE (Productos.Estado_id = @Estado_id);
 END

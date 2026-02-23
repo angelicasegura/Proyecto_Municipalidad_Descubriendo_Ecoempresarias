@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import toast from "react-hot-toast"
-import { obtenerProductos, crearProducto, editarProducto, eliminarProducto} from "../../../types/productosType"
+import { obtenerProductosEmprendedor, crearProducto, editarProducto, eliminarProducto} from "../../../types/productosType"
 import { obtenerCategorias } from "../../../types/productosType"
 import type { Producto } from "../../../types/productosType"
 import type { CategoriaProducto } from "../../../types/productosType"
@@ -31,7 +31,7 @@ export default function MisProductosPage() {
         const cargarDatos = async () => {
             try {
                 const [prods, cats] = await Promise.all([
-                    obtenerProductos(empId),
+                    obtenerProductosEmprendedor(empId),
                     obtenerCategorias(),
                 ])
                 setProductos(prods)
@@ -50,7 +50,7 @@ export default function MisProductosPage() {
     const refrescarProductos = async () => {
         if (!empId) return
         try {
-            const prods = await obtenerProductos(empId)
+            const prods = await obtenerProductosEmprendedor(empId)
             setProductos([...prods])
         } catch (err) {
             console.error("Error al refrescar:", err)
