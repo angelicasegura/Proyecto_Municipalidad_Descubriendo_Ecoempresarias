@@ -100,6 +100,10 @@
     <Build Include="dbo\Stored Procedures\sp_editarInventario.sql" />
     <Build Include="dbo\Stored Procedures\sp_agregarInventario.sql" />
     <Build Include="dbo\Stored Procedures\sp_ObtenerEmprendimientoPorCedula.sql" />
+    <Build Include="dbo\Stored Procedures\sp_AgregarCarrito.sql" />
+    <Build Include="dbo\Stored Procedures\sp_ObtenerCarritoPorUsuario.sql" />
+    <Build Include="dbo\Stored Procedures\sp_ActualizarCantidadCarrito.sql" />
+    <Build Include="dbo\Stored Procedures\sp_EliminarCarrito.sql" />
     <Build Include="dbo\Stored Procedures\SP_ObtenerEmprendimientoPorUsuarioId.sql" />
     <Build Include="dbo\Stored Procedures\SP_ObtenerProductosEmprendedor.sql" />
     <Build Include="dbo\Stored Procedures\SP_ObtenerProductosPorEstado.sql" />
@@ -111,6 +115,8 @@
     <Build Include="dbo\Stored Procedures\sp_ObtenerComentariosPorEmprendimiento.sql" />
     <Build Include="dbo\Stored Procedures\sp_ObtenerComentarioPorId.sql" />
     <Build Include="dbo\Stored Procedures\sp_ObtenerUsuarioIdPorComentario.sql" />
+    <Build Include="dbo\Tables\ECOEMPRESARIAS_PRODUCTOS_POR_CARRITO_TB.sql" />
+    <Build Include="dbo\Tables\ECOEMPRESARIAS_EMPRENDEDOR_TB.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="BD.refactorlog" />

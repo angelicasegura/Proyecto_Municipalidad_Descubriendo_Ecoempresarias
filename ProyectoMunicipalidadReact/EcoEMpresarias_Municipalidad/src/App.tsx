@@ -14,16 +14,14 @@ import RegisterPage from "./pages/auth/register/registerPage";
 import EmprendimientosPage from "./pages/public/ListaEmprendimientos/listaEmprendimientosPublic";
 
 import DetalleEmprendimiento from "./pages/public/DetalleEmprendimiento/DetalleEmprendimiento";
-
 import ProductosPage from "./pages/Productos/ProductoPage";
 import DetalleProductoPages from "./pages/Productos/Detalle/DetalleProductoPages";
-
-
 import { Toaster } from "react-hot-toast";
 import DetalleProductoPage from "./pages/public/DetalleProducto/DetalleProducto";
 import EmprendimientosPropios from "./pages/Emprendedores/ListaEmprendimientosPropiosInventario/ListaEmprendientosPropios";
 import InventarioEmprendimiento from "./pages/Emprendedores/Inventario/InvetarioEmprendimiento";
 import { Breadcrumbs } from "./components/ui/layout/Breadcrumbs";
+import CarritoPage from "./pages/public/Carrito/CarritoPage";
 import MisProductosPage from "./pages/Productos/MisProductos/MisProductosPage";
 import MisEmprendimientosPage from "./pages/Productos/MisProductos/MisEmprendimientosPage";
 import ListaPendientesPage from "./pages/Productos/ProductosPendientes/ListaPendientesPage";
@@ -36,38 +34,44 @@ function App() {
   }
   return (
     <>
-    <div className="flex min-h-screen flex-col">
-      <Navbar />
-      <div className="gradient-hero text-white px-4 py-2 ">
-        <Breadcrumbs />
-      </div>
-      <main className="flex-1">
-        <Toaster position="top-center" reverseOrder={false} />
-        <Routes>
-          {/* Esta parte es la del router aqui se define el link que se quiere que 
+      <div className="flex min-h-screen flex-col">
+        <Navbar />
+        <div className="gradient-hero text-white px-4 py-2 ">
+          <Breadcrumbs />
+        </div>
+        <main className="flex-1">
+          <Toaster position="top-center" reverseOrder={false} />
+          <Routes>
+            {/* Esta parte es la del router aqui se define el link que se quiere que 
         accione una ruta para cambiar de pagina, esto no es nada del los get o put a 
         la api, esto es solo lo visual */}
-          
 
-          {/* public routes */}
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/emprendimientos" element={<EmprendimientosPage />} />
-          <Route path="/emprendimiento/:id/:cedulaJuridica" element={<DetalleEmprendimiento />} /> 
-          <Route path="/producto/:id" element={<DetalleProductoPage />} />
+            {/* public routes */}
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/emprendimientos" element={<EmprendimientosPage />} />
+            <Route
+              path="/emprendimiento/:id/:cedulaJuridica"
+              element={<DetalleEmprendimiento />}
+            />
+            <Route path="/producto/:id" element={<DetalleProductoPage />} />
 
-          {/* HU-28: Ruta de registro */}
-          <Route path="/registro" element={<RegisterPage />} />
+            {/* HU-28: Ruta de registro */}
+            <Route path="/registro" element={<RegisterPage />} />
 
-          
+            {/* Ruta protegida para USUARIO (Carrito) */}
+            <Route element={<ProtectedRoute allowedRoles={["USUARIO"]} />}>
+              <Route path="/carrito" element={<CarritoPage />} />
+            </Route>
 
-          {/* admin routes */}
-          
-          <Route element={<ProtectedRoute allowedRoles={["ADMIN"]} />}>
-            <Route path="/usuarios" element={<AdminUsuarios />} />
-            <Route path="/emprendimientos-admin" element={<AdminEmprendedores />} />
-          </Route>
-            
+            {/* admin routes */}
+            <Route element={<ProtectedRoute allowedRoles={["ADMIN"]} />}>
+              <Route path="/usuarios" element={<AdminUsuarios />} />
+              <Route
+                path="/emprendimientos-admin"
+                element={<AdminEmprendedores />}
+              />
+            </Route>
 
           {/* Emprendedores routes */}
           <Route element={<ProtectedRoute allowedRoles={["EMPRENDEDOR"]} />}>
