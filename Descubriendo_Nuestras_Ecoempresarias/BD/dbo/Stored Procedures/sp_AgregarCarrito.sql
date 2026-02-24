@@ -6,15 +6,25 @@
 AS
 BEGIN
     SET NOCOUNT ON;
-
+    begin transaction;
     DECLARE @Carrito_id UNIQUEIDENTIFIER;
-
+    DECLARE @EstadoEmprendimiento INT;
 
     SELECT @Carrito_id = Carrito_id
     FROM dbo.ECOEMPRESARIAS_CARRITO_TB
     WHERE Usuario_id = @Usuario_id
       AND Emprendimiento_id = @Emprendimiento_id;
 
+
+      -- Verificar el estado del emprendimiento
+      SELECT @EstadoEmprendimiento = Estado_id 
+    FROM dbo.ECOEMPRESARIAS_EMPRENDIMIENTOS_TB
+    WHERE Emprendimiento_id = @Emprendimiento_id;
+
+    IF @EstadoEmprendimiento IS NULL OR @EstadoEmprendimiento <> 1
+    BEGIN
+        RETURN 0; -- Retorna 0 indicando que no se pudo realizar la operación
+    END
 
     IF @Carrito_id IS NULL
     BEGIN
@@ -47,5 +57,6 @@ BEGIN
     END
 
     RETURN 1;
+    commit transaction;
 END
 GO
