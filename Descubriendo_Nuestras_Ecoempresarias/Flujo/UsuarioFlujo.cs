@@ -73,7 +73,10 @@ namespace Flujo
         {
             return await _usuarioDA.ActualizarEstadoDeUsuario(Id, estado);
         }
-        
 
+        public async Task<List<Emprendedora>> Obtener10EmprendedorasAsync()
+        {
+            return await _usuarioDA.Obtener10EmprendedorasAsync();
+        }
     }
 }

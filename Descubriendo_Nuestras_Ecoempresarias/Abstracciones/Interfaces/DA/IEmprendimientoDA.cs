@@ -26,5 +26,6 @@ namespace Abstracciones.Interfaces.DA
         Task<EmprendimientoResponse> GetEmprendimientoPorId(string cedulaJuridica);
 
         Task<List<EmprendimientoResponse>> GetEmprendimientoPorCedulaUsuario(int cedula, int estado_id);
+        Task<int> InactivarOActivarEmprendimientosDeUsuario(int Cedula, int estado_id);
     }
 }

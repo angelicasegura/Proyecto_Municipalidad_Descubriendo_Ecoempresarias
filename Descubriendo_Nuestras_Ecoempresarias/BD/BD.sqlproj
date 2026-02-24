@@ -105,6 +105,8 @@
     <Build Include="dbo\Stored Procedures\sp_ObtenerComentariosPorEmprendimiento.sql" />
     <Build Include="dbo\Stored Procedures\sp_ObtenerComentarioPorId.sql" />
     <Build Include="dbo\Stored Procedures\sp_ObtenerUsuarioIdPorComentario.sql" />
+    <Build Include="dbo\Stored Procedures\sp_Obtener10Emprendedoras.sql" />
+    <Build Include="dbo\Stored Procedures\sp_InactivarOActivarUsuarioEmprendimientos.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="BD.refactorlog" />

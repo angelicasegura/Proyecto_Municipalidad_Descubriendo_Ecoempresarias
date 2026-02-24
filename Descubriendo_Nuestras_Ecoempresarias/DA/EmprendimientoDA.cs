@@ -149,7 +149,24 @@ namespace DA
             }
         }
 
-
+        public async Task<int> InactivarOActivarEmprendimientosDeUsuario(int Cedula, int estado_id)
+        {
+            try
+            {
+                string query = @"sp_InactivarOActivarUsuarioEmprendimientos";
+                var resultadoQuery = await _sqlConnection.ExecuteScalarAsync<int>(query, new
+                {
+                    UsuarioId = Cedula,
+                    Estado_id = estado_id
+                });
+                
+                return resultadoQuery;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Algo salio mal en la inactivaciond e emprendimientos",ex);
+            }
+        }
 
     }
 }

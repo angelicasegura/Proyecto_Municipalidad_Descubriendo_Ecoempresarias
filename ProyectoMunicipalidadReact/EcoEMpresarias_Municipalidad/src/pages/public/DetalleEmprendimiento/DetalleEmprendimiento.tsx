@@ -12,7 +12,7 @@ import EmprendimientoMap from "./components/EmprendimientoMap";
 import ProductosFilters from "./components/ProductosFilters";
 import ProductosGrid from "./components/ProductosGrid";
 
-import { Button } from "../../../components/ui/button";
+
 import ComentariosSection from "./components/ComentarioSection";
 export default function DetalleEmprendimiento() {
   const { id, cedulaJuridica } = useParams<{ id: string; cedulaJuridica: string }>();
@@ -82,13 +82,7 @@ export default function DetalleEmprendimiento() {
 
       <div className="mx-auto max-w-6xl space-y-6 px-4 py-6 md:py-10">
         
-        <Button
-          variant="ghost"
-          className="mb-6 pl-0 text-muted-foreground"
-          onClick={() => navigate(-1)}
-        >
-          ← Volver
-        </Button>
+        
         <EmprendimientoHeader emprendedor={emprendedor} loading={!emprendedor} />
 
         {emprendedor?.direccion && <EmprendimientoMap direccion={emprendedor.direccion} />}

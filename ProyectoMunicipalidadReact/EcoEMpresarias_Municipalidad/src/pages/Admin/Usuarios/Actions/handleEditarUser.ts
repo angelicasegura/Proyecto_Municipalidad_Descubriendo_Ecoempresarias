@@ -35,7 +35,7 @@ export function handleEditarUser({
       loading: "Editando usuario...",
       success: "Usuario editado correctamente 🎉",
       error: (err) => err.message || "No se pudo editar el usuario",
-    },{ duration: 4000 });
+    },{ duration: 2500 });
       
 
       try {

@@ -5,7 +5,7 @@
     [Telefono]           VARCHAR (15)  NOT NULL,
     [Contrasena]         VARCHAR (200) NOT NULL,
     [Email]              VARCHAR (200) NOT NULL,
-    [Ruta_Imagen_Perfil] VARCHAR (300) NOT NULL,
+    [Ruta_Imagen_Perfil] VARCHAR (300) NULL,
     [Edad]               INT           NOT NULL,
     [Estado_id]          INT           NOT NULL,
     [Rol_id]             INT           NOT NULL,

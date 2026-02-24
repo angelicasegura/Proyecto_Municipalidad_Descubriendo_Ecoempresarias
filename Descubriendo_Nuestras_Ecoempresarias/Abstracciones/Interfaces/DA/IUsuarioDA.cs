@@ -25,5 +25,7 @@ namespace Abstracciones.Interfaces.DA
 
         Task<int> ActualizarEstadoDeUsuario(int Id, int estado);
 
+        Task<List<Emprendedora>> Obtener10EmprendedorasAsync();
+
     }
 }
