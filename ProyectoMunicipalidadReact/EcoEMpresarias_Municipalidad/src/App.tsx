@@ -22,6 +22,10 @@ import EmprendimientosPropios from "./pages/Emprendedores/ListaEmprendimientosPr
 import InventarioEmprendimiento from "./pages/Emprendedores/Inventario/InvetarioEmprendimiento";
 import { Breadcrumbs } from "./components/ui/layout/Breadcrumbs";
 import CarritoPage from "./pages/public/Carrito/CarritoPage";
+import MisProductosPage from "./pages/Productos/MisProductos/MisProductosPage";
+import MisEmprendimientosPage from "./pages/Productos/MisProductos/MisEmprendimientosPage";
+import ListaPendientesPage from "./pages/Productos/ProductosPendientes/ListaPendientesPage";
+import ProductosPendientesPage from "./pages/Productos/ProductosPendientes/ProductosPendientesPage";
 
 function App() {
   const { loading } = useAuth();
@@ -78,6 +82,11 @@ function App() {
           {/* Productos routes */}
             <Route path="/productos" element={<ProductosPage />} />
             <Route path="/productos/:id" element={<DetalleProductoPages/>} />
+            <Route path="/mis-productos" element={<MisEmprendimientosPage />} />
+            <Route path="/mis-productos/:emprendimientoId" element={<MisProductosPage />} />
+
+            <Route path="/revision-productos" element={<ProductosPendientesPage />} />
+            <Route path="/productos-pendientes/:tipo" element={<ListaPendientesPage />} />
         </Routes>
       </main>
       <Footer />

@@ -13,7 +13,7 @@ namespace Abstracciones.Modelos
         public string NombreProducto { get; set; }
         public string Descripcion { get; set; }
         public Decimal Precio { get; set; }
-        public string Ruta_Imagen { get; set; }
+        public string? Ruta_Imagen { get; set; }
 
         public int Emprendimiento_id { get; set; }
 
@@ -33,5 +33,6 @@ namespace Abstracciones.Modelos
         public string CategoriaNombre { get; set; }
         public string NombreEstado { get; set; }
         public int UsuarioDueño { get; set; }
+        public string EmprendimientoNombre { get; set; }
     }
 }

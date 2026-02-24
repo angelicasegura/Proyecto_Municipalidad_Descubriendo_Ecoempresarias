@@ -3,6 +3,7 @@ using Abstracciones.Modelos;
 using Dapper;
 using Microsoft.Data.SqlClient;
 using System.Data;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 
 
@@ -50,18 +51,18 @@ namespace DA
                 estado = 4;
 
             string query = @"SP_EditarInformacionGeneralProducto";
-                var resultQuery = await _sqlConnection.ExecuteScalarAsync<Guid>(query, new
-                {
-                    Producto_id = id,
-                    NombreProducto = producto.NombreProducto,
-                    Descripcion = producto.Descripcion,
-                    Descuento = producto.Descuento,
-                    Ruta_Imagen = producto.Ruta_Imagen,
-                    Precio = producto.Precio,
-                    Categoria_id = producto.Categoria_id,
-                    Estado_id = estado
-                });
-                return resultQuery;
+            var resultQuery = await _sqlConnection.ExecuteScalarAsync<Guid>(query, new
+            {
+                Producto_id = id,
+                NombreProducto = producto.NombreProducto,
+                Descripcion = producto.Descripcion,
+                Descuento = producto.Descuento,
+                Ruta_Imagen = producto.Ruta_Imagen,
+                Precio = producto.Precio,
+                Categoria_id = producto.Categoria_id,
+                Estado_id = estado
+            });
+            return resultQuery;
         }
         public async Task<Guid> ElimnarProducto(Guid id)
         {
@@ -73,14 +74,14 @@ namespace DA
             return resultQuery;
         }
 
-        public async Task<ProductoRequest> ObtenerProducto(Guid Producto_id)
+        public async Task<ProductoResponse> ObtenerProducto(Guid Producto_id)
         {
             string query = @"SP_ObtenerProductoPorId";
-            var resultQuery = await _sqlConnection.QueryAsync<ProductoRequest>(query, new { Producto_id });
+            var resultQuery = await _sqlConnection.QueryAsync<ProductoResponse>(query, new { Producto_id });
             return resultQuery.FirstOrDefault();
         }
 
-        public async Task<IEnumerable<ProductoResponse>> ObtenerProductos(Guid? categoria_id, String? nombre, int? emprendimiento_id, int? estado_id)
+        public async Task<IEnumerable<ProductoResponse>> ObtenerProductos(Guid? categoria_id, string? nombre, int? emprendimiento_id, int? estado_id)
         {
             var parameters = new
             {
@@ -98,7 +99,54 @@ namespace DA
             return resultQuery;
         }
 
-        private async Task<bool> VerificarDatosModificados(Guid id, ProductoRequest producto) {
+        public async Task<IEnumerable<ProductoResponse>> ObtenerProductosEmprendedor(Guid? categoria_id, string? nombre, int? emprendimiento_id)
+        {
+            var parameters = new
+            {
+                Categoria_id = categoria_id,
+                Nombre = nombre,
+                Emprendimiento_id = emprendimiento_id
+            };
+            string query = @"SP_ObtenerProductosEmprendedor";
+            var resultQuery = await _sqlConnection.QueryAsync<ProductoResponse>(
+                query,
+                parameters,
+                commandType: CommandType.StoredProcedure
+    );
+            return resultQuery;
+        }
+
+        public async Task<IEnumerable<ProductoResponse>> ObtenerProductosPendientesDeAprobacion(int estado_id)
+        {
+            var parameters = new
+            {
+                Estado_id = estado_id,
+            };
+            string query = @"SP_ObtenerProductosPorEstado";
+            var resultQuery = await _sqlConnection.QueryAsync<ProductoResponse>(
+                query,
+                parameters,
+                commandType: CommandType.StoredProcedure
+    );
+            return resultQuery;
+        }
+
+
+        public async Task<Guid> CambiarEstadoProducto(Guid id, int estado_id)
+        {
+
+            string query = @"SP_CambiarEstadoProducto";
+            var resultQuery = await _sqlConnection.ExecuteScalarAsync<Guid>(query, new
+            {
+                Producto_id = id,
+                Estado_id = estado_id
+            });
+            return resultQuery;
+        }
+
+
+        private async Task<bool> VerificarDatosModificados(Guid id, ProductoRequest producto)
+        {
 
             try
             {
@@ -108,7 +156,8 @@ namespace DA
                 else
                     return false;
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
 
                 throw new Exception($"Error verificando al recuperar el producto para modificar: {ex.Message}", ex);
 
