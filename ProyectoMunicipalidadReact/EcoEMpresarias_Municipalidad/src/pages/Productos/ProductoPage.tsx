@@ -3,7 +3,7 @@ import type { Producto } from "../../types/productosType"
 import { obtenerProductos} from "../../types/productosType"
 import ProductoCard from "./components/ProductoCard"
 import { PackageOpen } from "lucide-react"
-import { types } from "node:util"
+
 
 export default function ProductosPage() {
     // productos que llegan de la API
