@@ -19,13 +19,19 @@ namespace Abstracciones.Interfaces.DA
     int? estadoId
         );
 
-        Task<int> CrearEmprendimientoAsync(EmprendimientoRequest emprendimiento);
+        public Task<int> CrearEmprendimientoAsync(EmprendimientoRequest emprendimiento);
 
-        Task<bool> VerificarExistenciaEmprendimiento(string CedulaJuridica);
+        public Task<bool> VerificarExistenciaEmprendimiento(string CedulaJuridica);
 
-        Task<EmprendimientoResponse> GetEmprendimientoPorId(string cedulaJuridica);
+        public Task<EmprendimientoResponse> GetEmprendimientoPorId(string cedulaJuridica);
 
-        Task<List<EmprendimientoResponse>> GetEmprendimientoPorCedulaUsuario(int cedula, int estado_id);
+        public Task<List<EmprendimientoResponse>> GetEmprendimientoPorCedulaUsuario(int cedula, int estado_id);
+
+        public Task<IEnumerable<EmprendimientoResponse>> ObtenerEmprendimientoPorUsuario(int usuario_id);
+
+        public Task<int> EditarEmprendimiento(int id, EmprendimientoRequest emprendimiento);
+
+        public Task<int> EliminarEmprendimeinto(int id);
         Task<int> InactivarOActivarEmprendimientosDeUsuario(int Cedula, int estado_id);
     }
 }

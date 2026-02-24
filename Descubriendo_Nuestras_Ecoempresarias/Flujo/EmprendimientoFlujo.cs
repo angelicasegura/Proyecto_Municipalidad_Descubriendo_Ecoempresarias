@@ -2,6 +2,7 @@
 using Abstracciones.Interfaces.Flujo;
 using Abstracciones.Modelos;
 using Abstracciones.Modelos.Pagination;
+using DA;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,8 +37,26 @@ namespace Flujo
 
         public async Task<PagedResult<EmprendimientoResponse>> GetEmprendimientosPaginadosAsync(int page, int limit, string? search, int? tipoActividadId, int? estadoId)
         {
-           return await _emprendimientoDA.GetEmprendimientosPaginadosAsync(page, limit, search, tipoActividadId, estadoId);
+            return await _emprendimientoDA.GetEmprendimientosPaginadosAsync(page, limit, search, tipoActividadId, estadoId);
         }
+
+
+        public async Task<IEnumerable<EmprendimientoResponse>> ObtenerEmprendimientoPorUsuario(int usuario_id)
+        {
+            return await _emprendimientoDA.ObtenerEmprendimientoPorUsuario(usuario_id);
+        }
+
+        public async Task<int> EditarEmprendimiento(int id, EmprendimientoRequest emprendimiento)
+        {
+            return await _emprendimientoDA.EditarEmprendimiento(id, emprendimiento);
+        }
+
+        public async Task<int> EliminarEmprendimeinto(int id)
+        {
+            return await _emprendimientoDA.EliminarEmprendimeinto(id);
+        }
+
+
 
         public async Task<int> InactivarOActivarEmprendimientosDeUsuario(int Cedula, int estado_id)
         {

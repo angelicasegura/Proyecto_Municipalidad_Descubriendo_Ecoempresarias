@@ -1,6 +1,9 @@
-﻿using Abstracciones.Interfaces.Flujo;
+﻿using Abstracciones.Interfaces.API;
+using Abstracciones.Interfaces.Flujo;
 using Abstracciones.Modelos;
 using API.Helpers;
+using DA;
+using Flujo;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -13,7 +16,7 @@ namespace API.Controllers
 
     [Route("api/emprendimientos")]
     [ApiController]
-    public class EmprendimientoController : ControllerBase
+    public class EmprendimientoController : ControllerBase, IEmprendimientoController
     {
 
         //TODO: Implementar que cuando se actualiza usuario, ya sea se le quita el rol emmprendedor o se inactive, que el emprendimiento relacionado se inactive tambien
@@ -179,16 +182,72 @@ namespace API.Controllers
 
         }
 
+        [HttpGet("ObtenerPorUsuario/{usuarioId}")]
+        public async Task<IActionResult> ObtenerEmprendimientoPorUsuario([FromRoute] int usuarioId)
+        {
+            try
+            {
+                var resultado = await _emprendimientoFlujo.ObtenerEmprendimientoPorUsuario(usuarioId);
+                if (resultado == null)
+                    return NoContent();
+                return Ok(resultado);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error interno: {ex.Message}");
+            }
+        }
+
+        [Authorize(Roles = "ADMIN")]
+        [HttpPut("EditarEmprendimiento/{id}")]
+        public async Task<IActionResult> EditarEmprendimiento([FromRoute] int id, [FromForm] EmprendimientoRequest emprendimiento)
+        {
+            //implementar que busque antes de crear, pero se pone despues
+            string rutaBase = _configuration["LinksDocument:DocumentosLink"];
+            string carpeta = _configuration["Carpetas:emprendimientos"];
+
+            if (emprendimiento.Imagen != null)
+            {
+                string rutaImagen = await _guardarImagen.GuardarImagen(rutaBase, emprendimiento.Imagen, carpeta);
+
+                if (rutaImagen != null)
+                {
+                    emprendimiento.Ruta_Imagen_Logo = rutaImagen;
+                }
+            }
+            try
+            {
+                var resultado = await _emprendimientoFlujo.EditarEmprendimiento(id, emprendimiento);
+                return Ok(resultado);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return StatusCode(500, $"Error interno al editar empredimiento es: {ex.Message}");
+            }
+        }
+
+        [Authorize(Roles = "ADMIN")]
+        [HttpPut("EliminarEmprendimiento/{id}")]
+        public async Task<IActionResult> EliminarEmprendimeinto([FromRoute] int id)
+        {
+            try
+            {
+                var resultado = await _emprendimientoFlujo.EliminarEmprendimeinto(id);
+                return Ok(resultado);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return StatusCode(500, $"Error interno al eliminar emprendimiento es: {ex.Message}");
+            }
+        }
+
 
         private async Task<bool> verificarSiEmprendimientoYaExiste(string CedulaJuridica)
         {
 
             return await _emprendimientoFlujo.VerificarExistenciaEmprendimiento(CedulaJuridica);
         }
-
-
-
-
-        
     }
 }

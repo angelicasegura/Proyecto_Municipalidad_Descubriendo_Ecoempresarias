@@ -1,10 +1,12 @@
-﻿CREATE PROCEDURE [dbo].[SP_ObtenerProductoPorId]
-    @Producto_id UNIQUEIDENTIFIER
+﻿CREATE PROCEDURE [dbo].[SP_ObtenerProductosEmprendedor]
+    @Nombre NVARCHAR(100) = NULL,
+    @Categoria_id UNIQUEIDENTIFIER = NULL,
+    @Emprendimiento_id INT = NULL
 AS
 BEGIN
     SET NOCOUNT ON;
 
-   SELECT
+    SELECT
         Productos.Producto_id,
         Productos.NombreProducto,
         Productos.Descripcion,
@@ -16,8 +18,7 @@ BEGIN
         Categoria.Nombre AS CategoriaNombre,
         Productos.Emprendimiento_id,
         Productos.Descuento,
-        Emprendimiento.Usuario_id AS UsuarioDueño,
-        Emprendimiento.Nombre AS EmprendimientoNombre
+        Emprendimiento.Usuario_id AS UsuarioDueño  
     FROM ECOEMPRESARIAS_PRODUCTO_TB Productos
     INNER JOIN ECOEMPRESARIAS_ESTADOS_TB Estado 
         ON Productos.Estado_id = Estado.Estado_id
@@ -25,5 +26,9 @@ BEGIN
         ON Productos.Categoria_id = Categoria.Categoria_id
     INNER JOIN ECOEMPRESARIAS_EMPRENDIMIENTOS_TB Emprendimiento  
         ON Productos.Emprendimiento_id = Emprendimiento.Emprendimiento_id
-	WHERE Productos.Producto_id = @Producto_id;
+    WHERE
+        (@Nombre IS NULL OR Productos.NombreProducto LIKE '%' + @Nombre + '%')
+        AND (@Categoria_id IS NULL OR Productos.Categoria_id = @Categoria_id)
+        AND (@Emprendimiento_id IS NULL OR Productos.Emprendimiento_id = @Emprendimiento_id)
+        AND (Productos.Estado_id != 2);
 END
