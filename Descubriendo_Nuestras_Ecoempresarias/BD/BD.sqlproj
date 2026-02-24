@@ -106,6 +106,11 @@
     <Build Include="dbo\Stored Procedures\SP_CambiarEstadoProducto.sql" />
     <Build Include="dbo\Stored Procedures\SP_InactivarEmprendimiento.sql" />
     <Build Include="dbo\Stored Procedures\SP_EditarEmprendimiento.sql" />
+    <Build Include="dbo\Stored Procedures\sp_AgregarComentario.sql" />
+    <Build Include="dbo\Stored Procedures\sp_EliminarComentario.sql" />
+    <Build Include="dbo\Stored Procedures\sp_ObtenerComentariosPorEmprendimiento.sql" />
+    <Build Include="dbo\Stored Procedures\sp_ObtenerComentarioPorId.sql" />
+    <Build Include="dbo\Stored Procedures\sp_ObtenerUsuarioIdPorComentario.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="BD.refactorlog" />

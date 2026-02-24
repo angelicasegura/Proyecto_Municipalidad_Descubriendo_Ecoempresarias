@@ -12,19 +12,19 @@ import EmprendimientoMap from "./components/EmprendimientoMap";
 import ProductosFilters from "./components/ProductosFilters";
 import ProductosGrid from "./components/ProductosGrid";
 
-
-
+import { Button } from "../../../components/ui/button";
+import ComentariosSection from "./components/ComentarioSection";
 export default function DetalleEmprendimiento() {
   const { id, cedulaJuridica } = useParams<{ id: string; cedulaJuridica: string }>();
-  
+
   // Estados de Datos
   const [emprendedor, setEmprendedor] = useState<Emprendedor | null>(null);
   const [productos, setProductos] = useState<Producto[]>([]);
   const [categorias, setCategorias] = useState<CategoriaProducto[]>([]);
-  
+
   // Estados de UI
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null)
 
   // Filtros (Como en tu ejemplo)
   const [searchTerm, setSearchTerm] = useState("");
@@ -75,13 +75,20 @@ export default function DetalleEmprendimiento() {
 
   }, [searchTerm, categoriaFilter, numericId]);
 
-  
+ 
 
   return (
     <main className="min-h-screen bg-emprendimiento-bg">
-      
+
       <div className="mx-auto max-w-6xl space-y-6 px-4 py-6 md:py-10">
         
+        <Button
+          variant="ghost"
+          className="mb-6 pl-0 text-muted-foreground"
+          onClick={() => navigate(-1)}
+        >
+          ← Volver
+        </Button>
         <EmprendimientoHeader emprendedor={emprendedor} loading={!emprendedor} />
 
         {emprendedor?.direccion && <EmprendimientoMap direccion={emprendedor.direccion} />}
@@ -108,8 +115,18 @@ export default function DetalleEmprendimiento() {
           productos={productos}
           loading={loading}
         />
-        
+        <div className="px-4 pb-4 bg-white">
+          <h3 className="text-xl font-semibold">Comentarios</h3>
+         
+          <div className="px-4 pb-4">
+            {numericId && (
+              <ComentariosSection emprendimientoId={numericId} />
+            )}
+          </div>
+        </div>
+
       </div>
+
     </main>
   );
 }
