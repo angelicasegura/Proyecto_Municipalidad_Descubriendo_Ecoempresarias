@@ -100,6 +100,12 @@
     <Build Include="dbo\Stored Procedures\sp_editarInventario.sql" />
     <Build Include="dbo\Stored Procedures\sp_agregarInventario.sql" />
     <Build Include="dbo\Stored Procedures\sp_ObtenerEmprendimientoPorCedula.sql" />
+    <Build Include="dbo\Stored Procedures\SP_ObtenerEmprendimientoPorUsuarioId.sql" />
+    <Build Include="dbo\Stored Procedures\SP_ObtenerProductosEmprendedor.sql" />
+    <Build Include="dbo\Stored Procedures\SP_ObtenerProductosPorEstado.sql" />
+    <Build Include="dbo\Stored Procedures\SP_CambiarEstadoProducto.sql" />
+    <Build Include="dbo\Stored Procedures\SP_InactivarEmprendimiento.sql" />
+    <Build Include="dbo\Stored Procedures\SP_EditarEmprendimiento.sql" />
     <Build Include="dbo\Stored Procedures\sp_AgregarComentario.sql" />
     <Build Include="dbo\Stored Procedures\sp_EliminarComentario.sql" />
     <Build Include="dbo\Stored Procedures\sp_ObtenerComentariosPorEmprendimiento.sql" />

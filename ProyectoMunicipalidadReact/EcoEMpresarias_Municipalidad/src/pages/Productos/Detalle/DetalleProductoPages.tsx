@@ -5,7 +5,7 @@ import { obtenerProductoPorId } from "../../../types/productosType"
 import { useAuth } from "../../../auth/AuthContext"
 import { Button } from "../../../components/ui/button"
 import ProductoInfo from '../components/ProductoInfo';
-import ProductoCantidad from "../../public/DetalleProducto/components/ProductoCantidad"
+
 
 
 export default function DetalleProductoPage() {
@@ -16,7 +16,7 @@ export default function DetalleProductoPage() {
     const [producto, setProducto] = useState<Producto | null>(null)
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState<string | null>(null)
-    const [cantidad, setCantidad] = useState(1);
+
 
     useEffect(() => {
         if (!id) return
@@ -92,11 +92,11 @@ export default function DetalleProductoPage() {
                 <div className="flex flex-col gap-6">
                     <ProductoInfo producto={producto} />
 
-                    <ProductoCantidad cantidad={cantidad} setCantidad={setCantidad} />
+                    
                     
 
                     {/* Solo se muestra si el usuario es EMPRENDEDOR Y es dueño */}
-                    {esDueño && (
+                    {/* {esDueño && (
                         <div className="flex gap-3 pt-2">
                             <Button
                                 variant="outline"
@@ -113,15 +113,10 @@ export default function DetalleProductoPage() {
                                 Eliminar
                             </Button>
                         </div>
-                    )}
+                    )
+                    } */}
 
-                    <Button
-                        size="lg"
-                        className="w-full"
-                        onClick={() => console.log("Agregar al carrito:", producto.producto_id)}
-                    >
-                        Agregar al carrito
-                    </Button>
+                    
                 </div>
             </div>
         </div>

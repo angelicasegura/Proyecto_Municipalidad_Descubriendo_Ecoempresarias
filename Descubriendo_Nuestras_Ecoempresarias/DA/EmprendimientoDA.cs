@@ -149,7 +149,50 @@ namespace DA
             }
         }
 
+        public async  Task<IEnumerable<EmprendimientoResponse>> ObtenerEmprendimientoPorUsuario(int Usuarioid)
+        {
+            try
+            {
+                string query = @"SP_ObtenerEmprendimientoPorUsuarioId";
+                var resultQuery = await _sqlConnection.QueryAsync<EmprendimientoResponse>(query, new { Usuarioid });
+                return resultQuery;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex);
+            }
 
+        }
+
+        public async Task<int> EditarEmprendimiento(int id, EmprendimientoRequest emprendimiento)
+        {
+            string query = @"SP_EditarEmprendimiento";
+            var resultQuery = await _sqlConnection.ExecuteScalarAsync<int>(query, new
+            {
+                EmprendimientoId = id,
+                Nombre = emprendimiento.Nombre,
+                Descripcion = emprendimiento.Descripcion,
+                Cedula_Juridica = emprendimiento.CedulaJuridica,
+                Telefono = emprendimiento.Telefono,
+                Email = emprendimiento.Email,
+                Direccion = emprendimiento.Direccion,
+                TipoActividad_id = emprendimiento.TipoActividadId,
+                Ruta_Imagen_Logo = emprendimiento.Ruta_Imagen_Logo
+
+            });
+            return resultQuery;
+        }
+
+        public async Task<int> EliminarEmprendimeinto(int id)
+        {
+
+            string query = @"SP_InactivarEmprendimiento";
+            var resultQuery = await _sqlConnection.ExecuteScalarAsync<int>(query, new
+            {
+                EmprendimientoId = id
+            });
+            return resultQuery;
+        }
 
     }
 }

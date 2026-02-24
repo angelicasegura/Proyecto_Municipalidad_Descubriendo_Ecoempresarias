@@ -15,7 +15,7 @@ export default function ProductoCard({ producto }: Props) {
 
     return (
         <div
-            onClick={() => navigate(`/productos/${producto.producto_id}`)}
+            onClick={() => navigate(`/producto/${producto.producto_id}`)}
             className="cursor-pointer rounded-2xl border bg-white shadow-sm hover:shadow-md transition-shadow overflow-hidden"
         >
             {/* Imagen del producto */}
