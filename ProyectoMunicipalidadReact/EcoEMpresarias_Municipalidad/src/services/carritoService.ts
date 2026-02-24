@@ -2,49 +2,75 @@ const API = "https://localhost:7050/api/Carrito";
 
 function authHeader() {
   const token = localStorage.getItem("token");
-  return {
+
+  const headers: Record<string, string> = {
     "Content-Type": "application/json",
-    Authorization: `Bearer ${token}`,
   };
+
+  if (token) {
+    headers.Authorization = `Bearer ${token}`;
+  }
+
+  return headers;
 }
 
-export async function agregarAlCarrito(productoId: string, cantidad: number) {
+async function parseResponse(res: Response) {
+  const contentType = res.headers.get("content-type") || "";
+  return contentType.includes("application/json") ? res.json() : res.text();
+}
+
+export async function agregarAlCarrito(payload: {
+  emprendimientoId: number;
+  productoId: string; 
+  cantidad: number;
+}) {
   const res = await fetch(`${API}/Agregar`, {
     method: "POST",
     headers: authHeader(),
-    body: JSON.stringify({ productoId, cantidad }),
+    body: JSON.stringify(payload),
   });
 
-  if (!res.ok) throw new Error("No se pudo agregar al carrito");
-  return res.json();
+  if (!res.ok) throw new Error(await res.text());
+  return parseResponse(res);
 }
 
-export async function obtenerMiCarrito() {
-  const res = await fetch(`${API}/MiCarrito`, {
-    headers: authHeader(),
-  });
+export async function obtenerMiCarrito(emprendimientoId: number) {
+  const res = await fetch(
+    `${API}/MiCarrito?emprendimientoId=${encodeURIComponent(emprendimientoId)}`,
+    {
+      headers: authHeader(),
+    }
+  );
 
-  if (!res.ok) throw new Error("No se pudo obtener el carrito");
-  return res.json();
+  if (!res.ok) throw new Error(await res.text());
+  return parseResponse(res);
 }
 
-export async function actualizarCantidad(carritoId: number, cantidad: number) {
+export async function actualizarCantidad(payload: {
+  emprendimientoId: number;
+  productoId: string; 
+  cantidad: number;
+}) {
   const res = await fetch(`${API}/ActualizarCantidad`, {
     method: "PUT",
     headers: authHeader(),
-    body: JSON.stringify({ carritoId, cantidad }),
+    body: JSON.stringify(payload),
   });
 
-  if (!res.ok) throw new Error("No se pudo actualizar cantidad");
-  return res.json();
+  if (!res.ok) throw new Error(await res.text());
+  return parseResponse(res);
 }
 
-export async function eliminarItem(carritoId: number) {
-  const res = await fetch(`${API}/Eliminar/${carritoId}`, {
+export async function eliminarItem(payload: {
+  emprendimientoId: number;
+  productoId: string; // GUID string
+}) {
+  const res = await fetch(`${API}/Eliminar`, {
     method: "DELETE",
     headers: authHeader(),
+    body: JSON.stringify(payload),
   });
 
-  if (!res.ok) throw new Error("No se pudo eliminar item");
-  return res.json();
+  if (!res.ok) throw new Error(await res.text());
+  return parseResponse(res);
 }

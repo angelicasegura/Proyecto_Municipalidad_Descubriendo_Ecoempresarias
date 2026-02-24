@@ -7,7 +7,7 @@ import {
 } from "../../../services/carritoService";
 
 type CarritoItem = {
-  Carrito_id: number; 
+  Carrito_id: string; 
   Cantidad: number;
 
   Producto_id: string; 
@@ -23,14 +23,22 @@ export default function CarritoPage() {
   const [items, setItems] = useState<CarritoItem[]>([]);
   const [loading, setLoading] = useState(true);
 
+  const emprendimientoId = Number(localStorage.getItem("emprendimientoId") || 0);
+
   async function cargar() {
     try {
+      if (!emprendimientoId) {
+        setItems([]);
+        return;
+      }
+
       setLoading(true);
-      const data = await obtenerMiCarrito();
+      const data = await obtenerMiCarrito(emprendimientoId);
 
       const lista = Array.isArray(data) ? data : data?.data ?? [];
       setItems(lista);
-    } catch {
+    } catch (e) {
+      console.error(e);
       toast.error("No se pudo cargar el carrito");
     } finally {
       setLoading(false);
@@ -39,7 +47,7 @@ export default function CarritoPage() {
 
   useEffect(() => {
     cargar();
-  }, []);
+  }, [emprendimientoId]);
 
   const total = useMemo(() => {
     return items.reduce((acc, it) => {
@@ -51,6 +59,17 @@ export default function CarritoPage() {
 
   if (loading) return <div className="p-6">Cargando carrito...</div>;
 
+  if (!emprendimientoId) {
+    return (
+      <div className="p-6 max-w-4xl mx-auto">
+        <h1 className="text-2xl font-semibold mb-2">Mi carrito</h1>
+        <div className="text-sm text-gray-600">
+          No hay un emprendimiento seleccionado. Volvé a un producto y agregalo al carrito.
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="p-6 max-w-4xl mx-auto">
       <h1 className="text-2xl font-semibold mb-6">Mi carrito</h1>
@@ -61,13 +80,13 @@ export default function CarritoPage() {
         <div className="space-y-4">
           {items.map((it) => (
             <div
-              key={it.Carrito_id}
+              key={`${it.Carrito_id}-${it.Producto_id}`} 
               className="border rounded-lg p-4 flex gap-4 items-center"
             >
               <div className="w-20 h-20 bg-gray-100 rounded overflow-hidden flex items-center justify-center">
                 {it.Ruta_Imagen ? (
                   <img
-                    src={it.Ruta_Imagen}
+                    src={`https://localhost:7050/api/Images/Buscar/3/${it.Ruta_Imagen}`}
                     alt={it.NombreProducto}
                     className="w-full h-full object-cover"
                   />
@@ -96,7 +115,7 @@ export default function CarritoPage() {
                     const v = Number(e.target.value);
                     setItems((prev) =>
                       prev.map((x) =>
-                        x.Carrito_id === it.Carrito_id
+                        x.Producto_id === it.Producto_id
                           ? { ...x, Cantidad: v }
                           : x
                       )
@@ -108,10 +127,15 @@ export default function CarritoPage() {
                   className="px-3 py-1 border rounded"
                   onClick={async () => {
                     try {
-                      await actualizarCantidad(it.Carrito_id, Number(it.Cantidad));
+                      await actualizarCantidad({
+                        emprendimientoId,
+                        productoId: it.Producto_id,
+                        cantidad: Number(it.Cantidad),
+                      });
                       toast.success("Cantidad actualizada");
                       await cargar();
-                    } catch {
+                    } catch (e) {
+                      console.error(e);
                       toast.error("No se pudo actualizar");
                     }
                   }}
@@ -123,10 +147,14 @@ export default function CarritoPage() {
                   className="px-3 py-1 border rounded text-red-600"
                   onClick={async () => {
                     try {
-                      await eliminarItem(it.Carrito_id);
+                      await eliminarItem({
+                        emprendimientoId,
+                        productoId: it.Producto_id,
+                      });
                       toast.success("Eliminado");
                       await cargar();
-                    } catch {
+                    } catch (e) {
+                      console.error(e);
                       toast.error("No se pudo eliminar");
                     }
                   }}
