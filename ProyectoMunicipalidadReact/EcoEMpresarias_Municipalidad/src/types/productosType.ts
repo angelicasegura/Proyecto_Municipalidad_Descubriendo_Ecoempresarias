@@ -94,6 +94,9 @@ export async function obtenerProductos(emprendimientoId?: number): Promise<Produ
 export async function obtenerProductosEmprendedor(emprendimientoId?: number): Promise<Producto[]> {
   const params = emprendimientoId ? `?emprendimiento_id=${emprendimientoId}` : ""
   const res = await authFetch(`${BASE_URL}/api/Producto/ObtenerProductosEmprendedor${params}`)
+
+  if (res.status === 204) return []
+  
   if (!res.ok) throw new Error("Error al obtener productos")
   return res.json()
 }
