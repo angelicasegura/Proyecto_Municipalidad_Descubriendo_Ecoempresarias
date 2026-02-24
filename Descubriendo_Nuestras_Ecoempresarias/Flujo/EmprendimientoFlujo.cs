@@ -40,6 +40,7 @@ namespace Flujo
             return await _emprendimientoDA.GetEmprendimientosPaginadosAsync(page, limit, search, tipoActividadId, estadoId);
         }
 
+
         public async Task<IEnumerable<EmprendimientoResponse>> ObtenerEmprendimientoPorUsuario(int usuario_id)
         {
             return await _emprendimientoDA.ObtenerEmprendimientoPorUsuario(usuario_id);
@@ -55,6 +56,12 @@ namespace Flujo
             return await _emprendimientoDA.EliminarEmprendimeinto(id);
         }
 
+
+
+        public async Task<int> InactivarOActivarEmprendimientosDeUsuario(int Cedula, int estado_id)
+        {
+            return await _emprendimientoDA.InactivarOActivarEmprendimientosDeUsuario(Cedula,estado_id);
+        }
 
         public async Task<bool> VerificarExistenciaEmprendimiento(string CedulaJuridica)
         {

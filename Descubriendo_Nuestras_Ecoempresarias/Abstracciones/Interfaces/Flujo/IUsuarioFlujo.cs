@@ -23,5 +23,7 @@ namespace Abstracciones.Interfaces.Flujo
 
         Task<int> EditarAdmin(int Id, UsuarioResponse usuario);
         Task<int> ActualizarEstadoDeUsuario(int Id, int estado);
+
+        Task<List<Emprendedora>> Obtener10EmprendedorasAsync();
     }
 }
