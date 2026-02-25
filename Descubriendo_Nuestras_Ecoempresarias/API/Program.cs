@@ -29,10 +29,10 @@ builder.Services.AddCors(options =>
         policy =>
         {
             policy.WithOrigins(
-                    "http://localhost:5173",    // Vite http
-                    "https://localhost:5173",   // Vite https (por si acaso)
-                    "https://localhost:7050",   // Swagger https
-                    "http://localhost:5090"     // API http (por si se prueba sin https)
+                    "http://localhost:5173",
+                    "http://localhost:5174",
+                    "https://localhost:5173",
+                    "https://localhost:5174"
                 )
                 .AllowAnyHeader()
                 .AllowAnyMethod();
@@ -146,7 +146,6 @@ builder.Services.AddScoped<IComentarioFlujo, ComentarioFlujo>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -156,11 +155,13 @@ if (app.Environment.IsDevelopment())
     });
 }
 
+app.UseHttpsRedirection();
+
+app.UseRouting();
+
 app.UseCors("AllowViteApp");
 
-app.UseHttpsRedirection();
 app.UseAuthentication();
-
 app.UseAuthorization();
 
 app.MapControllers();

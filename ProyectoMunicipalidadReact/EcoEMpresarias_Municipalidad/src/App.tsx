@@ -14,18 +14,14 @@ import RegisterPage from "./pages/auth/register/registerPage";
 import EmprendimientosPage from "./pages/public/ListaEmprendimientos/listaEmprendimientosPublic";
 
 import DetalleEmprendimiento from "./pages/public/DetalleEmprendimiento/DetalleEmprendimiento";
-import ProductosPage from "./pages/Productos/ProductoPage";
-import DetalleProductoPages from "./pages/Productos/Detalle/DetalleProductoPages";
+
 import { Toaster } from "react-hot-toast";
 import DetalleProductoPage from "./pages/public/DetalleProducto/DetalleProducto";
 import EmprendimientosPropios from "./pages/Emprendedores/ListaEmprendimientosPropiosInventario/ListaEmprendientosPropios";
 import InventarioEmprendimiento from "./pages/Emprendedores/Inventario/InvetarioEmprendimiento";
 import { Breadcrumbs } from "./components/ui/layout/Breadcrumbs";
 import CarritoPage from "./pages/public/Carrito/CarritoPage";
-import MisProductosPage from "./pages/Productos/MisProductos/MisProductosPage";
-import MisEmprendimientosPage from "./pages/Productos/MisProductos/MisEmprendimientosPage";
-import ListaPendientesPage from "./pages/Productos/ProductosPendientes/ListaPendientesPage";
-import ProductosPendientesPage from "./pages/Productos/ProductosPendientes/ProductosPendientesPage";
+import ForbiddenPage from "./pages/public/Forbidden/ForbiddenPage";
 
 function App() {
   const { loading } = useAuth();
@@ -44,12 +40,13 @@ function App() {
           <Routes>
             {/* Esta parte es la del router aqui se define el link que se quiere que 
         accione una ruta para cambiar de pagina, esto no es nada del los get o put a 
-        la api, esto es solo lo visual */}
+        la api, esto es solo lo visual */}            
 
             {/* public routes */}
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/emprendimientos" element={<EmprendimientosPage />} />
+            <Route path="/403" element={<ForbiddenPage />} />
             <Route
               path="/emprendimiento/:id/:cedulaJuridica"
               element={<DetalleEmprendimiento />}
@@ -60,12 +57,12 @@ function App() {
             <Route path="/registro" element={<RegisterPage />} />
 
             {/* Ruta protegida para USUARIO (Carrito) */}
-            <Route element={<ProtectedRoute allowedRoles={["USUARIO"]} />}>
+            <Route element={<ProtectedRoute allowedRoles={["Admin"]} />}>
               <Route path="/carrito" element={<CarritoPage />} />
             </Route>
 
             {/* admin routes */}
-            <Route element={<ProtectedRoute allowedRoles={["ADMIN"]} />}>
+            <Route element={<ProtectedRoute allowedRoles={["Admin"]} />}>
               <Route path="/usuarios" element={<AdminUsuarios />} />
               <Route
                 path="/emprendimientos-admin"
@@ -73,24 +70,21 @@ function App() {
               />
             </Route>
 
-          {/* Emprendedores routes */}
-          <Route element={<ProtectedRoute allowedRoles={["EMPRENDEDOR"]} />}>
-            <Route path="/emprendimientos-propio" element={<EmprendimientosPropios />} />
-            <Route path="/inventario/:id/:cedulaJuridica" element={<InventarioEmprendimiento />} />
-          </Route>
-
-          {/* Productos routes */}
-            <Route path="/productos" element={<ProductosPage />} />
-            <Route path="/productos/:id" element={<DetalleProductoPages/>} />
-            <Route path="/mis-productos" element={<MisEmprendimientosPage />} />
-            <Route path="/mis-productos/:emprendimientoId" element={<MisProductosPage />} />
-
-            <Route path="/revision-productos" element={<ProductosPendientesPage />} />
-            <Route path="/productos-pendientes/:tipo" element={<ListaPendientesPage />} />
-        </Routes>
-      </main>
-      <Footer />
-    </div>
+            {/* Emprendedores routes */}
+            <Route element={<ProtectedRoute allowedRoles={["EMPRENDEDOR"]} />}>
+              <Route
+                path="/emprendimientos-propio"
+                element={<EmprendimientosPropios />}
+              />
+              <Route
+                path="/inventario/:id/:cedulaJuridica"
+                element={<InventarioEmprendimiento />}
+              />
+            </Route>
+          </Routes>
+        </main>
+        <Footer />
+      </div>
     </>
   );
 }
