@@ -34,7 +34,7 @@ namespace DA
                     Producto_id = inventario.ProductoId,
                     Cantidad_actual = inventario.CantidadActual,
                     Cantidad_minima = inventario.CantidadMinima,
-                    Estado_id = 1
+                    Estado_id = 0
                 });
                 return resultQuery;
             }
