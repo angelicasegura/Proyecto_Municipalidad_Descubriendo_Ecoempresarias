@@ -22,6 +22,9 @@ import InventarioEmprendimiento from "./pages/Emprendedores/Inventario/Invetario
 import { Breadcrumbs } from "./components/ui/layout/Breadcrumbs";
 import CarritoPage from "./pages/public/Carrito/CarritoPage";
 import ForbiddenPage from "./pages/public/Forbidden/ForbiddenPage";
+import MapasPage from "./pages/public/mapas/MapasPage";
+
+<Route path="/mapas" element={<MapasPage />} />
 
 function App() {
   const { loading } = useAuth();
@@ -47,6 +50,7 @@ function App() {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/emprendimientos" element={<EmprendimientosPage />} />
             <Route path="/403" element={<ForbiddenPage />} />
+            <Route path="/mapas" element={<MapasPage />} />
             <Route
               path="/emprendimiento/:id/:cedulaJuridica"
               element={<DetalleEmprendimiento />}
