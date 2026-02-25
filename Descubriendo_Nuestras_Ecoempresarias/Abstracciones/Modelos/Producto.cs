@@ -33,6 +33,7 @@ namespace Abstracciones.Modelos
         public string CategoriaNombre { get; set; }
         public string NombreEstado { get; set; }
         public int UsuarioDueño { get; set; }
+        public Guid Categoria_id { get; set; }
         public string EmprendimientoNombre { get; set; }
     }
 }

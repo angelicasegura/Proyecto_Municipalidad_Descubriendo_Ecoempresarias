@@ -11,6 +11,13 @@ BEGIN
             Estado_id = @estado_id
         WHERE Producto_id = @Producto_id;
 
+        IF (@estado_id = 1)
+            BEGIN
+                UPDATE ECOEMPRESARIAS_INVENTARIO_TB
+                SET Estado_id = 1
+                WHERE Producto_id = @Producto_id;
+            END
+
 		SELECT @Producto_id;
 
     COMMIT TRANSACTION;
