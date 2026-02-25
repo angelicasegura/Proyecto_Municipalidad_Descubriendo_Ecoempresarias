@@ -29,10 +29,12 @@ namespace API.Controllers
                 if(result == 0)
                     return BadRequest("No se pudo agregar al carrito. Verifique los datos e intente nuevamente.");
                 return Ok(result);
-            }catch (System.Exception ex)
+            }
+            catch (System.Exception ex)
             {
                 return StatusCode(500, $"Error al agregar al carrito: {ex.Message}");
             }
+        }
 
         [HttpGet("MiCarrito")]
         public async Task<IActionResult> MiCarrito([FromQuery] int emprendimientoId)

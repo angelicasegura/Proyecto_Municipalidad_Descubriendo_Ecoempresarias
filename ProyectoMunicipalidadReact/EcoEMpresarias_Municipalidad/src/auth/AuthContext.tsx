@@ -5,7 +5,7 @@ import type {ReactNode} from "react"
 export interface User {
   id: number
   nombre: string
-  rol: "ADMIN" | "EMPRENDEDOR" | "USUARIO"
+  rol: "Admin" | "EMPRENDEDOR" | "USUARIO"
 }
 
 interface AuthContextType {

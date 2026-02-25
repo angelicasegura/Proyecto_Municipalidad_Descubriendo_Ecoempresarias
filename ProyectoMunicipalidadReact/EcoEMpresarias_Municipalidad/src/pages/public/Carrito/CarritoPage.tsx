@@ -7,20 +7,23 @@ import {
 } from "../../../services/carritoService";
 
 type CarritoItem = {
-  Carrito_id: string; 
-  Cantidad: number;
+  carrito_id: string; 
+  cantidad: number;
 
-  Producto_id: string; 
-  NombreProducto: string;
-  Descripcion?: string;
-  Precio: number;
-  Descuento?: number | null;
-  Ruta_Imagen?: string | null;
-  Emprendimiento_id?: number;
+  producto_id: number; 
+  nombreProducto: string;
+  descripcion?: string;
+  precio: number;
+  descuento?: number | null;
+  ruta_imagen?: string | null;
+  emprendimiento_id?: number;
 };
 
 export default function CarritoPage() {
   const [items, setItems] = useState<CarritoItem[]>([]);
+
+
+  console.log("itemssssssssssssssssss",items);
   const [loading, setLoading] = useState(true);
 
   const emprendimientoId = Number(localStorage.getItem("emprendimientoId") || 0);
@@ -51,9 +54,15 @@ export default function CarritoPage() {
 
   const total = useMemo(() => {
     return items.reduce((acc, it) => {
-      const precioFinal =
-        it.Descuento != null ? it.Precio - it.Descuento : it.Precio;
-      return acc + Number(it.Cantidad) * Number(precioFinal);
+const precio = Number(it.precio) || 0;
+const descuento = it.descuento != null ? Number(it.descuento) || 0 : 0;
+const cantidad = Number(it.cantidad) || 0;
+
+const precioFinal = precio - descuento;
+if (!Number.isFinite(cantidad) || !Number.isFinite(precioFinal)) {
+  console.log("Item con valores inválidos:", it);
+}
+return acc + cantidad * precioFinal;
     }, 0);
   }, [items]);
 
@@ -80,14 +89,14 @@ export default function CarritoPage() {
         <div className="space-y-4">
           {items.map((it) => (
             <div
-              key={`${it.Carrito_id}-${it.Producto_id}`} 
+              key={`${it.carrito_id}-${it.producto_id}`} 
               className="border rounded-lg p-4 flex gap-4 items-center"
             >
               <div className="w-20 h-20 bg-gray-100 rounded overflow-hidden flex items-center justify-center">
-                {it.Ruta_Imagen ? (
+                {it.ruta_imagen ? (
                   <img
-                    src={`https://localhost:7050/api/Images/Buscar/3/${it.Ruta_Imagen}`}
-                    alt={it.NombreProducto}
+                    src={`https://localhost:7050/api/Images/Buscar/3/${it.ruta_imagen}`}
+                    alt={it.nombreProducto}
                     className="w-full h-full object-cover"
                   />
                 ) : (
@@ -96,11 +105,11 @@ export default function CarritoPage() {
               </div>
 
               <div className="flex-1">
-                <div className="font-medium">{it.NombreProducto}</div>
+                <div className="font-medium">{it.nombreProducto}</div>
                 <div className="text-sm text-gray-600">
-                  ₡{Number(it.Precio).toFixed(2)}
-                  {it.Descuento != null
-                    ? ` (-₡${Number(it.Descuento).toFixed(2)})`
+                  ₡{Number(it.precio).toFixed(2)}
+                  {it.descuento != null
+                    ? ` (-₡${Number(it.descuento).toFixed(2)})`
                     : ""}
                 </div>
               </div>
@@ -110,16 +119,19 @@ export default function CarritoPage() {
                   type="number"
                   min={1}
                   className="w-20 border rounded px-2 py-1"
-                  value={it.Cantidad}
+                  value={it.cantidad}
                   onChange={(e) => {
-                    const v = Number(e.target.value);
-                    setItems((prev) =>
-                      prev.map((x) =>
-                        x.Producto_id === it.Producto_id
-                          ? { ...x, Cantidad: v }
-                          : x
-                      )
-                    );
+const raw = e.target.value;
+const v = raw === "" ? 1 : Number(raw);
+const safe = Number.isFinite(v) && v >= 1 ? v : 1;
+
+setItems((prev) =>
+  prev.map((x) =>
+    x.producto_id === it.producto_id
+      ? { ...x, cantidad: safe }
+      : x
+  )
+);
                   }}
                 />
 
@@ -129,8 +141,8 @@ export default function CarritoPage() {
                     try {
                       await actualizarCantidad({
                         emprendimientoId,
-                        productoId: it.Producto_id,
-                        cantidad: Number(it.Cantidad),
+                        productoId: it.producto_id,
+                        Cantidad: Number(it.cantidad),
                       });
                       toast.success("Cantidad actualizada");
                       await cargar();
@@ -149,7 +161,7 @@ export default function CarritoPage() {
                     try {
                       await eliminarItem({
                         emprendimientoId,
-                        productoId: it.Producto_id,
+                        productoId: it.producto_id,
                       });
                       toast.success("Eliminado");
                       await cargar();

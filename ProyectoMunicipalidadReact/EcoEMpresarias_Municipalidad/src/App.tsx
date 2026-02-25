@@ -21,7 +21,7 @@ import EmprendimientosPropios from "./pages/Emprendedores/ListaEmprendimientosPr
 import InventarioEmprendimiento from "./pages/Emprendedores/Inventario/InvetarioEmprendimiento";
 import { Breadcrumbs } from "./components/ui/layout/Breadcrumbs";
 import CarritoPage from "./pages/public/Carrito/CarritoPage";
-
+import ForbiddenPage from "./pages/public/Forbidden/ForbiddenPage";
 
 function App() {
   const { loading } = useAuth();
@@ -46,7 +46,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/emprendimientos" element={<EmprendimientosPage />} />
-
+            <Route path="/403" element={<ForbiddenPage />} />
             <Route
               path="/emprendimiento/:id/:cedulaJuridica"
               element={<DetalleEmprendimiento />}
@@ -57,12 +57,12 @@ function App() {
             <Route path="/registro" element={<RegisterPage />} />
 
             {/* Ruta protegida para USUARIO (Carrito) */}
-            <Route element={<ProtectedRoute allowedRoles={["USUARIO"]} />}>
+            <Route element={<ProtectedRoute allowedRoles={["Admin"]} />}>
               <Route path="/carrito" element={<CarritoPage />} />
             </Route>
 
             {/* admin routes */}
-            <Route element={<ProtectedRoute allowedRoles={["ADMIN"]} />}>
+            <Route element={<ProtectedRoute allowedRoles={["Admin"]} />}>
               <Route path="/usuarios" element={<AdminUsuarios />} />
               <Route
                 path="/emprendimientos-admin"

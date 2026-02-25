@@ -48,8 +48,8 @@ export async function obtenerMiCarrito(emprendimientoId: number) {
 
 export async function actualizarCantidad(payload: {
   emprendimientoId: number;
-  productoId: string; 
-  cantidad: number;
+  productoId: number; 
+  Cantidad: number;
 }) {
   const res = await fetch(`${API}/ActualizarCantidad`, {
     method: "PUT",
@@ -63,7 +63,7 @@ export async function actualizarCantidad(payload: {
 
 export async function eliminarItem(payload: {
   emprendimientoId: number;
-  productoId: string; // GUID string
+  productoId: number; // GUID string
 }) {
   const res = await fetch(`${API}/Eliminar`, {
     method: "DELETE",
