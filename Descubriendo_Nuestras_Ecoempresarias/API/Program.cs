@@ -14,6 +14,7 @@ using Flujo.EmaiService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -58,7 +59,8 @@ builder.Services.AddAuthentication(options =>
 
         options.TokenValidationParameters = new TokenValidationParameters
         {
-            ValidateIssuer = false,     // true en prod
+            ValidateIssuer = true,
+            ValidIssuer = builder.Configuration["Jwt:Issuer"],    // true en prod
             ValidateAudience = false,   // true en prod
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
@@ -80,7 +82,41 @@ builder.Services.AddScoped<IEmailService, EmailService>();
 
 
 
+builder.Services.AddEndpointsApiExplorer();
 
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "API",
+        Version = "v1"
+    });
+
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        Scheme = "bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "Escriba: Bearer {tu_token}"
+    });
+
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            Array.Empty<string>()
+        }
+    });
+});
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

@@ -43,6 +43,7 @@ namespace API.Seguridad
             //  Token
             var tokenDescriptor = new SecurityTokenDescriptor
             {
+                Issuer = _configuration["Jwt:Issuer"],
                 Subject = new ClaimsIdentity(claims),
                 Expires = DateTime.UtcNow.AddHours(1),
                 SigningCredentials = credentials
