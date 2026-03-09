@@ -37,6 +37,11 @@ export interface Emprendimiento {
   descripcion?: string
 }
 
+export interface Emprendedora {
+  nombre: string;
+  ruta_Imagen_Perfil: string;
+}
+
 
 export const fetchTiposActividad = async (): Promise<TipoActividad[]> => {
     try {

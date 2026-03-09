@@ -34,7 +34,7 @@ namespace DA
                 Precio = producto.Precio,
                 Categoria_id = producto.Categoria_id,
                 Emprendimiento_id = producto.Emprendimiento_id,
-                Estado_id = 3
+                Estado_id = 2
             });
             return resultQuery;
         }
@@ -48,7 +48,7 @@ namespace DA
             if (verificacion == true && producto.Estado_id == 1)
                 estado = 1;
             else
-                estado = 4;
+                estado = 3;
 
             string query = @"SP_EditarInformacionGeneralProducto";
             var resultQuery = await _sqlConnection.ExecuteScalarAsync<Guid>(query, new

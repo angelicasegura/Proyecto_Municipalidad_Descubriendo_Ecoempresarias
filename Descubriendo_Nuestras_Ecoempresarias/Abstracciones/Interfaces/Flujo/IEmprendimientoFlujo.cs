@@ -26,6 +26,7 @@ namespace Abstracciones.Interfaces.Flujo
 
         public Task<EmprendimientoResponse> GetEmprendimientoPorId(string cedulaJuridica);
 
+
         public Task<List<EmprendimientoResponse>> GetEmprendimientoPorCedulaUsuario(int cedula, int estado_id);
 
         public Task<IEnumerable<EmprendimientoResponse>> ObtenerEmprendimientoPorUsuario(int usuario_id);
@@ -33,5 +34,7 @@ namespace Abstracciones.Interfaces.Flujo
         public Task<int> EditarEmprendimiento(int id, EmprendimientoRequest emprendimiento);
 
         public Task<int> EliminarEmprendimeinto(int id);
+        Task<int> InactivarOActivarEmprendimientosDeUsuario(int Cedula, int estado_id);
+
     }
 }

@@ -42,4 +42,12 @@ namespace Abstracciones.Modelos
         public string Rol { get; set; }
     }
 
+
+    public class Emprendedora
+    {
+        public string Nombre { get; set; }
+        public string Ruta_Imagen_Perfil { get; set; }
+    }
+
+
 }

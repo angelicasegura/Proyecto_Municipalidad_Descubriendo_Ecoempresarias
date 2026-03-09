@@ -10,7 +10,11 @@ const NavigationContext = createContext<{
   setHistory: React.Dispatch<React.SetStateAction<NavItem[]>>;
 }>({ history: [], setHistory: () => {} });
 
-export function NavigationProvider({ children }: { children: React.ReactNode }) {
+export function NavigationProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const location = useLocation();
   const [history, setHistory] = useState<NavItem[]>([]);
 
@@ -26,8 +30,15 @@ export function NavigationProvider({ children }: { children: React.ReactNode }) 
     const label = firstSegment.charAt(0).toUpperCase() + firstSegment.slice(1);
 
     setHistory((prev) => {
-      const exists = prev.find((item) => item.path === location.pathname);
-      if (exists) return prev;
+      const existingIndex = prev.findIndex(
+        (item) => item.path === location.pathname,
+      );
+
+      if (existingIndex !== -1) {
+        return prev.slice(0, existingIndex + 1);
+      }
+
+      
       return [...prev, { path: location.pathname, label }];
     });
   }, [location]);
@@ -38,7 +49,6 @@ export function NavigationProvider({ children }: { children: React.ReactNode }) 
     </NavigationContext.Provider>
   );
 }
-
 
 export function useNavigationHistory() {
   return useContext(NavigationContext);

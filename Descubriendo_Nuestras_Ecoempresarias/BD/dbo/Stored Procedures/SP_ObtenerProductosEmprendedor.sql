@@ -30,5 +30,4 @@ BEGIN
         (@Nombre IS NULL OR Productos.NombreProducto LIKE '%' + @Nombre + '%')
         AND (@Categoria_id IS NULL OR Productos.Categoria_id = @Categoria_id)
         AND (@Emprendimiento_id IS NULL OR Productos.Emprendimiento_id = @Emprendimiento_id)
-        AND (Productos.Estado_id != 2);
 END

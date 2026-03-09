@@ -33,7 +33,7 @@ export function handleCrearEmprendedor({
       loading: "Creaciond e emprendimiento en proceso...",
       success: "Emprendimiento creado correctamente 🎉",
       error: (err) => err.message || "No se pudo crear el emprendimiento",
-    },{ duration: 4000 });  
+    },{ duration: 2500 });  
       
     try {
       await response;

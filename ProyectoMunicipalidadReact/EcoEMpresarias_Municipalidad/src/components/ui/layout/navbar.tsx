@@ -220,7 +220,7 @@ export function Navbar() {
             )}
 
             {/* Emprendedor Dropdown */}
-            {["EMPRENDEDOR"].includes(user?.rol ?? "") && (
+            {["EMPRENDEDOR","ADMIN"].includes(user?.rol ?? "") && (
               <DropdownMenu>
                 <DropdownMenuTrigger className="flex items-center gap-1 text-white font-medium hover:text-accent transition-colors whitespace-nowrap px-2">
                   Emprendedor
@@ -432,7 +432,7 @@ export function Navbar() {
             )}
 
             {/* EMPRENDEDOR */}
-            {["EMPRENDEDOR"].includes(user?.rol ?? "") && (
+            {["EMPRENDEDOR","ADMIN"].includes(user?.rol ?? "") && (
               <div className="mt-4">
                 <p className="px-2 text-sm font-semibold text-white/70 uppercase">
                   Emprendedor

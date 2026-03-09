@@ -20,11 +20,13 @@ namespace API.Controllers
     {
         private IUsuarioFlujo _usuarioFlujo;
         private ILogger<IUsuarioController> _logger;
+        private IEmprendimientoFlujo _emprendimientoFlujo;
 
-        public UsuarioController(IUsuarioFlujo usuarioFlujo, ILogger<IUsuarioController> logger)
+        public UsuarioController(IUsuarioFlujo usuarioFlujo, ILogger<IUsuarioController> logger, IEmprendimientoFlujo emprendimientoFlujo)
         {
             _usuarioFlujo = usuarioFlujo;
             _logger = logger;
+            _emprendimientoFlujo = emprendimientoFlujo;
         }
 
         [HttpPost]
@@ -162,6 +164,7 @@ namespace API.Controllers
 
                 // 2. Llamada al flujo/DA
                 var filasAfectadas = await _usuarioFlujo.ActualizarEstadoDeUsuario(id,estadoCambio);
+                var emprendimientosInactivos = await _emprendimientoFlujo.InactivarOActivarEmprendimientosDeUsuario(id,estadoCambio);
 
                 if (filasAfectadas > 0)
                 {
@@ -192,7 +195,7 @@ namespace API.Controllers
                     return NotFound($"Usuario ya existente");
                 }
 
-                usuario.Ruta_Imagen_Perfil = "https://via.placeholder.com/150";
+                
                 usuario.Contrasena = HashGenerator.HashHelper.GenerarHashSHA256("ContrasenaDefault1234_");
                 //Cambiar a que genere una contrasena aleatoria y enviarla por correo
 
@@ -210,6 +213,20 @@ namespace API.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, $"Error interno al intentar agregar el usuario: {ex.Message}");
+            }
+        }
+
+        [HttpGet("10Empresarias")]
+        public async Task<IActionResult> Obtener10Empresarias()
+        {
+            try
+            {
+                var empresarias =await _usuarioFlujo.Obtener10EmprendedorasAsync();
+                return Ok(empresarias);
+
+            }catch(Exception ex)
+            {
+                return StatusCode(500, $"Error interno al solicitar empresarias: {ex.Message}");
             }
         }
     }

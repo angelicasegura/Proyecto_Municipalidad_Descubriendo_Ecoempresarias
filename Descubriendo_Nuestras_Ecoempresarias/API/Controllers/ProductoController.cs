@@ -56,15 +56,15 @@ namespace API.Controllers
                 var resultado = await _productoFlujo.AgregarProducto(producto);
                 return Ok(resultado);
 
-                //    Inventario inventario = new Inventario
-                //    {
-                //        ProductoId = resultado,
-                //        CantidadActual = 0,
-                //        CantidadMinima = 10
+                Inventario inventario = new Inventario
+                    {
+                       ProductoId = resultado,
+                        CantidadActual = 0,
+                       CantidadMinima = 10
 
-                //    };
-                //    await _inventarioFlujo.AgregarInventario(inventario);
-                //    return Ok(resultado);
+                    };
+                 await _inventarioFlujo.AgregarInventario(inventario);
+                 return Ok(resultado);
 
             }
             catch (Exception ex)
@@ -168,7 +168,7 @@ namespace API.Controllers
             try
             {
                 var resultado = await _productoFlujo.ObtenerProductosEmprendedor(categoria_id, nombre, emprendimiento_id);
-                string carpeta = _configuration["Carpetas:Productos"];
+                
 
                 if (!resultado.Any())
                     return NoContent();
@@ -188,8 +188,8 @@ namespace API.Controllers
         {
             try
             {
-                var resultado = await _productoFlujo.ObtenerProductosPendientesDeAprobacion(3);
-                string carpeta = _configuration["Carpetas:Productos"];
+                var resultado = await _productoFlujo.ObtenerProductosPendientesDeAprobacion(2);
+                
 
                 if (!resultado.Any())
                     return NoContent();
@@ -209,8 +209,8 @@ namespace API.Controllers
         {
             try
             {
-                var resultado = await _productoFlujo.ObtenerProductosPendientesDeAprobacion(4);
-                string carpeta = _configuration["Carpetas:Productos"];
+                var resultado = await _productoFlujo.ObtenerProductosPendientesDeAprobacion(3);
+               
 
                 if (!resultado.Any())
                     return NoContent();
@@ -246,7 +246,7 @@ namespace API.Controllers
         {
             try
             {
-                var resultado = await _productoFlujo.CambiarEstadoProducto(id, 5);
+                var resultado = await _productoFlujo.CambiarEstadoProducto(id, 4);
                 return Ok(resultado);
             }
             catch (Exception ex)

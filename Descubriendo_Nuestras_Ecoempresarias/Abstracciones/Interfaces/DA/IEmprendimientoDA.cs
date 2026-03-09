@@ -32,6 +32,6 @@ namespace Abstracciones.Interfaces.DA
         public Task<int> EditarEmprendimiento(int id, EmprendimientoRequest emprendimiento);
 
         public Task<int> EliminarEmprendimeinto(int id);
-
+        Task<int> InactivarOActivarEmprendimientosDeUsuario(int Cedula, int estado_id);
     }
 }

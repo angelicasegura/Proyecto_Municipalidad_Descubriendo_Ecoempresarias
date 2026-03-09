@@ -1,25 +1,41 @@
-import { Badge } from "../../../components/ui/badge"
-
 interface EmpresariasCardProps {
-  name: string
-  description: string
-  badge: string
-  icon: string
+  name: string;
+  ruta_Imagen_Logo: string;
 }
 
-export function EmpresariasCard({ name, description, badge, icon }: EmpresariasCardProps) {
+export function EmpresariasCard({ name, ruta_Imagen_Logo }: EmpresariasCardProps) {
   return (
-    <div className="bg-[#f8f9fa] rounded-lg overflow-hidden shadow-[0_2px_8px_rgba(0,0,0,0.1)] transition-transform hover:scale-105">
-      <div className="gradient-entrepreneur w-full h-62.5 flex items-center justify-center text-white text-5xl">
-        {icon}
+    <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 border-t-4 border-t-[#f2a33c]">
+      
+      {/* Imagen como header */}
+      <div className="w-full h-100 relative">
+        {ruta_Imagen_Logo ? (
+        <img
+          src={
+            
+               `https://localhost:7050/api/Images/Buscar/2/${ruta_Imagen_Logo}`
+              
+          }
+          alt={name}
+          className="w-full h-full object-cover "
+        />
+        ) : (
+          
+          <img
+            src={"../../../../public/placeholder.png"}
+            alt={name}
+            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+          />
+        )}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
       </div>
+
+      {/* Contenido */}
       <div className="p-6">
-        <h3 className="text-[#0066aa] mb-2 text-[1.1rem] font-semibold">{name}</h3>
-        <p className="text-[#666] text-[0.9rem] leading-relaxed mb-4">{description}</p>
-        <Badge className="bg-[#f2a33c] text-[#333] hover:bg-[#f2a33c] px-3 py-1 rounded-full text-[0.8rem] font-semibold">
-          {badge}
-        </Badge>
+        <h3 className="text-[#0066aa] text-[1.1rem] font-semibold truncate text-center">
+          {name}
+        </h3>
       </div>
     </div>
-  )
+  );
 }

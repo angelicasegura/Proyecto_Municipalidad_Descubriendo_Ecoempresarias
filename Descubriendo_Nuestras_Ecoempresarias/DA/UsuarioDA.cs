@@ -88,10 +88,12 @@ namespace DA
         public async Task<UsuarioResponse> InicioSesionUsuario(string email, string contrasena)
         {
             string query = @"ObtenerUsuario";
-            var resultQuery = await _sqlConnection.QueryAsync<UsuarioResponse>(query, 
-                new { 
-                Email = email, 
-                Contrasena = contrasena },
+            var resultQuery = await _sqlConnection.QueryAsync<UsuarioResponse>(query,
+                new
+                {
+                    Email = email,
+                    Contrasena = contrasena
+                },
                 commandType: CommandType.StoredProcedure
              );
 
@@ -202,6 +204,15 @@ namespace DA
                 throw new Exception("Algo salio mal con la actualizacion");
             }
         }
+        public async Task<List<Emprendedora>> Obtener10EmprendedorasAsync()
+        {
+            string query = @"sp_Obtener10Emprendedoras";
+
+            var emprendedoras = await _sqlConnection.QueryAsync<Emprendedora>(query, commandType: CommandType.StoredProcedure);
+
+            return emprendedoras.ToList();
+        }
+
     }
 }
 

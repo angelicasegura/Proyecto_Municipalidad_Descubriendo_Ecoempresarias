@@ -29,7 +29,7 @@ export function ProductoFormModal({ open, producto, categorias, onClose, onConfi
     const [imagen, setImagen] = useState<File | null>(null)
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState<string | null>(null)
-
+ console.log(producto)
     // Cuando abrimos el modal en modo edición, prellenamos los campos con los datos actuales
     useEffect(() => {
         if (producto) {

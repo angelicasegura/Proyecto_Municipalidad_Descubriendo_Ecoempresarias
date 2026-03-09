@@ -32,7 +32,7 @@ export function handleCrearUser({
       loading: "Creando usuario...",
       success: "Usuario creado correctamente 🎉",
       error: (err) => err.message || "No se pudo crear el usuario",
-    },{ duration: 4000 });
+    },{ duration: 2500 });
 
     try {
 
