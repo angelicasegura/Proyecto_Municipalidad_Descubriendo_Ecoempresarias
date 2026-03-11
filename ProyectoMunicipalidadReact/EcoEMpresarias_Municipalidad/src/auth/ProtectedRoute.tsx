@@ -3,7 +3,7 @@ import { useAuth } from "../auth/AuthContext"
 import {PageLoader } from "../components/ui/layout/pageLoader"
 
 interface ProtectedRouteProps {
-  allowedRoles?: Array<"ADMIN" | "EMPRENDEDOR" | "USUARIO">
+  allowedRoles?: Array<"Admin" | "EMPRENDEDOR" | "USUARIO">
 }
 
 export function ProtectedRoute({ allowedRoles }: ProtectedRouteProps) {
@@ -18,7 +18,7 @@ export function ProtectedRoute({ allowedRoles }: ProtectedRouteProps) {
   if (!user) {
     return <Navigate to="/login" replace />
   }
-
+console.log("USER EN PROTECTED:", user.rol);
   //  Rol no autorizado
   if (allowedRoles && !allowedRoles.includes(user.rol)) {
     return <Navigate to="/403" replace />
