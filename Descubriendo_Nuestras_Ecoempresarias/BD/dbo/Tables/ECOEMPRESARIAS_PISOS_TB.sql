@@ -1,0 +1,11 @@
+﻿CREATE TABLE [dbo].[ECOEMPRESARIAS_PISOS_TB] (
+    [Piso_id]     INT            IDENTITY (1, 1) NOT NULL,
+    [Nombre_piso] NVARCHAR (150) NOT NULL,
+    [Numero_piso] INT            NOT NULL,
+    [Lugar_id]    INT            NOT NULL,
+    [Estado_id]   INT            NOT NULL,
+    CONSTRAINT [PK_ECOEMPRESARIAS_PISOS_TB] PRIMARY KEY CLUSTERED ([Piso_id] ASC),
+    CONSTRAINT [ECO_PISO_ESTADO_FK] FOREIGN KEY ([Estado_id]) REFERENCES [dbo].[ECOEMPRESARIAS_ESTADOS_TB] ([Estado_id]),
+    CONSTRAINT [FK_ECOEMPRESARIAS_PISOS_LUGAR] FOREIGN KEY ([Lugar_id]) REFERENCES [dbo].[ECOEMPRESARIAS_LUGARES_TB] ([Lugar_id])
+);
+

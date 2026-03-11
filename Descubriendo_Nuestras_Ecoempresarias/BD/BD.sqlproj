@@ -117,6 +117,25 @@
     <Build Include="dbo\Stored Procedures\sp_ObtenerUsuarioIdPorComentario.sql" />
     <Build Include="dbo\Stored Procedures\sp_Obtener10Emprendedoras.sql" />
     <Build Include="dbo\Stored Procedures\sp_InactivarOActivarUsuarioEmprendimientos.sql" />
+    <Build Include="dbo\Tables\ECOEMPRESARIAS_ZONAS_TB.sql" />
+    <Build Include="dbo\Tables\ECOEMPRESARIAS_STANDS_MAPAS_TB.sql" />
+    <Build Include="dbo\Tables\ECOEMPRESARIAS_PISOS_TB.sql" />
+    <Build Include="dbo\Tables\ECOEMPRESARIAS_MAPAS_TB.sql" />
+    <Build Include="dbo\Tables\ECOEMPRESARIAS_LUGARES_TB.sql" />
+    <Build Include="dbo\Tables\ECOEMPRESARIAS_EVENTOS_ZONAS_TB.sql" />
+    <Build Include="dbo\Tables\ECOEMPRESARIAS_EVENTOS_ZONAS_STANDS_TB.sql" />
+    <Build Include="dbo\Tables\ECOEMPRESARIAS_EVENTO_PISOS_TB.sql" />
+    <Build Include="dbo\Stored Procedures\SP_ObtenerLugarPorId.sql" />
+    <Build Include="dbo\Stored Procedures\SP_ObtenerLugares.sql" />
+    <Build Include="dbo\Stored Procedures\SP_ObtenerEventos.sql" />
+    <Build Include="dbo\Stored Procedures\SP_ObtenerEventoPorNombre.sql" />
+    <Build Include="dbo\Stored Procedures\SP_ObtenerEventoPorId.sql" />
+    <Build Include="dbo\Stored Procedures\SP_InactivarLugar.sql" />
+    <Build Include="dbo\Stored Procedures\SP_InactivarEvento.sql" />
+    <Build Include="dbo\Stored Procedures\SP_EditarLugar.sql" />
+    <Build Include="dbo\Stored Procedures\SP_EditarEvento.sql" />
+    <Build Include="dbo\Stored Procedures\SP_AgregarLugar.sql" />
+    <Build Include="dbo\Stored Procedures\SP_AgregarEvento.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="BD.refactorlog" />
