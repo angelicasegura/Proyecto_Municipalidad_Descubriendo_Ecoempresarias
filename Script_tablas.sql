@@ -543,3 +543,10 @@ CREATE TABLE ECOEMPRESARIAS_EVENTOS_ZONAS_STANDS_TB (
         FOREIGN KEY (Estado_id)
         REFERENCES ECOEMPRESARIAS_ESTADOS_TB(Estado_id)
 );
+
+
+---inserts en la tabla de estados
+Insert into ECOEMPRESARIAS_ESTADOS_TB(Estado_id, Nombre)
+VALUES (6, 'Reserva evento Pendiente'),
+(7, 'Reserva evento Aceptada'),
+(8, 'Reserva evento Rechazada')
