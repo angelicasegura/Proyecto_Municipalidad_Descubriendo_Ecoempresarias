@@ -132,6 +132,11 @@
     <Build Include="dbo\Stored Procedures\SP_EditarEvento.sql" />
     <Build Include="dbo\Stored Procedures\SP_AgregarLugar.sql" />
     <Build Include="dbo\Stored Procedures\SP_AgregarEvento.sql" />
+    <Build Include="dbo\Stored Procedures\sp_RechazarReserva_Evento.sql" />
+    <Build Include="dbo\Stored Procedures\sp_ObtenerSolicitudes_Evento.sql" />
+    <Build Include="dbo\Stored Procedures\sp_ObtenerReservas_Emprendimiento.sql" />
+    <Build Include="dbo\Stored Procedures\SP_CrearReserva_Evento.sql" />
+    <Build Include="dbo\Stored Procedures\sp_AprobarReserva_Evento.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="BD.refactorlog" />

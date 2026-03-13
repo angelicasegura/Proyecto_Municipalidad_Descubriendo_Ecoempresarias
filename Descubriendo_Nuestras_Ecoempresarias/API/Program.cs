@@ -121,6 +121,8 @@ builder.Services.AddScoped<ILugarController, LugarController>();
 builder.Services.AddScoped<IEventoDA, EventoDA>();
 builder.Services.AddScoped<IEventoFlujo, EventoFlujo>();
 builder.Services.AddScoped<IEventoController, EventoController>();
+builder.Services.AddScoped<IReservaEventoDA, ReservaEventoDA>();
+builder.Services.AddScoped<IReservaEventoFlujo, ReservaEventoFlujo>();
 
 var app = builder.Build();
 

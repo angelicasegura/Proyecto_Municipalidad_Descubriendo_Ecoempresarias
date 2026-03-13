@@ -60,7 +60,6 @@ export function Navbar() {
                 Carrito
               </Link>
             )}
-            {["ADMIN", "EMPRENDEDOR"].includes(user?.rol ?? "") && (
               <Link
                 to="/eventos"
                 className="text-white font-medium hover:text-accent transition-colors whitespace-nowrap px-2"
@@ -68,7 +67,7 @@ export function Navbar() {
                 {/* ejemplo de como proteger visualmente los accesos, recurden que es solo visual */}
                 Eventos
               </Link>
-            )}
+            
 
             {["ADMIN", "EMPRENDEDOR", "USUARIO"].includes(user?.rol ?? "") && (
               <Link
