@@ -54,7 +54,7 @@ export default function MisEmprendimientosPage() {
             </div>
         )
     }
-
+    console.log(emprendimientos)
     return (
         <div className="mx-auto max-w-5xl px-4 py-10 space-y-6">
             <div>
@@ -72,12 +72,13 @@ export default function MisEmprendimientosPage() {
                         className="cursor-pointer rounded-2xl border bg-white p-6 shadow-sm hover:shadow-md hover:border-primary transition-all space-y-4"
                     >
                         {/* Logo o ícono por defecto */}
-                        <div className="flex justify-center">
+
+                        <div className="relative aspect-16/10 overflow-hidden bg-muted">
                             {emp.ruta_Imagen_Logo ? (
                                 <img
-                                    src={`https://localhost:7050/api/Images/Buscar/3/${emp.ruta_Imagen_Logo}`}
+                                    src={`https://localhost:7050/api/Images/Buscar/1/${emp.ruta_Imagen_Logo}`}
                                     alt={emp.nombre}
-                                    className="h-16 w-16 rounded-full object-cover border"
+                                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                                 />
                             ) : (
                                 <div className="h-16 w-16 rounded-full bg-primary/10 flex items-center justify-center">

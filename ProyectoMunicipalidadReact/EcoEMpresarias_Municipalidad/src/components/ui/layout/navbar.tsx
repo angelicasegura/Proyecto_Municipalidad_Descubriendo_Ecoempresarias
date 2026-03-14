@@ -16,11 +16,25 @@ import { handleLogout } from "../../../pages/auth/logout/handleLogout";
 
 export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
+  const [adminOpen, setAdminOpen] = useState(false);
+  const [emprendedorOpen, setEmprendedorOpen] = useState(false);
   const { user } = useAuth();
+
+
+  const toggleAdmin = () => {
+    setAdminOpen(!adminOpen);
+    setEmprendedorOpen(false);
+  };
+
+  const toggleEmprendedor = () => {
+    setEmprendedorOpen(!emprendedorOpen);
+    setAdminOpen(false);
+  };
+
+
   return (
     <nav className="bg-[#056F94] gradient-hero text-primary-foreground sticky top-0 z-50 shadow-md">
-      <div className="mx-auto max-w-350px px-4 sm:px-8">
+      <div className="mx-auto max-w-screen-xl px-4 sm:px-8">
         <div className="flex h-20 items-center justify-between">
           {/* Logo */}
           <Link
@@ -38,7 +52,7 @@ export function Navbar() {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex lg:items-center lg:gap-4">
+          <div className="hidden xlg:flex xlg:items-center lg:gap-4">
             <Link
               to="/emprendimientos"
               className="text-white font-medium hover:text-accent transition-colors whitespace-nowrap px-2"
@@ -220,7 +234,7 @@ export function Navbar() {
             )}
 
             {/* Emprendedor Dropdown */}
-            {["EMPRENDEDOR","ADMIN"].includes(user?.rol ?? "") && (
+            {["EMPRENDEDOR", "ADMIN"].includes(user?.rol ?? "") && (
               <DropdownMenu>
                 <DropdownMenuTrigger className="flex items-center gap-1 text-white font-medium hover:text-accent transition-colors whitespace-nowrap px-2">
                   Emprendedor
@@ -317,7 +331,7 @@ export function Navbar() {
           {/* Mobile menu button */}
           <button
             type="button"
-            className="lg:hidden text-white"
+            className="xlg:hidden text-white"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
             {mobileMenuOpen ? (
@@ -329,165 +343,178 @@ export function Navbar() {
         </div>
 
         {/* Mobile menu */}
-        {mobileMenuOpen && (
-          <div className="lg:hidden py-4 space-y-2 border-t border-white/20">
+        <div
+          className={`fixed top-0 right-0 h-full w-80 bg-[#056F94] shadow-2xl z-50 p-6 space-y-3
+  overflow-y-auto
+  transform transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]
+  xl:hidden
+  ${mobileMenuOpen ? "translate-x-0" : "translate-x-full"}`}
+        >
+
+          {/* Botón cerrar */}
+          <div className="flex justify-end mb-4">
+            <button
+              onClick={() => setMobileMenuOpen(false)}
+              className="text-white"
+            >
+              <X className="h-6 w-6" />
+            </button>
+          </div>
+          <Link
+            to="/emprendimientos"
+            className="block py-2 px-2 text-white font-medium hover:text-accent"
+          >
+            Emprendimientos
+          </Link>
+
+          <Link
+            to="/productos"
+            className="block py-2 px-2 text-white font-medium hover:text-accent"
+          >
+            Productos
+          </Link>
+
+          {user && (
             <Link
-              to="/emprendimientos"
+              to="/carrito"
               className="block py-2 px-2 text-white font-medium hover:text-accent"
             >
-              Emprendimientos
+              Carrito
             </Link>
+          )}
 
+          {["ADMIN", "EMPRENDEDOR"].includes(user?.rol ?? "") && (
             <Link
-              to="/productos"
+              to="/eventos"
               className="block py-2 px-2 text-white font-medium hover:text-accent"
             >
-              Productos
+              Eventos
             </Link>
+          )}
 
-            {user && (
-              <Link
-                to="/carrito"
-                className="block py-2 px-2 text-white font-medium hover:text-accent"
-              >
-                Carrito
-              </Link>
-            )}
-
-            {["ADMIN", "EMPRENDEDOR"].includes(user?.rol ?? "") && (
-              <Link
-                to="/eventos"
-                className="block py-2 px-2 text-white font-medium hover:text-accent"
-              >
-                Eventos
-              </Link>
-            )}
-
-            {["ADMIN", "EMPRENDEDOR", "USUARIO"].includes(user?.rol ?? "") && (
-              <Link
-                to="/entregas"
-                className="block py-2 px-2 text-white font-medium hover:text-accent"
-              >
-                Entregas y seguimientos
-              </Link>
-            )}
-
+          {["ADMIN", "EMPRENDEDOR", "USUARIO"].includes(user?.rol ?? "") && (
             <Link
-              to="/mapas"
+              to="/entregas"
               className="block py-2 px-2 text-white font-medium hover:text-accent"
             >
-              Mapas
+              Entregas y seguimientos
             </Link>
+          )}
 
-            {/* ADMIN */}
-            {["ADMIN"].includes(user?.rol ?? "") && (
-              <div className="mt-4">
-                <p className="px-2 text-sm font-semibold text-white/70 uppercase">
-                  Administrador
-                </p>
+          <Link
+            to="/mapas"
+            className="block py-2 px-2 text-white font-medium hover:text-accent"
+          >
+            Mapas
+          </Link>
 
-                <Link
-                  to="/usuarios"
-                  className="block py-2 px-4 text-white hover:text-accent"
-                >
+          {["ADMIN"].includes(user?.rol ?? "") && (
+            <div className="mt-4">
+              <button
+                onClick={toggleAdmin}
+                className="w-full flex items-center justify-between py-2 px-3 rounded-md text-white font-medium transition-all hover:text-accent"
+              >
+                Administrador
+                <ChevronDown
+                  className={`h-4 w-4 transition-transform duration-300 ${adminOpen ? "rotate-180" : ""
+                    }`}
+                />
+              </button>
+
+              <div
+                className={`overflow-hidden transition-all duration-300 ${adminOpen ? "max-h-[500px] mt-2" : "max-h-0"
+                  }`}
+              >
+                <Link to="/usuarios" className="block py-2 px-4 text-white hover:text-accent rounded-md">
                   Usuarios
                 </Link>
-                <Link
-                  to="/roles"
-                  className="block py-2 px-4 text-white hover:text-accent"
-                >
+
+                <Link to="/roles" className="block py-2 px-4 text-white hover:text-accent rounded-md">
                   Gestión de Roles
                 </Link>
-                <Link
-                  to="/emprendimientos-admin"
-                  className="block py-2 px-4 text-white hover:text-accent"
-                >
+
+                <Link to="/emprendimientos-admin" className="block py-2 px-4 text-white hover:text-accent rounded-md">
                   Gestión de emprendimientos
                 </Link>
-                <Link
-                  to="/revision-productos"
-                  className="block py-2 px-4 text-white hover:text-accent"
-                >
+
+                <Link to="/revision-productos" className="block py-2 px-4 text-white hover:text-accent rounded-md">
                   Revisión de productos
                 </Link>
-                <Link
-                  to="/solicitudes"
-                  className="block py-2 px-4 text-white hover:text-accent"
-                >
+
+                <Link to="/solicitudes" className="block py-2 px-4 text-white hover:text-accent rounded-md">
                   Aprobación de solicitudes
                 </Link>
-                <Link
-                  to="/inteligencia-municipal"
-                  className="block py-2 px-4 text-white hover:text-accent"
-                >
+
+                <Link to="/inteligencia-municipal" className="block py-2 px-4 text-white hover:text-accent rounded-md">
                   Sistema de Inteligencia Municipal
                 </Link>
-                <Link
-                  to="/analisis-sectores"
-                  className="block py-2 px-4 text-white hover:text-accent"
-                >
+
+                <Link to="/analisis-sectores" className="block py-2 px-4 text-white hover:text-accent rounded-md ">
                   Análisis de sectores
                 </Link>
               </div>
-            )}
+            </div>
+          )}
 
-            {/* EMPRENDEDOR */}
-            {["EMPRENDEDOR","ADMIN"].includes(user?.rol ?? "") && (
-              <div className="mt-4">
-                <p className="px-2 text-sm font-semibold text-white/70 uppercase">
-                  Emprendedor
-                </p>
+          {["EMPRENDEDOR", "ADMIN"].includes(user?.rol ?? "") && (
+            <div className="mt-4">
+              <button
+                onClick={toggleEmprendedor}
+                className="w-full flex items-center justify-between py-2 px-3 rounded-md text-white font-medium transition-all hover:text-accent"
+              >
+                Emprendedor
+                <ChevronDown
+                  className={`h-4 w-4 transition-transform duration-300 ${emprendedorOpen ? "rotate-180" : ""
+                    }`}
+                />
+              </button>
 
-                <Link
-                  to="/emprendimientos-propio"
-                  className="block py-2 px-4 text-white hover:text-accent"
-                >
+              <div
+                className={`overflow-hidden transition-all duration-300 ${emprendedorOpen ? "max-h-96 mt-2" : "max-h-0"
+                  }`}
+              >
+                <Link to="/emprendimientos-propio" className="block py-2 px-4 text-white hover:text-accent rounded-md">
                   Inventario
                 </Link>
-                <Link
-                  to="/mis-productos"
-                  className="block py-2 px-4 text-white hover:text-accent"
-                >
+
+                <Link to="/mis-productos" className="block py-2 px-4 text-white hover:text-accent rounded-md">
                   Mis Productos
                 </Link>
-                <Link
-                  to="/analiticas"
-                  className="block py-2 px-4 text-white hover:text-accent"
-                >
+
+                <Link to="/analiticas" className="block py-2 px-4 text-white hover:text-accent rounded-md">
                   Analíticas del negocio
                 </Link>
-                <Link
-                  to="/mis-eventos"
-                  className="block py-2 px-4 text-white hover:text-accent"
-                >
+
+                <Link to="/mis-eventos" className="block py-2 px-4 text-white hover:text-accent rounded-md">
                   Mis Eventos
                 </Link>
               </div>
+            </div>
+          )}
+
+          {/* AUTH*/}
+          <div className="pt-4">
+            {!user && (
+              <Button
+                asChild
+                className="w-full bg-accent hover:bg-accent/90 text-accent-foreground"
+              >
+                <Link to="/login">Iniciar Sesión</Link>
+              </Button>
+            )}
+            {user && (
+              <Button
+                variant="secondary"
+                className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold"
+                onClick={handleLogout}
+              >
+                Cerrar Sesión
+              </Button>
             )}
 
-            {/* AUTH*/}
-            <div className="pt-4">
-              {!user && (
-                <Button
-                  asChild
-                  className="w-full bg-accent hover:bg-accent/90 text-accent-foreground"
-                >
-                  <Link to="/login">Iniciar Sesión</Link>
-                </Button>
-              )}
-              {user && (
-                <Button
-                  variant="secondary"
-                  className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold"
-                  onClick={handleLogout}
-                >
-                  Cerrar Sesión
-                </Button>
-              )}
-
-            </div>
           </div>
-        )}
+        </div>
+
       </div>
     </nav>
   );
