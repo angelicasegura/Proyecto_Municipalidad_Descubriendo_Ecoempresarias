@@ -1,5 +1,5 @@
 ﻿
-CREATE PROCEDURE [dbo].[sp_EditarUsuarioPorAdmin]
+CREATE PROCEDURE [dbo].[sp_EditarUsuarioPorADMIN]
     @IdUsuario INT,
     @Nombre VARCHAR(200),
     @Apellidos VARCHAR(200),

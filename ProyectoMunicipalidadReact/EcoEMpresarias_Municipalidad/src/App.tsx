@@ -61,12 +61,12 @@ function App() {
             <Route path="/registro" element={<RegisterPage />} />
 
             {/* Ruta protegida para USUARIO (Carrito) */}
-            <Route element={<ProtectedRoute allowedRoles={["Admin"]} />}>
+            <Route element={<ProtectedRoute allowedRoles={["ADMIN"]} />}>
               <Route path="/carrito" element={<CarritoPage />} />
             </Route>
 
             {/* admin routes */}
-            <Route element={<ProtectedRoute allowedRoles={["Admin"]} />}>
+            <Route element={<ProtectedRoute allowedRoles={["ADMIN"]} />}>
               <Route path="/usuarios" element={<AdminUsuarios />} />
               <Route
                 path="/emprendimientos-admin"

@@ -99,7 +99,7 @@ namespace DA
             return resultQuery;
         }
 
-        public async Task<IEnumerable<ProductoResponse>> ObtenerProductosEmprendedor(Guid? categoria_id, string? nombre, int? emprendimiento_id)
+        public async Task<IEnumerable<ProductoResponse>> ObtenerProductosEMPRENDEDOR(Guid? categoria_id, string? nombre, int? emprendimiento_id)
         {
             var parameters = new
             {
@@ -107,7 +107,7 @@ namespace DA
                 Nombre = nombre,
                 Emprendimiento_id = emprendimiento_id
             };
-            string query = @"SP_ObtenerProductosEmprendedor";
+            string query = @"SP_ObtenerProductosEMPRENDEDOR";
             var resultQuery = await _sqlConnection.QueryAsync<ProductoResponse>(
                 query,
                 parameters,

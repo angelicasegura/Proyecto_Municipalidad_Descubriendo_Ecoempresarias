@@ -3,7 +3,7 @@ import { useAuth } from "../auth/AuthContext"
 import {PageLoader } from "../components/ui/layout/pageLoader"
 
 interface ProtectedRouteProps {
-  allowedRoles?: Array<"Admin" | "EMPRENDEDOR" | "USUARIO">
+  allowedRoles?: Array<"ADMIN" | "EMPRENDEDOR" | "USUARIO">
 }
 
 export function ProtectedRoute({ allowedRoles }: ProtectedRouteProps) {

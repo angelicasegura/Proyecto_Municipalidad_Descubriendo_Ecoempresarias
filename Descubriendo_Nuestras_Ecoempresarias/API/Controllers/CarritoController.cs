@@ -8,7 +8,7 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Admin,Cliente")]
+    [Authorize(Roles = "ADMIN,USUARIO,EMPRENDEDOR")]
     public class CarritoController : ControllerBase
     {
         private readonly ICarritoFlujo _carritoFlujo;

@@ -14,7 +14,7 @@ BEGIN
         P.Descuento,
 
         I.Cantidad_actual as CantidadActual,
-        I.Cantidad_minima as CantidadMinima,
+        I.Cantidad_minima as CantidADMINima,
         I.Estado_id as EstadoId,
 
         EP.Nombre AS NombreEmprendimiento

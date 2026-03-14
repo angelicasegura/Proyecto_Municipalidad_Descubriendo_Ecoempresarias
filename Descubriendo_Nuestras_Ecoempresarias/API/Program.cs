@@ -142,6 +142,8 @@ builder.Services.AddScoped<ICarritoDA, CarritoDA>();
 builder.Services.AddScoped<ICarritoFlujo, CarritoFlujo>();
 builder.Services.AddScoped<IComentarioDA, ComentarioDA>();
 builder.Services.AddScoped<IComentarioFlujo, ComentarioFlujo>();
+builder.Services.AddScoped<IPedidoDA, PedidoDA>();
+builder.Services.AddScoped<IPedidoFlujo, PedidoFlujo>();
 
 
 var app = builder.Build();
