@@ -4,9 +4,14 @@ import { useQuery } from "@tanstack/react-query"
 import { fetchEventos } from "./actions/fetchEventos"
 import { EventosGrid } from "./components/eventosCardsGrid"
 
+import { useState } from "react"
+import CrearEventoModal from "./components/CrearEventoModal"
+
 export default function EventosPage() {
 
-  const { data: eventos = [], isLoading, error } = useQuery({
+  const [showModal, setShowModal] = useState(false)
+
+  const { data: eventos = [], isLoading, error, refetch } = useQuery({
     queryKey: ["eventos"],
     queryFn: fetchEventos,
     refetchInterval: 180000
@@ -31,7 +36,7 @@ export default function EventosPage() {
           </div>
 
           <p className="text-white/80 text-sm md:text-base max-w-xl mx-auto">
-            Participa en ferias, talleres y capacitaciones para emprendedores.
+            Descubre actividades, ferias y oportunidades para conocer a nuestros emprendedores
           </p>
 
         </div>
@@ -42,6 +47,18 @@ export default function EventosPage() {
 
       <section className="max-w-6xl mx-auto px-4 py-8">
 
+        {/* BOTÓN CREAR EVENTO */}
+        <div className="flex justify-end mb-6">
+
+          <button
+            onClick={() => setShowModal(true)}
+            className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+          >
+            Crear Evento
+          </button>
+
+        </div>
+
         {isLoading && <p>Cargando eventos...</p>}
 
         {error && <p>Error cargando eventos</p>}
@@ -51,6 +68,15 @@ export default function EventosPage() {
         )}
 
       </section>
+
+      {/* MODAL */}
+
+      {showModal && (
+        <CrearEventoModal
+          onClose={() => setShowModal(false)}
+          onSuccess={() => refetch()}
+        />
+      )}
 
     </main>
   )

@@ -1,5 +1,5 @@
 import type { Evento } from "../actions/fetchEventos"
-import {Calendar, MapPin} from "lucide-react"
+import { Calendar, MapPin } from "lucide-react"
 import { Link } from "react-router-dom"
 interface Props {
   evento: Evento
@@ -30,10 +30,9 @@ export default function EventoCard({ evento }: Props) {
 
       <div className="flex gap-2">
 
-        <Link
-          to={`/eventos/${evento.evento_id}`}
-          className="bg-blue-600 text-white px-3 py-1.5 rounded-md text-sm hover:bg-blue-700"
-        >
+
+        <Link to={`/eventos/${evento.evento_id}`}
+          className="bg-blue-600 text-white px-3 py-1.5 rounded-md text-sm hover:bg-blue-700">
           Ver detalles
         </Link>
 

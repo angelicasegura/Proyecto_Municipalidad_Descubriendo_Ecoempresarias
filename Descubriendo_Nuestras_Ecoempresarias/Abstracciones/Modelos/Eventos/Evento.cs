@@ -26,6 +26,7 @@ namespace Abstracciones.Modelos.Eventos
 
     public class EventoResponse : EventoBase
     {
+        public int Evento_id { get; set; }
         public string NombreLugar { get; set; }
         public string NombreEstado { get; set; }
 

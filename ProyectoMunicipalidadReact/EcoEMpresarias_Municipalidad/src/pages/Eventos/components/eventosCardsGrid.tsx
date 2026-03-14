@@ -10,13 +10,22 @@ export function EventosGrid({ eventos }: Props) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
-      {eventos.map((evento) => (
+      {/* {eventos.map((evento) => (
         <EventoCard
           key={evento.evento_id}
           evento={evento}
         />
-      ))}
+      ))} */}
 
+      {eventos.map((evento) => {
+        console.log(evento)
+        return (<EventoCard
+          key={evento.evento_id}
+          evento={evento}
+        />)
+        }
+       
+      )}
     </div>
   )
 }

@@ -29,6 +29,7 @@ import MisEmprendimientosPage from "./pages/Productos/MisProductos/MisEmprendimi
 import ListaPendientesPage from "./pages/Productos/ProductosPendientes/ListaPendientesPage";
 import ProductosPendientesPage from "./pages/Productos/ProductosPendientes/ProductosPendientesPage";
 import EventosPage from "./pages/Eventos/EventosPage";
+import EventoDetallePage from "./pages/Eventos/EventoDetallePage";
 
 function App() {
   const { loading } = useAuth();
@@ -57,6 +58,7 @@ function App() {
           <Route path="/emprendimiento/:id/:cedulaJuridica" element={<DetalleEmprendimiento />} /> 
           <Route path="/producto/:id" element={<DetalleProductoPage />} />
           <Route path="/eventos" element={<EventosPage />} />
+          <Route path="/eventos/:id" element={<EventoDetallePage />} />
 
           {/* HU-28: Ruta de registro */}
           <Route path="/registro" element={<RegisterPage />} />

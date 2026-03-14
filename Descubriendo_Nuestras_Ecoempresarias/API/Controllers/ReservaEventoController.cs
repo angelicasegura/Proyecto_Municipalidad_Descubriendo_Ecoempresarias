@@ -1,5 +1,6 @@
 ﻿using Abstracciones.Interfaces.Flujo;
 using Abstracciones.Modelos.Eventos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -15,6 +16,7 @@ namespace API.Controllers
         {
             _reservaEventoFlujo = reservaEventoFlujo;
         }
+        [Authorize(Roles = "EMPRENDEDOR")]
         [HttpPost("CrearReserva")]
         public async Task<IActionResult> CrearReserva(ReservaEventoRequest reserva)
         {
@@ -22,6 +24,7 @@ namespace API.Controllers
 
             return Ok(resultado);
         }
+        [Authorize(Roles = "EMPRENDEDOR")]
 
         [HttpGet("MisReservas/{emprendimientoId}")]
         public async Task<IActionResult> MisReservas(int emprendimientoId)
@@ -30,6 +33,7 @@ namespace API.Controllers
 
             return Ok(resultado);
         }
+        [Authorize(Roles = "ADMIN")]
 
         [HttpGet("Solicitudes")]
         public async Task<IActionResult> Solicitudes()
@@ -38,6 +42,7 @@ namespace API.Controllers
 
             return Ok(resultado);
         }
+        [Authorize(Roles = "ADMIN")]
 
         [HttpPut("Aprobar")]
         public async Task<IActionResult> Aprobar(int eventoId, int emprendimientoId)
@@ -46,6 +51,7 @@ namespace API.Controllers
 
             return Ok(resultado);
         }
+        [Authorize(Roles = "ADMIN")]
 
         [HttpPut("Rechazar")]
         public async Task<IActionResult> Rechazar(int eventoId, int emprendimientoId)
