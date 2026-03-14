@@ -94,8 +94,8 @@ namespace API.Controllers
             }
         }
         [Authorize(Roles = "ADMIN")]
-        [HttpPut("EditAdmin/{id}")]
-        public async Task<IActionResult> EditarUsuarioAdmin(int id, [FromBody] UsuarioResponse usuario)
+        [HttpPut("EditADMIN/{id}")]
+        public async Task<IActionResult> EditarUsuarioADMIN(int id, [FromBody] UsuarioResponse usuario)
         {
             try
     {
@@ -110,7 +110,7 @@ namespace API.Controllers
                 }
 
                 // 2. Llamada al flujo/DA
-                var filasAfectadas = await _usuarioFlujo.EditarAdmin(id, usuario);
+                var filasAfectadas = await _usuarioFlujo.EditarADMIN(id, usuario);
 
                 if (filasAfectadas > 0)
                 {
@@ -131,7 +131,7 @@ namespace API.Controllers
 
         [Authorize(Roles = "ADMIN,USUARIO")]
         [HttpPut("EditEstado/{id}")]
-        public async Task<IActionResult> EditarEstadoUsuarioAdmin(int id)
+        public async Task<IActionResult> EditarEstadoUsuarioADMIN(int id)
         {
             try
             {
@@ -183,8 +183,8 @@ namespace API.Controllers
         }
 
         [Authorize(Roles = "ADMIN")]
-        [HttpPost("AgregarAdmin")]
-        public async Task<IActionResult> AgregarUsuarioAdmin([FromBody] UsuarioRequest usuario)
+        [HttpPost("AgregarADMIN")]
+        public async Task<IActionResult> AgregarUsuarioADMIN([FromBody] UsuarioRequest usuario)
         {
             try
             {
@@ -221,7 +221,7 @@ namespace API.Controllers
         {
             try
             {
-                var empresarias =await _usuarioFlujo.Obtener10EmprendedorasAsync();
+                var empresarias =await _usuarioFlujo.Obtener10EMPRENDEDORasAsync();
                 return Ok(empresarias);
 
             }catch(Exception ex)

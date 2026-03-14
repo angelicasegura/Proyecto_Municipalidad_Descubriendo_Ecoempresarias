@@ -14,7 +14,7 @@ namespace Abstracciones.Interfaces.DA
         public Task<Guid> ElimnarProducto(Guid id);
         public Task<IEnumerable<ProductoResponse>> ObtenerProductos(Guid? categoria_id, string? nombre, int? emprendimiento_id, int? estado_id);
         public Task<IEnumerable<ProductoResponse>> ObtenerProductosPendientesDeAprobacion(int estado_id);
-        public Task<IEnumerable<ProductoResponse>> ObtenerProductosEmprendedor(Guid? categoria_id, string? nombre, int? emprendimiento_id);
+        public Task<IEnumerable<ProductoResponse>> ObtenerProductosEMPRENDEDOR(Guid? categoria_id, string? nombre, int? emprendimiento_id);
         public Task<Guid> CambiarEstadoProducto(Guid id, int estado_id);
         public Task<ProductoResponse> ObtenerProducto(Guid id);
         
