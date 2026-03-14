@@ -83,9 +83,9 @@ namespace API.Controllers
         }
 
         [HttpGet("emprendimiento/{Emprendimiento_id}")]
-        public async Task<IActionResult> ObtenerPorEmprendedor(int Emprendimiento_id)
+        public async Task<IActionResult> ObtenerPorEMPRENDEDOR(int Emprendimiento_id)
         {
-            var resultado = await _comentarioFlujo.ObtenerPorEmprendedor(Emprendimiento_id);
+            var resultado = await _comentarioFlujo.ObtenerPorEMPRENDEDOR(Emprendimiento_id);
             return Ok(resultado);
         }
         

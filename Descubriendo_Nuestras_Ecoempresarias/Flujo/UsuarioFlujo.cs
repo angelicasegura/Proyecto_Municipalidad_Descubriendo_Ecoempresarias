@@ -64,9 +64,9 @@ namespace Flujo
 
         }
 
-        public async Task<int> EditarAdmin(int Id, UsuarioResponse usuario)
+        public async Task<int> EditarADMIN(int Id, UsuarioResponse usuario)
         {
-            return await _usuarioDA.EditarAdmin(Id, usuario);
+            return await _usuarioDA.EditarADMIN(Id, usuario);
         }
 
         public async Task<int> ActualizarEstadoDeUsuario(int Id, int estado)
@@ -74,9 +74,9 @@ namespace Flujo
             return await _usuarioDA.ActualizarEstadoDeUsuario(Id, estado);
         }
 
-        public async Task<List<Emprendedora>> Obtener10EmprendedorasAsync()
+        public async Task<List<EMPRENDEDORa>> Obtener10EMPRENDEDORasAsync()
         {
-            return await _usuarioDA.Obtener10EmprendedorasAsync();
+            return await _usuarioDA.Obtener10EMPRENDEDORasAsync();
         }
     }
 }

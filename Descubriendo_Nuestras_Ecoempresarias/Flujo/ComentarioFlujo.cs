@@ -34,9 +34,9 @@ namespace Flujo
             return _comentarioDA.Eliminar(Comentario_id);
         }
 
-        public Task<List<ComentarioResponse>> ObtenerPorEmprendedor(int Emprendimiento_id)
+        public Task<List<ComentarioResponse>> ObtenerPorEMPRENDEDOR(int Emprendimiento_id)
         {
-            return _comentarioDA.ObtenerPorEmprendedor(Emprendimiento_id);
+            return _comentarioDA.ObtenerPorEMPRENDEDOR(Emprendimiento_id);
         }
 
        

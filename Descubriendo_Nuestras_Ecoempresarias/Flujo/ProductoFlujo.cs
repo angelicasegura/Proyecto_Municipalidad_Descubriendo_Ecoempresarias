@@ -44,9 +44,9 @@ namespace Flujo
             return await _productoDA.ObtenerProductos(categoria_id,nombre,emprendimiento_id,estado_id);
         }
 
-        public async Task<IEnumerable<ProductoResponse>> ObtenerProductosEmprendedor(Guid? categoria_id, String? nombre, int? emprendimiento_id)
+        public async Task<IEnumerable<ProductoResponse>> ObtenerProductosEMPRENDEDOR(Guid? categoria_id, String? nombre, int? emprendimiento_id)
         {
-            return await _productoDA.ObtenerProductosEmprendedor(categoria_id, nombre, emprendimiento_id);
+            return await _productoDA.ObtenerProductosEMPRENDEDOR(categoria_id, nombre, emprendimiento_id);
         }
 
         public async Task<IEnumerable<ProductoResponse>> ObtenerProductosPendientesDeAprobacion(int estado_id)
