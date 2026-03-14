@@ -107,6 +107,55 @@ namespace DA
                     );
                 }
 
+                //Elimina del carrito los productos comprados
+
+                string sqlEliminarProductoCarrito = @"
+                    DELETE ppc
+                    FROM dbo.ECOEMPRESARIAS_PRODUCTOS_POR_CARRITO_TB ppc
+                    INNER JOIN dbo.ECOEMPRESARIAS_CARRITO_TB c
+                        ON c.Carrito_id = ppc.Carrito_id
+                    WHERE c.Usuario_id = @UsuarioId
+                      AND c.Emprendimiento_id = @EmprendimientoId
+                      AND ppc.Producto_id = @ProductoId;";
+
+                foreach (var detalle in pedido.Detalles)
+                {
+                    await connection.ExecuteAsync(
+                        sqlEliminarProductoCarrito,
+                        new
+                        {
+                            UsuarioId = usuarioId,
+                            EmprendimientoId = pedido.EmprendimientoId,
+                            ProductoId = detalle.ProductoId
+                        },
+                        transaction
+                    );
+                }
+
+                //si el carrito quedó sin productos, eliminar encabezado de carrito
+                string sqlEliminarCarritoVacio = @"
+                    DELETE c
+                    FROM dbo.ECOEMPRESARIAS_CARRITO_TB c
+                    WHERE c.Usuario_id = @UsuarioId
+                      AND c.Emprendimiento_id = @EmprendimientoId
+                      AND NOT EXISTS
+                      (
+                          SELECT 1
+                          FROM dbo.ECOEMPRESARIAS_PRODUCTOS_POR_CARRITO_TB ppc
+                          WHERE ppc.Carrito_id = c.Carrito_id
+                      );";
+
+                await connection.ExecuteAsync(
+                    sqlEliminarCarritoVacio,
+                    new
+                    {
+                        UsuarioId = usuarioId,
+                        EmprendimientoId = pedido.EmprendimientoId
+                    },
+                    transaction
+                );
+
+
                 transaction.Commit();
 
                 pedido.PedidoId = pedidoId;
