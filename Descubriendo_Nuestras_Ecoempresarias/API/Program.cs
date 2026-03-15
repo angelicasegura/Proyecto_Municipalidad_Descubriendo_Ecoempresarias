@@ -36,7 +36,8 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowViteApp",
         policy =>
         {
-            policy.WithOrigins("http://localhost:5173") // La URL de tu frontend
+            policy.WithOrigins("http://localhost:5173",
+                "htpp://localhost:5174") // La URL de tu frontend
                   .AllowAnyHeader()
                   .AllowAnyMethod();
         });

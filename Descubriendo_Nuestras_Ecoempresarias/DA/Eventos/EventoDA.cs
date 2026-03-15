@@ -107,7 +107,7 @@ namespace DA.Eventos
         {
 
             string query = @"SP_ObtenerEventos";
-            var resultQuery = await _sqlConnection.QueryAsync<EventoResponse>(query);
+            var resultQuery = await _sqlConnection.QueryAsync<EventoResponse>(query, commandType: CommandType.StoredProcedure);
             return resultQuery;
         }
     }

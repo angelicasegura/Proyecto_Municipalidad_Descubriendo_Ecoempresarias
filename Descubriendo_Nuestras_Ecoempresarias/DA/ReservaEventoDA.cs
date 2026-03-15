@@ -5,6 +5,7 @@ using Dapper;
 using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,13 +37,19 @@ namespace DA
 
         public async Task<int> CrearReservaEvento(ReservaEventoRequest reserva)
         {
-            string query = "sp_CrearReserva_Evento";
+            string query = "sp_CrearReservaEvento";
             var resultadoConsulta = await _sqlConnection.ExecuteScalarAsync<int>(
                 query, new
                 {
                     Evento_id = reserva.Evento_id,
-                    Emprendimiento_id = reserva.Emprendimiento_id
-                });
+                    Emprendimiento_id = reserva.Emprendimiento_id,
+                    Nombre = reserva.Nombre,
+                    Apellidos = reserva.Apellidos,
+                    Cedula = reserva.Cedula,
+                    NombreEmprendimiento = reserva.NombreEmprendimiento,
+                    Productos = reserva.Productos,
+                    Correo = reserva.Correo
+                }, commandType: CommandType.StoredProcedure);
             return resultadoConsulta;
         }
 

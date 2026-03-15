@@ -15,10 +15,19 @@ namespace Abstracciones.Modelos.Eventos
 
     public class ReservaEventoRequest : ReservaEventoBase
     {
+        
 
+        public string Nombre { get; set; }
+        public string Apellidos { get; set; }
+        public string Cedula { get; set; }
+
+        public string NombreEmprendimiento { get; set; }
+        public string Productos { get; set; }
+        public string Correo { get; set; }
     }
     public class ReservaEventoResponse : ReservaEventoBase
     {
+        public int Reserva_id { get; set; }
         public string NombreEvento { get; set; }
         public string Estado { get; set; }
     }

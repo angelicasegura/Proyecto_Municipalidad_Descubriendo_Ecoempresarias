@@ -5,6 +5,7 @@ BEGIN
     SET NOCOUNT ON;
 
     SELECT
+    
         Evento.Evento_id,
         Evento.NombreEvento,
         Evento.Descripcion,
@@ -13,6 +14,7 @@ BEGIN
         Evento.Horario,
 		Evento.Cupos,
 		Evento.Cupos_actuales,
+        Evento.Lugar_id As Lugar_id,
         Estado.Nombre AS NombreEstado,
 		Lugar.Nombre AS NombreLugar
     FROM ECOEMPRESARIAS_EVENTOS_TB Evento

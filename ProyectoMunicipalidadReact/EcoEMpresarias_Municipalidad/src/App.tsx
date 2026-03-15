@@ -30,6 +30,11 @@ import ListaPendientesPage from "./pages/Productos/ProductosPendientes/ListaPend
 import ProductosPendientesPage from "./pages/Productos/ProductosPendientes/ProductosPendientesPage";
 import EventosPage from "./pages/Eventos/EventosPage";
 import EventoDetallePage from "./pages/Eventos/EventoDetallePage";
+import MisEventosPage from "./pages/Eventos/MisEventosPage";
+import MisEventosDetallePage from "./pages/Eventos/MisEventosDetallePage";
+import ReservarEventoPage from "./pages/Eventos/ReservarEventoPage";
+import SeleccionarEmprendimientoReservaPage from "./pages/Eventos/seleccionarEmprendimientoReservaPage";
+import SolicitudesEventoPage from "./pages/Admin/Eventos/SolicitudesEventoPage";
 
 function App() {
   const { loading } = useAuth();
@@ -70,6 +75,7 @@ function App() {
           <Route element={<ProtectedRoute allowedRoles={["ADMIN"]} />}>
             <Route path="/usuarios" element={<AdminUsuarios />} />
             <Route path="/emprendimientos-admin" element={<AdminEmprendedores />} />
+            <Route path="/solicitudes-eventos" element={<SolicitudesEventoPage />} />
           </Route>
             
 
@@ -77,6 +83,10 @@ function App() {
           <Route element={<ProtectedRoute allowedRoles={["EMPRENDEDOR"]} />}>
             <Route path="/emprendimientos-propio" element={<EmprendimientosPropios />} />
             <Route path="/inventario/:id/:cedulaJuridica" element={<InventarioEmprendimiento />} />
+            <Route path="/mis-eventos" element={<MisEventosPage />} />
+            <Route path="/mis-eventos/:emprendimientoId" element={<MisEventosDetallePage />} />
+            <Route path="/reservar-evento/:eventoId" element={<SeleccionarEmprendimientoReservaPage/>} />
+            <Route path="/reservar-evento/:eventoId/:emprendimientoId" element={<ReservarEventoPage />} />
           </Route>
 
           {/* Productos routes */}

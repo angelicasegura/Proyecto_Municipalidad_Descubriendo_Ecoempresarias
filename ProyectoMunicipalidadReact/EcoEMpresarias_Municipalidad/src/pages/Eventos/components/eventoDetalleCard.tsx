@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom"
 import { handleDesactivarEvento } from "../actions/handleDesactivarEvento"
 import ConfirmarCambioEstado from "./modalConfirmarCambioEstado"
 import { useState } from "react"
-
+import ModalEditarEvento from "./ModalEditarEvento"
 interface Props {
   evento: any
 }
@@ -17,7 +17,7 @@ export default function EventoDetalleCard({ evento }: Props) {
   const navigate = useNavigate()
 
   const [mostrarConfirmacion, setMostrarConfirmacion] = useState(false)
-
+  const [mostrarModalEditar, setMostrarModalEditar] = useState(false)
   if (!evento) return null
 
   const handleEliminar = async () => {
@@ -46,18 +46,18 @@ export default function EventoDetalleCard({ evento }: Props) {
         <div className="text-sm text-gray-600 mb-4 flex gap-6">
 
           <div className="flex items-center gap-2">
-            <Calendar size={16}/>
+            <Calendar size={16} />
             Fecha: {new Date(evento.fecha_inicio).toLocaleDateString()}
           </div>
 
           <div className="flex items-center gap-2">
-            <MapPin size={16}/>
+            <MapPin size={16} />
             Lugar: {evento.nombreLugar}
           </div>
 
         </div>
 
-        <hr className="mb-4"/>
+        <hr className="mb-4" />
 
         <h3 className="font-semibold mb-2">Descripción del evento</h3>
 
@@ -92,7 +92,10 @@ export default function EventoDetalleCard({ evento }: Props) {
 
           {esAdmin && (
             <>
-              <button className="bg-green-600 text-white px-4 py-2 rounded">
+              <button
+                onClick={() => setMostrarModalEditar(true)}
+                className="bg-green-600 text-white px-4 py-2 rounded"
+              >
                 Editar
               </button>
 
@@ -122,6 +125,15 @@ export default function EventoDetalleCard({ evento }: Props) {
 
       )}
 
+      {mostrarModalEditar && (
+
+        <ModalEditarEvento
+          evento={evento}
+          onClose={() => setMostrarModalEditar(false)}
+          onSuccess={() => navigate("/eventos")}
+        />
+
+      )}
     </>
   )
 }

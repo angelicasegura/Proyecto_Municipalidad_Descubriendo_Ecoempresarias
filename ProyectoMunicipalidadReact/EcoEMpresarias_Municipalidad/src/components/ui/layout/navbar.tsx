@@ -168,7 +168,7 @@ export function Navbar() {
                     className="text-foreground hover:bg-accent hover:to-blue-500 cursor-pointer"
                   >
                     <Link
-                      to="/solicitudes"
+                      to="/solicitudes-eventos"
                       className="
       text-white
       cursor-pointer
@@ -177,7 +177,7 @@ export function Navbar() {
       focus:outline-none
     "
                     >
-                      Aprobación de solicitudes
+                      Aprobación de solicitudes eventos
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem

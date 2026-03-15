@@ -1,13 +1,20 @@
 import type { Evento } from "../actions/fetchEventos"
 import { Calendar, MapPin } from "lucide-react"
 import { Link } from "react-router-dom"
+import { useAuth } from "../../../auth/AuthContext"
+
 interface Props {
   evento: Evento
 }
 
 export default function EventoCard({ evento }: Props) {
 
+  const { user } = useAuth()
+  const emprendedor = user?.rol === "EMPRENDEDOR"
+
+
   return (
+
     <div className="bg-white rounded-lg shadow-md p-5 border-t-4 border-orange-400 hover:shadow-lg transition">
 
       <h3 className="text-blue-600 font-semibold text-lg mb-3">
@@ -30,17 +37,21 @@ export default function EventoCard({ evento }: Props) {
 
       <div className="flex gap-2">
 
-
-        <Link to={`/eventos/${evento.evento_id}`}
-          className="bg-blue-600 text-white px-3 py-1.5 rounded-md text-sm hover:bg-blue-700">
+        <Link
+          to={`/eventos/${evento.evento_id}`}
+          className="bg-blue-600 text-white px-3 py-1.5 rounded-md text-sm hover:bg-blue-700"
+        >
           Ver detalles
         </Link>
 
-        <button
-          className="bg-teal-500 text-white px-3 py-1.5 rounded-md text-sm hover:bg-teal-600"
-        >
-          Reservar
-        </button>
+        {emprendedor && (
+          <Link
+            to={`/reservar-evento/${evento.evento_id}`}
+            className="bg-teal-500 text-white px-3 py-1.5 rounded-md text-sm hover:bg-teal-600"
+          >
+            Reservar
+          </Link>
+        )}
 
       </div>
 

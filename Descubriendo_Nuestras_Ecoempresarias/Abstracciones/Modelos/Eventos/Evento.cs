@@ -15,20 +15,24 @@ namespace Abstracciones.Modelos.Eventos
         public TimeSpan Horario { get; set; }
         public int Cupos { get; set; }
         public int Cupos_actuales { get; set; }
-        public int Lugar_id { get; set; }
+
+
 
     }
     public class EventoRequest : EventoBase
     {
         public int Estado_id { get; set; }
-        
+        public int Lugar_id { get; set; }
+
     }
 
     public class EventoResponse : EventoBase
     {
         public int Evento_id { get; set; }
+        public string Lugar_id { get; set; }
         public string NombreLugar { get; set; }
         public string NombreEstado { get; set; }
+        
 
     }
 }

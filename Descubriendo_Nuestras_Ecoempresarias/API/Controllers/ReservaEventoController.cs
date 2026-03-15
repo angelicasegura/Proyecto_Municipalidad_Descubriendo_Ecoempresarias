@@ -16,7 +16,7 @@ namespace API.Controllers
         {
             _reservaEventoFlujo = reservaEventoFlujo;
         }
-        [Authorize(Roles = "EMPRENDEDOR")]
+        //[Authorize(Roles = "EMPRENDEDOR")]
         [HttpPost("CrearReserva")]
         public async Task<IActionResult> CrearReserva(ReservaEventoRequest reserva)
         {
@@ -24,7 +24,7 @@ namespace API.Controllers
 
             return Ok(resultado);
         }
-        [Authorize(Roles = "EMPRENDEDOR")]
+        //[Authorize(Roles = "EMPRENDEDOR")]
 
         [HttpGet("MisReservas/{emprendimientoId}")]
         public async Task<IActionResult> MisReservas(int emprendimientoId)
