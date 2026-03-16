@@ -8,6 +8,7 @@ using Abstracciones.Interfaces.DA;
 using Abstracciones.Modelos;
 using Dapper;
 using Microsoft.Extensions.Configuration;
+using System.Data;
 
 namespace DA
 {
@@ -37,124 +38,62 @@ namespace DA
 
             try
             {
-                string sqlPedido = @"
-                    INSERT INTO dbo.ECOEMPRESARIAS_PEDIDOS_TB
-                    (
-                        Usuario_id,
-                        Emprendimiento_id,
-                        FechaPedido,
-                        EstadoPedido,
-                        DireccionEntrega,
-                        Observaciones,
-                        Total
-                    )
-                    OUTPUT INSERTED.Pedido_id
-                    VALUES
-                    (
-                        @UsuarioId,
-                        @EmprendimientoId,
-                        GETDATE(),
-                        'PENDIENTE',
-                        @DireccionEntrega,
-                        @Observaciones,
-                        @Total
-                    );";
-
                 int pedidoId = await connection.ExecuteScalarAsync<int>(
-                    sqlPedido,
+                    "sp_AgregarPedido",
                     new
                     {
-                        UsuarioId = usuarioId,
-                        pedido.EmprendimientoId,
-                        pedido.DireccionEntrega,
-                        pedido.Observaciones,
+                        Usuario_id = usuarioId,
+                        Emprendimiento_id = pedido.EmprendimientoId,
+                        DireccionEntrega = pedido.DireccionEntrega,
+                        Observaciones = pedido.Observaciones,
                         Total = total
                     },
-                    transaction
+                    transaction,
+                    commandType: CommandType.StoredProcedure
                 );
-
-                string sqlDetalle = @"
-                    INSERT INTO dbo.ECOEMPRESARIAS_DETALLE_PEDIDOS_TB
-                    (
-                        Pedido_id,
-                        Producto_id,
-                        Cantidad,
-                        PrecioUnitario,
-                        Subtotal
-                    )
-                    VALUES
-                    (
-                        @PedidoId,
-                        @ProductoId,
-                        @Cantidad,
-                        @PrecioUnitario,
-                        @Subtotal
-                    );";
 
                 foreach (var detalle in pedido.Detalles)
                 {
                     await connection.ExecuteAsync(
-                        sqlDetalle,
+                        "sp_AgregarDetallePedido",
                         new
                         {
-                            PedidoId = pedidoId,
-                            ProductoId = detalle.ProductoId,
+                            Pedido_id = pedidoId,
+                            Producto_id = detalle.ProductoId,
                             Cantidad = detalle.Cantidad,
                             PrecioUnitario = detalle.PrecioUnitario,
                             Subtotal = detalle.Cantidad * detalle.PrecioUnitario
                         },
-                        transaction
+                        transaction,
+                        commandType: CommandType.StoredProcedure
                     );
                 }
-
-                //Elimina del carrito los productos comprados
-
-                string sqlEliminarProductoCarrito = @"
-                    DELETE ppc
-                    FROM dbo.ECOEMPRESARIAS_PRODUCTOS_POR_CARRITO_TB ppc
-                    INNER JOIN dbo.ECOEMPRESARIAS_CARRITO_TB c
-                        ON c.Carrito_id = ppc.Carrito_id
-                    WHERE c.Usuario_id = @UsuarioId
-                      AND c.Emprendimiento_id = @EmprendimientoId
-                      AND ppc.Producto_id = @ProductoId;";
 
                 foreach (var detalle in pedido.Detalles)
                 {
                     await connection.ExecuteAsync(
-                        sqlEliminarProductoCarrito,
+                        "sp_EliminarProductoCarritoDespuesPedido",
                         new
                         {
-                            UsuarioId = usuarioId,
-                            EmprendimientoId = pedido.EmprendimientoId,
-                            ProductoId = detalle.ProductoId
+                            Usuario_id = usuarioId,
+                            Emprendimiento_id = pedido.EmprendimientoId,
+                            Producto_id = detalle.ProductoId
                         },
-                        transaction
+                        transaction,
+                        commandType: CommandType.StoredProcedure
                     );
                 }
 
-                //si el carrito quedó sin productos, eliminar encabezado de carrito
-                string sqlEliminarCarritoVacio = @"
-                    DELETE c
-                    FROM dbo.ECOEMPRESARIAS_CARRITO_TB c
-                    WHERE c.Usuario_id = @UsuarioId
-                      AND c.Emprendimiento_id = @EmprendimientoId
-                      AND NOT EXISTS
-                      (
-                          SELECT 1
-                          FROM dbo.ECOEMPRESARIAS_PRODUCTOS_POR_CARRITO_TB ppc
-                          WHERE ppc.Carrito_id = c.Carrito_id
-                      );";
-
                 await connection.ExecuteAsync(
-                    sqlEliminarCarritoVacio,
+                    "sp_EliminarCarritoVacioDespuesPedido",
                     new
                     {
-                        UsuarioId = usuarioId,
-                        EmprendimientoId = pedido.EmprendimientoId
+                        Usuario_id = usuarioId,
+                        Emprendimiento_id = pedido.EmprendimientoId
                     },
-                    transaction
+                    transaction,
+                    commandType: CommandType.StoredProcedure
                 );
-
 
                 transaction.Commit();
 
