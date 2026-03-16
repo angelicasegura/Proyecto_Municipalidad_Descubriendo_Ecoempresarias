@@ -83,7 +83,14 @@ export function Navbar() {
                 Eventos
               </Link>
             )}
-
+            {["ADMIN", "EMPRENDEDOR", "USUARIO"].includes(user?.rol ?? "") && (
+              <Link
+                to="/pedidos/mis-pedidos"
+                className="text-white font-medium hover:text-accent transition-colors whitespace-nowrap px-2"
+              >
+                Mis Pedidos
+              </Link>
+            )}
             {["ADMIN", "EMPRENDEDOR", "USUARIO"].includes(user?.rol ?? "") && (
               <Link
                 to="/entregas"

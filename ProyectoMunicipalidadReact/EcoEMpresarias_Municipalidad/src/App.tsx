@@ -23,6 +23,7 @@ import { Breadcrumbs } from "./components/ui/layout/Breadcrumbs";
 import CarritoPage from "./pages/public/Carrito/CarritoPage";
 import ForbiddenPage from "./pages/public/Forbidden/ForbiddenPage";
 import MapasPage from "./pages/public/mapas/MapasPage";
+import MisPedidosPage from "./pages/Pedidos/Usuario/mispedidos/MisPedidosPage";
 
 <Route path="/mapas" element={<MapasPage />} />
 
@@ -60,6 +61,11 @@ function App() {
             {/* HU-28: Ruta de registro */}
             <Route path="/registro" element={<RegisterPage />} />
 
+
+            {/*Rutas de peidos*/}
+            <Route element={<ProtectedRoute allowedRoles={["ADMIN","EMPRENDEDOR","USUARIO"]} />}>
+              <Route path="/pedidos/mis-pedidos" element={<MisPedidosPage />} />
+            </Route>
             {/* Ruta protegida para USUARIO (Carrito) */}
             <Route element={<ProtectedRoute allowedRoles={["ADMIN"]} />}>
               <Route path="/carrito" element={<CarritoPage />} />
@@ -75,7 +81,7 @@ function App() {
             </Route>
 
             {/* Emprendedores routes */}
-            <Route element={<ProtectedRoute allowedRoles={["EMPRENDEDOR"]} />}>
+            <Route element={<ProtectedRoute allowedRoles={["EMPRENDEDOR","ADMIN"]} />}>
               <Route
                 path="/emprendimientos-propio"
                 element={<EmprendimientosPropios />}
