@@ -52,7 +52,7 @@ export function Navbar() {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden xlg:flex xlg:items-center lg:gap-4">
+          <div className="hidden xl:flex xl:items-center lg:gap-4">
             <Link
               to="/emprendimientos"
               className="text-white font-medium hover:text-accent transition-colors whitespace-nowrap px-2"
@@ -331,7 +331,7 @@ export function Navbar() {
           {/* Mobile menu button */}
           <button
             type="button"
-            className="xlg:hidden text-white"
+            className="xl:hidden text-white"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
             {mobileMenuOpen ? (

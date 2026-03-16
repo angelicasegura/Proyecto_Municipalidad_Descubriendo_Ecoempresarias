@@ -1,7 +1,7 @@
-import type { Pedido } from "../types/pedidoType"
+import type { PedidoRequest } from "../types/pedidoType"
 import { authFetch } from "../auth/AuthFetch"
 
-export async function agregarPedido(pedido: Pedido): Promise<Pedido> {
+export async function agregarPedido(pedido: PedidoRequest): Promise<PedidoRequest> {
   const response = await authFetch("https://localhost:7050/api/Pedido", {
     method: "POST",
     headers: {

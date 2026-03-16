@@ -23,6 +23,7 @@ BEGIN
 
     IF @EstadoEmprendimiento IS NULL OR @EstadoEmprendimiento <> 1
     BEGIN
+         ROLLBACK TRANSACTION;
         RETURN 0; -- Retorna 0 indicando que no se pudo realizar la operación
     END
 
@@ -55,8 +56,8 @@ BEGIN
         VALUES
             (@Carrito_id, @Producto_id, @Cantidad);
     END
-
-    RETURN 1;
     commit transaction;
+    RETURN 1;
+    
 END
 GO
