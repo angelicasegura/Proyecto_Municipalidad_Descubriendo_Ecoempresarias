@@ -1,14 +1,37 @@
 ﻿CREATE TABLE [dbo].[ECOEMPRESARIAS_PEDIDOS_TB] (
-    [Pedido_id]         INT             IDENTITY (1, 1) NOT NULL,
-    [Usuario_id]        INT             NOT NULL,
-    [Emprendimiento_id] INT             NOT NULL,
-    [FechaPedido]       DATETIME        CONSTRAINT [DF_ECOEMPRESARIAS_PEDIDOS_FECHA] DEFAULT (getdate()) NOT NULL,
-    [EstadoPedido]      VARCHAR (50)    CONSTRAINT [DF_ECOEMPRESARIAS_PEDIDOS_ESTADO] DEFAULT ('PENDIENTE') NOT NULL,
-    [DireccionEntrega]  VARCHAR (250)   NOT NULL,
-    [Observaciones]     VARCHAR (500)   NULL,
-    [Total]             DECIMAL (18, 2) NOT NULL,
-    CONSTRAINT [PK_ECOEMPRESARIAS_PEDIDOS] PRIMARY KEY CLUSTERED ([Pedido_id] ASC),
-    CONSTRAINT [FK_ECOEMPRESARIAS_PEDIDOS_EMPRENDIMIENTO] FOREIGN KEY ([Emprendimiento_id]) REFERENCES [dbo].[ECOEMPRESARIAS_EMPRENDIMIENTOS_TB] ([Emprendimiento_id]),
-    CONSTRAINT [FK_ECOEMPRESARIAS_PEDIDOS_USUARIO] FOREIGN KEY ([Usuario_id]) REFERENCES [dbo].[ECOEMPRESARIAS_USUARIOS_TB] ([Usuario_id])
-);
 
+    Pedido_id UNIQUEIDENTIFIER NOT NULL,
+
+    Factura_id INT NOT NULL unique,
+
+    Usuario_id INT NOT NULL,
+    Emprendimiento_id INT NOT NULL,
+
+    FechaPedido DATETIME NOT NULL
+        CONSTRAINT ECO_PEDIDOS_FECHA_DF DEFAULT GETDATE(),
+
+    Estado_id INT NOT NULL,
+
+    DireccionEntrega VARCHAR(250) NOT NULL,
+    Observaciones VARCHAR(500) NULL,
+
+    CONSTRAINT ECO_PEDIDOS_PK
+        PRIMARY KEY CLUSTERED (Pedido_id),
+
+    CONSTRAINT ECO_PEDIDOS_FACTURA_FK
+        FOREIGN KEY (Factura_id)
+        REFERENCES [dbo].[ECOEMPRESARIAS_FACTURAS_TB] (Factura_id),
+
+    CONSTRAINT ECO_PEDIDOS_USUARIO_FK
+        FOREIGN KEY (Usuario_id)
+        REFERENCES [dbo].[ECOEMPRESARIAS_USUARIOS_TB] (Usuario_id),
+
+    CONSTRAINT ECO_PEDIDOS_EMPRENDIMIENTO_FK
+        FOREIGN KEY (Emprendimiento_id)
+        REFERENCES [dbo].[ECOEMPRESARIAS_EMPRENDIMIENTOS_TB] (Emprendimiento_id),
+
+    CONSTRAINT ECO_PEDIDOS_ESTADO_FK
+        FOREIGN KEY (Estado_id)
+        REFERENCES [dbo].[ECOEMPRESARIAS_ESTADOS_TB] (Estado_id)
+
+);

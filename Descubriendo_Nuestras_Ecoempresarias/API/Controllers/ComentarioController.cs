@@ -28,7 +28,7 @@ namespace API.Controllers
 
         }
 
-
+        [Authorize]
         [HttpPost("emprendimiento/{Emprendimiento_id}")]
         public async Task<IActionResult> Agregar(
      int Emprendimiento_id,

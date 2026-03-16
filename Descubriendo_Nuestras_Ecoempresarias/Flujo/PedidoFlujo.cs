@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Abstracciones.Interfaces.DA;
 using Abstracciones.Interfaces.Flujo;
 using Abstracciones.Modelos;
+using Abstracciones.Modelos.Pagination;
 
 namespace Flujo
 {
@@ -18,9 +19,14 @@ namespace Flujo
             _pedidoDA = pedidoDA;
         }
 
-        public Task<Pedido> AgregarPedido(int usuarioId, Pedido pedido)
+        public async Task<Guid> AgregarPedido(int usuarioId, PedidoRequest pedido)
         {
-            return _pedidoDA.AgregarPedido(usuarioId, pedido);
+            return await _pedidoDA.AgregarPedido(usuarioId, pedido);
+        }
+
+        public async Task<PagedResult<PedidoResponse>> ObtenerPedidosAsync(int usuarioId, int? estadoId, int pagina, int registrosPorPagina)
+        {
+            return await _pedidoDA.ObtenerPedidosAsync(usuarioId, estadoId, pagina, registrosPorPagina);
         }
     }
 }

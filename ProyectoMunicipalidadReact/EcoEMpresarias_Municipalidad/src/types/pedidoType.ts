@@ -1,17 +1,39 @@
-export interface DetallePedido {
-  productoId: number
-  cantidad: number
-  precioUnitario: number
-}
 
-export interface Pedido {
-  pedidoId?: number
+
+export interface PedidoRequest {
   usuarioId: number
   emprendimientoId: number
-  fechaPedido?: string
-  estadoPedido?: string
   direccionEntrega: string
   observaciones?: string
-  total?: number
-  detalles: DetallePedido[]
+}
+
+export interface FacturaDetalleResponse {
+  productoId: string
+  nombreProducto: string
+  cantidad: number
+  precioUnitario: number
+  subtotal: number
+}
+
+
+export interface FacturaResponse {
+  facturaId: number
+  fecha: string
+  subtotal: number
+  iva: number
+  total: number
+  usuarioId: number
+  emprendimientoId: number
+  estadoId: number
+  detalles: FacturaDetalleResponse[]
+}
+
+
+export interface PedidoResponse {
+  pedidoId: string
+  fechaPedido: string
+  estadoId: number
+  direccionEntrega: string
+  observaciones?: string
+  factura: FacturaResponse
 }

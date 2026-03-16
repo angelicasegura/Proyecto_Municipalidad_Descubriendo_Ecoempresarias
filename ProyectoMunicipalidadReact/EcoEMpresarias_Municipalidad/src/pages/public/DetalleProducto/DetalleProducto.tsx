@@ -74,14 +74,13 @@ export default function DetalleProductoPage() {
                   cantidad,
                 });
 
-                toast.success("Agregado al carrito"); 
+                
                 console.log("Agregar:", {
                   producto_id: producto.producto_id,
                   cantidad,
                 });
               } catch (err) {
                 console.error(err);
-                toast.error("No se pudo agregar al carrito");
               }
             }}
           >

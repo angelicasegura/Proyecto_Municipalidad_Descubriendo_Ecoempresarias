@@ -120,11 +120,9 @@
     <Build Include="dbo\Stored Procedures\sp_Obtener10Emprendedoras.sql" />
     <Build Include="dbo\Stored Procedures\sp_InactivarOActivarUsuarioEmprendimientos.sql" />
     <Build Include="dbo\Tables\ECOEMPRESARIAS_PEDIDOS_TB.sql" />
-    <Build Include="dbo\Tables\ECOEMPRESARIAS_DETALLE_PEDIDOS_TB.sql" />
     <Build Include="dbo\Stored Procedures\sp_EliminarProductoCarritoDespuesPedido.sql" />
     <Build Include="dbo\Stored Procedures\sp_EliminarCarritoVacioDespuesPedido.sql" />
     <Build Include="dbo\Stored Procedures\sp_AgregarPedido.sql" />
-    <Build Include="dbo\Stored Procedures\sp_AgregarDetallePedido.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="BD.refactorlog" />
