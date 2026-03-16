@@ -32,6 +32,7 @@ BEGIN
            ,Distrito
            ,Detalles
            ,Estado_id)
+            OUTPUT INSERTED.Lugar_id
 		VALUES
 			(@Nombre,
 			@Provincia,
@@ -39,8 +40,6 @@ BEGIN
 			@Distrito,
 			@Detalles,
 			@Estado_id)
-
-		SELECT Lugar_id FROM ECOEMPRESARIAS_LUGARES_TB WHERE Nombre = @Nombre;
 
 		COMMIT TRANSACTION
 

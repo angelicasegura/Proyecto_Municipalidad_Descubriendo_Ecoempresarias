@@ -28,7 +28,7 @@ namespace API.Controllers.Eventos
             _configuration = configuration;
         }
 
-        [Authorize(Roles = "ADMIN")]
+        //[Authorize(Roles = "ADMIN")]
         [HttpPost("CrearLugar")]
         public async Task<IActionResult> AgregarLugar([FromBody] LugarRequest lugar)
         {
@@ -44,7 +44,7 @@ namespace API.Controllers.Eventos
             }
         }
 
-        [Authorize(Roles = "ADMIN")]
+        //[Authorize(Roles = "ADMIN")]
         [HttpPut("EditarLugar/{id}")]
         public async Task<IActionResult> EditarLugar([FromRoute]int id, [FromBody] LugarRequest lugar)
         {
@@ -60,7 +60,7 @@ namespace API.Controllers.Eventos
             }
         }
 
-        [Authorize(Roles = "ADMIN")]
+        //[Authorize(Roles = "ADMIN")]
         [HttpPut("InactivarLugar/{id}")]
         public async Task<IActionResult> InactivarLugar([FromRoute] int id)
         {
@@ -76,7 +76,7 @@ namespace API.Controllers.Eventos
             }
         }
 
-        [Authorize(Roles = "ADMIN")]
+        //[Authorize(Roles = "ADMIN")]
         [HttpGet("ObtenerLugares")]
         public async Task<IActionResult> ObtenerLugares()
         {
@@ -96,7 +96,7 @@ namespace API.Controllers.Eventos
             }
         }
 
-        [Authorize(Roles = "ADMIN")]
+        //[Authorize(Roles = "ADMIN")]
         [HttpGet("ObtenerLugarId/{id}")]
         public async Task<IActionResult> ObtenerLugarPorId([FromRoute] int id)
         {

@@ -1,0 +1,23 @@
+﻿CREATE PROCEDURE SP_InactivarPiso
+    @Piso_id INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+	BEGIN TRY
+	BEGIN TRANSACTION
+
+        UPDATE ECOEMPRESARIAS_PISOS_TB
+        SET
+            Estado_id = 0
+        WHERE Piso_id = @Piso_id;
+
+		SELECT @Piso_id;
+
+    COMMIT TRANSACTION;
+	END TRY
+
+  BEGIN CATCH
+    DECLARE @ErrorMessage NVARCHAR(4000) = ERROR_MESSAGE();
+    RAISERROR(@ErrorMessage,16,1);
+END CATCH
+END
