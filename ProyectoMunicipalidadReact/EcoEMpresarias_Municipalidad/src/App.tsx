@@ -28,6 +28,16 @@ import MisProductosPage from "./pages/Productos/MisProductos/MisProductosPage";
 import MisEmprendimientosPage from "./pages/Productos/MisProductos/MisEmprendimientosPage";
 import ListaPendientesPage from "./pages/Productos/ProductosPendientes/ListaPendientesPage";
 import ProductosPendientesPage from "./pages/Productos/ProductosPendientes/ProductosPendientesPage";
+import EventosPage from "./pages/Eventos/EventosPage";
+import EventoDetallePage from "./pages/Eventos/EventoDetallePage";
+import MisEventosPage from "./pages/Eventos/MisEventosPage";
+import MisEventosDetallePage from "./pages/Eventos/MisEventosDetallePage";
+import ReservarEventoPage from "./pages/Eventos/ReservarEventoPage";
+import SeleccionarEmprendimientoReservaPage from "./pages/Eventos/seleccionarEmprendimientoReservaPage";
+import SolicitudesEventoPage from "./pages/Admin/Eventos/SolicitudesEventoPage";
+import AdminLugaresPage from "./pages/Admin/Lugares/AdminLugaresPage";
+import CrearLugarPage from "./pages/Admin/Lugares/crearLugarPage";
+import EditarLugarPage from "./pages/Admin/Lugares/EditarLugarPage";
 
 function App() {
   const { loading } = useAuth();
@@ -55,6 +65,8 @@ function App() {
           <Route path="/emprendimientos" element={<EmprendimientosPage />} />
           <Route path="/emprendimiento/:id/:cedulaJuridica" element={<DetalleEmprendimiento />} /> 
           <Route path="/producto/:id" element={<DetalleProductoPage />} />
+          <Route path="/eventos" element={<EventosPage />} />
+          <Route path="/eventos/:id" element={<EventoDetallePage />} />
 
           {/* HU-28: Ruta de registro */}
           <Route path="/registro" element={<RegisterPage />} />
@@ -66,6 +78,10 @@ function App() {
           <Route element={<ProtectedRoute allowedRoles={["ADMIN"]} />}>
             <Route path="/usuarios" element={<AdminUsuarios />} />
             <Route path="/emprendimientos-admin" element={<AdminEmprendedores />} />
+            <Route path="/solicitudes-eventos" element={<SolicitudesEventoPage />} />
+            <Route path="/admin/lugares" element={<AdminLugaresPage />} />
+            <Route path="/admin/crear-lugar" element={<CrearLugarPage/>} />
+            <Route path="/admin/editar-lugar/:id" element={<EditarLugarPage/>} />
           </Route>
             
 
@@ -73,6 +89,10 @@ function App() {
           <Route element={<ProtectedRoute allowedRoles={["EMPRENDEDOR"]} />}>
             <Route path="/emprendimientos-propio" element={<EmprendimientosPropios />} />
             <Route path="/inventario/:id/:cedulaJuridica" element={<InventarioEmprendimiento />} />
+            <Route path="/mis-eventos" element={<MisEventosPage />} />
+            <Route path="/mis-eventos/:emprendimientoId" element={<MisEventosDetallePage />} />
+            <Route path="/reservar-evento/:eventoId" element={<SeleccionarEmprendimientoReservaPage/>} />
+            <Route path="/reservar-evento/:eventoId/:emprendimientoId" element={<ReservarEventoPage />} />
           </Route>
 
           {/* Productos routes */}

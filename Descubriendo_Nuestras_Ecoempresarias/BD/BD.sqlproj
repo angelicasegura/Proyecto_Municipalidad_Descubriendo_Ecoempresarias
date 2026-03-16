@@ -63,7 +63,6 @@
   <ItemGroup>
     <Build Include="dbo\Tables\ECOEMPRESARIAS_USUARIOS_TB.sql" />
     <Build Include="dbo\Tables\ECOEMPRESARIAS_ROLES_TB.sql" />
-    <Build Include="dbo\Tables\ECOEMPRESARIAS_RESERVA_EVENTOS_TB.sql" />
     <Build Include="dbo\Tables\ECOEMPRESARIAS_PRODUCTO_TB.sql" />
     <Build Include="dbo\Tables\ECOEMPRESARIAS_INVENTARIO_TB.sql" />
     <Build Include="dbo\Tables\ECOEMPRESARIAS_FACTURAS_TB.sql" />
@@ -132,6 +131,12 @@
     <Build Include="dbo\Stored Procedures\SP_EditarEvento.sql" />
     <Build Include="dbo\Stored Procedures\SP_AgregarLugar.sql" />
     <Build Include="dbo\Stored Procedures\SP_AgregarEvento.sql" />
+    <Build Include="dbo\Stored Procedures\sp_RechazarReserva_Evento.sql" />
+    <Build Include="dbo\Stored Procedures\sp_ObtenerSolicitudes_Evento.sql" />
+    <Build Include="dbo\Stored Procedures\sp_ObtenerReservas_Emprendimiento.sql" />
+    <Build Include="dbo\Stored Procedures\sp_AprobarReserva_Evento.sql" />
+    <Build Include="dbo\Tables\ECOEMPRESARIAS_RESERVA_EVENTOS_TB.sql" />
+    <Build Include="dbo\Stored Procedures\SP_CrearReservaEvento.sql" />
     <Build Include="dbo\Stored Procedures\SP_ReservarStandEvento.sql" />
     <Build Include="dbo\Stored Procedures\SP_ObtenerZonasPorPiso.sql" />
     <Build Include="dbo\Stored Procedures\SP_ObtenerZonasPorId.sql" />

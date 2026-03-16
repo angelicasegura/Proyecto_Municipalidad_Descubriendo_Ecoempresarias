@@ -36,7 +36,8 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowViteApp",
         policy =>
         {
-            policy.WithOrigins("http://localhost:5173") // La URL de tu frontend
+            policy.WithOrigins("http://localhost:5173",
+                "htpp://localhost:5174") // La URL de tu frontend
                   .AllowAnyHeader()
                   .AllowAnyMethod();
         });
@@ -50,11 +51,11 @@ builder.Services.AddAuthentication(options =>
 })
     .AddJwtBearer(options =>
     {
-        // AQUÕ se lee la clave secreta
+        // AQU√ç se lee la clave secreta
         var secret = builder.Configuration["Jwt:Secret"]
             ?? throw new InvalidOperationException("JWT Secret no configurado.");
 
-        // Asegurar tamaÒo mÌnimo de clave
+        // Asegurar tama√±o m√≠nimo de clave
         var keyBytes = Encoding.UTF8.GetBytes(secret);
         if (keyBytes.Length < 32)
         {
@@ -121,6 +122,8 @@ builder.Services.AddScoped<ILugarController, LugarController>();
 builder.Services.AddScoped<IEventoDA, EventoDA>();
 builder.Services.AddScoped<IEventoFlujo, EventoFlujo>();
 builder.Services.AddScoped<IEventoController, EventoController>();
+builder.Services.AddScoped<IReservaEventoDA, ReservaEventoDA>();
+builder.Services.AddScoped<IReservaEventoFlujo, ReservaEventoFlujo>();
 builder.Services.AddScoped<IPisoDA, PisoDA>();
 builder.Services.AddScoped<IPisoFlujo, PisoFlujo>();
 builder.Services.AddScoped<IMapaDA, MapaDA>();
@@ -129,7 +132,6 @@ builder.Services.AddScoped<IZonaDA, ZonaDA>();
 builder.Services.AddScoped<IZonaFlujo, ZonaFlujo>();
 builder.Services.AddScoped<IStandDA, StandDA>();
 builder.Services.AddScoped<IStandFlujo, StandFlujo>();
-
 
 var app = builder.Build();
 

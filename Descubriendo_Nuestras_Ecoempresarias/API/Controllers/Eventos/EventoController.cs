@@ -22,7 +22,7 @@ namespace API.Controllers.Eventos
             _configuration = configuration;
         }
 
-        //[Authorize(Roles = "ADMIN")]
+        [Authorize(Roles = "ADMIN")]
         [HttpPost("CrearEvento")]
         public async Task<IActionResult> AgregarEvento([FromBody] EventoRequest evento)
         {
@@ -38,7 +38,7 @@ namespace API.Controllers.Eventos
             }
         }
 
-        //[Authorize(Roles = "ADMIN")]
+        [Authorize(Roles = "ADMIN")]
         [HttpPut("EditarEvento/{id}")]
         public async Task<IActionResult> EditarEvento([FromRoute]int id, [FromBody] EventoRequest evento)
         {
@@ -55,7 +55,7 @@ namespace API.Controllers.Eventos
             }
         }
 
-        //[Authorize(Roles = "ADMIN")]
+        [Authorize(Roles = "ADMIN")]
         [HttpPut("InactivarEvento/{id}")]
         public async Task<IActionResult> InactivarEvento([FromRoute]  int id)
         {
