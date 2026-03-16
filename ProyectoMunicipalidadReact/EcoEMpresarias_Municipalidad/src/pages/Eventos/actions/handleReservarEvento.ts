@@ -13,7 +13,7 @@ export async function handleReservarEvento(data:any){
       body: JSON.stringify({
         Evento_id: data.evento_id,
         Emprendimiento_id: data.emprendimiento_id,
-        Estado_id: 6,
+        Estado_id: 8,
         Nombre: data.nombre,
         Apellidos: data.apellidos,
         Cedula: data.cedula,

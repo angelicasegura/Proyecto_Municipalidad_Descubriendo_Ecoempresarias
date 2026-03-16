@@ -214,6 +214,23 @@ export function Navbar() {
                       Análisis de sectores
                     </Link>
                   </DropdownMenuItem>
+                  <DropdownMenuItem
+                    asChild
+                    className="text-foreground hover:bg-accent hover:to-blue-500 cursor-pointer"
+                  >
+                    <Link
+                      to="/admin/lugares"
+                      className="
+      text-white
+      cursor-pointer
+      data-highlighted:bg-[#09C2EF]
+      data-highlighted:text-black
+      focus:outline-none
+    "
+                    >
+                      Lugares
+                    </Link>
+                  </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             )}

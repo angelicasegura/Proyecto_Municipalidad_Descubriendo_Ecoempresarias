@@ -1,76 +1,148 @@
-import { useQuery } from "@tanstack/react-query"
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
 import { fetchSolicitudesEventos } from "./actions/fetchSolicitudesEventos"
+import { aprobarSolicitud } from "./actions/aprobarSolicitud"
+import { rechazarSolicitud } from "./actions/rechazarSolicitud"
 
 export default function SolicitudesEventosPage(){
+
+  const queryClient = useQueryClient()
 
   const { data: solicitudes = [], isLoading } = useQuery({
     queryKey:["solicitudesEventos"],
     queryFn: fetchSolicitudesEventos
   })
 
+  const aprobarMutation = useMutation({
+    mutationFn: aprobarSolicitud,
+    onSuccess:()=>{
+      queryClient.invalidateQueries({queryKey:["solicitudesEventos"]})
+    }
+  })
+
+  const rechazarMutation = useMutation({
+    mutationFn: rechazarSolicitud,
+    onSuccess:()=>{
+      queryClient.invalidateQueries({queryKey:["solicitudesEventos"]})
+    }
+  })
+
   if(isLoading) return <p>Cargando solicitudes...</p>
+// 🔹 SOLO SOLICITUDES PENDIENTES
+  const solicitudesPendientes = solicitudes.filter((s:any)=> s.estado_id === 8)
 
   return(
 
-    <div className="max-w-6xl mx-auto mt-10">
+    <div className="max-w-7xl mx-auto mt-10 px-6 mb-20">
 
-      <h1 className="text-2xl font-bold mb-6">
+      <h1 className="text-3xl font-semibold text-gray-700 mb-8">
         Solicitudes enviadas
       </h1>
 
-      <div className="bg-white shadow rounded-lg p-6">
+      {/* 🔹 SI NO HAY SOLICITUDES */}
 
-        <table className="w-full text-left">
+      {solicitudesPendientes.length === 0 && (
 
-          <thead className="border-b">
+        <div className="bg-white shadow-md rounded-xl p-10 text-center">
 
-            <tr className="text-gray-600 text-sm">
-              <th>#</th>
-              <th>Evento</th>
-              <th>Nombre</th>
-              <th>Emprendimiento</th>
-              <th>Productos</th>
-              <th>Fecha</th>
-              <th>Estado</th>
-            </tr>
+          <h2 className="text-xl font-semibold text-gray-600 mb-2">
+            No hay solicitudes pendientes
+          </h2>
 
-          </thead>
+          <p className="text-gray-500 text-sm">
+            Cuando los emprendedores envíen solicitudes para eventos aparecerán aquí.
+          </p>
 
-          <tbody>
+        </div>
 
-            {solicitudes.map((s:any,index:number)=>(
+      )}
 
-              <tr key={s.reserva_id} className="border-b text-sm">
+      {/* 🔹 TABLA */}
 
-                <td>{index + 1}</td>
+      {solicitudesPendientes.length > 0 && (
 
-                <td>{s.evento}</td>
+        <div className="bg-white rounded-xl shadow-md overflow-hidden">
 
-                <td>{s.nombre}</td>
+          <table className="min-w-full text-sm text-left">
 
-                <td>{s.emprendimiento}</td>
+            <thead className="bg-gray-50 border-b">
 
-                <td>{s.productos}</td>
+              <tr className="text-gray-600 uppercase text-xs tracking-wider">
 
-                <td>{new Date(s.fecha).toLocaleDateString()}</td>
-
-                <td>
-
-                  <span className="bg-yellow-400 text-white px-2 py-1 rounded text-xs">
-                    {s.estado}
-                  </span>
-
-                </td>
+                <th className="px-4 py-3">#</th>
+                <th className="px-4 py-3">Evento</th>
+                <th className="px-4 py-3">Nombre</th>
+                <th className="px-4 py-3">Emprendimiento</th>
+                <th className="px-4 py-3">Estado</th>
+                <th className="px-4 py-3 text-center">Acciones</th>
 
               </tr>
 
-            ))}
+            </thead>
 
-          </tbody>
+            <tbody className="divide-y">
 
-        </table>
+              {solicitudesPendientes.map((s:any,index:number)=>{
 
-      </div>
+                const estadoColor =
+                  s.estado_id === 8
+                    ? "bg-yellow-400"
+                    : s.estado_id === 9
+                    ? "bg-green-500"
+                    : "bg-red-500"
+
+                return(
+
+                  <tr key={s.numero} className="hover:bg-gray-50">
+
+                    <td className="px-4 py-3">{index + 1}</td>
+
+                    <td className="px-4 py-3 font-medium text-gray-700">
+                      {s.evento}
+                    </td>
+
+                    <td className="px-4 py-3">{s.nombre}</td>
+
+                    <td className="px-4 py-3">{s.emprendimiento}</td>
+
+                    <td className="px-4 py-3">
+
+                      <span className={`${estadoColor} text-white px-3 py-1 rounded-full text-xs`}>
+                        {s.estado}
+                      </span>
+
+                    </td>
+
+                    <td className="px-4 py-3 flex gap-2 justify-center">
+
+                      <button
+                        onClick={()=>aprobarMutation.mutate(s.numero)}
+                        className="bg-green-600 text-white px-3 py-1 rounded text-xs hover:bg-green-700"
+                      >
+                        Aprobar
+                      </button>
+
+                      <button
+                        onClick={()=>rechazarMutation.mutate(s.numero)}
+                        className="bg-red-500 text-white px-3 py-1 rounded text-xs hover:bg-red-600"
+                      >
+                        Rechazar
+                      </button>
+
+                    </td>
+
+                  </tr>
+
+                )
+
+              })}
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+      )}
 
     </div>
 

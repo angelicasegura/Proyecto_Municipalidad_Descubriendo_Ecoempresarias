@@ -35,6 +35,9 @@ import MisEventosDetallePage from "./pages/Eventos/MisEventosDetallePage";
 import ReservarEventoPage from "./pages/Eventos/ReservarEventoPage";
 import SeleccionarEmprendimientoReservaPage from "./pages/Eventos/seleccionarEmprendimientoReservaPage";
 import SolicitudesEventoPage from "./pages/Admin/Eventos/SolicitudesEventoPage";
+import AdminLugaresPage from "./pages/Admin/Lugares/AdminLugaresPage";
+import CrearLugarPage from "./pages/Admin/Lugares/crearLugarPage";
+import EditarLugarPage from "./pages/Admin/Lugares/EditarLugarPage";
 
 function App() {
   const { loading } = useAuth();
@@ -76,6 +79,9 @@ function App() {
             <Route path="/usuarios" element={<AdminUsuarios />} />
             <Route path="/emprendimientos-admin" element={<AdminEmprendedores />} />
             <Route path="/solicitudes-eventos" element={<SolicitudesEventoPage />} />
+            <Route path="/admin/lugares" element={<AdminLugaresPage />} />
+            <Route path="/admin/crear-lugar" element={<CrearLugarPage/>} />
+            <Route path="/admin/editar-lugar/:id" element={<EditarLugarPage/>} />
           </Route>
             
 

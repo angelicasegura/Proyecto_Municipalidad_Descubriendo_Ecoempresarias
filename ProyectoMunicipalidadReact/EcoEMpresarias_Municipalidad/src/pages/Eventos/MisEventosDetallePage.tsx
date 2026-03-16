@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import { useQuery } from "@tanstack/react-query"
 import { fetchMisEventos } from "./actions/fetchMisEventos"
 
@@ -13,7 +13,7 @@ export default function MisEventosDetallePage(){
   })
 
   if(isLoading) return <p>Cargando eventos...</p>
-
+  console.log(eventos)
   return(
 
     <div className="max-w-5xl mx-auto mt-10">
@@ -42,9 +42,9 @@ export default function MisEventosDetallePage(){
             {eventos.map((evento:any,index:number)=>{
 
               const estadoColor =
-                evento.estado === "Pendiente"
+                evento.estado === "Reserva evento Pendiente"
                 ? "bg-yellow-400"
-                : evento.estado === "Aprobado"
+                : evento.estado === "Reserva evento Aceptada"
                 ? "bg-green-500"
                 : "bg-red-500"
 
@@ -60,6 +60,20 @@ export default function MisEventosDetallePage(){
                     <span className={`${estadoColor} text-white px-2 py-1 rounded text-xs`}>
                       {evento.estado}
                     </span>
+                  </td>
+                  <td>
+
+                    {evento.estado === "Reserva evento Aceptada" && (
+
+                      <Link
+                        to={`/seleccionar-espacio/${evento.evento_id}/${emprendimientoId}`}
+                        className="bg-blue-600 text-white px-3 py-1 rounded text-xs hover:bg-blue-700"
+                      >
+                        Seleccionar espacio
+                      </Link>
+
+                    )}
+
                   </td>
 
 

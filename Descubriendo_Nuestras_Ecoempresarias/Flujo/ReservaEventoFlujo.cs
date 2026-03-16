@@ -16,9 +16,9 @@ namespace Flujo
         {
             _reservaEventoDA = reservaEventoDA;
         }
-        public async Task<int> AprobarReserva(int eventoId, int emprendimientoId)
+        public async Task<int> AprobarReserva(int Reserva_id)
         {
-            return await _reservaEventoDA.AprobarReserva(eventoId, emprendimientoId);
+            return await _reservaEventoDA.AprobarReserva(Reserva_id);
         }
 
         public async Task<int> CrearReservaEvento(ReservaEventoRequest reserva)
@@ -36,9 +36,9 @@ namespace Flujo
             return await _reservaEventoDA.ObtenerSolicitudesReservaEvento();
         }
 
-        public async Task<int> RechazarReserva(int eventoId, int emprendimientoId)
+        public async Task<int> RechazarReserva(int Reserva_id)
         {
-            return await _reservaEventoDA.RechazarReserva(eventoId, emprendimientoId);
+            return await _reservaEventoDA.RechazarReserva(Reserva_id);
         }
     }
 }

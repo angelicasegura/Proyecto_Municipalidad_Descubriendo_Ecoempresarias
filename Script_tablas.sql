@@ -547,6 +547,8 @@ CREATE TABLE ECOEMPRESARIAS_EVENTOS_ZONAS_STANDS_TB (
 
 ---inserts en la tabla de estados
 Insert into ECOEMPRESARIAS_ESTADOS_TB(Estado_id, Nombre)
-VALUES (6, 'Reserva evento Pendiente'),
-(7, 'Reserva evento Aceptada'),
-(8, 'Reserva evento Rechazada')
+VALUES 
+(9, 'Reserva evento Aceptada'),
+(10, 'Reserva evento Rechazada')
+SELECT * FROM ECOEMPRESARIAS_RESERVA_EVENTOS_TB
+delete from ECOEMPRESARIAS_RESERVA_Eventos_TB WHERE Reserva_id = 7

@@ -23,14 +23,13 @@ namespace DA
             _sqlConnection = _repositorioDapper.ObtenerRepositorio();
         }
 
-        public async Task<int> AprobarReserva(int eventoId, int emprendimientoId)
+        public async Task<int> AprobarReserva(int Reserva_id)
         {
             string query = "sp_AprobarReserva_Evento";
             var resultado = await _sqlConnection.ExecuteScalarAsync<int>(
                 query, new
                 {
-                    Evento_id = eventoId,
-                    Emprendimiento_id = emprendimientoId
+                    Reserva_id = Reserva_id   
                 });
             return resultado;
         }
@@ -69,14 +68,13 @@ namespace DA
             return resultado.ToList();
         }
 
-        public Task<int> RechazarReserva(int eventoId, int emprendimientoId)
+        public Task<int> RechazarReserva(int Reserva_id)
         {
             string query = "sp_RechazarReserva_Evento";
             var resultado = _sqlConnection.ExecuteScalarAsync<int>(
                 query, new
                 {
-                    Evento_id = eventoId,
-                    Emprendimiento_id = emprendimientoId
+                    Reserva_id = Reserva_id
                 });
             return resultado;
         }

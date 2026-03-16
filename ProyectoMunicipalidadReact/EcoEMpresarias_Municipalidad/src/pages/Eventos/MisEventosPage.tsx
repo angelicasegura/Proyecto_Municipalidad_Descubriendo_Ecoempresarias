@@ -27,7 +27,7 @@ export default function MisEventosPage() {
     
     return (
 
-        <div className="max-w-6xl mx-auto mt-10">
+        <div className="max-w-6xl mx-auto mt-10 mb-20">
 
             <h1 className="text-2xl font-bold mb-6">
                 Selecciona un emprendimiento

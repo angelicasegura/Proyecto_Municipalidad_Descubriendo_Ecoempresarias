@@ -1,15 +1,18 @@
 import { Calendar } from "lucide-react"
 import { useQuery } from "@tanstack/react-query"
+import { useState } from "react"
 
 import { fetchEventos } from "./actions/fetchEventos"
 import { EventosGrid } from "./components/eventosCardsGrid"
-
-import { useState } from "react"
 import CrearEventoModal from "./components/CrearEventoModal"
+
+import { useAuth } from "../../auth/AuthContext"
 
 export default function EventosPage() {
 
   const [showModal, setShowModal] = useState(false)
+
+  const { user } = useAuth()
 
   const { data: eventos = [], isLoading, error, refetch } = useQuery({
     queryKey: ["eventos"],
@@ -17,10 +20,18 @@ export default function EventosPage() {
     refetchInterval: 180000
   })
 
+  // 🔹 FILTRAR EVENTOS SEGÚN ROL
+  const eventosFiltrados =
+    user?.rol === "ADMIN"
+      ? eventos
+      : eventos.filter((e: any) => e.estado_id === 1 || e.nombreEstado ==="Activo")
+
+      console.log(eventos)
+
   return (
     <main className="min-h-screen bg-background">
 
-      {/* Hero */}
+      {/* HERO */}
       <section className="gradient-hero py-12 px-4">
 
         <div className="max-w-6xl mx-auto text-center">
@@ -43,39 +54,46 @@ export default function EventosPage() {
 
       </section>
 
-      {/* Eventos */}
+      {/* EVENTOS */}
 
       <section className="max-w-6xl mx-auto px-4 py-8">
 
-        {/* BOTÓN CREAR EVENTO */}
-        <div className="flex justify-end mb-6">
+        {/* BOTÓN CREAR EVENTO SOLO ADMIN */}
 
-          <button
-            onClick={() => setShowModal(true)}
-            className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
-          >
-            Crear Evento
-          </button>
+        {user?.rol === "ADMIN" && (
 
-        </div>
+          <div className="flex justify-end mb-6">
+
+            <button
+              onClick={() => setShowModal(true)}
+              className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition"
+            >
+              Crear Evento
+            </button>
+
+          </div>
+
+        )}
 
         {isLoading && <p>Cargando eventos...</p>}
 
         {error && <p>Error cargando eventos</p>}
 
         {!isLoading && !error && (
-          <EventosGrid eventos={eventos}/>
+          <EventosGrid eventos={eventosFiltrados}/>
         )}
 
       </section>
 
-      {/* MODAL */}
+      {/* MODAL CREAR EVENTO */}
 
-      {showModal && (
+      {showModal && user?.rol === "ADMIN" && (
+
         <CrearEventoModal
           onClose={() => setShowModal(false)}
           onSuccess={() => refetch()}
         />
+
       )}
 
     </main>

@@ -12,7 +12,7 @@ namespace Abstracciones.Interfaces.DA
         Task <int> CrearReservaEvento(ReservaEventoRequest reserva);
         Task <List<ReservaEventoResponse>> ObtenerReservasEmprendimiento(int emprendimientoId);
         Task <List<solicitudReservaEvento>> ObtenerSolicitudesReservaEvento();
-        Task <int> AprobarReserva(int eventoId, int emprendimientoId);
-        Task <int> RechazarReserva(int eventoId, int emprendimientoId);
+        Task <int> AprobarReserva(int Reserva_id);
+        Task <int> RechazarReserva(int Reserva_id);
     }
 }

@@ -16,7 +16,7 @@ namespace API.Controllers
         {
             _reservaEventoFlujo = reservaEventoFlujo;
         }
-        //[Authorize(Roles = "EMPRENDEDOR")]
+        [Authorize(Roles = "EMPRENDEDOR")]
         [HttpPost("CrearReserva")]
         public async Task<IActionResult> CrearReserva(ReservaEventoRequest reserva)
         {
@@ -24,7 +24,7 @@ namespace API.Controllers
 
             return Ok(resultado);
         }
-        //[Authorize(Roles = "EMPRENDEDOR")]
+        [Authorize(Roles = "EMPRENDEDOR")]
 
         [HttpGet("MisReservas/{emprendimientoId}")]
         public async Task<IActionResult> MisReservas(int emprendimientoId)
@@ -33,7 +33,7 @@ namespace API.Controllers
 
             return Ok(resultado);
         }
-        [Authorize(Roles = "ADMIN")]
+       [Authorize(Roles = "ADMIN")]
 
         [HttpGet("Solicitudes")]
         public async Task<IActionResult> Solicitudes()
@@ -44,19 +44,19 @@ namespace API.Controllers
         }
         [Authorize(Roles = "ADMIN")]
 
-        [HttpPut("Aprobar")]
-        public async Task<IActionResult> Aprobar(int eventoId, int emprendimientoId)
+        [HttpPut("Aprobar/{reservaId}")]
+        public async Task<IActionResult> Aprobar(int reservaId)
         {
-            var resultado = await _reservaEventoFlujo.AprobarReserva(eventoId, emprendimientoId);
+            var resultado = await _reservaEventoFlujo.AprobarReserva(reservaId);
 
             return Ok(resultado);
         }
         [Authorize(Roles = "ADMIN")]
 
-        [HttpPut("Rechazar")]
-        public async Task<IActionResult> Rechazar(int eventoId, int emprendimientoId)
+        [HttpPut("Rechazar/{reservaId}")]
+        public async Task<IActionResult> Rechazar(int reservaId)
         {
-            var resultado = await _reservaEventoFlujo.RechazarReserva(eventoId, emprendimientoId);
+            var resultado = await _reservaEventoFlujo.RechazarReserva(reservaId);
 
             return Ok(resultado);
         }
