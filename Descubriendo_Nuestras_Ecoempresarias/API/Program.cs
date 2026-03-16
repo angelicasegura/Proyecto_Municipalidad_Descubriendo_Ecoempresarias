@@ -121,6 +121,15 @@ builder.Services.AddScoped<ILugarController, LugarController>();
 builder.Services.AddScoped<IEventoDA, EventoDA>();
 builder.Services.AddScoped<IEventoFlujo, EventoFlujo>();
 builder.Services.AddScoped<IEventoController, EventoController>();
+builder.Services.AddScoped<IPisoDA, PisoDA>();
+builder.Services.AddScoped<IPisoFlujo, PisoFlujo>();
+builder.Services.AddScoped<IMapaDA, MapaDA>();
+builder.Services.AddScoped<IMapaFlujo, MapaFlujo>();
+builder.Services.AddScoped<IZonaDA, ZonaDA>();
+builder.Services.AddScoped<IZonaFlujo, ZonaFlujo>();
+builder.Services.AddScoped<IStandDA, StandDA>();
+builder.Services.AddScoped<IStandFlujo, StandFlujo>();
+
 
 var app = builder.Build();
 
