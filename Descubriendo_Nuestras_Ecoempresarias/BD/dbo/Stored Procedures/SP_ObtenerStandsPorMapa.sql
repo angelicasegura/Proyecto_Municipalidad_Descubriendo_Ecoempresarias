@@ -14,6 +14,7 @@ BEGIN
             S.Ancho,
             S.Alto,
             S.Rotacion,
+            S.Estado_id,
             E.Nombre AS Estado
         FROM ECOEMPRESARIAS_STANDS_MAPAS_TB S
         INNER JOIN ECOEMPRESARIAS_ESTADOS_TB E

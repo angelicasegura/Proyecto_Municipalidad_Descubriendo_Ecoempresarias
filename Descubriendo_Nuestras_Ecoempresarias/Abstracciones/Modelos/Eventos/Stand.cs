@@ -24,6 +24,7 @@ namespace Abstracciones.Modelos.Eventos
     }
     public class StandResponse : StandBase
     {
+        public int Estado_id { get; set; }
         public int Stand_id { get; set; }
         public string NombreEstado { get; set; }
     }

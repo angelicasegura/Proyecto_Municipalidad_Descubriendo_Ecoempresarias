@@ -36,8 +36,11 @@ import ReservarEventoPage from "./pages/Eventos/ReservarEventoPage";
 import SeleccionarEmprendimientoReservaPage from "./pages/Eventos/seleccionarEmprendimientoReservaPage";
 import SolicitudesEventoPage from "./pages/Admin/Eventos/SolicitudesEventoPage";
 import AdminLugaresPage from "./pages/Admin/Lugares/AdminLugaresPage";
-import CrearLugarPage from "./pages/Admin/Lugares/crearLugarPage";
+import CrearLugarPage from "./pages/Admin/Lugares/CrearLugarPage";
 import EditarLugarPage from "./pages/Admin/Lugares/EditarLugarPage";
+import MapasPage from "./pages/Mapas/MapasPage";
+import LugarDetallePage from "./pages/Admin/Lugares/LugarDetallePage";
+
 
 function App() {
   const { loading } = useAuth();
@@ -103,6 +106,11 @@ function App() {
 
             <Route path="/revision-productos" element={<ProductosPendientesPage />} />
             <Route path="/productos-pendientes/:tipo" element={<ListaPendientesPage />} />
+
+            {/* Mapas routes */}
+            <Route path="/mapas" element={<MapasPage />} />
+
+            <Route path="/admin/lugares/:lugar_id" element={<LugarDetallePage />} />
         </Routes>
       </main>
       <Footer />

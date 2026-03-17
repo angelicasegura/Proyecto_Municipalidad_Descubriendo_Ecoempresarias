@@ -78,12 +78,14 @@ export function Navbar() {
               </Link>
             )}
             {/* No se que es esto de mapas */}
+            {["ADMIN"].includes(user?.rol ?? "") && (
             <Link
               to="/mapas"
               className="text-white font-medium hover:text-accent transition-colors whitespace-nowrap px-2"
             >
               Mapas
             </Link>
+            )}
             {/* Cambiar A ADMIN para Cuando ya este Conectado A APi */}
             {["ADMIN"].includes(user?.rol ?? "") && (
               <DropdownMenu>
@@ -387,13 +389,6 @@ export function Navbar() {
                 Entregas y seguimientos
               </Link>
             )}
-
-            <Link
-              to="/mapas"
-              className="block py-2 px-2 text-white font-medium hover:text-accent"
-            >
-              Mapas
-            </Link>
 
             {/* ADMIN */}
             {["ADMIN"].includes(user?.rol ?? "") && (
