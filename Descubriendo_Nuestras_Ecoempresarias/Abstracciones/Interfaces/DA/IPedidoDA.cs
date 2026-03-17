@@ -19,5 +19,6 @@ namespace Abstracciones.Interfaces.DA
         Task<EmprendimientoResponse> obtenerEmprendimientoPedido(Guid pedidoId);
 
         Task<PedidoResponse> obtenerPedido(Guid pedidoId);
+        Task<PagedResult<PedidoResponse>> ObtenerPedidosPorEmprendimiento(int emprendimientoId, int? estadoId, int pagina, DateTime? fecha, int registrosPorPagina);
         }
     }

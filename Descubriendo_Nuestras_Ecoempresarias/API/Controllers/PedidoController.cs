@@ -12,12 +12,13 @@ namespace API.Controllers
     public class PedidoController : ControllerBase
     {
         private readonly IPedidoFlujo _pedidoFlujo;
-
-        public PedidoController(IPedidoFlujo pedidoFlujo)
+        private readonly IEmprendimientoFlujo _emprendimientoFlujo;
+        public PedidoController(IPedidoFlujo pedidoFlujo, IEmprendimientoFlujo emprendimientoFlujo)
         {
             _pedidoFlujo = pedidoFlujo;
+            _emprendimientoFlujo = emprendimientoFlujo;
         }
-        
+
         [HttpPost]
         public async Task<IActionResult> AgregarPedido([FromBody] PedidoRequest pedido)
         {
@@ -99,6 +100,37 @@ namespace API.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500,ex.Message);
+            }
+
+        }
+
+
+        [Authorize(Roles = "EMPRENDEDOR,ADMIN")]
+        [HttpGet("Emprendimiento")]
+        public async Task<IActionResult> obtenerPorEmprendimiento([FromQuery] string cedulaJuridica, [FromQuery] int page)
+        {
+            try
+            {
+                var idClaim = User.Claims.FirstOrDefault(c => c.Type == "id")?.Value;
+                int usuarioId = int.Parse(idClaim ?? "0");
+                Abstracciones.Modelos.Emprendimiento.EmprendimientoResponse emprendimineto = await _emprendimientoFlujo.GetEmprendimientoPorId(cedulaJuridica);
+                if (emprendimineto.UsuarioId != usuarioId || emprendimineto.EstadoId == 0)
+                {
+                    return Unauthorized();
+                }
+                if (emprendimineto == null)
+                {
+                    return NoContent();
+                }
+
+                var resultado = await _pedidoFlujo.ObtenerPedidosPorEmprendimiento(emprendimineto.EmprendimientoId
+                    , null, page, null,10);
+
+
+                return Ok(resultado);
+            }catch(Exception ex)
+            {
+                return StatusCode(500, ex.Message);
             }
 
         }

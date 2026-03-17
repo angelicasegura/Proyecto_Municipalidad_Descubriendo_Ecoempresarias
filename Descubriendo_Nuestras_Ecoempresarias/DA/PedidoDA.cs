@@ -159,5 +159,47 @@ namespace DA
             return pedido;
 
         }
+
+
+        public async Task<PagedResult<PedidoResponse>> ObtenerPedidosPorEmprendimiento(int emprendimientoId, int? estadoId, int pagina, DateTime? fecha, int registrosPorPagina)
+        {
+            var parametros = new
+            {
+                Emprendimiento_id = emprendimientoId,
+                Estado_id = estadoId,
+                Pagina = pagina,
+                Fecha = fecha,
+                RegistrosPorPagina = registrosPorPagina
+            };
+
+            string query = @"sp_ObtenerPedidosPorEmprendimiento";
+
+            using var multi = await _sqlConnection.QueryMultipleAsync(query, parametros, commandType: CommandType.StoredProcedure);
+
+            var pedidos = multi.Read<PedidoResponse>().ToList();
+            var facturas = multi.Read<Factura>().ToList();
+            var detalles = multi.Read<FacturaDetalleResponse>().ToList();
+
+            foreach (var pedido in pedidos)
+            {
+                var factura = facturas.FirstOrDefault(f => f.Factura_id == pedido.Factura_id);
+                if (factura != null)
+                {
+                    factura.Detalles = detalles
+                        .Where(d => d.Factura_id == factura.Factura_id)
+                        .ToList();
+
+                    pedido.Factura = factura;
+                }
+            }
+
+            int totalCount = pedidos.Count;
+
+            return new PagedResult<PedidoResponse>
+            {
+                Items = pedidos,
+                TotalCount = totalCount
+            };
+        }
     }
 }

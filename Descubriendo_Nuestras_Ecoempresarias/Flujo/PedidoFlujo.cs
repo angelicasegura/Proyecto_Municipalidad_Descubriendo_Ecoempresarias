@@ -48,5 +48,10 @@ namespace Flujo
         {
             return await _pedidoDA.ObtenerPedidosAsync(usuarioId, estadoId, pagina,fecha, registrosPorPagina);
         }
+
+        public async Task<PagedResult<PedidoResponse>> ObtenerPedidosPorEmprendimiento(int emprendimientoId, int? estadoId, int pagina, DateTime? fecha, int registrosPorPagina)
+        {
+            return await _pedidoDA.ObtenerPedidosPorEmprendimiento(emprendimientoId, estadoId, pagina, fecha, registrosPorPagina);
+        }
     }
 }

@@ -91,14 +91,7 @@ export function Navbar() {
                 Mis Pedidos
               </Link>
             )}
-            {["ADMIN", "EMPRENDEDOR", "USUARIO"].includes(user?.rol ?? "") && (
-              <Link
-                to="/entregas"
-                className="text-white font-medium hover:text-accent transition-colors whitespace-nowrap px-2"
-              >
-                Entregas y seguimientos
-              </Link>
-            )}
+            
             {/* No se que es esto de mapas */}
             <Link
               to="/mapas"
@@ -399,14 +392,15 @@ export function Navbar() {
             </Link>
           )}
 
+
           {["ADMIN", "EMPRENDEDOR", "USUARIO"].includes(user?.rol ?? "") && (
-            <Link
-              to="/entregas"
-              className="block py-2 px-2 text-white font-medium hover:text-accent"
-            >
-              Entregas y seguimientos
-            </Link>
-          )}
+              <Link
+                to="/pedidos/mis-pedidos"
+                className="block py-2 px-2 text-white font-medium hover:text-accent"
+              >
+                Mis Pedidos
+              </Link>
+            )}
 
           <Link
             to="/mapas"
