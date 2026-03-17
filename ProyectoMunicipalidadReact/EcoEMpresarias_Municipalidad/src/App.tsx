@@ -24,7 +24,8 @@ import CarritoPage from "./pages/public/Carrito/CarritoPage";
 import ForbiddenPage from "./pages/public/Forbidden/ForbiddenPage";
 import MapasPage from "./pages/public/mapas/MapasPage";
 import MisPedidosPage from "./pages/Pedidos/Usuario/mispedidos/MisPedidosPage";
-
+import ListaEmprendimientosPropios from "./pages/Pedidos/Emprendedor/misEmprendimientos/ListaEmprendientosPropios";
+import PedidosPage from "./pages/Pedidos/Emprendedor/misPedidos/pedidosPageEmprendedor";
 <Route path="/mapas" element={<MapasPage />} />
 
 function App() {
@@ -89,6 +90,14 @@ function App() {
               <Route
                 path="/inventario/:id/:cedulaJuridica"
                 element={<InventarioEmprendimiento />}
+              />
+              <Route
+                path="/emprendimientos-propios"
+                element={<ListaEmprendimientosPropios/>}
+              />
+              <Route
+                path="/Seguimiento-Pedidos/:cedulaJuridica"
+                element={<PedidosPage />}
               />
             </Route>
           </Routes>

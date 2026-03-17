@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import { BannerDeSeccionInventario } from "./components/BannerDeSeccionInventario";
 import { EmprendimientosGrid } from "./components/emprendimientoCardsGrid";
 
-export default function EmprendimientosPropios() {
+export default function ListaEmprendimientosPropios() {
   const [emprendedores, setEmprendedores] = useState<Emprendedor[]>([]);
   const [tiposActividad, setTiposActividad] = useState<TipoActividad[]>([]);
   

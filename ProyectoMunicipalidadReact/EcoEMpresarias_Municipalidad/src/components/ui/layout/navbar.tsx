@@ -481,7 +481,9 @@ export function Navbar() {
                 <Link to="/mis-productos" className="block py-2 px-4 text-white hover:text-accent rounded-md">
                   Mis Productos
                 </Link>
-
+                  <Link to="/emprendimientos-propios" className="block py-2 px-4 text-white hover:text-accent rounded-md">
+                  Pedidos Y Entregas
+                </Link>
                 <Link to="/analiticas" className="block py-2 px-4 text-white hover:text-accent rounded-md">
                   Analíticas del negocio
                 </Link>

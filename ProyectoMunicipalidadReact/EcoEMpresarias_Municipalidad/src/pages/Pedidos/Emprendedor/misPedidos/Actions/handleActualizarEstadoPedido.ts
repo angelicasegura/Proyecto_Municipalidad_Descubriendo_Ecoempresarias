@@ -1,7 +1,7 @@
 import { authFetch } from "../../../../../auth/AuthFetch";
 import toast from "react-hot-toast";
 
-export async function handleActualizarPedido(pedidoId: number) {
+export async function handleActualizarPedido(pedidoId: string) {
   if (!pedidoId) throw new Error("Falta el pedidoId");
 
   const params = new URLSearchParams({ pedidoId: pedidoId.toString() });
