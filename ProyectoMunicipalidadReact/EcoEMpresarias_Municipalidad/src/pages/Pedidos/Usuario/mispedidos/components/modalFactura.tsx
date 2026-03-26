@@ -18,6 +18,12 @@ import {
 import { Separator } from "../../../../../components/ui/separator";
 import { MapPin } from "lucide-react";
 
+
+import { handleObtenerEmprendimientoPorId } from "../../../Emprendedor/misPedidos/Actions/handleObtenerEmprendimientoFactura";
+import { generarFacturaPDF } from "../../../Emprendedor/misPedidos/Actions/hanldeGenerarPDF";
+import { useQuery } from "@tanstack/react-query";
+
+
 interface ModalFacturaProps {
   pedido: Pedido | null;
   open: boolean;
@@ -32,6 +38,24 @@ const ModalFactura = ({ pedido, open, onOpenChange }: ModalFacturaProps) => {
   if (!pedido) return null;
   const { factura } = pedido;
 
+const { data: emprendimiento, isLoading } = useQuery({
+    queryKey: ["emprendimiento", factura?.emprendimiento_id],
+    queryFn: () => {
+      if (!factura?.emprendimiento_id) return null;
+      return handleObtenerEmprendimientoPorId(factura.emprendimiento_id);
+    },
+  });
+  const handleDescargarFactura = () => {
+    if (!factura) return;
+
+    if (!emprendimiento) {
+      alert("No se pudo cargar el emprendimiento");
+      return;
+    }
+
+    generarFacturaPDF(factura, emprendimiento);
+  };
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-md sm:max-w-lg">
@@ -42,7 +66,13 @@ const ModalFactura = ({ pedido, open, onOpenChange }: ModalFacturaProps) => {
             {pedido.direccionEntrega}
           </DialogDescription>
         </DialogHeader>
-
+        <button
+          onClick={handleDescargarFactura}
+          disabled={isLoading || !emprendimiento}
+          className="bg-blue-600 text-white px-3 py-2 rounded disabled:opacity-50"
+        >
+          {isLoading ? "Cargando..." : "Descargar PDF"}
+        </button>
         {pedido.observaciones && (
           <div className="rounded-md bg-muted p-3 text-sm">
             <span className="font-medium">Observaciones:</span> {pedido.observaciones}
