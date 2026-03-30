@@ -9,7 +9,7 @@ namespace Abstracciones.Interfaces.Flujo
 {
     public interface IComentarioFlujo
     {
-        Task<List<ComentarioResponse>> ObtenerPorEmprendedor(int Emprendimiento_id);
+        Task<List<ComentarioResponse>> ObtenerPorEMPRENDEDOR(int Emprendimiento_id);
         Task<int> Agregar(ComentarioRequest comentario);
         Task<Guid> Editar(Guid Id, ComentarioRequest comentario);
         Task<int> Eliminar (int Comentario_id);

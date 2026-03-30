@@ -33,7 +33,7 @@ namespace DA
                     Inventario_id = Guid.NewGuid(),
                     Producto_id = inventario.ProductoId,
                     Cantidad_actual = inventario.CantidadActual,
-                    Cantidad_minima = inventario.CantidadMinima,
+                    Cantidad_minima = inventario.CantidADMINima,
                     Estado_id = 0
                 });
                 return resultQuery;
@@ -53,7 +53,7 @@ namespace DA
                 {
                     Producto_id=id,
                     Cantidad_actual = inventario.CantidadActual,
-                    Cantidad_minima = inventario.CantidadMinima,
+                    Cantidad_minima = inventario.CantidADMINima,
                     Estado_id = inventario.EstadoId
                 });
                 return resultQuery;

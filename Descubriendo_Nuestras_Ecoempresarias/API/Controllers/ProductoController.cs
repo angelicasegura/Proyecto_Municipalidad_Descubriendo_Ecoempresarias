@@ -60,7 +60,7 @@ namespace API.Controllers
                     {
                        ProductoId = resultado,
                         CantidadActual = 0,
-                       CantidadMinima = 10
+                       CantidADMINima = 10
 
                     };
                  await _inventarioFlujo.AgregarInventario(inventario);
@@ -160,14 +160,14 @@ namespace API.Controllers
 
 
         [Authorize(Roles = "EMPRENDEDOR")]
-        [HttpGet("ObtenerProductosEmprendedor")]
-        public async Task<IActionResult> ObtenerProductosEmprendedor([FromQuery] Guid? categoria_id,
+        [HttpGet("ObtenerProductosEMPRENDEDOR")]
+        public async Task<IActionResult> ObtenerProductosEMPRENDEDOR([FromQuery] Guid? categoria_id,
                                                   [FromQuery] string? nombre,
                                                   [FromQuery] int? emprendimiento_id)
         {
             try
             {
-                var resultado = await _productoFlujo.ObtenerProductosEmprendedor(categoria_id, nombre, emprendimiento_id);
+                var resultado = await _productoFlujo.ObtenerProductosEMPRENDEDOR(categoria_id, nombre, emprendimiento_id);
                 
 
                 if (!resultado.Any())

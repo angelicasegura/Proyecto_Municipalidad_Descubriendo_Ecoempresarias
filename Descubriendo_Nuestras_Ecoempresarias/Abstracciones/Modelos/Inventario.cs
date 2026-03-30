@@ -23,7 +23,7 @@ namespace Abstracciones.Modelos
 
         public decimal Descuento { get; set; }
 
-        public decimal CantidadMinima { get; set; }
+        public decimal CantidADMINima { get; set; }
 
         public int EstadoId { get; set; }
 
@@ -41,7 +41,7 @@ namespace Abstracciones.Modelos
 
         [Required]
         [Range(0, int.MaxValue, ErrorMessage = "La cantidad mínima debe ser mayor o igual a 0.")]
-        public int CantidadMinima { get; set; }
+        public int CantidADMINima { get; set; }
 
         [Required]
         [Range(0, int.MaxValue, ErrorMessage = "El estado debe ser mayor o igual a 0.")]

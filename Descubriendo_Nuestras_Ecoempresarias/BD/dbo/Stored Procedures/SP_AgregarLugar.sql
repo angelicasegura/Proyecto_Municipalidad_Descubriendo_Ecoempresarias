@@ -32,6 +32,7 @@ BEGIN
            ,Distrito
            ,Detalles
            ,Estado_id)
+            OUTPUT INSERTED.Lugar_id
 		VALUES
 			(@Nombre,
 			@Provincia,

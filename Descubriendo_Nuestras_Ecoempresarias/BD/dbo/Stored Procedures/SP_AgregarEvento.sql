@@ -38,6 +38,7 @@ BEGIN
 			Cupos_actuales,
 			Lugar_id ,
 			Estado_id)
+			 OUTPUT INSERTED.Evento_id
 		VALUES
 			(@NombreEvento,
 			@Descripcion,

@@ -1,5 +1,4 @@
-﻿CREATE procedure sp_ObtenerSolicitudes_Evento
-as
+﻿as
 begin
 SELECT
 r.Reserva_id as numero,
