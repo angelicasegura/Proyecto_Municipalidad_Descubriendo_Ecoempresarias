@@ -74,15 +74,14 @@ export function Navbar() {
                 Carrito
               </Link>
             )}
-            {["ADMIN", "EMPRENDEDOR"].includes(user?.rol ?? "") && (
-              <Link
-                to="/eventos"
-                className="text-white font-medium hover:text-accent transition-colors whitespace-nowrap px-2"
-              >
-                {/* ejemplo de como proteger visualmente los accesos, recurden que es solo visual */}
-                Eventos
-              </Link>
-            )}
+            <Link
+              to="/eventos"
+              className="text-white font-medium hover:text-accent transition-colors whitespace-nowrap px-2"
+            >
+              {/* ejemplo de como proteger visualmente los accesos, recurden que es solo visual */}
+              Eventos
+            </Link>
+
 
             {["ADMIN", "EMPRENDEDOR", "USUARIO"].includes(user?.rol ?? "") && (
               <Link
@@ -183,7 +182,7 @@ export function Navbar() {
                     className="text-foreground hover:bg-accent hover:to-blue-500 cursor-pointer"
                   >
                     <Link
-                      to="/solicitudes"
+                      to="/solicitudes-eventos"
                       className="
       text-white
       cursor-pointer
@@ -192,7 +191,7 @@ export function Navbar() {
       focus:outline-none
     "
                     >
-                      Aprobación de solicitudes
+                      Aprobación de solicitudes eventos
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem
@@ -200,7 +199,7 @@ export function Navbar() {
                     className="text-foreground hover:bg-accent hover:to-blue-500 cursor-pointer"
                   >
                     <Link
-                      to="/inteligencia-municipal"
+                      to="/reportesDashboard"
                       className="
       text-white
       cursor-pointer
@@ -212,12 +211,13 @@ export function Navbar() {
                       Sistema de Inteligencia Municipal
                     </Link>
                   </DropdownMenuItem>
+                  
                   <DropdownMenuItem
                     asChild
                     className="text-foreground hover:bg-accent hover:to-blue-500 cursor-pointer"
                   >
                     <Link
-                      to="/analisis-sectores"
+                      to="/admin/lugares"
                       className="
       text-white
       cursor-pointer
@@ -226,7 +226,7 @@ export function Navbar() {
       focus:outline-none
     "
                     >
-                      Análisis de sectores
+                      Lugares
                     </Link>
                   </DropdownMenuItem>
                 </DropdownMenuContent>

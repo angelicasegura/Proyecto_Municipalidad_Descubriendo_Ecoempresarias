@@ -59,11 +59,11 @@
     <Folder Include="dbo\" />
     <Folder Include="dbo\Tables\" />
     <Folder Include="dbo\Stored Procedures\" />
+    <Folder Include="dbo\Views\" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\ECOEMPRESARIAS_USUARIOS_TB.sql" />
     <Build Include="dbo\Tables\ECOEMPRESARIAS_ROLES_TB.sql" />
-    <Build Include="dbo\Tables\ECOEMPRESARIAS_RESERVA_EVENTOS_TB.sql" />
     <Build Include="dbo\Tables\ECOEMPRESARIAS_PRODUCTO_TB.sql" />
     <Build Include="dbo\Tables\ECOEMPRESARIAS_INVENTARIO_TB.sql" />
     <Build Include="dbo\Tables\ECOEMPRESARIAS_FACTURAS_TB.sql" />
@@ -124,6 +124,36 @@
     <Build Include="dbo\Stored Procedures\sp_EliminarCarritoVacioDespuesPedido.sql" />
     <Build Include="dbo\Stored Procedures\sp_AgregarPedido.sql" />
     <Build Include="dbo\Stored Procedures\sp_ObtenerPedidosPorUsuario.sql" />
+    <Build Include="dbo\Tables\ECOEMPRESARIAS_ZONAS_TB.sql" />
+    <Build Include="dbo\Tables\ECOEMPRESARIAS_STANDS_MAPAS_TB.sql" />
+    <Build Include="dbo\Tables\ECOEMPRESARIAS_PISOS_TB.sql" />
+    <Build Include="dbo\Tables\ECOEMPRESARIAS_MAPAS_TB.sql" />
+    <Build Include="dbo\Tables\ECOEMPRESARIAS_LUGARES_TB.sql" />
+    <Build Include="dbo\Tables\ECOEMPRESARIAS_EVENTOS_ZONAS_TB.sql" />
+    <Build Include="dbo\Tables\ECOEMPRESARIAS_EVENTOS_ZONAS_STANDS_TB.sql" />
+    <Build Include="dbo\Tables\ECOEMPRESARIAS_EVENTO_PISOS_TB.sql" />
+    <Build Include="dbo\Stored Procedures\SP_ObtenerLugarPorId.sql" />
+    <Build Include="dbo\Stored Procedures\SP_ObtenerLugares.sql" />
+    <Build Include="dbo\Stored Procedures\SP_ObtenerEventos.sql" />
+    <Build Include="dbo\Stored Procedures\SP_ObtenerEventoPorNombre.sql" />
+    <Build Include="dbo\Stored Procedures\SP_ObtenerEventoPorId.sql" />
+    <Build Include="dbo\Stored Procedures\SP_InactivarLugar.sql" />
+    <Build Include="dbo\Stored Procedures\SP_InactivarEvento.sql" />
+    <Build Include="dbo\Stored Procedures\SP_EditarLugar.sql" />
+    <Build Include="dbo\Stored Procedures\SP_EditarEvento.sql" />
+    <Build Include="dbo\Stored Procedures\SP_AgregarLugar.sql" />
+    <Build Include="dbo\Stored Procedures\SP_AgregarEvento.sql" />
+    <Build Include="dbo\Stored Procedures\sp_RechazarReserva_Evento.sql" />
+    <Build Include="dbo\Stored Procedures\sp_ObtenerSolicitudes_Evento.sql" />
+    <Build Include="dbo\Stored Procedures\sp_ObtenerReservas_Emprendimiento.sql" />
+    <Build Include="dbo\Stored Procedures\sp_AprobarReserva_Evento.sql" />
+    <Build Include="dbo\Tables\ECOEMPRESARIAS_RESERVA_EVENTOS_TB.sql" />
+    <Build Include="dbo\Stored Procedures\SP_CrearReservaEvento.sql" />
+    <Build Include="dbo\Views\vw_VentasPorSector_1.sql" />
+    <Build Include="dbo\Views\vw_VentasConFecha_1.sql" />
+    <Build Include="dbo\Views\vw_TopSectores_1.sql" />
+    <Build Include="dbo\Views\vw_EmprendimientosActivos_1.sql" />
+    <Build Include="dbo\Views\vw_CrecimientoMensual_1.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="BD.refactorlog" />

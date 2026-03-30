@@ -25,6 +25,22 @@ import ForbiddenPage from "./pages/public/Forbidden/ForbiddenPage";
 import MapasPage from "./pages/public/mapas/MapasPage";
 
 <Route path="/mapas" element={<MapasPage />} />
+import MisProductosPage from "./pages/Productos/MisProductos/MisProductosPage";
+import MisEmprendimientosPage from "./pages/Productos/MisProductos/MisEmprendimientosPage";
+import ListaPendientesPage from "./pages/Productos/ProductosPendientes/ListaPendientesPage";
+import ProductosPendientesPage from "./pages/Productos/ProductosPendientes/ProductosPendientesPage";
+import EventosPage from "./pages/Eventos/EventosPage";
+import EventoDetallePage from "./pages/Eventos/EventoDetallePage";
+import MisEventosPage from "./pages/Eventos/MisEventosPage";
+import MisEventosDetallePage from "./pages/Eventos/MisEventosDetallePage";
+import ReservarEventoPage from "./pages/Eventos/ReservarEventoPage";
+import SeleccionarEmprendimientoReservaPage from "./pages/Eventos/seleccionarEmprendimientoReservaPage";
+import SolicitudesEventoPage from "./pages/Admin/Eventos/SolicitudesEventoPage";
+import AdminLugaresPage from "./pages/Admin/Lugares/AdminLugaresPage";
+import EditarLugarPage from "./pages/Admin/Lugares/EditarLugarPage";
+import ReportesAdmin from "./pages/Admin/ReportesAdmin/reportesDashboard";
+import CrearLugarPage from "./pages/Admin/Lugares/crearLugarPage";
+
 
 function App() {
   const { loading } = useAuth();
