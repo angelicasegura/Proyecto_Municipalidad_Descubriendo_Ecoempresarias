@@ -11,7 +11,7 @@ import ProductoInfo from '../components/ProductoInfo';
 export default function DetalleProductoPage() {
     const { id } = useParams<{ id: string }>()
     const navigate = useNavigate()
-    const { user } = useAuth() // obtenemos el usuario logueado del contexto
+    const { user } = useAuth() 
 
     const [producto, setProducto] = useState<Producto | null>(null)
     const [loading, setLoading] = useState(true)
@@ -36,8 +36,7 @@ export default function DetalleProductoPage() {
         fetchProducto()
     }, [id])
 
-    // ¿El usuario logueado es el dueño de este producto?
-    // Condiciones: debe tener rol EMPRENDEDOR Y su id debe coincidir con usuarioDueño del producto
+   
     const esDueño =
         user?.rol === "EMPRENDEDOR" &&
         producto !== null &&

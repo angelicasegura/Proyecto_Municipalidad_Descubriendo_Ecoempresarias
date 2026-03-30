@@ -1,4 +1,3 @@
-
 using Abstracciones.Interfaces.API;
 using Abstracciones.Interfaces.API.Eventos;
 using Abstracciones.Interfaces.DA;
@@ -20,9 +19,9 @@ using Flujo.Eventos;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models; 
 using System.Security.Cryptography;
 using System.Text;
-
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,16 +29,19 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowViteApp",
         policy =>
         {
-            policy.WithOrigins("http://localhost:5173",
-                "htpp://localhost:5174") // La URL de tu frontend
-                  .AllowAnyHeader()
-                  .AllowAnyMethod();
+            policy.WithOrigins(
+                    "http://localhost:5173",
+                    "http://localhost:5174",
+                    "https://localhost:5173",
+                    "https://localhost:5174"
+                )
+                .AllowAnyHeader()
+                .AllowAnyMethod();
         });
 });
 
@@ -49,50 +51,78 @@ builder.Services.AddAuthentication(options =>
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 })
-    .AddJwtBearer(options =>
+.AddJwtBearer(options =>
+{
+    // AQU� se lee la clave secreta
+    var secret = builder.Configuration["Jwt:Secret"]
+        ?? throw new InvalidOperationException("JWT Secret no configurado.");
+
+    // Asegurar tama�o m�nimo de clave
+    var keyBytes = Encoding.UTF8.GetBytes(secret);
+    if (keyBytes.Length < 32)
     {
-        // AQUÍ se lee la clave secreta
-        var secret = builder.Configuration["Jwt:Secret"]
-            ?? throw new InvalidOperationException("JWT Secret no configurado.");
+        using var sha = SHA256.Create();
+        keyBytes = sha.ComputeHash(keyBytes);
+    }
 
-        // Asegurar tamaño mínimo de clave
-        var keyBytes = Encoding.UTF8.GetBytes(secret);
-        if (keyBytes.Length < 32)
-        {
-            using var sha = SHA256.Create();
-            keyBytes = sha.ComputeHash(keyBytes);
-        }
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = false,     // true en prod
+        ValidateAudience = false,   // true en prod
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
 
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuer = false,     // true en prod
-            ValidateAudience = false,   // true en prod
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(keyBytes),
 
-            IssuerSigningKey = new SymmetricSecurityKey(keyBytes),
+        // Claims personalizados
+        NameClaimType = "nombre",
+        RoleClaimType = "rol",
 
-            // Claims personalizados
-            NameClaimType = "nombre",
-            RoleClaimType = "rol",
-
-            ClockSkew = TimeSpan.Zero
-        };
-    });
+        ClockSkew = TimeSpan.Zero
+    };
+});
 
 builder.Services.Configure<EmailSettings>(
     builder.Configuration.GetSection("EmailSettings"));
 
 builder.Services.AddScoped<IEmailService, EmailService>();
 
-
-
-
-
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "API",
+        Version = "v1"
+    });
+
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        Scheme = "bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "Escriba: Bearer {tu_token}"
+    });
+
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            Array.Empty<string>()
+        }
+    });
+});
 
 builder.Services.AddSingleton<TokenProvider>();
 builder.Services.AddScoped<GuardarImagenes>();
@@ -114,8 +144,14 @@ builder.Services.AddScoped<ICategoriaProductosDA, CategoriaProductosDA>();
 builder.Services.AddScoped<ICategoriaProductosFlujo, CategoriaProductosFlujo>();
 builder.Services.AddScoped<IInventarioDA, InventarioDA>();
 builder.Services.AddScoped<IInventarioFlujo, InventarioFlujo>();
+builder.Services.AddScoped<ICarritoDA, CarritoDA>();
+builder.Services.AddScoped<ICarritoFlujo, CarritoFlujo>();
 builder.Services.AddScoped<IComentarioDA, ComentarioDA>();
 builder.Services.AddScoped<IComentarioFlujo, ComentarioFlujo>();
+builder.Services.AddScoped<IPedidoDA, PedidoDA>();
+builder.Services.AddScoped<IPedidoFlujo, PedidoFlujo>();
+
+
 builder.Services.AddScoped<ILugarDA, LugarDA>();
 builder.Services.AddScoped<ILugarFlujo, LugarFlujo>();
 builder.Services.AddScoped<ILugarController, LugarController>();
@@ -128,22 +164,22 @@ builder.Services.AddScoped<IReporteDA, ReporteDA>();
 builder.Services.AddScoped<IReporteFlujo, ReporteFlujo>();
 var app = builder.Build();
 
-
-
-
-
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1");
+    });
 }
+
+app.UseHttpsRedirection();
+
+app.UseRouting();
 
 app.UseCors("AllowViteApp");
 
-app.UseHttpsRedirection();
 app.UseAuthentication();
-
 app.UseAuthorization();
 
 app.MapControllers();

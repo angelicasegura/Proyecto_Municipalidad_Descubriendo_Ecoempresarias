@@ -100,6 +100,10 @@
     <Build Include="dbo\Stored Procedures\sp_editarInventario.sql" />
     <Build Include="dbo\Stored Procedures\sp_agregarInventario.sql" />
     <Build Include="dbo\Stored Procedures\sp_ObtenerEmprendimientoPorCedula.sql" />
+    <Build Include="dbo\Stored Procedures\sp_AgregarCarrito.sql" />
+    <Build Include="dbo\Stored Procedures\sp_ObtenerCarritoPorUsuario.sql" />
+    <Build Include="dbo\Stored Procedures\sp_ActualizarCantidadCarrito.sql" />
+    <Build Include="dbo\Stored Procedures\sp_EliminarCarrito.sql" />
     <Build Include="dbo\Stored Procedures\SP_ObtenerEmprendimientoPorUsuarioId.sql" />
     <Build Include="dbo\Stored Procedures\SP_ObtenerProductosEmprendedor.sql" />
     <Build Include="dbo\Stored Procedures\SP_ObtenerProductosPorEstado.sql" />
@@ -111,8 +115,15 @@
     <Build Include="dbo\Stored Procedures\sp_ObtenerComentariosPorEmprendimiento.sql" />
     <Build Include="dbo\Stored Procedures\sp_ObtenerComentarioPorId.sql" />
     <Build Include="dbo\Stored Procedures\sp_ObtenerUsuarioIdPorComentario.sql" />
+    <Build Include="dbo\Tables\ECOEMPRESARIAS_PRODUCTOS_POR_CARRITO_TB.sql" />
+    <Build Include="dbo\Tables\ECOEMPRESARIAS_EMPRENDEDOR_TB.sql" />
     <Build Include="dbo\Stored Procedures\sp_Obtener10Emprendedoras.sql" />
     <Build Include="dbo\Stored Procedures\sp_InactivarOActivarUsuarioEmprendimientos.sql" />
+    <Build Include="dbo\Tables\ECOEMPRESARIAS_PEDIDOS_TB.sql" />
+    <Build Include="dbo\Stored Procedures\sp_EliminarProductoCarritoDespuesPedido.sql" />
+    <Build Include="dbo\Stored Procedures\sp_EliminarCarritoVacioDespuesPedido.sql" />
+    <Build Include="dbo\Stored Procedures\sp_AgregarPedido.sql" />
+    <Build Include="dbo\Stored Procedures\sp_ObtenerPedidosPorUsuario.sql" />
     <Build Include="dbo\Tables\ECOEMPRESARIAS_ZONAS_TB.sql" />
     <Build Include="dbo\Tables\ECOEMPRESARIAS_STANDS_MAPAS_TB.sql" />
     <Build Include="dbo\Tables\ECOEMPRESARIAS_PISOS_TB.sql" />

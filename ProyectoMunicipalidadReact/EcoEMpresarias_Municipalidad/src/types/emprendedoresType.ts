@@ -9,7 +9,7 @@ export interface Emprendedor {
   telefono: string
   direccion: string
   estadoId: number
-  usuarioId: number        // 👈 agregá esto si no está
+  usuarioId: number        
   ruta_Imagen_Logo?: string
   descripcion?: string
 }

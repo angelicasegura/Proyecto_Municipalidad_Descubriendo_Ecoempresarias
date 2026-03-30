@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[SP_ObtenerProductosEmprendedor]
+﻿CREATE PROCEDURE [dbo].[SP_ObtenerProductosEMPRENDEDOR]
     @Nombre NVARCHAR(100) = NULL,
     @Categoria_id UNIQUEIDENTIFIER = NULL,
     @Emprendimiento_id INT = NULL

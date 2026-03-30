@@ -43,7 +43,7 @@ namespace Abstracciones.Modelos
     }
 
 
-    public class Emprendedora
+    public class EMPRENDEDORa
     {
         public string Nombre { get; set; }
         public string Ruta_Imagen_Perfil { get; set; }

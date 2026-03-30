@@ -74,7 +74,7 @@ namespace DA
             return resultadoConsulta;
         }
 
-        public async Task<List<ComentarioResponse>> ObtenerPorEmprendedor(int Emprendimiento_id)
+        public async Task<List<ComentarioResponse>> ObtenerPorEMPRENDEDOR(int Emprendimiento_id)
         {
             string query = @"sp_ObtenerComentariosPorEmprendimiento";
             var resultado = await _sqlConnection.QueryAsync<ComentarioResponse>( query, new
@@ -114,7 +114,7 @@ namespace DA
             throw new NotImplementedException();
         }
 
-        //public Task<List<ComentarioResponse>> ObtenerPorEmprendedor(int Emprendimiento_id)
+        //public Task<List<ComentarioResponse>> ObtenerPorEMPRENDEDOR(int Emprendimiento_id)
         //{
         //    string query = @"sp_ObtenerComentariosPorEmprendimiento";
         //    var resultadoConsulta = _sqlConnection.QueryAsync(query, new { Emprendimiento_id = Emprendimiento_id },

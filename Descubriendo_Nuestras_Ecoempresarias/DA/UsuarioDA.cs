@@ -149,11 +149,11 @@ namespace DA
             }
         }
 
-        public async Task<int> EditarAdmin(int Id, UsuarioResponse usuario)
+        public async Task<int> EditarADMIN(int Id, UsuarioResponse usuario)
         {
             try
             {
-                string query = @"sp_EditarUsuarioPorAdmin";
+                string query = @"sp_EditarUsuarioPorADMIN";
                 var resultadoQuery = await _sqlConnection.ExecuteScalarAsync<int>(query, new
                 {
                     IdUsuario = usuario.IdUsuario,
@@ -204,13 +204,13 @@ namespace DA
                 throw new Exception("Algo salio mal con la actualizacion");
             }
         }
-        public async Task<List<Emprendedora>> Obtener10EmprendedorasAsync()
+        public async Task<List<EMPRENDEDORa>> Obtener10EMPRENDEDORasAsync()
         {
-            string query = @"sp_Obtener10Emprendedoras";
+            string query = @"sp_Obtener10EMPRENDEDORas";
 
-            var emprendedoras = await _sqlConnection.QueryAsync<Emprendedora>(query, commandType: CommandType.StoredProcedure);
+            var EMPRENDEDORas = await _sqlConnection.QueryAsync<EMPRENDEDORa>(query, commandType: CommandType.StoredProcedure);
 
-            return emprendedoras.ToList();
+            return EMPRENDEDORas.ToList();
         }
 
     }
