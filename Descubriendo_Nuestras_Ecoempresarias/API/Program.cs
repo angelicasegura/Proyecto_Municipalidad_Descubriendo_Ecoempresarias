@@ -51,11 +51,11 @@ builder.Services.AddAuthentication(options =>
 })
     .AddJwtBearer(options =>
     {
-        // AQUÕ se lee la clave secreta
+        // AQU√ç se lee la clave secreta
         var secret = builder.Configuration["Jwt:Secret"]
             ?? throw new InvalidOperationException("JWT Secret no configurado.");
 
-        // Asegurar tamaÒo mÌnimo de clave
+        // Asegurar tama√±o m√≠nimo de clave
         var keyBytes = Encoding.UTF8.GetBytes(secret);
         if (keyBytes.Length < 32)
         {
@@ -124,9 +124,6 @@ builder.Services.AddScoped<IEventoFlujo, EventoFlujo>();
 builder.Services.AddScoped<IEventoController, EventoController>();
 builder.Services.AddScoped<IReservaEventoDA, ReservaEventoDA>();
 builder.Services.AddScoped<IReservaEventoFlujo, ReservaEventoFlujo>();
-builder.Services.AddScoped<IRepositorioDapper, RepositorioDapper>();
-builder.Services.AddScoped<IReporteDA, ReporteDA>();
-builder.Services.AddScoped<IReporteFlujo, ReporteFlujo>();
 
 var app = builder.Build();
 
