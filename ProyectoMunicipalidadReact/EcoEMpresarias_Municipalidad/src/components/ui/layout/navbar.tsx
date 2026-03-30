@@ -60,14 +60,14 @@ export function Navbar() {
                 Carrito
               </Link>
             )}
-              <Link
-                to="/eventos"
-                className="text-white font-medium hover:text-accent transition-colors whitespace-nowrap px-2"
-              >
-                {/* ejemplo de como proteger visualmente los accesos, recurden que es solo visual */}
-                Eventos
-              </Link>
-            
+            <Link
+              to="/eventos"
+              className="text-white font-medium hover:text-accent transition-colors whitespace-nowrap px-2"
+            >
+              {/* ejemplo de como proteger visualmente los accesos, recurden que es solo visual */}
+              Eventos
+            </Link>
+
 
             {["ADMIN", "EMPRENDEDOR", "USUARIO"].includes(user?.rol ?? "") && (
               <Link
@@ -185,7 +185,7 @@ export function Navbar() {
                     className="text-foreground hover:bg-accent hover:to-blue-500 cursor-pointer"
                   >
                     <Link
-                      to="/inteligencia-municipal"
+                      to="/reportesDashboard"
                       className="
       text-white
       cursor-pointer
@@ -197,23 +197,7 @@ export function Navbar() {
                       Sistema de Inteligencia Municipal
                     </Link>
                   </DropdownMenuItem>
-                  <DropdownMenuItem
-                    asChild
-                    className="text-foreground hover:bg-accent hover:to-blue-500 cursor-pointer"
-                  >
-                    <Link
-                      to="/analisis-sectores"
-                      className="
-      text-white
-      cursor-pointer
-      data-highlighted:bg-[#09C2EF]
-      data-highlighted:text-black
-      focus:outline-none
-    "
-                    >
-                      Análisis de sectores
-                    </Link>
-                  </DropdownMenuItem>
+                  
                   <DropdownMenuItem
                     asChild
                     className="text-foreground hover:bg-accent hover:to-blue-500 cursor-pointer"
@@ -236,7 +220,7 @@ export function Navbar() {
             )}
 
             {/* Emprendedor Dropdown */}
-            {["EMPRENDEDOR","ADMIN"].includes(user?.rol ?? "") && (
+            {["EMPRENDEDOR", "ADMIN"].includes(user?.rol ?? "") && (
               <DropdownMenu>
                 <DropdownMenuTrigger className="flex items-center gap-1 text-white font-medium hover:text-accent transition-colors whitespace-nowrap px-2">
                   Emprendedor
@@ -448,7 +432,7 @@ export function Navbar() {
             )}
 
             {/* EMPRENDEDOR */}
-            {["EMPRENDEDOR","ADMIN"].includes(user?.rol ?? "") && (
+            {["EMPRENDEDOR", "ADMIN"].includes(user?.rol ?? "") && (
               <div className="mt-4">
                 <p className="px-2 text-sm font-semibold text-white/70 uppercase">
                   Emprendedor

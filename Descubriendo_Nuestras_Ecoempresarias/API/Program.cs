@@ -124,6 +124,9 @@ builder.Services.AddScoped<IEventoFlujo, EventoFlujo>();
 builder.Services.AddScoped<IEventoController, EventoController>();
 builder.Services.AddScoped<IReservaEventoDA, ReservaEventoDA>();
 builder.Services.AddScoped<IReservaEventoFlujo, ReservaEventoFlujo>();
+builder.Services.AddScoped<IRepositorioDapper, RepositorioDapper>();
+builder.Services.AddScoped<IReporteDA, ReporteDA>();
+builder.Services.AddScoped<IReporteFlujo, ReporteFlujo>();
 
 var app = builder.Build();
 
