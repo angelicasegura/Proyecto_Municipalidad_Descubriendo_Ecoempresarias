@@ -1,0 +1,12 @@
+﻿CREATE TABLE [dbo].[ECOEMPRESARIAS_LUGARES_TB] (
+    [Lugar_id]  INT            IDENTITY (1, 1) NOT NULL,
+    [Nombre]    NVARCHAR (200) NOT NULL,
+    [Provincia] NVARCHAR (200) NOT NULL,
+    [Canton]    NVARCHAR (200) NOT NULL,
+    [Distrito]  NVARCHAR (200) NOT NULL,
+    [Detalles]  NVARCHAR (MAX) NULL,
+    [Estado_id] INT            NOT NULL,
+    CONSTRAINT [PK_ECO_LUGARES_TB] PRIMARY KEY CLUSTERED ([Lugar_id] ASC),
+    CONSTRAINT [ECO_LUGAR_ESTADO_FK] FOREIGN KEY ([Estado_id]) REFERENCES [dbo].[ECOEMPRESARIAS_ESTADOS_TB] ([Estado_id])
+);
+

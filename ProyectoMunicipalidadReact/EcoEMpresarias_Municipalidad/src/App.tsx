@@ -27,6 +27,24 @@ import MisPedidosPage from "./pages/Pedidos/Usuario/mispedidos/MisPedidosPage";
 import ListaEmprendimientosPropios from "./pages/Pedidos/Emprendedor/misEmprendimientos/ListaEmprendientosPropios";
 import PedidosPage from "./pages/Pedidos/Emprendedor/misPedidos/pedidosPageEmprendedor";
 <Route path="/mapas" element={<MapasPage />} />
+import MisProductosPage from "./pages/Productos/MisProductos/MisProductosPage";
+import MisEmprendimientosPage from "./pages/Productos/MisProductos/MisEmprendimientosPage";
+import ListaPendientesPage from "./pages/Productos/ProductosPendientes/ListaPendientesPage";
+import ProductosPendientesPage from "./pages/Productos/ProductosPendientes/ProductosPendientesPage";
+import EventosPage from "./pages/Eventos/EventosPage";
+import EventoDetallePage from "./pages/Eventos/EventoDetallePage";
+import MisEventosPage from "./pages/Eventos/MisEventosPage";
+import MisEventosDetallePage from "./pages/Eventos/MisEventosDetallePage";
+import ReservarEventoPage from "./pages/Eventos/ReservarEventoPage";
+import SeleccionarEmprendimientoReservaPage from "./pages/Eventos/seleccionarEmprendimientoReservaPage";
+import SolicitudesEventoPage from "./pages/Admin/Eventos/SolicitudesEventoPage";
+import AdminLugaresPage from "./pages/Admin/Lugares/AdminLugaresPage";
+import EditarLugarPage from "./pages/Admin/Lugares/EditarLugarPage";
+import ReportesAdmin from "./pages/Admin/ReportesAdmin/reportesDashboard";
+import CrearLugarPage from "./pages/Admin/Lugares/crearLugarPage";
+import DetalleProductoPages from "./pages/Productos/Detalle/DetalleProductoPages";
+import ProductosPage from "./pages/Productos/ProductoPage";
+
 
 function App() {
   const { loading } = useAuth();
@@ -45,7 +63,7 @@ function App() {
           <Routes>
             {/* Esta parte es la del router aqui se define el link que se quiere que 
         accione una ruta para cambiar de pagina, esto no es nada del los get o put a 
-        la api, esto es solo lo visual */}            
+        la api, esto es solo lo visual */}
 
             {/* public routes */}
             <Route path="/" element={<Home />} />
@@ -53,10 +71,14 @@ function App() {
             <Route path="/emprendimientos" element={<EmprendimientosPage />} />
             <Route path="/403" element={<ForbiddenPage />} />
             <Route path="/mapas" element={<MapasPage />} />
+            <Route path="/eventos" element={<EventosPage />} />
+            <Route path="/eventos/:id" element={<EventoDetallePage />} />
             <Route
               path="/emprendimiento/:id/:cedulaJuridica"
               element={<DetalleEmprendimiento />}
             />
+            <Route path="/mapas" element={<MapasPage />} />
+
             <Route path="/producto/:id" element={<DetalleProductoPage />} />
 
             {/* HU-28: Ruta de registro */}
@@ -79,6 +101,11 @@ function App() {
                 path="/emprendimientos-admin"
                 element={<AdminEmprendedores />}
               />
+              <Route path="/solicitudes-eventos" element={<SolicitudesEventoPage />} />
+              <Route path="/admin/lugares" element={<AdminLugaresPage />} />
+              <Route path="/admin/crear-lugar" element={<CrearLugarPage />} />
+              <Route path="/admin/editar-lugar/:id" element={<EditarLugarPage />} />
+              <Route path="/reportesDashboard" element={<ReportesAdmin />} />
             </Route>
 
             {/* Emprendedores routes */}
@@ -99,7 +126,19 @@ function App() {
                 path="/Seguimiento-Pedidos/:cedulaJuridica"
                 element={<PedidosPage />}
               />
+              <Route path="/mis-eventos" element={<MisEventosPage />} />
+              <Route path="/mis-eventos/:emprendimientoId" element={<MisEventosDetallePage />} />
+              <Route path="/reservar-evento/:eventoId" element={<SeleccionarEmprendimientoReservaPage />} />
+              <Route path="/reservar-evento/:eventoId/:emprendimientoId" element={<ReservarEventoPage />} />
             </Route>
+            {/* Productos routes */}
+            <Route path="/productos" element={<ProductosPage />} />
+            <Route path="/productos/:id" element={<DetalleProductoPages />} />
+            <Route path="/mis-productos" element={<MisEmprendimientosPage />} />
+            <Route path="/mis-productos/:emprendimientoId" element={<MisProductosPage />} />
+
+            <Route path="/revision-productos" element={<ProductosPendientesPage />} />
+            <Route path="/productos-pendientes/:tipo" element={<ListaPendientesPage />} />
           </Routes>
         </main>
         <Footer />
