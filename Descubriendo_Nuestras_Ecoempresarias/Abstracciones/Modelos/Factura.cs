@@ -18,11 +18,11 @@ namespace Abstracciones.Modelos
 
         public decimal Total { get; set; }
 
-        public int UsuarioId { get; set; }
+        public int Usuario_id { get; set; }
 
-        public int EmprendimientoId { get; set; }
+        public int Emprendimiento_id { get; set; }
 
-        public int EstadoId { get; set; }
+        public int Estado_id { get; set; }
 
         public List<FacturaDetalleResponse> Detalles { get; set; } = new();
     }

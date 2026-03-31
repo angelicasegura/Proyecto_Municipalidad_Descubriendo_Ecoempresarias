@@ -1,9 +1,9 @@
-﻿CREATE   PROCEDURE [dbo].[sp_ObtenerPedidosPorUsuario]
+﻿CREATE PROCEDURE [dbo].[sp_ObtenerPedidosPorEmprendimiento]
 (
-    @Usuario_id INT,
+    @Emprendimiento_id INT,
     @Estado_id INT = NULL,           -- filtrar por estado opcional
     @Pagina INT = 1,
-	@Fecha DATE = NULL,
+    @Fecha DATE = NULL,
     @RegistrosPorPagina INT = 10
 )
 AS
@@ -24,7 +24,7 @@ BEGIN
             P.Factura_id,
             ROW_NUMBER() OVER (ORDER BY P.FechaPedido DESC) AS RowNum
         FROM dbo.ECOEMPRESARIAS_PEDIDOS_TB P
-        WHERE P.Usuario_id = @Usuario_id
+        WHERE P.Emprendimiento_id = @Emprendimiento_id
           AND (
                 (@Estado_id IS NOT NULL AND P.Estado_id = @Estado_id)
                 OR (@Estado_id IS NULL AND P.Estado_id IN (5,6))
@@ -37,7 +37,7 @@ BEGIN
                      AND (@Pagina * @RegistrosPorPagina);
 
     -----------------------------------------
-    -- 2. FACTURAS DEL USUARIO
+    -- 2. FACTURAS DEL EMPRENDIMIENTO
     -----------------------------------------
     SELECT 
         F.Factura_id,
@@ -51,7 +51,7 @@ BEGIN
     FROM dbo.ECOEMPRESARIAS_FACTURAS_TB F
     INNER JOIN dbo.ECOEMPRESARIAS_PEDIDOS_TB P
         ON P.Factura_id = F.Factura_id
-    WHERE P.Usuario_id = @Usuario_id
+    WHERE P.Emprendimiento_id = @Emprendimiento_id
       AND (
             (@Estado_id IS NOT NULL AND P.Estado_id = @Estado_id)
             OR (@Estado_id IS NULL AND P.Estado_id IN (5,6))
@@ -73,12 +73,11 @@ BEGIN
         ON DF.Producto_id = P.Producto_id
     INNER JOIN dbo.ECOEMPRESARIAS_PEDIDOS_TB PED
         ON DF.Factura_id = PED.Factura_id
-    WHERE PED.Usuario_id = @Usuario_id
+    WHERE PED.Emprendimiento_id = @Emprendimiento_id
       AND (
             (@Estado_id IS NOT NULL AND PED.Estado_id = @Estado_id)
             OR (@Estado_id IS NULL AND PED.Estado_id IN (5,6))
           )
       AND (@Fecha IS NULL OR CAST(PED.FechaPedido AS DATE) = @Fecha)
     ORDER BY DF.Factura_id;
-
 END

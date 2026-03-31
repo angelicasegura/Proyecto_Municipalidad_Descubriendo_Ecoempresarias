@@ -74,23 +74,24 @@ export function Navbar() {
                 Carrito
               </Link>
             )}
-            <Link
-              to="/eventos"
-              className="text-white font-medium hover:text-accent transition-colors whitespace-nowrap px-2"
-            >
-              {/* ejemplo de como proteger visualmente los accesos, recurden que es solo visual */}
-              Eventos
-            </Link>
-
-
-            {["ADMIN", "EMPRENDEDOR", "USUARIO"].includes(user?.rol ?? "") && (
+            {["ADMIN", "EMPRENDEDOR"].includes(user?.rol ?? "") && (
               <Link
-                to="/entregas"
+                to="/eventos"
                 className="text-white font-medium hover:text-accent transition-colors whitespace-nowrap px-2"
               >
-                Entregas y seguimientos
+                {/* ejemplo de como proteger visualmente los accesos, recurden que es solo visual */}
+                Eventos
               </Link>
             )}
+            {["ADMIN", "EMPRENDEDOR", "USUARIO"].includes(user?.rol ?? "") && (
+              <Link
+                to="/pedidos/mis-pedidos"
+                className="text-white font-medium hover:text-accent transition-colors whitespace-nowrap px-2"
+              >
+                Mis Pedidos
+              </Link>
+            )}
+            
             {/* No se que es esto de mapas */}
             <Link
               to="/mapas"
@@ -392,14 +393,15 @@ export function Navbar() {
             </Link>
           )}
 
+
           {["ADMIN", "EMPRENDEDOR", "USUARIO"].includes(user?.rol ?? "") && (
-            <Link
-              to="/entregas"
-              className="block py-2 px-2 text-white font-medium hover:text-accent"
-            >
-              Entregas y seguimientos
-            </Link>
-          )}
+              <Link
+                to="/pedidos/mis-pedidos"
+                className="block py-2 px-2 text-white font-medium hover:text-accent"
+              >
+                Mis Pedidos
+              </Link>
+            )}
 
           <Link
             to="/mapas"
@@ -480,7 +482,9 @@ export function Navbar() {
                 <Link to="/mis-productos" className="block py-2 px-4 text-white hover:text-accent rounded-md">
                   Mis Productos
                 </Link>
-
+                  <Link to="/emprendimientos-propios" className="block py-2 px-4 text-white hover:text-accent rounded-md">
+                  Pedidos Y Entregas
+                </Link>
                 <Link to="/analiticas" className="block py-2 px-4 text-white hover:text-accent rounded-md">
                   Analíticas del negocio
                 </Link>

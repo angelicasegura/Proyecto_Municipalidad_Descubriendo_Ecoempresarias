@@ -84,10 +84,10 @@ export default function CarritoPage() {
 
       toast.success("Pedido creado correctamente");
       
-      console.log("Pedido ID:", pedidoId);
+     
 
-      // aquí tú haces la redirección
-      // navigate(`/pedido/${pedidoId}`);
+      
+       //navigate("http://localhost:5173/pedidos/mis-pedidos");
 
     } catch {
 
