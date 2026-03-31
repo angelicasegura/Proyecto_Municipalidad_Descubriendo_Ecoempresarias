@@ -124,6 +124,13 @@
     <Build Include="dbo\Stored Procedures\sp_EliminarCarritoVacioDespuesPedido.sql" />
     <Build Include="dbo\Stored Procedures\sp_AgregarPedido.sql" />
     <Build Include="dbo\Stored Procedures\sp_ObtenerPedidosPorUsuario.sql" />
+    <Build Include="dbo\Tables\ECOEMPRESARIAS_MOTIVOPEDIDOINACTIVO_TB.sql" />
+    <Build Include="dbo\Stored Procedures\sp_InactivarPedido.sql" />
+    <Build Include="dbo\Stored Procedures\sp_ActualizarEstadoPedido.sql" />
+    <Build Include="dbo\Stored Procedures\sp_ObtenerPedido.sql" />
+    <Build Include="dbo\Stored Procedures\sp_ObtenerEmprendimientoPorPedido.sql" />
+    <Build Include="dbo\Stored Procedures\sp_ObtenerPedidosPorEmprendimiento.sql" />
+    <Build Include="dbo\Stored Procedures\sp_ObtenerEmprendimientoPorId.sql" />
     <Build Include="dbo\Tables\ECOEMPRESARIAS_ZONAS_TB.sql" />
     <Build Include="dbo\Tables\ECOEMPRESARIAS_STANDS_MAPAS_TB.sql" />
     <Build Include="dbo\Tables\ECOEMPRESARIAS_PISOS_TB.sql" />

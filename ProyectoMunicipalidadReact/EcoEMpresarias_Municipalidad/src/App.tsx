@@ -23,6 +23,10 @@ import { Breadcrumbs } from "./components/ui/layout/Breadcrumbs";
 import CarritoPage from "./pages/public/Carrito/CarritoPage";
 import ForbiddenPage from "./pages/public/Forbidden/ForbiddenPage";
 import MapasPage from "./pages/public/mapas/MapasPage";
+import MisPedidosPage from "./pages/Pedidos/Usuario/mispedidos/MisPedidosPage";
+import ListaEmprendimientosPropios from "./pages/Pedidos/Emprendedor/misEmprendimientos/ListaEmprendientosPropios";
+import PedidosPage from "./pages/Pedidos/Emprendedor/misPedidos/pedidosPageEmprendedor";
+<Route path="/mapas" element={<MapasPage />} />
 import MisProductosPage from "./pages/Productos/MisProductos/MisProductosPage";
 import MisEmprendimientosPage from "./pages/Productos/MisProductos/MisEmprendimientosPage";
 import ListaPendientesPage from "./pages/Productos/ProductosPendientes/ListaPendientesPage";
@@ -80,6 +84,11 @@ function App() {
             {/* HU-28: Ruta de registro */}
             <Route path="/registro" element={<RegisterPage />} />
 
+
+            {/*Rutas de peidos*/}
+            <Route element={<ProtectedRoute allowedRoles={["ADMIN","EMPRENDEDOR","USUARIO"]} />}>
+              <Route path="/pedidos/mis-pedidos" element={<MisPedidosPage />} />
+            </Route>
             {/* Ruta protegida para USUARIO (Carrito) */}
             <Route element={<ProtectedRoute allowedRoles={["ADMIN"]} />}>
               <Route path="/carrito" element={<CarritoPage />} />
@@ -100,7 +109,7 @@ function App() {
             </Route>
 
             {/* Emprendedores routes */}
-            <Route element={<ProtectedRoute allowedRoles={["EMPRENDEDOR"]} />}>
+            <Route element={<ProtectedRoute allowedRoles={["EMPRENDEDOR","ADMIN"]} />}>
               <Route
                 path="/emprendimientos-propio"
                 element={<EmprendimientosPropios />}
@@ -108,6 +117,14 @@ function App() {
               <Route
                 path="/inventario/:id/:cedulaJuridica"
                 element={<InventarioEmprendimiento />}
+              />
+              <Route
+                path="/emprendimientos-propios"
+                element={<ListaEmprendimientosPropios/>}
+              />
+              <Route
+                path="/Seguimiento-Pedidos/:cedulaJuridica"
+                element={<PedidosPage />}
               />
               <Route path="/mis-eventos" element={<MisEventosPage />} />
               <Route path="/mis-eventos/:emprendimientoId" element={<MisEventosDetallePage />} />

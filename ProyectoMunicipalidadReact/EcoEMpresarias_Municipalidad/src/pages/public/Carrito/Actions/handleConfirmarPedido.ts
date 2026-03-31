@@ -7,7 +7,12 @@ export async function handleCrearPedido(
   direccionEntrega: string,
   observaciones?: string
 ): Promise<string> {
-
+console.log(JSON.stringify({
+          usuarioId,
+          emprendimientoId,
+          direccionEntrega,
+          observaciones
+        }));
   try {
 
     const response = await authFetch(
