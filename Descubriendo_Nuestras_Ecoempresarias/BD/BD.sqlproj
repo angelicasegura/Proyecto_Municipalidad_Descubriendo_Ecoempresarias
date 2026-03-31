@@ -149,11 +149,6 @@
     <Build Include="dbo\Stored Procedures\sp_AprobarReserva_Evento.sql" />
     <Build Include="dbo\Tables\ECOEMPRESARIAS_RESERVA_EVENTOS_TB.sql" />
     <Build Include="dbo\Stored Procedures\SP_CrearReservaEvento.sql" />
-    <Build Include="dbo\Views\vw_VentasPorSector_1.sql" />
-    <Build Include="dbo\Views\vw_VentasConFecha_1.sql" />
-    <Build Include="dbo\Views\vw_TopSectores_1.sql" />
-    <Build Include="dbo\Views\vw_EmprendimientosActivos_1.sql" />
-    <Build Include="dbo\Views\vw_CrecimientoMensual_1.sql" />
     <Build Include="dbo\Tables\ECOEMPRESARIAS_ZONAS_TB.sql" />
     <Build Include="dbo\Tables\ECOEMPRESARIAS_STANDS_MAPAS_TB.sql" />
     <Build Include="dbo\Tables\ECOEMPRESARIAS_PISOS_TB.sql" />
