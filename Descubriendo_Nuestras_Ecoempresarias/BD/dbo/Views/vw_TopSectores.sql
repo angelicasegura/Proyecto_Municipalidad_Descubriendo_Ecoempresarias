@@ -1,4 +1,5 @@
-﻿CREATE VIEW vw_TopSectores
+﻿
+CREATE VIEW vw_TopSectores
 AS
 SELECT TOP 3
     ta.Nombre AS Sector,

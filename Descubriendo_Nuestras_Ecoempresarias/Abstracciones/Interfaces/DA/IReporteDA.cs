@@ -13,5 +13,21 @@ namespace Abstracciones.Interfaces.DA
         Task<IEnumerable<CrecimientoResponse>> ObtenerCrecimiento();
         Task<IEnumerable<TopSectorResponse>> ObtenerTopSectores();
         Task<ActivosResponse> ObtenerActivos();
+
+        //Emprendimientos
+
+
+        Task<KpiNegocio> ObtenerKpi(int emprendimientoId);
+
+        Task<IEnumerable<VentasMensuales>> ObtenerVentasMensuales(int emprendimientoId);
+
+        Task<IEnumerable<TicketPromedioDto>> ObtenerTicketPromedio(int emprendimientoId);
+
+        Task<IEnumerable<ProductoTop>> ObtenerProductosTop(int emprendimientoId);
+
+        Task<IEnumerable<ProductoBajo>> ObtenerProductosBajo(int emprendimientoId);
+
+        Task<IEnumerable<InventarioReporte>> ObtenerInventario(int emprendimientoId);
+
     }
 }

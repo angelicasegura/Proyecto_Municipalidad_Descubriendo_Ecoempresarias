@@ -1,4 +1,5 @@
-﻿CREATE VIEW vw_VentasConFecha
+﻿
+CREATE VIEW vw_VentasConFecha
 AS
 SELECT 
     ta.Nombre AS Sector,
