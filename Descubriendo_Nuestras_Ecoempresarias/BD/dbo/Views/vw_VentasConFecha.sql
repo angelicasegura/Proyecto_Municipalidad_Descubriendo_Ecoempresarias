@@ -3,8 +3,8 @@ AS
 SELECT 
     ta.Nombre AS Sector,
     df.Cantidad,
-    df.Precio,
-    (df.Cantidad * df.Precio) AS Total,
+    df.PrecioUnitario,
+    (df.Cantidad * df. df.PrecioUnitario) AS Total,
     f.Fecha
 FROM ECOEMPRESARIAS_FACTURAS_TB f
 INNER JOIN ECOEMPRESARIAS_DETALLE_FACTURAS_TB df 
