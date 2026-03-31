@@ -91,7 +91,7 @@ export function Navbar() {
                 Mis Pedidos
               </Link>
             )}
-            
+
             {/* No se que es esto de mapas */}
             <Link
               to="/mapas"
@@ -212,7 +212,7 @@ export function Navbar() {
                       Sistema de Inteligencia Municipal
                     </Link>
                   </DropdownMenuItem>
-                  
+
                   <DropdownMenuItem
                     asChild
                     className="text-foreground hover:bg-accent hover:to-blue-500 cursor-pointer"
@@ -395,13 +395,13 @@ export function Navbar() {
 
 
           {["ADMIN", "EMPRENDEDOR", "USUARIO"].includes(user?.rol ?? "") && (
-              <Link
-                to="/pedidos/mis-pedidos"
-                className="block py-2 px-2 text-white font-medium hover:text-accent"
-              >
-                Mis Pedidos
-              </Link>
-            )}
+            <Link
+              to="/pedidos/mis-pedidos"
+              className="block py-2 px-2 text-white font-medium hover:text-accent"
+            >
+              Mis Pedidos
+            </Link>
+          )}
 
           <Link
             to="/mapas"
@@ -454,6 +454,22 @@ export function Navbar() {
                 <Link to="/analisis-sectores" className="block py-2 px-4 text-white hover:text-accent rounded-md ">
                   Análisis de sectores
                 </Link>
+                
+                <Link
+                      to="/solicitudes-eventos"
+className="block py-2 px-4 text-white hover:text-accent rounded-md" >
+                      Aprobación de solicitudes eventos
+                    </Link>
+                <Link
+                      to="/reportesDashboard"
+                      className="block py-2 px-4 text-white hover:text-accent rounded-md">
+                      Sistema de Inteligencia Municipal
+                    </Link>
+                    <Link
+                  to="/admin/lugares"
+                  className="block py-2 px-4 text-white hover:text-accent rounded-md">
+                  Lugares
+                </Link>
               </div>
             </div>
           )}
@@ -482,7 +498,7 @@ export function Navbar() {
                 <Link to="/mis-productos" className="block py-2 px-4 text-white hover:text-accent rounded-md">
                   Mis Productos
                 </Link>
-                  <Link to="/emprendimientos-propios" className="block py-2 px-4 text-white hover:text-accent rounded-md">
+                <Link to="/emprendimientos-propios" className="block py-2 px-4 text-white hover:text-accent rounded-md">
                   Pedidos Y Entregas
                 </Link>
                 <Link to="/emprendimientos-propios-reportes" className="block py-2 px-4 text-white hover:text-accent rounded-md">
