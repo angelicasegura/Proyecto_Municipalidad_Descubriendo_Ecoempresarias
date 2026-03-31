@@ -43,5 +43,55 @@ namespace API.Controllers
             var resultado = await _flujo.ObtenerActivos();
             return Ok(resultado);
         }
+
+        //emprendedores
+        [Authorize(Roles = "ADMIN,EMPRENDEDOR")]
+        [HttpGet("kpi/{id}")]
+        public async Task<IActionResult> ObtenerKpi(int id)
+        {
+            var resultado = await _flujo.ObtenerKpi(id);
+            return Ok(resultado);
+        }
+
+        [Authorize(Roles = "ADMIN,EMPRENDEDOR")]
+        [HttpGet("ventas-mensuales/{id}")]
+        public async Task<IActionResult> VentasMensuales(int id)
+        {
+            var resultado = await _flujo.ObtenerVentasMensuales(id);
+            return Ok(resultado);
+        }
+
+        [Authorize(Roles = "ADMIN,EMPRENDEDOR")]
+        [HttpGet("ticket-promedio/{id}")]
+        public async Task<IActionResult> TicketPromedio(int id)
+        {
+            var resultado = await _flujo.ObtenerTicketPromedio(id);
+            return Ok(resultado);
+        }
+
+        [Authorize(Roles = "ADMIN,EMPRENDEDOR")]
+        [HttpGet("top-productos/{id}")]
+        public async Task<IActionResult> TopProductos(int id)
+        {
+            var resultado = await _flujo.ObtenerProductosTop(id);
+            return Ok(resultado);
+        }
+
+
+        [Authorize(Roles = "ADMIN,EMPRENDEDOR")]
+        [HttpGet("productos-bajo/{id}")]
+        public async Task<IActionResult> ProductosBajo(int id)
+        {
+            var resultado = await _flujo.ObtenerProductosBajo(id);
+            return Ok(resultado);
+        }
+
+        [Authorize(Roles = "ADMIN,EMPRENDEDOR")]
+        [HttpGet("inventario/{id}")]
+        public async Task<IActionResult> Inventario(int id)
+        {
+            var resultado = await _flujo.ObtenerInventario(id);
+            return Ok(resultado);
+        }
     }
 }

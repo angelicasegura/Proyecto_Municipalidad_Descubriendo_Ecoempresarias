@@ -74,7 +74,7 @@ namespace API.Controllers
             }
         }
 
-        [Authorize(Roles = "EMPRENDEDOR")]
+        [Authorize(Roles = "ADMIN,EMPRENDEDOR")]
         [HttpPut("EditarProducto/{id}")]
         public async Task<IActionResult> EditarProducto([FromRoute] Guid id, [FromForm] ProductoRequest producto)
         {
@@ -159,7 +159,7 @@ namespace API.Controllers
         }
 
 
-        [Authorize(Roles = "EMPRENDEDOR")]
+        [Authorize(Roles = "ADMIN,EMPRENDEDOR")]
         [HttpGet("ObtenerProductosEMPRENDEDOR")]
         public async Task<IActionResult> ObtenerProductosEMPRENDEDOR([FromQuery] Guid? categoria_id,
                                                   [FromQuery] string? nombre,

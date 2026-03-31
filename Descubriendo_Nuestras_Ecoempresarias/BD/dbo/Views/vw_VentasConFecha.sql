@@ -1,10 +1,11 @@
-﻿CREATE VIEW vw_VentasConFecha
+﻿
+CREATE VIEW vw_VentasConFecha
 AS
 SELECT 
     ta.Nombre AS Sector,
     df.Cantidad,
-    df.Precio,
-    (df.Cantidad * df.Precio) AS Total,
+    df.PrecioUnitario,
+    (df.Cantidad * df.PrecioUnitario) AS Total,
     f.Fecha
 FROM ECOEMPRESARIAS_FACTURAS_TB f
 INNER JOIN ECOEMPRESARIAS_DETALLE_FACTURAS_TB df 
