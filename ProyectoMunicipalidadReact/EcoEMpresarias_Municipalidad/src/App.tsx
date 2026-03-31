@@ -41,9 +41,11 @@ import SolicitudesEventoPage from "./pages/Admin/Eventos/SolicitudesEventoPage";
 import AdminLugaresPage from "./pages/Admin/Lugares/AdminLugaresPage";
 import EditarLugarPage from "./pages/Admin/Lugares/EditarLugarPage";
 import ReportesAdmin from "./pages/Admin/ReportesAdmin/reportesDashboard";
-import CrearLugarPage from "./pages/Admin/Lugares/crearLugarPage";
+import CrearLugarPage from "./pages/Admin/Lugares/CrearLugarPage";
 import DetalleProductoPages from "./pages/Productos/Detalle/DetalleProductoPages";
 import ProductosPage from "./pages/Productos/ProductoPage";
+import ReportesEmprendimiento from "./pages/Emprendedores/ReportesEmprendimiento/Reportes/ReportesEmprendimiento";
+import EmprendimientosPropiosReportes from "./pages/Emprendedores/ReportesEmprendimiento/ListaEmprendimientosPropiosInventario/ListaEmprendientosPropios";
 
 
 function App() {
@@ -114,6 +116,7 @@ function App() {
                 path="/emprendimientos-propio"
                 element={<EmprendimientosPropios />}
               />
+              
               <Route
                 path="/inventario/:id/:cedulaJuridica"
                 element={<InventarioEmprendimiento />}
@@ -126,6 +129,9 @@ function App() {
                 path="/Seguimiento-Pedidos/:cedulaJuridica"
                 element={<PedidosPage />}
               />
+              <Route path="/emprendimientos-propios-reportes" 
+              element={<EmprendimientosPropiosReportes/>}/>
+              <Route path="/reportes-emprendimiento/:id" element={<ReportesEmprendimiento />} />
               <Route path="/mis-eventos" element={<MisEventosPage />} />
               <Route path="/mis-eventos/:emprendimientoId" element={<MisEventosDetallePage />} />
               <Route path="/reservar-evento/:eventoId" element={<SeleccionarEmprendimientoReservaPage />} />

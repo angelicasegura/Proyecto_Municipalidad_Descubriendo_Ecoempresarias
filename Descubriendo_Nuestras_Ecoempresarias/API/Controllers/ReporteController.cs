@@ -45,6 +45,7 @@ namespace API.Controllers
         }
 
         //emprendedores
+        //Falta hacer validaciones para asgurarse que los reportes solo lo vean los emprendedores asignados
         [Authorize(Roles = "ADMIN,EMPRENDEDOR")]
         [HttpGet("kpi/{id}")]
         public async Task<IActionResult> ObtenerKpi(int id)

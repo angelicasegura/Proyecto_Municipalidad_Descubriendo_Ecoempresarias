@@ -278,7 +278,7 @@ export function Navbar() {
 
                   <DropdownMenuItem asChild>
                     <Link
-                      to="/analiticas"
+                      to="/emprendimientos-propios-reportes"
                       className="
             text-white
             cursor-pointer
@@ -485,7 +485,7 @@ export function Navbar() {
                   <Link to="/emprendimientos-propios" className="block py-2 px-4 text-white hover:text-accent rounded-md">
                   Pedidos Y Entregas
                 </Link>
-                <Link to="/analiticas" className="block py-2 px-4 text-white hover:text-accent rounded-md">
+                <Link to="/emprendimientos-propios-reportes" className="block py-2 px-4 text-white hover:text-accent rounded-md">
                   Analíticas del negocio
                 </Link>
 

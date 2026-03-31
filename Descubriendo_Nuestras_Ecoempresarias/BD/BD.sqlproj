@@ -191,6 +191,7 @@
     <Build Include="dbo\Functions\FN_REPORTE_TOP_PRODUCTOS.sql" />
     <Build Include="dbo\Functions\FN_REPORTE_INVENTARIO.sql" />
     <Build Include="dbo\Functions\FN_PRODUCTOS_BAJO_RENDIMIENTO.sql" />
+    <Build Include="dbo\Functions\FN_KPI_NEGOCIO.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="BD.refactorlog" />
