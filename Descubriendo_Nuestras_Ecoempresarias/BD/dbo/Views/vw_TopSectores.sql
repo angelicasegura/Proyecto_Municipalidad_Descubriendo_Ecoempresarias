@@ -1,8 +1,9 @@
-﻿CREATE VIEW vw_TopSectores
+﻿
+CREATE VIEW vw_TopSectores
 AS
 SELECT TOP 3
     ta.Nombre AS Sector,
-    SUM(df.Cantidad * df.Precio) AS TotalVentas
+    SUM(df.Cantidad *  df.PrecioUnitario) AS TotalVentas
 FROM ECOEMPRESARIAS_FACTURAS_TB f
 INNER JOIN ECOEMPRESARIAS_DETALLE_FACTURAS_TB df 
     ON f.Factura_id = df.Factura_id

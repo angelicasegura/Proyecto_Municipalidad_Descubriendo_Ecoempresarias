@@ -19,7 +19,7 @@ namespace API.Controllers
             _emprendimientoFlujo = emprendimientoFlujo;
         }
 
-        [Authorize(Roles = "EMPRENDEDOR")]
+        [Authorize(Roles = "ADMIN,EMPRENDEDOR")]
         [HttpGet("Mi-Inventario")]
         public async Task<IActionResult> ObtenerInventarios([FromQuery] int emprendimiento_id, [FromQuery] string CedulaJuridica)
         {
@@ -48,7 +48,7 @@ namespace API.Controllers
             }
         }
 
-        [Authorize(Roles = "EMPRENDEDOR")]
+        [Authorize(Roles = "ADMIN,EMPRENDEDOR")]
         [HttpPut("Editar")]
         public async Task<IActionResult> EditarInventario([FromQuery] Guid Inventarioid, [FromQuery] int emprendimiento_id, [FromQuery] string CedulaJuridica, [FromBody] InventarioRequest inventario)
         {

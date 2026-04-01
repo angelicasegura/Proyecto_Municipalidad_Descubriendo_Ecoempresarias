@@ -60,6 +60,7 @@
     <Folder Include="dbo\Tables\" />
     <Folder Include="dbo\Stored Procedures\" />
     <Folder Include="dbo\Views\" />
+    <Folder Include="dbo\Functions\" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\ECOEMPRESARIAS_USUARIOS_TB.sql" />
@@ -124,6 +125,13 @@
     <Build Include="dbo\Stored Procedures\sp_EliminarCarritoVacioDespuesPedido.sql" />
     <Build Include="dbo\Stored Procedures\sp_AgregarPedido.sql" />
     <Build Include="dbo\Stored Procedures\sp_ObtenerPedidosPorUsuario.sql" />
+    <Build Include="dbo\Tables\ECOEMPRESARIAS_MOTIVOPEDIDOINACTIVO_TB.sql" />
+    <Build Include="dbo\Stored Procedures\sp_InactivarPedido.sql" />
+    <Build Include="dbo\Stored Procedures\sp_ActualizarEstadoPedido.sql" />
+    <Build Include="dbo\Stored Procedures\sp_ObtenerPedido.sql" />
+    <Build Include="dbo\Stored Procedures\sp_ObtenerEmprendimientoPorPedido.sql" />
+    <Build Include="dbo\Stored Procedures\sp_ObtenerPedidosPorEmprendimiento.sql" />
+    <Build Include="dbo\Stored Procedures\sp_ObtenerEmprendimientoPorId.sql" />
     <Build Include="dbo\Tables\ECOEMPRESARIAS_ZONAS_TB.sql" />
     <Build Include="dbo\Tables\ECOEMPRESARIAS_STANDS_MAPAS_TB.sql" />
     <Build Include="dbo\Tables\ECOEMPRESARIAS_PISOS_TB.sql" />
@@ -149,11 +157,41 @@
     <Build Include="dbo\Stored Procedures\sp_AprobarReserva_Evento.sql" />
     <Build Include="dbo\Tables\ECOEMPRESARIAS_RESERVA_EVENTOS_TB.sql" />
     <Build Include="dbo\Stored Procedures\SP_CrearReservaEvento.sql" />
-    <Build Include="dbo\Views\vw_VentasPorSector_1.sql" />
-    <Build Include="dbo\Views\vw_VentasConFecha_1.sql" />
-    <Build Include="dbo\Views\vw_TopSectores_1.sql" />
-    <Build Include="dbo\Views\vw_EmprendimientosActivos_1.sql" />
-    <Build Include="dbo\Views\vw_CrecimientoMensual_1.sql" />
+    <Build Include="dbo\Tables\ECOEMPRESARIAS_ZONAS_TB.sql" />
+    <Build Include="dbo\Tables\ECOEMPRESARIAS_STANDS_MAPAS_TB.sql" />
+    <Build Include="dbo\Tables\ECOEMPRESARIAS_PISOS_TB.sql" />
+    <Build Include="dbo\Tables\ECOEMPRESARIAS_MAPAS_TB.sql" />
+    <Build Include="dbo\Tables\ECOEMPRESARIAS_LUGARES_TB.sql" />
+    <Build Include="dbo\Tables\ECOEMPRESARIAS_EVENTOS_ZONAS_TB.sql" />
+    <Build Include="dbo\Tables\ECOEMPRESARIAS_EVENTOS_ZONAS_STANDS_TB.sql" />
+    <Build Include="dbo\Tables\ECOEMPRESARIAS_EVENTO_PISOS_TB.sql" />
+    <Build Include="dbo\Views\vw_VentasPorSector.sql" />
+    <Build Include="dbo\Views\vw_VentasConFecha.sql" />
+    <Build Include="dbo\Views\vw_TopSectores.sql" />
+    <Build Include="dbo\Views\vw_EmprendimientosActivos.sql" />
+    <Build Include="dbo\Views\vw_CrecimientoMensual.sql" />
+    <Build Include="dbo\Stored Procedures\sp_RechazarReserva_Evento.sql" />
+    <Build Include="dbo\Stored Procedures\sp_ObtenerSolicitudes_Evento.sql" />
+    <Build Include="dbo\Stored Procedures\sp_ObtenerReservas_Emprendimiento.sql" />
+    <Build Include="dbo\Stored Procedures\SP_ObtenerLugarPorId.sql" />
+    <Build Include="dbo\Stored Procedures\SP_ObtenerLugares.sql" />
+    <Build Include="dbo\Stored Procedures\SP_ObtenerEventos.sql" />
+    <Build Include="dbo\Stored Procedures\SP_ObtenerEventoPorNombre.sql" />
+    <Build Include="dbo\Stored Procedures\SP_ObtenerEventoPorId.sql" />
+    <Build Include="dbo\Stored Procedures\SP_InactivarLugar.sql" />
+    <Build Include="dbo\Stored Procedures\SP_InactivarEvento.sql" />
+    <Build Include="dbo\Stored Procedures\SP_EditarLugar.sql" />
+    <Build Include="dbo\Stored Procedures\SP_EditarEvento.sql" />
+    <Build Include="dbo\Stored Procedures\SP_CrearReservaEvento.sql" />
+    <Build Include="dbo\Stored Procedures\sp_AprobarReserva_Evento.sql" />
+    <Build Include="dbo\Stored Procedures\SP_AgregarLugar.sql" />
+    <Build Include="dbo\Stored Procedures\SP_AgregarEvento.sql" />
+    <Build Include="dbo\Functions\FN_TICKET_PROMEDIO_MENSUAL.sql" />
+    <Build Include="dbo\Functions\FN_REPORTE_VENTAS_MENSUALES.sql" />
+    <Build Include="dbo\Functions\FN_REPORTE_TOP_PRODUCTOS.sql" />
+    <Build Include="dbo\Functions\FN_REPORTE_INVENTARIO.sql" />
+    <Build Include="dbo\Functions\FN_PRODUCTOS_BAJO_RENDIMIENTO.sql" />
+    <Build Include="dbo\Functions\FN_KPI_NEGOCIO.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="BD.refactorlog" />

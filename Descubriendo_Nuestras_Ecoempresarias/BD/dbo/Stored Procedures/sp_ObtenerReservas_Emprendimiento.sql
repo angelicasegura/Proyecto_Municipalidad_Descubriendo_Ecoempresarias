@@ -1,4 +1,4 @@
-﻿create procedure sp_ObtenerReservas_Emprendimiento
+﻿CREATE procedure sp_ObtenerReservas_Emprendimiento
 @Emprendimiento_id int 
 as
 begin

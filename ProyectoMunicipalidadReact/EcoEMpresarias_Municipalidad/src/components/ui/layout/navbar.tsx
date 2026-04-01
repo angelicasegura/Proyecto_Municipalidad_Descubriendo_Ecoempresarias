@@ -74,23 +74,24 @@ export function Navbar() {
                 Carrito
               </Link>
             )}
-            <Link
-              to="/eventos"
-              className="text-white font-medium hover:text-accent transition-colors whitespace-nowrap px-2"
-            >
-              {/* ejemplo de como proteger visualmente los accesos, recurden que es solo visual */}
-              Eventos
-            </Link>
-
-
-            {["ADMIN", "EMPRENDEDOR", "USUARIO"].includes(user?.rol ?? "") && (
+            {["ADMIN", "EMPRENDEDOR"].includes(user?.rol ?? "") && (
               <Link
-                to="/entregas"
+                to="/eventos"
                 className="text-white font-medium hover:text-accent transition-colors whitespace-nowrap px-2"
               >
-                Entregas y seguimientos
+                {/* ejemplo de como proteger visualmente los accesos, recurden que es solo visual */}
+                Eventos
               </Link>
             )}
+            {["ADMIN", "EMPRENDEDOR", "USUARIO"].includes(user?.rol ?? "") && (
+              <Link
+                to="/pedidos/mis-pedidos"
+                className="text-white font-medium hover:text-accent transition-colors whitespace-nowrap px-2"
+              >
+                Mis Pedidos
+              </Link>
+            )}
+
             {/* No se que es esto de mapas */}
             <Link
               to="/mapas"
@@ -211,7 +212,7 @@ export function Navbar() {
                       Sistema de Inteligencia Municipal
                     </Link>
                   </DropdownMenuItem>
-                  
+
                   <DropdownMenuItem
                     asChild
                     className="text-foreground hover:bg-accent hover:to-blue-500 cursor-pointer"
@@ -277,7 +278,7 @@ export function Navbar() {
 
                   <DropdownMenuItem asChild>
                     <Link
-                      to="/analiticas"
+                      to="/emprendimientos-propios-reportes"
                       className="
             text-white
             cursor-pointer
@@ -392,12 +393,13 @@ export function Navbar() {
             </Link>
           )}
 
+
           {["ADMIN", "EMPRENDEDOR", "USUARIO"].includes(user?.rol ?? "") && (
             <Link
-              to="/entregas"
+              to="/pedidos/mis-pedidos"
               className="block py-2 px-2 text-white font-medium hover:text-accent"
             >
-              Entregas y seguimientos
+              Mis Pedidos
             </Link>
           )}
 
@@ -452,6 +454,22 @@ export function Navbar() {
                 <Link to="/analisis-sectores" className="block py-2 px-4 text-white hover:text-accent rounded-md ">
                   Análisis de sectores
                 </Link>
+                
+                <Link
+                      to="/solicitudes-eventos"
+className="block py-2 px-4 text-white hover:text-accent rounded-md" >
+                      Aprobación de solicitudes eventos
+                    </Link>
+                <Link
+                      to="/reportesDashboard"
+                      className="block py-2 px-4 text-white hover:text-accent rounded-md">
+                      Sistema de Inteligencia Municipal
+                    </Link>
+                    <Link
+                  to="/admin/lugares"
+                  className="block py-2 px-4 text-white hover:text-accent rounded-md">
+                  Lugares
+                </Link>
               </div>
             </div>
           )}
@@ -480,8 +498,10 @@ export function Navbar() {
                 <Link to="/mis-productos" className="block py-2 px-4 text-white hover:text-accent rounded-md">
                   Mis Productos
                 </Link>
-
-                <Link to="/analiticas" className="block py-2 px-4 text-white hover:text-accent rounded-md">
+                <Link to="/emprendimientos-propios" className="block py-2 px-4 text-white hover:text-accent rounded-md">
+                  Pedidos Y Entregas
+                </Link>
+                <Link to="/emprendimientos-propios-reportes" className="block py-2 px-4 text-white hover:text-accent rounded-md">
                   Analíticas del negocio
                 </Link>
 

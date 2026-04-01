@@ -23,7 +23,9 @@ import { Breadcrumbs } from "./components/ui/layout/Breadcrumbs";
 import CarritoPage from "./pages/public/Carrito/CarritoPage";
 import ForbiddenPage from "./pages/public/Forbidden/ForbiddenPage";
 import MapasPage from "./pages/public/mapas/MapasPage";
-
+import MisPedidosPage from "./pages/Pedidos/Usuario/mispedidos/MisPedidosPage";
+import ListaEmprendimientosPropios from "./pages/Pedidos/Emprendedor/misEmprendimientos/ListaEmprendientosPropios";
+import PedidosPage from "./pages/Pedidos/Emprendedor/misPedidos/pedidosPageEmprendedor";
 <Route path="/mapas" element={<MapasPage />} />
 import MisProductosPage from "./pages/Productos/MisProductos/MisProductosPage";
 import MisEmprendimientosPage from "./pages/Productos/MisProductos/MisEmprendimientosPage";
@@ -39,7 +41,11 @@ import SolicitudesEventoPage from "./pages/Admin/Eventos/SolicitudesEventoPage";
 import AdminLugaresPage from "./pages/Admin/Lugares/AdminLugaresPage";
 import EditarLugarPage from "./pages/Admin/Lugares/EditarLugarPage";
 import ReportesAdmin from "./pages/Admin/ReportesAdmin/reportesDashboard";
-import CrearLugarPage from "./pages/Admin/Lugares/crearLugarPage";
+import CrearLugarPage from "./pages/Admin/Lugares/CrearLugarPage";
+import DetalleProductoPages from "./pages/Productos/Detalle/DetalleProductoPages";
+import ProductosPage from "./pages/Productos/ProductoPage";
+import ReportesEmprendimiento from "./pages/Emprendedores/ReportesEmprendimiento/Reportes/ReportesEmprendimiento";
+import EmprendimientosPropiosReportes from "./pages/Emprendedores/ReportesEmprendimiento/ListaEmprendimientosPropiosInventario/ListaEmprendientosPropios";
 
 
 function App() {
@@ -59,7 +65,7 @@ function App() {
           <Routes>
             {/* Esta parte es la del router aqui se define el link que se quiere que 
         accione una ruta para cambiar de pagina, esto no es nada del los get o put a 
-        la api, esto es solo lo visual */}            
+        la api, esto es solo lo visual */}
 
             {/* public routes */}
             <Route path="/" element={<Home />} />
@@ -67,15 +73,24 @@ function App() {
             <Route path="/emprendimientos" element={<EmprendimientosPage />} />
             <Route path="/403" element={<ForbiddenPage />} />
             <Route path="/mapas" element={<MapasPage />} />
+            <Route path="/eventos" element={<EventosPage />} />
+            <Route path="/eventos/:id" element={<EventoDetallePage />} />
             <Route
               path="/emprendimiento/:id/:cedulaJuridica"
               element={<DetalleEmprendimiento />}
             />
+            <Route path="/mapas" element={<MapasPage />} />
+
             <Route path="/producto/:id" element={<DetalleProductoPage />} />
 
             {/* HU-28: Ruta de registro */}
             <Route path="/registro" element={<RegisterPage />} />
 
+
+            {/*Rutas de peidos*/}
+            <Route element={<ProtectedRoute allowedRoles={["ADMIN","EMPRENDEDOR","USUARIO"]} />}>
+              <Route path="/pedidos/mis-pedidos" element={<MisPedidosPage />} />
+            </Route>
             {/* Ruta protegida para USUARIO (Carrito) */}
             <Route element={<ProtectedRoute allowedRoles={["ADMIN"]} />}>
               <Route path="/carrito" element={<CarritoPage />} />
@@ -88,19 +103,48 @@ function App() {
                 path="/emprendimientos-admin"
                 element={<AdminEmprendedores />}
               />
+              <Route path="/solicitudes-eventos" element={<SolicitudesEventoPage />} />
+              <Route path="/admin/lugares" element={<AdminLugaresPage />} />
+              <Route path="/admin/crear-lugar" element={<CrearLugarPage />} />
+              <Route path="/admin/editar-lugar/:id" element={<EditarLugarPage />} />
+              <Route path="/reportesDashboard" element={<ReportesAdmin />} />
             </Route>
 
             {/* Emprendedores routes */}
-            <Route element={<ProtectedRoute allowedRoles={["EMPRENDEDOR"]} />}>
+            <Route element={<ProtectedRoute allowedRoles={["EMPRENDEDOR","ADMIN"]} />}>
               <Route
                 path="/emprendimientos-propio"
                 element={<EmprendimientosPropios />}
               />
+              
               <Route
                 path="/inventario/:id/:cedulaJuridica"
                 element={<InventarioEmprendimiento />}
               />
+              <Route
+                path="/emprendimientos-propios"
+                element={<ListaEmprendimientosPropios/>}
+              />
+              <Route
+                path="/Seguimiento-Pedidos/:cedulaJuridica"
+                element={<PedidosPage />}
+              />
+              <Route path="/emprendimientos-propios-reportes" 
+              element={<EmprendimientosPropiosReportes/>}/>
+              <Route path="/reportes-emprendimiento/:id" element={<ReportesEmprendimiento />} />
+              <Route path="/mis-eventos" element={<MisEventosPage />} />
+              <Route path="/mis-eventos/:emprendimientoId" element={<MisEventosDetallePage />} />
+              <Route path="/reservar-evento/:eventoId" element={<SeleccionarEmprendimientoReservaPage />} />
+              <Route path="/reservar-evento/:eventoId/:emprendimientoId" element={<ReservarEventoPage />} />
             </Route>
+            {/* Productos routes */}
+            <Route path="/productos" element={<ProductosPage />} />
+            <Route path="/productos/:id" element={<DetalleProductoPages />} />
+            <Route path="/mis-productos" element={<MisEmprendimientosPage />} />
+            <Route path="/mis-productos/:emprendimientoId" element={<MisProductosPage />} />
+
+            <Route path="/revision-productos" element={<ProductosPendientesPage />} />
+            <Route path="/productos-pendientes/:tipo" element={<ListaPendientesPage />} />
           </Routes>
         </main>
         <Footer />
