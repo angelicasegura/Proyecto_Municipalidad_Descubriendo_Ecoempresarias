@@ -1,0 +1,8 @@
+﻿CREATE TABLE [dbo].[ECOEMPRESARIAS_MOTIVOPEDIDOINACTIVO_TB] (
+    [PedidoId]      UNIQUEIDENTIFIER NOT NULL,
+    [Descripcion]   NVARCHAR (1000)  NOT NULL,
+    [FechaCreacion] DATETIME         DEFAULT (getdate()) NOT NULL,
+    CONSTRAINT [PK_MotivoPedidoInactivo] PRIMARY KEY CLUSTERED ([PedidoId] ASC),
+    CONSTRAINT [FK_MotivoPedidoInactivo_Pedidos] FOREIGN KEY ([PedidoId]) REFERENCES [dbo].[ECOEMPRESARIAS_PEDIDOS_TB] ([Pedido_id]) ON DELETE CASCADE ON UPDATE CASCADE
+);
+

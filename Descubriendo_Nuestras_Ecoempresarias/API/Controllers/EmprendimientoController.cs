@@ -94,9 +94,9 @@ namespace API.Controllers
 
 
         [Authorize(Roles = "ADMIN")]
-        [HttpPost("crearAdmin")]
+        [HttpPost("crearADMIN")]
         [Consumes("multipart/form-data")]
-        public async Task<IActionResult> crearEmprendimientoAdmin([FromForm] EmprendimientoRequest request)
+        public async Task<IActionResult> crearEmprendimientoADMIN([FromForm] EmprendimientoRequest request)
         {
             try
             {
@@ -122,7 +122,7 @@ namespace API.Controllers
                 if (usuario.IdRol != 2)
                 {
                     usuario.IdRol = 2;
-                    var UpdateUser = await _usuarioFlujo.EditarAdmin(usuario.IdUsuario, usuario);
+                    var UpdateUser = await _usuarioFlujo.EditarADMIN(usuario.IdUsuario, usuario);
                 }
                 
                 
@@ -160,6 +160,27 @@ namespace API.Controllers
         }
 
 
+
+        [HttpGet("Obtener/EMprendimientoID")]
+        public async Task<IActionResult> obtenerEmprendimientoPorEmprendimientoId([FromQuery] int id)
+        {
+            try
+            {
+                if (id == null)
+                {
+                    return BadRequest("Id no indicado");
+                }
+                var emprendimiento = await _emprendimientoFlujo.GetEmprendiemientoPorEmprendimeintoID(id);
+
+
+                return Ok(emprendimiento);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+        }
 
         [HttpGet("Obtener/Cedula")]
         public async Task<IActionResult> obtenerEmprendimientosPorCedulaUsuario([FromQuery] int cedula)

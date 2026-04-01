@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/Elementos de la solución/">
+    <File Path=".gitignore" />
+  </Folder>
   <Project Path="Abstracciones/Abstracciones.csproj" Id="304b6afa-a511-44e1-b5a7-e8cae2ca1df2" />
   <Project Path="API/API.csproj" Id="f6b51430-b726-40f8-a156-7e55244c89fc" />
   <Project Path="BD/BD.sqlproj" Id="c5f3bed1-39d2-4615-a388-061d40accae0">

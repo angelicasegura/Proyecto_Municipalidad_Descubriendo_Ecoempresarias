@@ -1,4 +1,4 @@
-﻿create procedure sp_AprobarReserva_Evento
+﻿CREATE procedure sp_AprobarReserva_Evento
 @Reserva_id int
 as 
 begin

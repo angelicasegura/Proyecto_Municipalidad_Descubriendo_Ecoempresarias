@@ -16,11 +16,25 @@ import { handleLogout } from "../../../pages/auth/logout/handleLogout";
 
 export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
+  const [adminOpen, setAdminOpen] = useState(false);
+  const [emprendedorOpen, setEmprendedorOpen] = useState(false);
   const { user } = useAuth();
+
+
+  const toggleAdmin = () => {
+    setAdminOpen(!adminOpen);
+    setEmprendedorOpen(false);
+  };
+
+  const toggleEmprendedor = () => {
+    setEmprendedorOpen(!emprendedorOpen);
+    setAdminOpen(false);
+  };
+
+
   return (
     <nav className="bg-[#056F94] gradient-hero text-primary-foreground sticky top-0 z-50 shadow-md">
-      <div className="mx-auto max-w-350px px-4 sm:px-8">
+      <div className="mx-auto max-w-screen-xl px-4 sm:px-8">
         <div className="flex h-20 items-center justify-between">
           {/* Logo */}
           <Link
@@ -38,7 +52,7 @@ export function Navbar() {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex lg:items-center lg:gap-4">
+          <div className="hidden xl:flex xl:items-center lg:gap-4">
             <Link
               to="/emprendimientos"
               className="text-white font-medium hover:text-accent transition-colors whitespace-nowrap px-2"
@@ -60,6 +74,7 @@ export function Navbar() {
                 Carrito
               </Link>
             )}
+            {["ADMIN", "EMPRENDEDOR"].includes(user?.rol ?? "") && (
               <Link
                 to="/eventos"
                 className="text-white font-medium hover:text-accent transition-colors whitespace-nowrap px-2"
@@ -67,24 +82,24 @@ export function Navbar() {
                 {/* ejemplo de como proteger visualmente los accesos, recurden que es solo visual */}
                 Eventos
               </Link>
-            
-
+            )}
             {["ADMIN", "EMPRENDEDOR", "USUARIO"].includes(user?.rol ?? "") && (
               <Link
-                to="/entregas"
+                to="/pedidos/mis-pedidos"
                 className="text-white font-medium hover:text-accent transition-colors whitespace-nowrap px-2"
               >
-                Entregas y seguimientos
+                Mis Pedidos
               </Link>
             )}
+
             {/* No se que es esto de mapas */}
             {["ADMIN"].includes(user?.rol ?? "") && (
-            <Link
-              to="/mapas"
-              className="text-white font-medium hover:text-accent transition-colors whitespace-nowrap px-2"
-            >
-              Mapas
-            </Link>
+              <Link
+                to="/mapas"
+                className="text-white font-medium hover:text-accent transition-colors whitespace-nowrap px-2"
+              >
+                Mapas
+              </Link>
             )}
             {/* Cambiar A ADMIN para Cuando ya este Conectado A APi */}
             {["ADMIN"].includes(user?.rol ?? "") && (
@@ -187,7 +202,7 @@ export function Navbar() {
                     className="text-foreground hover:bg-accent hover:to-blue-500 cursor-pointer"
                   >
                     <Link
-                      to="/inteligencia-municipal"
+                      to="/reportesDashboard"
                       className="
       text-white
       cursor-pointer
@@ -199,23 +214,7 @@ export function Navbar() {
                       Sistema de Inteligencia Municipal
                     </Link>
                   </DropdownMenuItem>
-                  <DropdownMenuItem
-                    asChild
-                    className="text-foreground hover:bg-accent hover:to-blue-500 cursor-pointer"
-                  >
-                    <Link
-                      to="/analisis-sectores"
-                      className="
-      text-white
-      cursor-pointer
-      data-highlighted:bg-[#09C2EF]
-      data-highlighted:text-black
-      focus:outline-none
-    "
-                    >
-                      Análisis de sectores
-                    </Link>
-                  </DropdownMenuItem>
+
                   <DropdownMenuItem
                     asChild
                     className="text-foreground hover:bg-accent hover:to-blue-500 cursor-pointer"
@@ -238,7 +237,7 @@ export function Navbar() {
             )}
 
             {/* Emprendedor Dropdown */}
-            {["EMPRENDEDOR","ADMIN"].includes(user?.rol ?? "") && (
+            {["EMPRENDEDOR", "ADMIN"].includes(user?.rol ?? "") && (
               <DropdownMenu>
                 <DropdownMenuTrigger className="flex items-center gap-1 text-white font-medium hover:text-accent transition-colors whitespace-nowrap px-2">
                   Emprendedor
@@ -281,7 +280,7 @@ export function Navbar() {
 
                   <DropdownMenuItem asChild>
                     <Link
-                      to="/analiticas"
+                      to="/emprendimientos-propios-reportes"
                       className="
             text-white
             cursor-pointer
@@ -335,7 +334,7 @@ export function Navbar() {
           {/* Mobile menu button */}
           <button
             type="button"
-            className="lg:hidden text-white"
+            className="xl:hidden text-white"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
             {mobileMenuOpen ? (
@@ -347,158 +346,204 @@ export function Navbar() {
         </div>
 
         {/* Mobile menu */}
-        {mobileMenuOpen && (
-          <div className="lg:hidden py-4 space-y-2 border-t border-white/20">
-            <Link
-              to="/emprendimientos"
-              className="block py-2 px-2 text-white font-medium hover:text-accent"
+        <div
+          className={`fixed top-0 right-0 h-full w-80 bg-[#056F94] shadow-2xl z-50 p-6 space-y-3
+  overflow-y-auto
+  transform transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]
+  xl:hidden
+  ${mobileMenuOpen ? "translate-x-0" : "translate-x-full"}`}
+        >
+
+          {/* Botón cerrar */}
+          <div className="flex justify-end mb-4">
+            <button
+              onClick={() => setMobileMenuOpen(false)}
+              className="text-white"
             >
-              Emprendimientos
-            </Link>
-
-            <Link
-              to="/productos"
-              className="block py-2 px-2 text-white font-medium hover:text-accent"
-            >
-              Productos
-            </Link>
-
-            {user && (
-              <Link
-                to="/carrito"
-                className="block py-2 px-2 text-white font-medium hover:text-accent"
-              >
-                Carrito
-              </Link>
-            )}
-
-            {["ADMIN", "EMPRENDEDOR"].includes(user?.rol ?? "") && (
-              <Link
-                to="/eventos"
-                className="block py-2 px-2 text-white font-medium hover:text-accent"
-              >
-                Eventos
-              </Link>
-            )}
-
-            {["ADMIN", "EMPRENDEDOR", "USUARIO"].includes(user?.rol ?? "") && (
-              <Link
-                to="/entregas"
-                className="block py-2 px-2 text-white font-medium hover:text-accent"
-              >
-                Entregas y seguimientos
-              </Link>
-            )}
-
-            {/* ADMIN */}
-            {["ADMIN"].includes(user?.rol ?? "") && (
-              <div className="mt-4">
-                <p className="px-2 text-sm font-semibold text-white/70 uppercase">
-                  Administrador
-                </p>
-
-                <Link
-                  to="/usuarios"
-                  className="block py-2 px-4 text-white hover:text-accent"
-                >
-                  Usuarios
-                </Link>
-                <Link
-                  to="/roles"
-                  className="block py-2 px-4 text-white hover:text-accent"
-                >
-                  Gestión de Roles
-                </Link>
-                <Link
-                  to="/emprendimientos-admin"
-                  className="block py-2 px-4 text-white hover:text-accent"
-                >
-                  Gestión de emprendimientos
-                </Link>
-                <Link
-                  to="/revision-productos"
-                  className="block py-2 px-4 text-white hover:text-accent"
-                >
-                  Revisión de productos
-                </Link>
-                <Link
-                  to="/solicitudes"
-                  className="block py-2 px-4 text-white hover:text-accent"
-                >
-                  Aprobación de solicitudes
-                </Link>
-                <Link
-                  to="/inteligencia-municipal"
-                  className="block py-2 px-4 text-white hover:text-accent"
-                >
-                  Sistema de Inteligencia Municipal
-                </Link>
-                <Link
-                  to="/analisis-sectores"
-                  className="block py-2 px-4 text-white hover:text-accent"
-                >
-                  Análisis de sectores
-                </Link>
-              </div>
-            )}
-
-            {/* EMPRENDEDOR */}
-            {["EMPRENDEDOR","ADMIN"].includes(user?.rol ?? "") && (
-              <div className="mt-4">
-                <p className="px-2 text-sm font-semibold text-white/70 uppercase">
-                  Emprendedor
-                </p>
-
-                <Link
-                  to="/emprendimientos-propio"
-                  className="block py-2 px-4 text-white hover:text-accent"
-                >
-                  Inventario
-                </Link>
-                <Link
-                  to="/mis-productos"
-                  className="block py-2 px-4 text-white hover:text-accent"
-                >
-                  Mis Productos
-                </Link>
-                <Link
-                  to="/analiticas"
-                  className="block py-2 px-4 text-white hover:text-accent"
-                >
-                  Analíticas del negocio
-                </Link>
-                <Link
-                  to="/mis-eventos"
-                  className="block py-2 px-4 text-white hover:text-accent"
-                >
-                  Mis Eventos
-                </Link>
-              </div>
-            )}
-
-            {/* AUTH*/}
-            <div className="pt-4">
-              {!user && (
-                <Button
-                  asChild
-                  className="w-full bg-accent hover:bg-accent/90 text-accent-foreground"
-                >
-                  <Link to="/login">Iniciar Sesión</Link>
-                </Button>
-              )}
-              {user && (
-                <Button
-                  variant="secondary"
-                  className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold"
-                  onClick={handleLogout}
-                >
-                  Cerrar Sesión
-                </Button>
-              )}
-
-            </div>
+              <X className="h-6 w-6" />
+            </button>
           </div>
-        )}
+          <Link
+            to="/emprendimientos"
+            className="block py-2 px-2 text-white font-medium hover:text-accent"
+          >
+            Emprendimientos
+          </Link>
+
+          <Link
+            to="/productos"
+            className="block py-2 px-2 text-white font-medium hover:text-accent"
+          >
+            Productos
+          </Link>
+
+          {user && (
+            <Link
+              to="/carrito"
+              className="block py-2 px-2 text-white font-medium hover:text-accent"
+            >
+              Carrito
+            </Link>
+          )}
+
+          {["ADMIN", "EMPRENDEDOR"].includes(user?.rol ?? "") && (
+            <Link
+              to="/eventos"
+              className="block py-2 px-2 text-white font-medium hover:text-accent"
+            >
+              Eventos
+            </Link>
+          )}
+          {/* ADMIN */}
+          {["ADMIN"].includes(user?.rol ?? "") && (
+            <div className="mt-4">
+              <p className="px-2 text-sm font-semibold text-white/70 uppercase">
+                Administrador
+              </p>
+
+              {["ADMIN", "EMPRENDEDOR", "USUARIO"].includes(user?.rol ?? "") && (
+                <Link
+                  to="/pedidos/mis-pedidos"
+                  className="block py-2 px-2 text-white font-medium hover:text-accent"
+                >
+                  Mis Pedidos
+                </Link>
+              )}
+
+
+              {["ADMIN"].includes(user?.rol ?? "") && (
+                <div className="mt-4">
+                  <button
+                    onClick={toggleAdmin}
+                    className="w-full flex items-center justify-between py-2 px-3 rounded-md text-white font-medium transition-all hover:text-accent"
+                  >
+                    Administrador
+                    <ChevronDown
+                      className={`h-4 w-4 transition-transform duration-300 ${adminOpen ? "rotate-180" : ""
+                        }`}
+                    />
+                  </button>
+
+                  <div
+                    className={`overflow-hidden transition-all duration-300 ${adminOpen ? "max-h-[500px] mt-2" : "max-h-0"
+                      }`}
+                  >
+                    <Link to="/usuarios" className="block py-2 px-4 text-white hover:text-accent rounded-md">
+                      Usuarios
+                    </Link>
+
+                    <Link to="/roles" className="block py-2 px-4 text-white hover:text-accent rounded-md">
+                      Gestión de Roles
+                    </Link>
+
+                    <Link to="/emprendimientos-admin" className="block py-2 px-4 text-white hover:text-accent rounded-md">
+                      Gestión de emprendimientos
+                    </Link>
+
+                    <Link to="/revision-productos" className="block py-2 px-4 text-white hover:text-accent rounded-md">
+                      Revisión de productos
+                    </Link>
+
+                    <Link to="/solicitudes" className="block py-2 px-4 text-white hover:text-accent rounded-md">
+                      Aprobación de solicitudes
+                    </Link>
+
+                    <Link to="/inteligencia-municipal" className="block py-2 px-4 text-white hover:text-accent rounded-md">
+                      Sistema de Inteligencia Municipal
+                    </Link>
+
+                    <Link to="/analisis-sectores" className="block py-2 px-4 text-white hover:text-accent rounded-md ">
+                      Análisis de sectores
+                    </Link>
+                    <Link
+                      to="/mapas"
+                      className="block py-2 px-2 text-white font-medium hover:text-accent"
+                    >
+                      Mapas
+                    </Link>
+
+
+                    <Link
+                      to="/solicitudes-eventos"
+                      className="block py-2 px-4 text-white hover:text-accent rounded-md" >
+                      Aprobación de solicitudes eventos
+                    </Link>
+                    <Link
+                      to="/reportesDashboard"
+                      className="block py-2 px-4 text-white hover:text-accent rounded-md">
+                      Sistema de Inteligencia Municipal
+                    </Link>
+                    <Link
+                      to="/admin/lugares"
+                      className="block py-2 px-4 text-white hover:text-accent rounded-md">
+                      Lugares
+                    </Link>
+                  </div>
+                </div>
+              )}
+
+              {["EMPRENDEDOR", "ADMIN"].includes(user?.rol ?? "") && (
+                <div className="mt-4">
+                  <button
+                    onClick={toggleEmprendedor}
+                    className="w-full flex items-center justify-between py-2 px-3 rounded-md text-white font-medium transition-all hover:text-accent"
+                  >
+                    Emprendedor
+                    <ChevronDown
+                      className={`h-4 w-4 transition-transform duration-300 ${emprendedorOpen ? "rotate-180" : ""
+                        }`}
+                    />
+                  </button>
+
+                  <div
+                    className={`overflow-hidden transition-all duration-300 ${emprendedorOpen ? "max-h-96 mt-2" : "max-h-0"
+                      }`}
+                  >
+                    <Link to="/emprendimientos-propio" className="block py-2 px-4 text-white hover:text-accent rounded-md">
+                      Inventario
+                    </Link>
+
+                    <Link to="/mis-productos" className="block py-2 px-4 text-white hover:text-accent rounded-md">
+                      Mis Productos
+                    </Link>
+                    <Link to="/emprendimientos-propios" className="block py-2 px-4 text-white hover:text-accent rounded-md">
+                      Pedidos Y Entregas
+                    </Link>
+                    <Link to="/emprendimientos-propios-reportes" className="block py-2 px-4 text-white hover:text-accent rounded-md">
+                      Analíticas del negocio
+                    </Link>
+
+                    <Link to="/mis-eventos" className="block py-2 px-4 text-white hover:text-accent rounded-md">
+                      Mis Eventos
+                    </Link>
+                  </div>
+                </div>
+              )}
+
+              {/* AUTH*/}
+              <div className="pt-4">
+                {!user && (
+                  <Button
+                    asChild
+                    className="w-full bg-accent hover:bg-accent/90 text-accent-foreground"
+                  >
+                    <Link to="/login">Iniciar Sesión</Link>
+                  </Button>
+                )}
+                {user && (
+                  <Button
+                    variant="secondary"
+                    className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold"
+                    onClick={handleLogout}
+                  >
+                    Cerrar Sesión
+                  </Button>
+                )}
+
+              </div>
+            </div> 
+          )}
+        </div>
       </div>
     </nav>
   );

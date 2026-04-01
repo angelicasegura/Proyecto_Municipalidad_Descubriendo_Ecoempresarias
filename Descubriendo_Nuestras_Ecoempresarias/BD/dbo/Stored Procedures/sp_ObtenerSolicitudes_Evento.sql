@@ -1,4 +1,4 @@
-﻿Create procedure sp_ObtenerSolicitudes_Evento
+﻿create procedure sp_ObtenerSolicitudes_Evento
 as
 begin
 SELECT
