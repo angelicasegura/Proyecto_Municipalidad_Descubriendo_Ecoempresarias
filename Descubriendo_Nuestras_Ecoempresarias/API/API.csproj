@@ -17,4 +17,8 @@
     <ProjectReference Include="..\Flujo\Flujo.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\Eventos\logica\" />
+  </ItemGroup>
+
 </Project>
