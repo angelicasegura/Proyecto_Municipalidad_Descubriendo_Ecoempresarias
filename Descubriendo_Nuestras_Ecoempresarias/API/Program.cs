@@ -180,6 +180,7 @@ app.UseRouting();
 app.UseCors("AllowViteApp");
 
 app.UseAuthentication();
+app.UseMiddleware<ValidarUsuarioMiddleware>();
 app.UseAuthorization();
 
 app.MapControllers();
