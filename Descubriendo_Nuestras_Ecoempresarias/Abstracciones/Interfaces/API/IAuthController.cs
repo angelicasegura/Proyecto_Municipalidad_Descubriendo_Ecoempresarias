@@ -10,7 +10,7 @@ namespace Abstracciones.Interfaces.API
 {
     public interface IAuthController
     {
-        Task<IActionResult> RegistrarUsuario();
+        Task<IActionResult> RegistrarUsuario(UsuarioRegistroRequest usuario);
         Task<IActionResult> IniciarSesion(Modelos.Autenticacion.LoginRequest loginRequest);
 
         Task<IActionResult> OlvidoContrasena(ForgotPassword forgotPassword);
