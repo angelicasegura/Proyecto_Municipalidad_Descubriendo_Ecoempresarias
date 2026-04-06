@@ -11,8 +11,9 @@ namespace Abstracciones.Interfaces.API.Eventos.logica
     public interface IEventoPisoController
     {
         public Task<IActionResult> AgregarPisoAEvento(EventoPisoBase piso);
-        public Task<IActionResult> CambiarDisponibilidadPiso(EventoPisoBase piso);
-        public Task<IActionResult> ObtenerPisoEvento(EventoPisoResponse piso);
-        public Task<IActionResult> ObtenerPisoEventoYEstado(int estadoid, EventoPisoResponse piso);
+        public Task<IActionResult> InactivarPisoEvento( EventoPisoBase piso);
+        public Task<IActionResult> ActivarPisoEvento( EventoPisoBase piso);
+        public Task<IActionResult> ObtenerPisoEvento(int evento_id);
+        public Task<IActionResult> ObtenerPisoEventoActivos( int evento_id);
     }
 }

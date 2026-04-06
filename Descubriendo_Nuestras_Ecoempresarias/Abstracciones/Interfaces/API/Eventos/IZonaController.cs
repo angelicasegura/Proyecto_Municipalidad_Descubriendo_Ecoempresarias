@@ -15,6 +15,7 @@ namespace Abstracciones.Interfaces.API.Eventos
         public Task<IActionResult> InactivarZona(int zona_id);
         public Task<IActionResult> ActivarZona(int zona_id);
         public Task<IActionResult> ObtenerZonasPorPiso(int piso_id);
+        public Task<IActionResult> ObtenerZonasPorPisoActivas(int piso_id);
         public Task<IActionResult> ObtenerZonaPorId(int zona_id);
     }
 }

@@ -9,9 +9,9 @@ namespace Abstracciones.Interfaces.DA.Eventos.logica
 {
     public interface IEventoZonaStandDA
     {
-        public Task<int> AgregarPisoAEvento(EventoPisoBase piso);
-        public Task<int> CambiarDisponibilidadPiso(EventoPisoBase piso);
-        public Task<int> ObtenerPisoEvento(EventoPisoResponse piso);
-        public Task<int> ObtenerPisoEventoYEstado(int estadoid, EventoPisoResponse piso);
+        public Task<int> AgregarStandAEvento(EventoZonaStandBase stand);
+        public Task<int> CambiarDisponibilidadStand(int estado_id, EventoZonaStandBase stand);
+        public Task<IEnumerable<EventoZonaStandResponse>> ObtenerStandsEvento(int zona_id, int evento_id);
+
     }
 }

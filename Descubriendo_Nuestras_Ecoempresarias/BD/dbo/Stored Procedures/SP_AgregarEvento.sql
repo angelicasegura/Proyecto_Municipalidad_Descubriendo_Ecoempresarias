@@ -50,8 +50,6 @@ BEGIN
 			@Lugar_id ,
 			@Estado_id)
 
-		SELECT Evento_id FROM ECOEMPRESARIAS_EVENTOS_TB WHERE NombreEvento = @NombreEvento;
-
 		COMMIT TRANSACTION
 
     END TRY

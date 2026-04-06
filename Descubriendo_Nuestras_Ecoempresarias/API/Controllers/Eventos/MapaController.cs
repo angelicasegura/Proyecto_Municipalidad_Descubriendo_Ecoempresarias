@@ -85,7 +85,7 @@ namespace API.Controllers.Eventos
             }
         }
 
-        [Authorize(Roles = "ADMIN")]
+        //[Authorize(Roles = "ADMIN")]
         [HttpGet("ObtenerMapaPorId/{mapa_id}")]
         public async Task<IActionResult> ObtenerMapaPorId([FromRoute] int mapa_id)
         {
@@ -105,7 +105,7 @@ namespace API.Controllers.Eventos
             }
         }
 
-        [Authorize(Roles = "ADMIN")]
+        //[Authorize(Roles = "ADMIN")]
         [HttpGet("ObtenerMapas")]
         public async Task<IActionResult> ObtenerMapas()
         {

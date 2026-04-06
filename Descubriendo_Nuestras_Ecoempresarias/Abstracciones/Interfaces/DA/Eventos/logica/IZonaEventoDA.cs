@@ -10,9 +10,9 @@ namespace Abstracciones.Interfaces.DA.Eventos.logica
     public interface IZonaEventoDA
     {
         public Task<int> AgregarZonaAEvento(EventoZonaBase zona);
-        public Task<int> CambiarDisponibilidadZona(EventoZonaBase zona);
-        public Task<int> ObtenerZonaEvento(EventoZonaResponse zona);
-        public Task<int> ObtenerZonaAEventoYEstado(int estadoid, EventoZonaResponse zona);
+        public Task<int> CambiarDisponibilidadZona(int estado_id, EventoZonaBase zona);
+        public Task<IEnumerable<EventoZonaResponse>> ObtenerZonaEvento(int evento_id);
+        public Task<IEnumerable<EventoZonaResponse>> ObtenerZonaAEventoYEstado(int estadoid, int evento_id);
 
     }
 }

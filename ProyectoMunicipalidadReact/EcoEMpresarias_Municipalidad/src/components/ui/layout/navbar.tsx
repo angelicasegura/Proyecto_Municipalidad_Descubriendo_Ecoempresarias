@@ -232,6 +232,27 @@ export function Navbar() {
                       Lugares
                     </Link>
                   </DropdownMenuItem>
+
+                  <DropdownMenuItem
+                    asChild
+                    className="text-foreground hover:bg-accent hover:to-blue-500 cursor-pointer"
+                  >
+                    <Link
+                      to="/mapasEventos"
+                      className="
+      text-white
+      cursor-pointer
+      data-highlighted:bg-[#09C2EF]
+      data-highlighted:text-black
+      focus:outline-none
+    "
+                    >
+                      Mapas eventos
+                    </Link>
+                  </DropdownMenuItem>
+
+
+
                 </DropdownMenuContent>
               </DropdownMenu>
             )}
@@ -455,13 +476,6 @@ export function Navbar() {
                     <Link to="/analisis-sectores" className="block py-2 px-4 text-white hover:text-accent rounded-md ">
                       Análisis de sectores
                     </Link>
-                    <Link
-                      to="/mapas"
-                      className="block py-2 px-2 text-white font-medium hover:text-accent"
-                    >
-                      Mapas
-                    </Link>
-
 
                     <Link
                       to="/solicitudes-eventos"
@@ -477,6 +491,11 @@ export function Navbar() {
                       to="/admin/lugares"
                       className="block py-2 px-4 text-white hover:text-accent rounded-md">
                       Lugares
+                    </Link>
+                      <Link
+                      to="/mapas"
+                      className="block py-2 px-4 text-white hover:text-accent rounded-md">
+                      Mapas Eventos
                     </Link>
                   </div>
                 </div>

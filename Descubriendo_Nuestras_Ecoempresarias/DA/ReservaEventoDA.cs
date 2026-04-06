@@ -78,5 +78,18 @@ namespace DA
                 });
             return resultado;
         }
+
+        public async Task<bool> TieneReservaAceptada(int emprendimiento_id, int evento_id)
+        {
+            string query = "sp_Tiene_Reserva_Aceptada";
+
+            var count = await _sqlConnection.ExecuteScalarAsync<int>(query, new
+            {
+                Emprendimiento_id = emprendimiento_id,
+                Evento_id = evento_id
+            }, commandType: CommandType.StoredProcedure);
+            return count > 0;
+
+        }
     }
 }

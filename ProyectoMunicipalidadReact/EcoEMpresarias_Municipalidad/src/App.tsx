@@ -26,8 +26,8 @@ import MapasPage from "./pages/public/mapas/MapasPage";
 import MisPedidosPage from "./pages/Pedidos/Usuario/mispedidos/MisPedidosPage";
 import ListaEmprendimientosPropios from "./pages/Pedidos/Emprendedor/misEmprendimientos/ListaEmprendientosPropios";
 import PedidosPage from "./pages/Pedidos/Emprendedor/misPedidos/pedidosPageEmprendedor";
-<Route path="/mapas" element={<MapasPage />} />
 import MisProductosPage from "./pages/Productos/MisProductos/MisProductosPage";
+import MapasPageEve from "./pages/Mapas/MapasPage";
 import MisEmprendimientosPage from "./pages/Productos/MisProductos/MisEmprendimientosPage";
 import ListaPendientesPage from "./pages/Productos/ProductosPendientes/ListaPendientesPage";
 import ProductosPendientesPage from "./pages/Productos/ProductosPendientes/ProductosPendientesPage";
@@ -47,7 +47,7 @@ import DetalleProductoPages from "./pages/Productos/Detalle/DetalleProductoPages
 import ProductosPage from "./pages/Productos/ProductoPage";
 import ReportesEmprendimiento from "./pages/Emprendedores/ReportesEmprendimiento/Reportes/ReportesEmprendimiento";
 import EmprendimientosPropiosReportes from "./pages/Emprendedores/ReportesEmprendimiento/ListaEmprendimientosPropiosInventario/ListaEmprendientosPropios";
-
+import ReservarStandPage from "../src/pages/Eventos/ReservaStandPage";
 
 
 function App() {
@@ -150,9 +150,12 @@ function App() {
 
 
             {/* Mapas routes */}
-            <Route path="/mapas" element={<MapasPage />} />
+            <Route path="/mapasEventos" element={<MapasPageEve />} />
 
             <Route path="/admin/lugares/:lugar_id" element={<LugarDetallePage />} />
+
+            <Route path="/seleccionar-stand/:evento_id" element={<ReservarStandPage />} />
+
         </Routes>
       </main>
       <Footer />

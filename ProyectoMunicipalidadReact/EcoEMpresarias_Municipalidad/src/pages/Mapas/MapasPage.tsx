@@ -11,7 +11,7 @@ import type { MapaResponse, MapaRequest } from "../../types/mapaType"
 
 type Vista = "lista" | "editor"
 
-export default function MapasPage() {
+export default function MapasPageEve() {
 
     const queryClient = useQueryClient()
 

@@ -11,6 +11,7 @@ namespace Abstracciones.Modelos.Eventos.Logica
         public int Evento_id { get; set; }
         public int Zona_id { get; set; }
         public int Estado_id { get; set; }
+        public int Piso_id { get; set; }
     }
 
     public class EventoZonaResponse : EventoZonaBase

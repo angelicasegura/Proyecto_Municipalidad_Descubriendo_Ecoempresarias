@@ -40,5 +40,10 @@ namespace Flujo
         {
             return await _reservaEventoDA.RechazarReserva(Reserva_id);
         }
+
+        public async Task<bool> TieneReservaAceptada(int emprendimiento_id, int evento_id)
+        {
+            return await _reservaEventoDA.TieneReservaAceptada(emprendimiento_id, evento_id);
+        }
     }
 }

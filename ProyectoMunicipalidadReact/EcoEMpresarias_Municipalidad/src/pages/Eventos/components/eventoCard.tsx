@@ -12,7 +12,6 @@ export default function EventoCard({ evento }: Props) {
   const { user } = useAuth()
   const emprendedor = user?.rol === "EMPRENDEDOR"
 
-
   return (
 
     <div className="bg-white rounded-lg shadow-md p-5 border-t-4 border-orange-400 hover:shadow-lg transition">
@@ -35,7 +34,7 @@ export default function EventoCard({ evento }: Props) {
         {evento.descripcion}
       </p>
 
-      <div className="flex gap-2">
+      <div className="flex gap-2 flex-wrap">
 
         <Link
           to={`/eventos/${evento.evento_id}`}
@@ -45,12 +44,23 @@ export default function EventoCard({ evento }: Props) {
         </Link>
 
         {emprendedor && (
-          <Link
-            to={`/reservar-evento/${evento.evento_id}`}
-            className="bg-teal-500 text-white px-3 py-1.5 rounded-md text-sm hover:bg-teal-600"
-          >
-            Reservar
-          </Link>
+          <>
+            {/* Solicitar participación en el evento */}
+            <Link
+              to={`/reservar-evento/${evento.evento_id}`}
+              className="bg-teal-500 text-white px-3 py-1.5 rounded-md text-sm hover:bg-teal-600"
+            >
+              Reservar Cupo
+            </Link>
+
+            {/* Seleccionar stand una vez aprobada la solicitud */}
+            <Link
+              to={`/seleccionar-stand/${evento.evento_id}`}
+              className="bg-orange-500 text-white px-3 py-1.5 rounded-md text-sm hover:bg-orange-600"
+            >
+              Seleccionar Stand
+            </Link>
+          </>
         )}
 
       </div>

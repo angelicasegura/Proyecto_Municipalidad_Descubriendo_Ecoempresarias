@@ -12,22 +12,20 @@ namespace Abstracciones.Modelos.Eventos.Logica
         public int Evento_id { get; set; }
         public int Zona_id { get; set; }
         public int Estado_id { get; set; }
+        public int? Emprendimiento_id { get; set; }
     }
 
-    public class EventoZonaStandResponse
+    public class EventoZonaStandResponse: EventoZonaStandBase
     {
         public string NombreEvento { get; set; }
-        public int Zona_id { get; set; }
         public string NombreZona { get; set; }
-        public int stand_id { get; set; }
         public string Codigo { get; set; }
         public int X { get; set; }
         public int Y { get; set; }
         public int Ancho { get; set; }
         public int Alto { get; set; }
         public int Rotacion { get; set; }
-        public int Empendimiento_id { get; set; }
-        public string NombreEmprendimiento { get; set; }
+        public string? NombreEmprendimiento { get; set; }
         public string Estado { get; set; }
 
     }

@@ -14,7 +14,7 @@ namespace Abstracciones.Modelos.Eventos.Logica
 
     }
 
-    public class EventoPisoResponse
+    public class EventoPisoResponse: EventoPisoBase
     {
         public string NombreEvento { get; set; }
         public DateTime Fecha_inicio { get; set; }

@@ -5,6 +5,7 @@ import type { PisoResponse, ZonaResponse, ZonaRequest } from "../../../../types/
 import { fetchZonasPorPiso, agregarZona, editarZona, inactivarZona } from "../actions/zonaActions/fetchsZona"
 import ZonaForm from "./Zonaform"
 import ModalConfirmar from "./ModalConfirmar"
+import ModalAsignarMapa from "./ModalAsignarMapa"
 
 interface Props {
     piso: PisoResponse
@@ -17,11 +18,12 @@ export default function PisoCard({ piso, onEditarPiso, onInactivarPiso }: Props)
     const queryClient = useQueryClient()
     const queryKey = ["zonas", piso.piso_id]
 
-    const [abierto, setAbierto]               = useState(false)
-    const [showZonaForm, setShowZonaForm]     = useState(false)
-    const [zonaEditar, setZonaEditar]         = useState<ZonaResponse | null>(null)
+    const [abierto, setAbierto] = useState(false)
+    const [showZonaForm, setShowZonaForm] = useState(false)
+    const [zonaEditar, setZonaEditar] = useState<ZonaResponse | null>(null)
     const [zonaAInactivar, setZonaAInactivar] = useState<ZonaResponse | null>(null)
     const [inactivandoZona, setInactivandoZona] = useState(false)
+    const [zonaAsignarMapa, setZonaAsignarMapa] = useState<ZonaResponse | null>(null)
 
     const { data: zonas = [], isLoading } = useQuery<ZonaResponse[]>({
         queryKey,
@@ -33,7 +35,7 @@ export default function PisoCard({ piso, onEditarPiso, onInactivarPiso }: Props)
 
     const handleGuardarZona: (zona: ZonaRequest, id?: number) => Promise<void> = async (zona, id) => {
         if (id) await editarZona(id, zona)
-        else    await agregarZona(zona)
+        else await agregarZona(zona)
         await refrescar()
         setShowZonaForm(false)
         setZonaEditar(null)
@@ -49,6 +51,13 @@ export default function PisoCard({ piso, onEditarPiso, onInactivarPiso }: Props)
             setInactivandoZona(false)
             setZonaAInactivar(null)
         }
+    }
+
+    // Asignar mapa: llama a editarZona con el mapa_id seleccionado
+    const handleAsignarMapa: (zona: ZonaRequest, id: number) => Promise<void> = async (zona, id) => {
+        await editarZona(id, zona)
+        await refrescar()
+        setZonaAsignarMapa(null)
     }
 
     const esActivo = piso.nombreEstado === "Activo" || piso.nombreEstado === "ACTIVO"
@@ -167,9 +176,8 @@ export default function PisoCard({ piso, onEditarPiso, onInactivarPiso }: Props)
                                                             Inactivar
                                                         </button>
                                                         <button
-                                                            disabled
-                                                            title="Próximamente"
-                                                            className="bg-blue-100 text-blue-400 px-2 py-1 rounded text-xs font-semibold cursor-not-allowed flex items-center gap-1"
+                                                            onClick={() => setZonaAsignarMapa(zona)}
+                                                            className="bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 rounded text-xs font-semibold transition flex items-center gap-1"
                                                         >
                                                             <MapPin size={11} /> Asignar Mapa
                                                         </button>
@@ -185,7 +193,7 @@ export default function PisoCard({ piso, onEditarPiso, onInactivarPiso }: Props)
                 )}
             </div>
 
-            {/* Modal zona */}
+            {/* Modal agregar/editar zona */}
             {showZonaForm && (
                 <ZonaForm
                     pisoId={piso.piso_id}
@@ -203,6 +211,16 @@ export default function PisoCard({ piso, onEditarPiso, onInactivarPiso }: Props)
                     onConfirmar={handleConfirmarInactivarZona}
                     onCancelar={() => setZonaAInactivar(null)}
                     cargando={inactivandoZona}
+                />
+            )}
+
+            {/* Modal asignar mapa a zona */}
+            {zonaAsignarMapa && (
+                <ModalAsignarMapa
+                    zona={zonaAsignarMapa}
+                    pisoId={piso.piso_id}
+                    onConfirmar={handleAsignarMapa}
+                    onCancelar={() => setZonaAsignarMapa(null)}
                 />
             )}
         </>
