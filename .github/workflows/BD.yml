@@ -44,9 +44,6 @@ jobs:
       - name: Setup NuGet
         uses: NuGet/setup-nuget@v1
 
-      - name: Restore NuGet packages
-        run: nuget restore "Descubriendo_Nuestras_Ecoempresarias/Descubriendo_Nuestras_Ecoempresarias.sln"
-
       - name: Build Database Project
         run: |
           msbuild "Descubriendo_Nuestras_Ecoempresarias/BD/BD.sqlproj" /p:Configuration=Release /p:Platform="Any CPU" /p:OutputPath="./bin/Release/"
