@@ -178,6 +178,7 @@ builder.Services.AddScoped<IZonaEventoDA, EventoZonaDA>();
 builder.Services.AddScoped<IEventoZonaFlujo, EventoZonaFlujo>();
 builder.Services.AddScoped<IEventoZonaStandDA, EventoZonaStandDA>();
 builder.Services.AddScoped<IEventoZonaStandFlujo, EventoZonaStandFlujo>();
+builder.Services.AddScoped<INotificacionesService, NotificacionService>();
 
 var app = builder.Build();
 

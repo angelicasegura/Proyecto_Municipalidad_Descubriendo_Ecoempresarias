@@ -52,6 +52,15 @@ namespace DA
             return resultadoConsulta;
         }
 
+        public async Task<ReservaEventoRequest> ObtenerReservaPorId(int reserva_id)
+        {
+            string query = "sp_ObtenerReservaPorId";
+            return await _sqlConnection.QueryFirstOrDefaultAsync<ReservaEventoRequest>(query,
+                new { 
+                    Reserva_id = reserva_id 
+                },commandType: CommandType.StoredProcedure);
+        }
+
         public async Task<List<ReservaEventoResponse>> ObtenerReservasEmprendimiento(int emprendimientoId)
         {
             string query = "sp_ObtenerReservas_Emprendimiento";

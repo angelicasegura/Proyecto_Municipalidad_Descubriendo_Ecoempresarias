@@ -24,12 +24,16 @@ namespace Abstracciones.Modelos.Eventos
         public string NombreEmprendimiento { get; set; }
         public string Productos { get; set; }
         public string Correo { get; set; }
+        public string NombreEvento { get; set; }
     }
     public class ReservaEventoResponse : ReservaEventoBase
     {
+        public string Nombre { get; set; }
         public int Reserva_id { get; set; }
+        public string NombreEmprendimiento { get; set; }
         public string NombreEvento { get; set; }
         public string Estado { get; set; }
+        public string Correo { get; set; }
     }
 
     public class solicitudReservaEvento : ReservaEventoBase

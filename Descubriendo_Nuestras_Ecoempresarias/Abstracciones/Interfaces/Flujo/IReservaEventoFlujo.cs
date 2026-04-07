@@ -15,5 +15,6 @@ namespace Abstracciones.Interfaces.Flujo
         Task<int> AprobarReserva(int Reserva_id);
         Task<int> RechazarReserva(int Reserva_id);
         Task<bool> TieneReservaAceptada(int emprendimiento_id, int evento_id);
+        Task<ReservaEventoRequest> ObtenerReservaPorId(int reserva_id);
     }
 }
