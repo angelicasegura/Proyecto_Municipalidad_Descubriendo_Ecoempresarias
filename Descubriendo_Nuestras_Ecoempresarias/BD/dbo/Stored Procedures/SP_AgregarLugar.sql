@@ -41,8 +41,6 @@ BEGIN
 			@Detalles,
 			@Estado_id)
 
-		SELECT Lugar_id FROM ECOEMPRESARIAS_LUGARES_TB WHERE Nombre = @Nombre;
-
 		COMMIT TRANSACTION
 
     END TRY

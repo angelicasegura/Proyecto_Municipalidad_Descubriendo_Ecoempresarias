@@ -551,5 +551,10 @@ VALUES
 (8, 'Reserva evento Pendiente'),
 (9, 'Reserva evento Aceptada'),
 (10, 'Reserva evento Rechazada')
-SELECT * FROM ECOEMPRESARIAS_RESERVA_EVENTOS_TB
-delete from ECOEMPRESARIAS_RESERVA_Eventos_TB WHERE Reserva_id = 7
+
+---inserts en la tabla de estados
+Insert into ECOEMPRESARIAS_ESTADOS_TB(Estado_id, Nombre)
+VALUES 
+(11, 'DISPONIBLE'),
+(12, 'OCUPADO'),
+(13, 'BLOQUEADO')
