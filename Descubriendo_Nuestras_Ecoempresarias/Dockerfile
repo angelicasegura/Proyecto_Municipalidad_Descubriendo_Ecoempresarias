@@ -4,14 +4,17 @@ WORKDIR /app
 
 COPY . .
 
-# 🔥 DEBUG: ver estructura real
+# 🔥 DEBUG (solo para ver estructura)
 RUN ls -R
 
-# (dejamos esto para que falle después pero ya vimos la ruta)
+# ⚠️ AJUSTAR ESTA RUTA DESPUÉS DE VER EL LOG
 RUN dotnet restore Descubriendo_Nuestras_Ecoempresarias/API/API.csproj
+RUN dotnet publish Descubriendo_Nuestras_Ecoempresarias/API/API.csproj -c Release -o /app/out
 
-# Copiar lo publicado
+# Runtime
+FROM mcr.microsoft.com/dotnet/aspnet:8.0
+WORKDIR /app
+
 COPY --from=build /app/out .
 
-# Ejecutar la API
 CMD ["dotnet", "API.dll"]
