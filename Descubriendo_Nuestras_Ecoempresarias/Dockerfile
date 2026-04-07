@@ -4,19 +4,11 @@ WORKDIR /app
 
 COPY . .
 
-# Restaurar directamente desde raíz
-RUN dotnet restore "./Descubriendo_Nuestras_Ecoempresarias/API/API.csproj"
+# 🔥 DEBUG: ver estructura real
+RUN ls -R
 
-# Publicar
-RUN dotnet publish "./Descubriendo_Nuestras_Ecoempresarias/API/API.csproj" -c Release -o /app/out
-
-# Runtime
-FROM mcr.microsoft.com/dotnet/aspnet:8.0
-WORKDIR /app
-
-COPY --from=build /app/out .
-
-CMD ["dotnet", "API.dll"]
+# (dejamos esto para que falle después pero ya vimos la ruta)
+RUN dotnet restore Descubriendo_Nuestras_Ecoempresarias/API/API.csproj
 
 # Copiar lo publicado
 COPY --from=build /app/out .
