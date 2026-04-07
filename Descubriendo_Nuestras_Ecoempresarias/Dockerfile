@@ -4,12 +4,12 @@ WORKDIR /app
 
 COPY . .
 
-# 🔥 DEBUG (solo para ver estructura)
-RUN ls -R
+# 🔥 Entrar a la carpeta correcta
+WORKDIR /app/Descubriendo_Nuestras_Ecoempresarias
 
-# ⚠️ AJUSTAR ESTA RUTA DESPUÉS DE VER EL LOG
-RUN dotnet restore Descubriendo_Nuestras_Ecoempresarias/API/API.csproj
-RUN dotnet publish Descubriendo_Nuestras_Ecoempresarias/API/API.csproj -c Release -o /app/out
+# ✅ Ahora sí usar ruta RELATIVA correcta
+RUN dotnet restore API/API.csproj
+RUN dotnet publish API/API.csproj -c Release -o /app/out
 
 # Runtime
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
