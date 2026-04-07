@@ -4,11 +4,13 @@ WORKDIR /app
 
 COPY . .
 
-# 🔥 Entrar a la carpeta correcta
+# Ir donde está la solución
 WORKDIR /app/Descubriendo_Nuestras_Ecoempresarias
 
-# ✅ Ahora sí usar ruta RELATIVA correcta
-RUN dotnet restore API/API.csproj
+# Restaurar toda la solución
+RUN dotnet restore Descubriendo_Nuestras_Ecoempresarias.slnx
+
+# Publicar el proyecto API (auto detecta dependencias)
 RUN dotnet publish API/API.csproj -c Release -o /app/out
 
 # Runtime
