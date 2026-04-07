@@ -2,19 +2,19 @@ import { Link, useParams } from "react-router-dom"
 import { useQuery } from "@tanstack/react-query"
 import { fetchMisEventos } from "./actions/fetchMisEventos"
 
-export default function MisEventosDetallePage(){
+export default function MisEventosDetallePage() {
 
   const { emprendimientoId } = useParams()
 
-  const { data:eventos = [], isLoading } = useQuery({
-    queryKey:["misEventos",emprendimientoId],
-    queryFn:()=>fetchMisEventos(Number(emprendimientoId)),
-    enabled:!!emprendimientoId
+  const { data: eventos = [], isLoading } = useQuery({
+    queryKey: ["misEventos", emprendimientoId],
+    queryFn: () => fetchMisEventos(Number(emprendimientoId)),
+    enabled: !!emprendimientoId
   })
 
-  if(isLoading) return <p>Cargando eventos...</p>
+  if (isLoading) return <p>Cargando eventos...</p>
   console.log(eventos)
-  return(
+  return (
 
     <div className="max-w-5xl mx-auto mt-10">
 
@@ -39,16 +39,16 @@ export default function MisEventosDetallePage(){
 
           <tbody>
 
-            {eventos.map((evento:any,index:number)=>{
+            {eventos.map((evento: any, index: number) => {
 
               const estadoColor =
                 evento.estado === "Reserva evento Pendiente"
-                ? "bg-yellow-400"
-                : evento.estado === "Reserva evento Aceptada"
-                ? "bg-green-500"
-                : "bg-red-500"
+                  ? "bg-yellow-400"
+                  : evento.estado === "Reserva evento Aceptada"
+                    ? "bg-green-500"
+                    : "bg-red-500"
 
-              return(
+              return (
 
                 <tr key={evento.evento_id} className="border-b text-sm">
 
@@ -66,10 +66,10 @@ export default function MisEventosDetallePage(){
                     {evento.estado === "Reserva evento Aceptada" && (
 
                       <Link
-                        to={`/seleccionar-espacio/${evento.evento_id}/${emprendimientoId}`}
-                        className="bg-blue-600 text-white px-3 py-1 rounded text-xs hover:bg-blue-700"
+                        to={`/seleccionar-stand/${evento.evento_id}`}
+                        className="bg-orange-500 text-white px-3 py-1.5 rounded-md text-sm hover:bg-orange-600"
                       >
-                        Seleccionar espacio
+                        Seleccionar Stand
                       </Link>
 
                     )}

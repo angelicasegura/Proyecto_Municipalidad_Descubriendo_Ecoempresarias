@@ -28,7 +28,7 @@ export default function CrearEventoModal({ onClose, onSuccess }: Props) {
   })
 
   // filtrar solo activos
-  const lugaresActivos = lugares.filter((l: any) => l.nombreEstado === "Activo")
+  const lugaresActivos = lugares.filter((l: any) => l.nombreEstado === "ACTIVO")
 
   const handleSubmit = async (e: any) => {
     e.preventDefault()

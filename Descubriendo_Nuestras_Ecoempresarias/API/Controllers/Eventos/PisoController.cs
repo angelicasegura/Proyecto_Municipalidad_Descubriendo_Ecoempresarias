@@ -2,6 +2,7 @@
 using Abstracciones.Interfaces.Flujo.Eventos;
 using Abstracciones.Modelos.Eventos;
 using Flujo.Eventos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,7 +22,7 @@ namespace API.Controllers.Eventos
         }
 
 
-        //[Authorize(Roles = "ADMIN")]
+        [Authorize(Roles = "ADMIN")]
         [HttpPost("AgregarPiso")]
         public async Task<IActionResult> AgregarPiso([FromBody] PisoRequest piso)
         {
@@ -37,7 +38,7 @@ namespace API.Controllers.Eventos
             }
         }
 
-        //[Authorize(Roles = "ADMIN")]
+        [Authorize(Roles = "ADMIN")]
         [HttpPut("EditarPiso/{id}")]
         public async Task<IActionResult> EditarPiso([FromRoute]int id, [FromBody] PisoRequest piso)
         {
@@ -53,7 +54,7 @@ namespace API.Controllers.Eventos
             }
         }
 
-        //[Authorize(Roles = "ADMIN")]
+        [Authorize(Roles = "ADMIN")]
         [HttpPut("InactivarPiso/{id}")]
         public async Task<IActionResult> InactivarPiso([FromRoute]int id)
         {
@@ -69,7 +70,7 @@ namespace API.Controllers.Eventos
             }
         }
 
-        //[Authorize(Roles = "ADMIN")]
+        [Authorize(Roles = "ADMIN")]
         [HttpGet("ObtenerPisoPorId/{id}")]
         public async Task<IActionResult> ObtenerPisoPorId([FromRoute] int id)
         {
@@ -89,7 +90,7 @@ namespace API.Controllers.Eventos
             }
         }
 
-        //[Authorize(Roles = "ADMIN")]
+        [Authorize(Roles = "ADMIN")]
         [HttpGet("ObtenerPisoPorLugar/{lugar_id}")]
         public async Task<IActionResult> ObtenerPisosPorLugar([FromRoute] int lugar_id)
         {
