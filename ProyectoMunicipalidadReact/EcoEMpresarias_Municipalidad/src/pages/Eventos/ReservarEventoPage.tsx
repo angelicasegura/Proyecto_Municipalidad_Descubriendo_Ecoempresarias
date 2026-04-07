@@ -13,6 +13,7 @@ export default function ReservarEventoPage() {
   const [nombreEmprendimiento, setNombreEmprendimiento] = useState("")
   const [productos, setProductos] = useState("")
   const [correo, setCorreo] = useState("")
+  const [nombreEvento, setNombreEvento] = useState("")
 
   const [alerta, setAlerta] = useState<{
     tipo: "success" | "error"
@@ -44,7 +45,8 @@ export default function ReservarEventoPage() {
       await handleReservarEvento({
         evento_id: Number(eventoId),
         emprendimiento_id: Number(emprendimientoId),
-        estado_id: 6,
+        nombreEvento,
+        estado_id: 8,
         nombre,
         apellidos,
         cedula,
@@ -105,6 +107,15 @@ export default function ReservarEventoPage() {
       )}
 
       <form onSubmit={handleSubmit} className="space-y-3">
+        <label className="block text-sm font-semibold mb-1">
+          Nombre Evento:
+        </label>
+        <input
+          placeholder="Nombre del evento"
+          className="w-full border p-2 rounded"
+          value={nombreEvento}
+          onChange={(e) => setNombreEvento(e.target.value)}
+        />
         <label className="block text-sm font-semibold mb-1">
           Nombre:
         </label>

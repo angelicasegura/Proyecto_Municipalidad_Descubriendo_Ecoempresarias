@@ -94,7 +94,7 @@ function App() {
               <Route path="/pedidos/mis-pedidos" element={<MisPedidosPage />} />
             </Route>
             {/* Ruta protegida para USUARIO (Carrito) */}
-            <Route element={<ProtectedRoute allowedRoles={["ADMIN"]} />}>
+            <Route element={<ProtectedRoute allowedRoles={["ADMIN","EMPRENDEDOR","USUARIO"]} />}>
               <Route path="/carrito" element={<CarritoPage />} />
             </Route>
 
