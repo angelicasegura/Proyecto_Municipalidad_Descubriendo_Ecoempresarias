@@ -17,7 +17,6 @@ namespace Abstracciones.Modelos.Eventos
         public int Cupos_actuales { get; set; }
 
 
-
     }
     public class EventoRequest : EventoBase
     {
@@ -30,9 +29,12 @@ namespace Abstracciones.Modelos.Eventos
     {
         public int Evento_id { get; set; }
         public string Lugar_id { get; set; }
-        public string NombreLugar { get; set; }
-        public string NombreEstado { get; set; }
         
+        public string NombreEstado { get; set; }
+
+        public string NombreLugar { get; set; }
+
+
 
     }
 }

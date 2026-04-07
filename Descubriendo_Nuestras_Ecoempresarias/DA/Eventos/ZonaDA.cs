@@ -100,5 +100,22 @@ namespace DA.Eventos
                 throw new Exception(ex.Message, ex);
             }
         }
+
+        public async Task<IEnumerable<ZonaResponse>> ObtenerZonasPorPisoActivas(int piso_id)
+        {
+            try
+            {
+                string query = @"SP_ObtenerZonasPorPisoActivas";
+                var parameters = new
+                {
+                    Piso_id = piso_id
+                };
+                return await _sqlConnection.QueryAsync<ZonaResponse>(query, parameters, commandType: CommandType.StoredProcedure);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex);
+            }
+        }
     }
 }

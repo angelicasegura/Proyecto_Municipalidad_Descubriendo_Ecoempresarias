@@ -39,5 +39,10 @@ namespace Flujo.Eventos
         {
             return await _zonaDA.ObtenerZonasPorPiso(piso_id);
         }
+
+        public async Task<IEnumerable<ZonaResponse>> ObtenerZonasPorPisoActivas(int piso_id)
+        {
+            return await _zonaDA.ObtenerZonasPorPisoActivas(piso_id);
+        }
     }
 }

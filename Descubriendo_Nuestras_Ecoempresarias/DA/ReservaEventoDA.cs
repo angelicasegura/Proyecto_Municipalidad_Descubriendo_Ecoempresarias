@@ -52,6 +52,15 @@ namespace DA
             return resultadoConsulta;
         }
 
+        public async Task<ReservaEventoRequest> ObtenerReservaPorId(int reserva_id)
+        {
+            string query = "sp_ObtenerReservaPorId";
+            return await _sqlConnection.QueryFirstOrDefaultAsync<ReservaEventoRequest>(query,
+                new { 
+                    Reserva_id = reserva_id 
+                },commandType: CommandType.StoredProcedure);
+        }
+
         public async Task<List<ReservaEventoResponse>> ObtenerReservasEmprendimiento(int emprendimientoId)
         {
             string query = "sp_ObtenerReservas_Emprendimiento";
@@ -77,6 +86,19 @@ namespace DA
                     Reserva_id = Reserva_id
                 });
             return resultado;
+        }
+
+        public async Task<bool> TieneReservaAceptada(int emprendimiento_id, int evento_id)
+        {
+            string query = "sp_Tiene_Reserva_Aceptada";
+
+            var count = await _sqlConnection.ExecuteScalarAsync<int>(query, new
+            {
+                Emprendimiento_id = emprendimiento_id,
+                Evento_id = evento_id
+            }, commandType: CommandType.StoredProcedure);
+            return count > 0;
+
         }
     }
 }

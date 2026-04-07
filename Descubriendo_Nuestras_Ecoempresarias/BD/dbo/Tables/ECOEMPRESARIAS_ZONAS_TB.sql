@@ -3,7 +3,7 @@
     [Nombre]      NVARCHAR (150) NOT NULL,
     [Descripcion] NVARCHAR (MAX) NULL,
     [Piso_id]     INT            NOT NULL,
-    [Mapa_id]     INT            NOT NULL,
+    [Mapa_id]     INT            NULL,
     [Estado_id]   INT            NOT NULL,
     CONSTRAINT [PK_ECOEMPRESARIAS_ZONAS_TB] PRIMARY KEY CLUSTERED ([Zona_id] ASC),
     CONSTRAINT [ECO_ZONA_ESTADO_FK] FOREIGN KEY ([Estado_id]) REFERENCES [dbo].[ECOEMPRESARIAS_ESTADOS_TB] ([Estado_id]),
