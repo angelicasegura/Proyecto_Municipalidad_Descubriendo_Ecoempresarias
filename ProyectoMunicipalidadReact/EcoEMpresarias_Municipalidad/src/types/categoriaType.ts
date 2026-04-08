@@ -7,7 +7,7 @@ export interface Categoria {
     estado: number
 }
 
-const BASE_URL = "https://localhost:7050"
+const BASE_URL = "https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net"
 
 export async function obtenerCategorias(): Promise<Categoria[]> {
     const res = await authFetch(`${BASE_URL}/api/CategoriasProductos/Obtener`)

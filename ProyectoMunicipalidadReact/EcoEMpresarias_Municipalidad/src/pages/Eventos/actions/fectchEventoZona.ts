@@ -1,7 +1,7 @@
 import { authFetch } from "../../../auth/AuthFetch"
 import type { EventoZonaRequest, EventoZonaResponse } from "../../../types/EventoZonaType"
 
-const BASE = "https://localhost:7050/api/EventoZona"
+const BASE = "https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/api/EventoZona"
 
 // Todas las zonas del evento (activas e inactivas) — vista admin
 export async function fetchZonasEvento(evento_id: number): Promise<EventoZonaResponse[]> {

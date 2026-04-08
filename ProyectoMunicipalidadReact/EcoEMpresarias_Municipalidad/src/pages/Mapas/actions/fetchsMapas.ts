@@ -1,7 +1,7 @@
 import { authFetch } from "../../../auth/AuthFetch";
 import type { MapaRequest, MapaResponse } from "../../../types/mapaType";
 
-const BASE = "https://localhost:7050/api/Mapa";
+const BASE = "https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/api/Mapa";
 
 export async function fetchMapas(): Promise<MapaResponse[]> {
     const res = await authFetch(`${BASE}/ObtenerMapas`);

@@ -14,7 +14,7 @@ export interface Evento {
 export async function fetchEventos(): Promise<Evento[]> {
 
   const res = await fetch(
-    "https://localhost:7050/api/Evento/ObtenerEventos"
+    "https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/api/Evento/ObtenerEventos"
   )
 
   if (!res.ok) {
