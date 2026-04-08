@@ -1,7 +1,7 @@
 import { authFetch } from "../../../../../auth/AuthFetch"
 import type { ZonaRequest, ZonaResponse } from "../../../../../types/lugarType"
 
-const BASE = "https://localhost:7050/api/Zona"
+const BASE = "https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/api/Zona"
 
 export async function fetchZonasPorPiso(piso_id: number): Promise<ZonaResponse[]> {
     const res = await authFetch(`${BASE}/ObtenerZonasPorPiso/${piso_id}`)

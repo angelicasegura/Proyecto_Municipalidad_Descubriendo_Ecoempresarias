@@ -1,4 +1,4 @@
-const API = "https://localhost:7050/api/reporte";
+const API = "https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/api/reporte";
 
 export async function obtenerVentasPorSector() {
   const token = localStorage.getItem("token");

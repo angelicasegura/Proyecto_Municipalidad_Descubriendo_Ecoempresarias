@@ -12,7 +12,7 @@ export async function handleAgregarCarrito(payload: AgregarCarritoRequest) {
   const toastId = toast.loading("Agregando producto al carrito...");
 
   try {
-    const res = await authFetch("https://localhost:7050/api/Carrito/Agregar", {
+    const res = await authFetch("https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/api/Carrito/Agregar", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

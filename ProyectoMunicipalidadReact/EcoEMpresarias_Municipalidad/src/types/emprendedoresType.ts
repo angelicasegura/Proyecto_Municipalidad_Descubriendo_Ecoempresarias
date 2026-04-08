@@ -90,7 +90,7 @@ export async function toggleEstadoEmprendimiento(id: number): Promise<void> {
 }
 
 
-const BASE_URL = "https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net"
+const BASE_URL = "https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/"
 
 export async function obtenerEmprendimientosPorUsuario(usuarioId: number): Promise<Emprendimiento[]> {
   const res = await authFetch(`${BASE_URL}/api/Emprendimientos/ObtenerPorUsuario/${usuarioId}`)

@@ -1,7 +1,7 @@
 import { authFetch } from "../../../../../auth/AuthFetch"
 import type { PisoRequest, PisoResponse } from "../../../../../types/lugarType"
 
-const BASE = "https://localhost:7050/api/Piso"
+const BASE = "https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/api/Piso"
 
 export async function fetchPisosPorLugar(lugar_id: number): Promise<PisoResponse[]> {
     const res = await authFetch(`${BASE}/ObtenerPisoPorLugar/${lugar_id}`)

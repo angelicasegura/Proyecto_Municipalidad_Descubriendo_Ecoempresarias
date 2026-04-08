@@ -16,7 +16,7 @@ export function handleCrearEmprendedor({
     
       console.log([...emprendimientoData.entries()]);
       const response = authFetch(
-        "https://localhost:7050/api/emprendimientos/crearAdmin",
+        "https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/api/emprendimientos/crearAdmin",
         {
           method: "POST",
           body: emprendimientoData,

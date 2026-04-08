@@ -6,7 +6,7 @@ export async function handleFetchProducto(
   try {
     
 
-    const response = await fetch(`https://localhost:7050/api/Producto/ObtenerProducto/${producto_id}`);
+    const response = await fetch(`https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/api/Producto/ObtenerProducto/${producto_id}`);
     
     if (!response.ok) throw new Error("Error al obtener productos");
 
