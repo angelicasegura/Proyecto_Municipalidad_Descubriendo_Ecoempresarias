@@ -3,7 +3,7 @@ export async function editarLugar(id:number,data:any){
   const token = localStorage.getItem("token")
 
   const response = await fetch(
-    `https://localhost:7050/api/Lugar/EditarLugar/${id}`,
+    `https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/api/Lugar/EditarLugar/${id}`,
     {
       method:"PUT",
       headers:{

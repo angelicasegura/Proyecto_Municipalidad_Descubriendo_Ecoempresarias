@@ -3,7 +3,7 @@ export async function fetchLugares(){
   const token = localStorage.getItem("token")
 
   const response = await fetch(
-    "https://localhost:7050/api/Lugar/ObtenerLugares",
+    "https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/api/Lugar/ObtenerLugares",
     {
       headers:{
         Authorization:`Bearer ${token}`

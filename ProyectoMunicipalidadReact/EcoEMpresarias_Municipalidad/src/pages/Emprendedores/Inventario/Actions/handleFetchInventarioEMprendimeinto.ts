@@ -8,7 +8,7 @@ import type { Inventario } from "../../../../types/productosType";
 export async function handleFetchInventarioEmprendimiento(emprendimiento_id: string, CedulaJuridica: string): Promise<Inventario[]> {
   try {
      const parameters = new URLSearchParams({ emprendimiento_id,CedulaJuridica });
-     const response = await authFetch(`https://localhost:7050/api/Inventario/Mi-Inventario?${parameters.toString()}`);
+     const response = await authFetch(`https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/api/Inventario/Mi-Inventario?${parameters.toString()}`);
      console.log(response);
      if (!response.ok) throw new Error("Error al obtener emprendimiento");
      return await response.json();

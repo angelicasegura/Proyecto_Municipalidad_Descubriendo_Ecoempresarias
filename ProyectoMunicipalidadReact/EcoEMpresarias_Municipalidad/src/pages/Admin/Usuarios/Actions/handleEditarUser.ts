@@ -17,7 +17,7 @@ export function handleEditarUser({
   return async (userData: User) => {
     //  API 
     
-      const response =  authFetch(`https://localhost:7050/api/Usuarios/EditAdmin/${userData.idUsuario}`, {
+      const response =  authFetch(`https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/api/Usuarios/EditAdmin/${userData.idUsuario}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

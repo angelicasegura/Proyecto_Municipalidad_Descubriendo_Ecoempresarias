@@ -45,7 +45,7 @@ export interface Emprendedora {
 
 export const fetchTiposActividad = async (): Promise<TipoActividad[]> => {
     try {
-        const response = await fetch("https://localhost:7050/api/TiposActividad");
+        const response = await fetch("https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/api/TiposActividad");
         if (!response.ok) throw new Error("Error al cargar tipos de actividad");
         return await response.json();
     } catch (error) {
@@ -72,7 +72,7 @@ export const getTipoActividadNombre = (id: number, listaTipos: TipoActividad[]):
 
 export async function editarEmprendimiento(id: number, formData: FormData): Promise<void> {
   const token = localStorage.getItem("token")
-  const res = await fetch(`https://localhost:7050/api/Emprendimientos/EditarEmprendimiento/${id}`, {
+  const res = await fetch(`https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/api/Emprendimientos/EditarEmprendimiento/${id}`, {
     method: "PUT",
     headers: { Authorization: `Bearer ${token}` },
     body: formData,
@@ -83,14 +83,14 @@ export async function editarEmprendimiento(id: number, formData: FormData): Prom
 // Inactivar/activar emprendimiento
 export async function toggleEstadoEmprendimiento(id: number): Promise<void> {
   const res = await authFetch(
-    `https://localhost:7050/api/Emprendimientos/EliminarEmprendimiento/${id}`,
+    `https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/api/Emprendimientos/EliminarEmprendimiento/${id}`,
     { method: "PUT" }
   )
   if (!res.ok) throw new Error("Error al cambiar estado del emprendimiento")
 }
 
 
-const BASE_URL = "https://localhost:7050"
+const BASE_URL = "https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/"
 
 export async function obtenerEmprendimientosPorUsuario(usuarioId: number): Promise<Emprendimiento[]> {
   const res = await authFetch(`${BASE_URL}/api/Emprendimientos/ObtenerPorUsuario/${usuarioId}`)
