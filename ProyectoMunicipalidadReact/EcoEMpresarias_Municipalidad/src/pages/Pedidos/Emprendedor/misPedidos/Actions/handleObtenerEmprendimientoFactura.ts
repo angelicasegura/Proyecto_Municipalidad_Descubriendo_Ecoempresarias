@@ -8,7 +8,7 @@ export async function handleObtenerEmprendimientoPorId(
     if (!emprendimientoId) return null;
 
     const res = await authFetch(
-      `https://localhost:7050/api/emprendimientos/Obtener/EMprendimientoID?id=${emprendimientoId}`
+      `https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/api/emprendimientos/Obtener/EMprendimientoID?id=${emprendimientoId}`
     );
 
     if (!res.ok) {

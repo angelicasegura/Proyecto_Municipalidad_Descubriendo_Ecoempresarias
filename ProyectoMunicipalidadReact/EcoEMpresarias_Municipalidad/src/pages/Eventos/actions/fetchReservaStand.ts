@@ -1,7 +1,7 @@
 import { authFetch } from "../../../auth/AuthFetch"
 import type { EventoPisoActivoResponse, EventoZonaActivaResponse } from "../../../types/reservaType"
 
-const BASE = "https://localhost:7050"
+const BASE = "https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net"
 
 // Pisos habilitados por el admin para este evento
 export async function fetchPisosActivosEvento(evento_id: number): Promise<EventoPisoActivoResponse[]> {

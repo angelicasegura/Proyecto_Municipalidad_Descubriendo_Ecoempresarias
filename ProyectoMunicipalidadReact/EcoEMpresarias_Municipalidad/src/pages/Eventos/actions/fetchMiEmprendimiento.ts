@@ -3,7 +3,7 @@ export async function fetchMiEmprendimiento(usuarioId:number){
   const token = localStorage.getItem("token")
 
   const response = await fetch(
-    `https://localhost:7050/api/Emprendimiento/ObtenerPorUsuario/${usuarioId}`,
+    `https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/api/Emprendimiento/ObtenerPorUsuario/${usuarioId}`,
     {
       headers:{
         Authorization:`Bearer ${token}`
