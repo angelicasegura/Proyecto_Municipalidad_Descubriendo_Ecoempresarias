@@ -3,7 +3,7 @@ export async function handleReservarEvento(data:any){
   const token = localStorage.getItem("token")
 
   const response = await fetch(
-    "https://localhost:7050/api/ReservaEvento/CrearReserva",
+    "https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/api/ReservaEvento/CrearReserva",
     {
       method:"POST",
       headers:{

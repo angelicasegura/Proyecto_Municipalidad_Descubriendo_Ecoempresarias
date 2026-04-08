@@ -3,7 +3,7 @@ export async function fetchMisEventos(emprendimientoId: number) {
   const token = localStorage.getItem("token")
 
   const response = await fetch(
-    `https://localhost:7050/api/ReservaEvento/MisReservas/${emprendimientoId}`,
+    `https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/api/ReservaEvento/MisReservas/${emprendimientoId}`,
     {
       headers:{
         Authorization:`Bearer ${token}`

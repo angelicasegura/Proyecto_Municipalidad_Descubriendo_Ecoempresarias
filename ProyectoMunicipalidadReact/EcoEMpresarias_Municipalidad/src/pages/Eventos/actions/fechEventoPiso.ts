@@ -1,7 +1,7 @@
 import { authFetch } from "../../../auth/AuthFetch"
 import type { EventoPisoRequest, EventoPisoResponse } from "../../../types/eventoPisoType"
 
-const BASE = "https://localhost:7050/api/EventoPiso"
+const BASE = "https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/api/EventoPiso"
 
 // Trae TODOS los pisos del evento (activos e inactivos) — vista admin
 export async function fetchPisosEvento(evento_id: number): Promise<EventoPisoResponse[]> {

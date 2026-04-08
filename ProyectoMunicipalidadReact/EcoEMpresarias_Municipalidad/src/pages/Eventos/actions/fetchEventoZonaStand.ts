@@ -1,7 +1,7 @@
 import { authFetch } from "../../../auth/AuthFetch"
 import type { EventoZonaStandRequest, EventoZonaStandResponse } from "../../../types/eventoZonaStandTypes"
 
-const BASE = "https://localhost:7050/api/EventoZonaStand"
+const BASE = "https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/api/EventoZonaStand"
 
 // Obtener stands de una zona en un evento
 export async function fetchStandsEvento(

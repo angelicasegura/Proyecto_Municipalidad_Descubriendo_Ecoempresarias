@@ -47,7 +47,7 @@ export interface InventarioRequest {
 export const fetchCategoriasProductos = async (): Promise<CategoriaProducto[]> => {
   try {
     const response = await fetch(
-      "https://localhost:7050/api/CategoriasProductos/Obtener"
+      "https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/api/CategoriasProductos/Obtener"
     )
 
     if (!response.ok) {
@@ -81,7 +81,7 @@ export function formatearPrecio(precio: number): string {
 
 
 
-const BASE_URL = "https://localhost:7050"
+const BASE_URL = "https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net"
 
 // Trae todos los productos
 export async function obtenerProductos(emprendimientoId?: number): Promise<Producto[]> {
