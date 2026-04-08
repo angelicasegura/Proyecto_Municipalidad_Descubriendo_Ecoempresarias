@@ -16,7 +16,7 @@ console.log(JSON.stringify({
   try {
 
     const response = await authFetch(
-      "https://localhost:7050/api/Pedido",
+      "https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/api/Pedido",
       {
         method: "POST",
         headers: {

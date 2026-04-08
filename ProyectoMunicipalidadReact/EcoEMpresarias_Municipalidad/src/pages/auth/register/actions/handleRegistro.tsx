@@ -1,5 +1,5 @@
 export async function registrarUsuario(data: any) {
-  const response = await fetch("https://localhost:7050/auth/registro", {
+  const response = await fetch("https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/auth/registro", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

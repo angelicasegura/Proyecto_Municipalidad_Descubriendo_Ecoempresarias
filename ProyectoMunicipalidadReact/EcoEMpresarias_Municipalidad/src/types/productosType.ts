@@ -81,7 +81,7 @@ export function formatearPrecio(precio: number): string {
 
 
 
-const BASE_URL = "https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net"
+const BASE_URL = "https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/"
 
 // Trae todos los productos
 export async function obtenerProductos(emprendimientoId?: number): Promise<Producto[]> {

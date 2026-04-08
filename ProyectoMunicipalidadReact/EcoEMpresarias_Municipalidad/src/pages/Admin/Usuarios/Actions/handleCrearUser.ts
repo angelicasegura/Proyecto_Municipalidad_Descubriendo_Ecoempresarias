@@ -14,7 +14,7 @@ export function handleCrearUser({
   return async (userData: any) => {
 
     
-      const response =  authFetch(`https://localhost:7050/api/Usuarios/AgregarAdmin`, {
+      const response =  authFetch(`https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/api/Usuarios/AgregarAdmin`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

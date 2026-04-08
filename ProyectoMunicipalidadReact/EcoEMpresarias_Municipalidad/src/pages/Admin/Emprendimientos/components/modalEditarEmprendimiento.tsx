@@ -236,7 +236,7 @@ export function EditarEmprendedor({ open, onOpenChange, emprendedor, tiposActivi
             {emprendedor?.ruta_Imagen_Logo && !imagen && (
               <div className="mb-2">
                 <img
-                  src={`https://localhost:7050/api/Images/Buscar/3/${emprendedor.ruta_Imagen_Logo}`}
+                  src={`https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/api/Images/Buscar/3/${emprendedor.ruta_Imagen_Logo}`}
                   alt="Logo actual"
                   className="h-16 w-16 rounded-full object-cover border"
                 />

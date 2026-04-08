@@ -15,7 +15,7 @@ export function handleToggleStatus({
   return async(userData: User) => {
     // AQUÍ VA LA API EN EL FUTURO
     
-          const response =  authFetch(`https://localhost:7050/api/Usuarios/EditEstado/${userData.idUsuario}`, {
+          const response =  authFetch(`https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/api/Usuarios/EditEstado/${userData.idUsuario}`, {
             method: "PUT",
             headers: {
               "Content-Type": "application/json",
