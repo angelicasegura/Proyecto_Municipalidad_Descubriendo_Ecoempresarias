@@ -6,7 +6,7 @@ import { handleFetchCarrito } from "./Actions/handleCargarCarrito";
 import { handleActualizarCantidad } from "./Actions/handleActualizarCarrito";
 import { handleEliminarItemCarrito } from "./Actions/handleEliminarItemCarrito";
 import { handleCrearPedido } from "./Actions/handleConfirmarPedido";
-
+import { useNavigate } from "react-router-dom";
 import CarritoItemCard from "./components/carritoItemCard";
 import CarritoResumen from "./components/carritoResumen";
 import CarritoFormularioPedido from "./components/CarritoFormularioPedido";
@@ -18,7 +18,7 @@ export default function CarritoPage() {
   const [creandoPedido, setCreandoPedido] = useState(false);
   const [direccionEntrega, setDireccionEntrega] = useState("");
   const [observaciones, setObservaciones] = useState("");
-
+  const navigate = useNavigate();
   const { user } = useAuth();
 
   const emprendimientoId = Number(localStorage.getItem("emprendimientoId") || 0); //TODO recuerda que esto no se debe hacer asi, que primero se haga una lsita de carritos y asi, esto hay que cambiarlo a futuro
@@ -87,7 +87,7 @@ export default function CarritoPage() {
      
 
       
-       //navigate("http://localhost:5173/pedidos/mis-pedidos");
+       navigate("http://localhost:5173/pedidos/mis-pedidos");
 
     } catch {
 
