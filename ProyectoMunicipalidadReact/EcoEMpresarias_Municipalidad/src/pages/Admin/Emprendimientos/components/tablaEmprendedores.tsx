@@ -66,7 +66,7 @@ export function EmprendedoresTable({
             </TableHeader>
             <TableBody>
               {emprendedores.map((emprendedor) => (
-                <TableRow key={emprendedor.emprendedor_id} className="hover:bg-muted/30">
+                <TableRow key={emprendedor.emprendimientoId} className="hover:bg-muted/30">
                   <TableCell className="font-medium">{emprendedor.nombre}</TableCell>
                   <TableCell className="font-mono text-sm">{emprendedor.cedulaJuridica}</TableCell>
                   
