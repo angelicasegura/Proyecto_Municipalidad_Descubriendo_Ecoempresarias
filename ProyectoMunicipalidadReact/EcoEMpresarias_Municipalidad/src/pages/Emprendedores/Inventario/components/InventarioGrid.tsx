@@ -94,7 +94,7 @@ export function InventarioGrid({ items, CedulaJuridica, emprendimientoId, onUpda
                 <tr key={item.productoId} className={`${rowColor} border-b`}>
                   <td className="px-6 py-3">
                     <img
-                      src={`https://localhost:7050/api/Images/Buscar/3/${item.ruta_Imagen}` || "/public/placeholder.png"}
+                      src={`https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/api/Images/Buscar/3/${item.ruta_Imagen}` || "/public/placeholder.png"}
                       alt={item.nombreProducto}
                       className="w-16 h-16 object-cover rounded"
                     />

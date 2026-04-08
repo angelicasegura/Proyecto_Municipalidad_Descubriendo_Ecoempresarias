@@ -10,7 +10,7 @@ export interface LoginResponse {
   token: string;
 }
 export async function loginUser(data: LoginRequest): Promise<LoginResponse> {
-  const response = await fetch("https://localhost:7050/login", {
+  const response = await fetch("https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

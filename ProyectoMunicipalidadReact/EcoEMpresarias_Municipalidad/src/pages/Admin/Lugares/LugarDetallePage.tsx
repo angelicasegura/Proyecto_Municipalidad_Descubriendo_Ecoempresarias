@@ -25,7 +25,7 @@ export default function LugarDetallePage() {
     const { data: lugar, isLoading: loadingLugar } = useQuery<LugarResponse>({
         queryKey: ["lugar", lugarId],
         queryFn: async () => {
-            const res = await authFetch(`https://localhost:7050/api/Lugar/ObtenerLugarId/${lugarId}`)
+            const res = await authFetch(`https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/api/Lugar/ObtenerLugarId/${lugarId}`)
             if (!res.ok) throw new Error("Error al cargar lugar")
             return res.json()
         },

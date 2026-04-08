@@ -27,7 +27,7 @@ export default function ModalAsignarMapa({ zona, pisoId, onConfirmar, onCancelar
     const { data: mapas = [], isLoading } = useQuery<MapaOption[]>({
         queryKey: ["mapas"],
         queryFn: async () => {
-            const res = await authFetch("https://localhost:7050/api/Mapa/ObtenerMapas")
+            const res = await authFetch("https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/api/Mapa/ObtenerMapas")
             if (res.status === 204) return []
             if (!res.ok) throw new Error("Error al obtener mapas")
             return res.json()

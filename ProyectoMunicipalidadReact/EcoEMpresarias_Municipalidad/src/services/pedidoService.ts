@@ -2,7 +2,7 @@ import type { PedidoRequest } from "../types/pedidoType"
 import { authFetch } from "../auth/AuthFetch"
 
 export async function agregarPedido(pedido: PedidoRequest): Promise<PedidoRequest> {
-  const response = await authFetch("https://localhost:7050/api/Pedido", {
+  const response = await authFetch("https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/api/Pedido", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
