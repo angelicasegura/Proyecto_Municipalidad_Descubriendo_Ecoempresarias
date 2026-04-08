@@ -7,7 +7,7 @@ export async function handleActualizarCantidad(
 ) {
   try {
     const response = await authFetch(
-      `https://localhost:7050/api/Carrito/ActualizarCantidad`,
+      `https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/api/Carrito/ActualizarCantidad`,
       {
         method: "PUT",
         headers: {

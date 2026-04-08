@@ -19,7 +19,10 @@ BEGIN
             P.Numero_piso,
 
             M.Mapa_id,
-            M.Nombre AS NombreMapa
+            M.Nombre AS NombreMapa,
+            
+            EZ.Estado_id,
+            ES.Nombre AS Estado
 
         FROM ECOEMPRESARIAS_EVENTOS_ZONAS_TB EZ
 
@@ -31,6 +34,9 @@ BEGIN
 
         INNER JOIN ECOEMPRESARIAS_PISOS_TB P
             ON Z.Piso_id = P.Piso_id
+
+            INNER JOIN ECOEMPRESARIAS_ESTADOS_TB ES
+            ON EZ.Estado_id = ES.Estado_id
 
         LEFT JOIN ECOEMPRESARIAS_MAPAS_TB M
             ON Z.Mapa_id = M.Mapa_id

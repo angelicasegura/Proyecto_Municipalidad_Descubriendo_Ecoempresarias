@@ -117,5 +117,24 @@ namespace API.Controllers.Eventos
                 return StatusCode(500, $"Error interno al obtener zonas es: {ex.Message}");
             }
         }
+
+        [HttpGet("ObtenerZonasPorPisoActivas/{piso_id}")]
+        public async Task<IActionResult> ObtenerZonasPorPisoActivas([FromRoute] int piso_id)
+        {
+            try
+            {
+                var resultado = await _zonaFlujo.ObtenerZonasPorPisoActivas(piso_id);
+
+                if (!resultado.Any())
+                    return NoContent();
+
+                return Ok(resultado);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return StatusCode(500, $"Error interno al obtener zonas es: {ex.Message}");
+            }
+        }
     }
 }

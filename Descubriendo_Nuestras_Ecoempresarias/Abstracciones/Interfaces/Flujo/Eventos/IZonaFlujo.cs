@@ -13,6 +13,7 @@ namespace Abstracciones.Interfaces.Flujo.Eventos
         public Task<int> EditarZona(int id, ZonaRequest zona);
         public Task<int> CambiarEstadoZona(int zona_id, int estado_id);
         public Task<IEnumerable<ZonaResponse>> ObtenerZonasPorPiso(int piso_id);
+        public Task<IEnumerable<ZonaResponse>> ObtenerZonasPorPisoActivas(int piso_id);
         public Task<ZonaResponse> ObtenerZonaPorId(int zona_id);
     }
 

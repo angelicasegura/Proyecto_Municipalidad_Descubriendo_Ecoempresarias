@@ -7,6 +7,9 @@ r.Reserva_id,
 r.Evento_id,
 r.Emprendimiento_id, 
 r.Estado_id, 
+r.Correo,
+r.Nombre,
+r.NombreEmprendimiento,
 e.NombreEvento as nombreEvento,
 est.Nombre as Estado 
 from ECOEMPRESARIAS_RESERVA_EVENTOS_TB r

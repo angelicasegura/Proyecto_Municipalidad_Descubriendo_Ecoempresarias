@@ -231,5 +231,18 @@ namespace DA
 
         }
 
+        public async Task<IEnumerable<EmprendimientoResponse>> ObtenerEmprendimientosActivos()
+        {
+            try
+            {
+                string query = @"SP_ObtenerEmprendimientosActivos";
+                var resultQuery = await _sqlConnection.QueryAsync<EmprendimientoResponse>(query);
+                return resultQuery;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex);
+            }
+        }
     }
 }

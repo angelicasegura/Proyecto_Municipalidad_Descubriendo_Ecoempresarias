@@ -38,7 +38,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       return
     }
 
-    fetch(`https://localhost:7050/auth/me`, {
+    fetch(`https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/auth/me`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -60,7 +60,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const login = async (token: string) => {
   localStorage.setItem("token", token)
 
-  const res = await fetch("http://localhost:7050/auth/me", {
+  const res = await fetch("https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/auth/me", {
     headers: { Authorization: `Bearer ${token}` },
   })
 

@@ -1,5 +1,6 @@
 ﻿using Abstracciones.Interfaces.API.Eventos;
 using Abstracciones.Interfaces.Flujo.Eventos;
+using Abstracciones.Interfaces.Servicios;
 using Abstracciones.Modelos.Eventos;
 using DA.Eventos;
 using Flujo.Eventos;
@@ -14,12 +15,14 @@ namespace API.Controllers.Eventos
     public class EventoController : ControllerBase, IEventoController
     {
         private readonly IEventoFlujo _eventoFlujo;
+        private readonly INotificacionesService _notificacionService;
         private readonly IConfiguration _configuration;
 
-        public EventoController(IEventoFlujo eventoFlujo, IConfiguration configuration)
+        public EventoController(IEventoFlujo eventoFlujo, IConfiguration configuration, INotificacionesService notificacionesService)
         {
             _eventoFlujo = eventoFlujo;
             _configuration = configuration;
+            _notificacionService = notificacionesService;
         }
 
         [Authorize(Roles = "ADMIN")]
@@ -29,7 +32,29 @@ namespace API.Controllers.Eventos
             try
             {
                 var resultado = await _eventoFlujo.AgregarEvento(evento);
+
+                
+               
+                    Console.WriteLine(">>> Iniciando envío de notificación nuevo evento");
+                    try
+                    {
+                        await _notificacionService.NotificarNuevoEventoAsync(
+                            nombreEvento: evento.NombreEvento,
+                            fechaInicio: evento.Fecha_inicio.ToString("dd/MM/yyyy"),
+                            fechaFin: evento.Fecha_Final.ToString("dd/MM/yyyy"),
+                            lugar: $"{evento.Lugar_id}", //esto es temporal, idealmente se debería obtener el nombre del lugar a partir del ID
+                            descripcion: evento.Descripcion
+                        );
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Error enviando notificación nuevo evento: {ex.Message}");
+                    }
+                
+
+
                 return Ok(resultado);
+
             }
             catch (Exception ex)
             {

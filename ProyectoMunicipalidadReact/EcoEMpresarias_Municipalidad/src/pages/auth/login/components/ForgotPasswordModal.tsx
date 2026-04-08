@@ -44,7 +44,7 @@ export function ForgotPasswordModal({ open, onOpenChange }: ForgotPasswordModalP
 
         setIsLoading(true)
         try {
-            const response = await fetch("https://localhost:7050/auth/olvido-contrasena", {
+            const response = await fetch("https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net//auth/olvido-contrasena", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

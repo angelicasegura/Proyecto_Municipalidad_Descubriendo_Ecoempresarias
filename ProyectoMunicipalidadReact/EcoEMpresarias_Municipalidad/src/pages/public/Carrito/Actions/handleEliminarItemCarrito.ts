@@ -6,7 +6,7 @@ export async function handleEliminarItemCarrito(
 ) {
   try {
     const response = await authFetch(
-      `https://localhost:7050/api/Carrito/Eliminar`,
+      `https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/api/Carrito/Eliminar`,
       {
         method: "DELETE",
         headers: {

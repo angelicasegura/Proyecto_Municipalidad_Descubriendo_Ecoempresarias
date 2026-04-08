@@ -2,6 +2,7 @@
 using Abstracciones.Interfaces.Flujo.Eventos;
 using Abstracciones.Modelos.Eventos;
 using Flujo.Eventos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,6 +21,7 @@ namespace API.Controllers.Eventos
             _configuration = configuration;
         }
 
+        [Authorize(Roles = "ADMIN")]
         [HttpPut("EditarStand/{id}")]
         public async Task<IActionResult> ActualizarStand([FromRoute] int id, [FromBody] StandRequest stand)
         {
@@ -35,6 +37,7 @@ namespace API.Controllers.Eventos
             }
         }
 
+        [Authorize(Roles = "ADMIN")]
         [HttpPost("AgregarStand")]
         public async Task<IActionResult> AgregarStand([FromBody] StandRequest stand)
         {
@@ -50,6 +53,7 @@ namespace API.Controllers.Eventos
             }
         }
 
+        [Authorize(Roles = "ADMIN")]
         [HttpPut("InactivarStand/{stand_id}")]
         public async Task<IActionResult> InactivarStand([FromRoute] int stand_id)
         {
@@ -65,6 +69,7 @@ namespace API.Controllers.Eventos
             }
         }
 
+        [Authorize(Roles = "ADMIN")]
         [HttpPut("ActivarStand/{stand_id}")]
         public async Task<IActionResult> ActivarStand([FromRoute] int stand_id)
         {
@@ -80,6 +85,7 @@ namespace API.Controllers.Eventos
             }
         }
 
+        [Authorize(Roles = "ADMIN")]
         [HttpGet("ObtenerStandPorId/{stand_id}")]
         public async Task<IActionResult> ObtenerStandPorId([FromRoute] int stand_id)
         {
@@ -95,6 +101,7 @@ namespace API.Controllers.Eventos
             }
         }
 
+        [Authorize(Roles = "ADMIN")]
         [HttpGet("ObtenerStandPorMapa/{mapa_id}")]
         public async Task<IActionResult> ObtenerStandPorMapa([FromRoute] int mapa_id)
         {

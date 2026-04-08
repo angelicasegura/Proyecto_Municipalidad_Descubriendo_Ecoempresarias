@@ -10,7 +10,7 @@ export async function handleFetchPedidosPorEmprendimiento(
   if (!CedulaJuridica) throw new Error("Falta CedulaJuridica");
 
   const params = new URLSearchParams({ cedulaJuridica: CedulaJuridica, page: page.toString() });
-  const url = `https://localhost:7050/api/Pedido/Emprendimiento?${params.toString()}`;
+  const url = `https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/api/Pedido/Emprendimiento?${params.toString()}`;
 
   const res = authFetch(url)
     .then(async (response) => {

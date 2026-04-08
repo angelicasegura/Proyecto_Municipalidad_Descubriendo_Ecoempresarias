@@ -2,6 +2,7 @@
 using Abstracciones.Interfaces.Flujo.Eventos;
 using Abstracciones.Modelos.Eventos;
 using Flujo.Eventos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,6 +21,7 @@ namespace API.Controllers.Eventos
             _configuration = configuration;
         }
 
+        [Authorize(Roles = "ADMIN")]
         [HttpPost("AgregarMapa")]
         public async Task<IActionResult> AgregarMapa([FromBody]MapaRequest mapa)
         {
@@ -35,6 +37,7 @@ namespace API.Controllers.Eventos
             }
         }
 
+        [Authorize(Roles = "ADMIN")]
         [HttpPut("InactivarMapa/{mapa_id}")]
         public async Task<IActionResult> InactivarMapa([FromRoute] int mapa_id)
         {
@@ -50,6 +53,7 @@ namespace API.Controllers.Eventos
             }
         }
 
+        [Authorize(Roles = "ADMIN")]
         [HttpPut("ActivarMapa/{mapa_id}")]
         public async Task<IActionResult> ActivarMapa([FromRoute] int mapa_id)
         {
@@ -65,6 +69,7 @@ namespace API.Controllers.Eventos
             }
         }
 
+        [Authorize(Roles = "ADMIN")]
         [HttpPut("EditarMapa/{id}")]
         public async Task<IActionResult> EditarMapa([FromRoute] int id, [FromBody] MapaRequest mapa)
         {
@@ -80,6 +85,7 @@ namespace API.Controllers.Eventos
             }
         }
 
+        //[Authorize(Roles = "ADMIN")]
         [HttpGet("ObtenerMapaPorId/{mapa_id}")]
         public async Task<IActionResult> ObtenerMapaPorId([FromRoute] int mapa_id)
         {
@@ -99,6 +105,7 @@ namespace API.Controllers.Eventos
             }
         }
 
+        //[Authorize(Roles = "ADMIN")]
         [HttpGet("ObtenerMapas")]
         public async Task<IActionResult> ObtenerMapas()
         {

@@ -7,7 +7,7 @@ export async function handleCancelarPedido(pedidoId: string, descripcion: string
   if (!descripcion) throw new Error("Debe ingresar un motivo de cancelación");
 
   const params = new URLSearchParams({ pedidoId });
-  const url = `https://localhost:7050/api/Pedido/Cancelar?${params.toString()}`;
+  const url = `https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/api/Pedido/Cancelar?${params.toString()}`;
 
   const res = authFetch(url, {
     method: "POST",
