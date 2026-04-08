@@ -38,14 +38,16 @@ namespace API.Seguridad
                 new Claim("nombre", usuario.Nombre),
                 new Claim("rol", usuario.Rol)
             };
-
+            int expiresInMinutes = int.TryParse(_configuration["Jwt:Expires"], out var minutes) ? minutes : 60;
+            
 
             //  Token
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Issuer = _configuration["Jwt:Issuer"],
                 Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.UtcNow.AddHours(1),
+                Expires = DateTime.UtcNow.AddMinutes(expiresInMinutes),
+                Audience = _configuration["Jwt:Audience"],
                 SigningCredentials = credentials
             };
 
