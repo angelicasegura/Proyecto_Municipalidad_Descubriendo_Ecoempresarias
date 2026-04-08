@@ -72,7 +72,7 @@ jobs:
 
       - name: Run tests (excluding BD project)
         run: |
-          cd cd "Descubriendo_Nuestras_Ecoempresarias"
+          cd "Descubriendo_Nuestras_Ecoempresarias"
           dotnet test "API/API.csproj" --no-restore --verbosity normal --configuration Release || echo "No tests found or test execution failed"
 
       - name: dotnet publish
