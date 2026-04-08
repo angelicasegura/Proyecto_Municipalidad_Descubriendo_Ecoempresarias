@@ -1,6 +1,5 @@
 ﻿using Abstracciones.Interfaces.Flujo;
 using Abstracciones.Modelos;
-using Flujo;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,126 +12,109 @@ namespace API.Controllers
     {
         private readonly IPedidoFlujo _pedidoFlujo;
         private readonly IEmprendimientoFlujo _emprendimientoFlujo;
+
         public PedidoController(IPedidoFlujo pedidoFlujo, IEmprendimientoFlujo emprendimientoFlujo)
         {
             _pedidoFlujo = pedidoFlujo;
             _emprendimientoFlujo = emprendimientoFlujo;
         }
 
+        private int GetUsuarioId() =>
+            int.Parse(User.Claims.FirstOrDefault(c => c.Type == "id")?.Value ?? "0");
+
         [HttpPost]
-        public async Task<IActionResult> AgregarPedido([FromBody] PedidoRequest pedido)
+        public async Task<IActionResult> ConfirmarPedido([FromBody] PedidoRequest pedido)
         {
             try
             {
-                int usuarioId = pedido.UsuarioId;
+                var resultado = await _pedidoFlujo.ConfirmarPedido(GetUsuarioId(), pedido);
 
-                var resultado = await _pedidoFlujo.AgregarPedido(usuarioId, pedido);
+                if (resultado == null)
+                    return BadRequest("No se pudo confirmar el pedido. Verifique que su carrito no esté vacío.");
 
                 return Ok(resultado);
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return StatusCode(500, ex.Message);
             }
         }
 
         [HttpGet]
-        public async Task<IActionResult> ObtenerPedidosPaginadosUsuario(int? estadoId,DateTime? fecha, int pagina)
+        public async Task<IActionResult> ObtenerPedidosPaginadosUsuario(int? estadoId, DateTime? fecha, int pagina)
         {
             try
             {
-                var idClaim = User.Claims.FirstOrDefault(c => c.Type == "id")?.Value;
-                int usuarioId = int.Parse(idClaim ?? "0");
-
-                var resultado = await _pedidoFlujo.ObtenerPedidosAsync(usuarioId, estadoId, pagina,fecha, 10);
-                //agregar validacion de usuario
+                var resultado = await _pedidoFlujo.ObtenerPedidosAsync(GetUsuarioId(), estadoId, pagina, fecha, 10);
                 return Ok(resultado);
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
 
-
-        [Authorize(Roles ="EMPRENDEDOR,ADMIN")]
+        [Authorize(Roles = "EMPRENDEDOR,ADMIN")]
         [HttpPut]
         public async Task<IActionResult> ActualizarEstadoPedido(Guid pedidoId)
         {
-            var idClaim = User.Claims.FirstOrDefault(c => c.Type == "id")?.Value;
-            int usuarioId = int.Parse(idClaim ?? "0");
-
+            int usuarioId = GetUsuarioId();
             try
             {
-                Abstracciones.Modelos.Emprendimiento.EmprendimientoResponse emprendmiento = await _pedidoFlujo.obtenerEmprendimientoPedido(pedidoId);
+                var emprendimiento = await _pedidoFlujo.obtenerEmprendimientoPedido(pedidoId);
 
-
-                if (usuarioId != emprendmiento.UsuarioId || emprendmiento.EstadoId==0)
-                {
+                if (usuarioId != emprendimiento.UsuarioId || emprendimiento.EstadoId == 0)
                     return Unauthorized();
-                }
-                if (emprendmiento == null)
-                {
-                    return NoContent();
-                }
-                int estado = 6;
-                PedidoResponse pedido = await _pedidoFlujo.obtenerPedido(pedidoId);
-                if (pedido == null)
-                {
-                    return NoContent();
-                }
-                if(pedido.Estado_id == 5)
-                {
-                    Guid resultado = await _pedidoFlujo.ActualizarEstadoPedido(pedidoId,estado);
-                    return Ok(resultado);
-                }else if (pedido.Estado_id == 6)
-                {
-                    estado = 7;
-                    Guid resultado = await _pedidoFlujo.ActualizarEstadoPedido(pedidoId, estado);
-                    return Ok(resultado);
-                }
-                else
-                {
-                    return StatusCode(500, "El pedido no tiene un estado valido");
 
-                }
-           
+                if (emprendimiento == null)
+                    return NoContent();
+
+                PedidoResponse pedido = await _pedidoFlujo.obtenerPedido(pedidoId);
+
+                if (pedido == null)
+                    return NoContent();
+
+                int estado;
+                if (pedido.Estado_id == 5)
+                    estado = 6;
+                else if (pedido.Estado_id == 6)
+                    estado = 7;
+                else
+                    return StatusCode(500, "El pedido no tiene un estado válido");
+
+                Guid resultado = await _pedidoFlujo.ActualizarEstadoPedido(pedidoId, estado);
+                return Ok(resultado);
             }
             catch (Exception ex)
             {
-                return StatusCode(500,ex.Message);
+                return StatusCode(500, ex.Message);
             }
-
         }
-
 
         [Authorize(Roles = "EMPRENDEDOR,ADMIN")]
         [HttpGet("Emprendimiento")]
-        public async Task<IActionResult> obtenerPorEmprendimiento([FromQuery] string cedulaJuridica, [FromQuery] int page)
+        public async Task<IActionResult> ObtenerPorEmprendimiento([FromQuery] string cedulaJuridica, [FromQuery] int page)
         {
             try
             {
-                var idClaim = User.Claims.FirstOrDefault(c => c.Type == "id")?.Value;
-                int usuarioId = int.Parse(idClaim ?? "0");
-                Abstracciones.Modelos.Emprendimiento.EmprendimientoResponse emprendimineto = await _emprendimientoFlujo.GetEmprendimientoPorId(cedulaJuridica);
-                if (emprendimineto.UsuarioId != usuarioId || emprendimineto.EstadoId == 0)
-                {
+                int usuarioId = GetUsuarioId();
+                var emprendimiento = await _emprendimientoFlujo.GetEmprendimientoPorId(cedulaJuridica);
+
+                if (emprendimiento.UsuarioId != usuarioId || emprendimiento.EstadoId == 0)
                     return Unauthorized();
-                }
-                if (emprendimineto == null)
-                {
+
+                if (emprendimiento == null)
                     return NoContent();
-                }
 
-                var resultado = await _pedidoFlujo.ObtenerPedidosPorEmprendimiento(emprendimineto.EmprendimientoId
-                    , null, page, null,10);
-
+                var resultado = await _pedidoFlujo.ObtenerPedidosPorEmprendimiento(
+                    emprendimiento.EmprendimientoId, null, page, null, 10);
 
                 return Ok(resultado);
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 return StatusCode(500, ex.Message);
             }
-
         }
     }
 }

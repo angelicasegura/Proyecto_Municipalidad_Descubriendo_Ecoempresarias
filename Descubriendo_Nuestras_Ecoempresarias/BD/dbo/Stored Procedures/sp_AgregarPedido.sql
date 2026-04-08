@@ -1,9 +1,10 @@
-﻿CREATE PROCEDURE [dbo].[sp_AgregarPedido]
+﻿
+
+
+CREATE   PROCEDURE [dbo].[sp_AgregarPedido]
 (
     @Usuario_id INT,
-    @Emprendimiento_id INT,
-    @DireccionEntrega VARCHAR(250),
-    @Observaciones VARCHAR(500)
+    @Emprendimiento_id INT
 )
 AS
 BEGIN
@@ -152,9 +153,7 @@ Factura_id,
 Usuario_id,
 Emprendimiento_id,
 FechaPedido,
-Estado_id,
-DireccionEntrega,
-Observaciones
+Estado_id
 )
 VALUES
 (
@@ -163,9 +162,7 @@ VALUES
 @Usuario_id,
 @Emprendimiento_id,
 GETDATE(),
-5,
-@DireccionEntrega,
-@Observaciones
+5
 )
 
 ------------------------------------------------

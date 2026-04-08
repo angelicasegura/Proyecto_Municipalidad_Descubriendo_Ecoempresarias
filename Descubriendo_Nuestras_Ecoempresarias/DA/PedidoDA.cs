@@ -3,7 +3,6 @@ using Abstracciones.Modelos;
 using Abstracciones.Modelos.Pagination;
 using Dapper;
 using Microsoft.Data.SqlClient;
-using Microsoft.IdentityModel.Tokens;
 using System.Data;
 using static Abstracciones.Modelos.Emprendimiento;
 
@@ -20,50 +19,44 @@ namespace DA
             _sqlConnection = _repositorioDapper.ObtenerRepositorio();
         }
 
-        public async Task<Guid> AgregarPedido(int usuarioId, PedidoRequest pedido)
+        public async Task<ConfirmarPedidoResponse> ConfirmarPedido(int usuarioId, PedidoRequest pedido)
         {
             if (pedido == null)
                 throw new Exception("El pedido no puede ser nulo.");
-            string query = @"sp_AgregarPedido";
-            Guid pedidoId = await _sqlConnection.ExecuteScalarAsync<Guid>(
+
+            string query = "sp_ConfirmarPedido";
+
+            var resultado = await _sqlConnection.QuerySingleOrDefaultAsync<ConfirmarPedidoResponse>(
                 query,
                 new
                 {
                     Usuario_id = usuarioId,
-                    Emprendimiento_id = pedido.EmprendimientoId,
-                    DireccionEntrega = pedido.DireccionEntrega,
-                    Observaciones = pedido.Observaciones
+                    Emprendimiento_id = pedido.EmprendimientoId
                 },
                 commandType: CommandType.StoredProcedure
             );
 
-            return pedidoId;
+            return resultado;
         }
 
         public async Task<PagedResult<PedidoResponse>> ObtenerPedidosAsync(int usuarioId, int? estadoId, int pagina, DateTime? fecha, int registrosPorPagina)
         {
-
             var parametros = new
             {
-                Usuario_id=usuarioId,
+                Usuario_id = usuarioId,
                 Estado_id = estadoId,
                 Pagina = pagina,
                 Fecha = fecha,
-                RegistrosPorPagina=registrosPorPagina
+                RegistrosPorPagina = registrosPorPagina
             };
-            string query = @"sp_ObtenerPedidosPorUsuario";
 
+            string query = "sp_ObtenerPedidosPorUsuario";
 
             using var multi = await _sqlConnection.QueryMultipleAsync(query, parametros, commandType: CommandType.StoredProcedure);
 
             var pedidos = multi.Read<PedidoResponse>().ToList();
-
-      
             var facturas = multi.Read<Factura>().ToList();
-
-            
             var detalles = multi.Read<FacturaDetalleResponse>().ToList();
-
 
             foreach (var pedido in pedidos)
             {
@@ -73,93 +66,57 @@ namespace DA
                     factura.Detalles = detalles
                         .Where(d => d.Factura_id == factura.Factura_id)
                         .ToList();
-
                     pedido.Factura = factura;
                 }
             }
 
-            int totalCount = pedidos.Count; 
-
             return new PagedResult<PedidoResponse>
             {
                 Items = pedidos,
-                TotalCount = totalCount
+                TotalCount = pedidos.Count
             };
         }
 
-
         public async Task<Guid> ActualizarEstadoPedido(Guid pedidoId, int EstadoID)
         {
-            if(pedidoId == null || EstadoID==null)
-            {
-                throw new Exception("El id del pedido es nulo o estado nulo");
-            }
             var parametros = new
             {
                 Pedido_id = pedidoId,
                 Estado_id = EstadoID
             };
-            string query = @"sp_ActualizarEstadoPedido";
 
-            Guid pedido = await _sqlConnection.QuerySingleAsync<Guid>(query,parametros, commandType: CommandType.StoredProcedure);
-            return pedido;
+            string query = "sp_ActualizarEstadoPedido";
+            return await _sqlConnection.QuerySingleAsync<Guid>(query, parametros, commandType: CommandType.StoredProcedure);
         }
 
-        public async Task<Guid> InactivarPedido(Guid pedidoId, String descripcion)
+        public async Task<Guid> InactivarPedido(Guid pedidoId, string descripcion)
         {
-            if (pedidoId == null || descripcion == null)
-            {
+            if (descripcion == null)
                 throw new Exception("El id del pedido es nulo o motivo nulo");
-            }
+
             var parametros = new
             {
                 PedidoId = pedidoId,
                 Descripcion = descripcion
             };
-            string query = @"sp_InactivarPedido";
-            Guid pedido = await _sqlConnection.QuerySingleAsync<Guid>(query, parametros, commandType: CommandType.StoredProcedure);
-            return pedido;
 
+            string query = "sp_InactivarPedido";
+            return await _sqlConnection.QuerySingleAsync<Guid>(query, parametros, commandType: CommandType.StoredProcedure);
         }
 
         public async Task<EmprendimientoResponse> obtenerEmprendimientoPedido(Guid pedidoId)
         {
-            if (pedidoId == null)
-            {
-                throw new Exception("El pedido id esta nulo");
-            }
-            var parametros = new
-            {
-                PedidoId = pedidoId,
-            };
-            string query = @"sp_ObtenerEmprendimientoPorPedido";
-
-            EmprendimientoResponse emprendimiento = await _sqlConnection.QuerySingleAsync<EmprendimientoResponse>(query, parametros, commandType: CommandType.StoredProcedure);
-
-            return emprendimiento;
-
+            var parametros = new { PedidoId = pedidoId };
+            string query = "sp_ObtenerEmprendimientoPorPedido";
+            return await _sqlConnection.QuerySingleAsync<EmprendimientoResponse>(query, parametros, commandType: CommandType.StoredProcedure);
         }
-
-
 
         public async Task<PedidoResponse> obtenerPedido(Guid pedidoId)
         {
-            if (pedidoId == null)
-            {
-                throw new Exception("El pedido id esta nulo");
-            }
-            var parametros = new
-            {
-                PedidoId = pedidoId,
-            };
-            string query = @"sp_ObtenerPedido";
-
-            PedidoResponse pedido = await _sqlConnection.QuerySingleAsync<PedidoResponse>(query, parametros, commandType: CommandType.StoredProcedure);
-
-            return pedido;
-
+            var parametros = new { PedidoId = pedidoId };
+            string query = "sp_ObtenerPedido";
+            return await _sqlConnection.QuerySingleAsync<PedidoResponse>(query, parametros, commandType: CommandType.StoredProcedure);
         }
-
 
         public async Task<PagedResult<PedidoResponse>> ObtenerPedidosPorEmprendimiento(int emprendimientoId, int? estadoId, int pagina, DateTime? fecha, int registrosPorPagina)
         {
@@ -172,7 +129,7 @@ namespace DA
                 RegistrosPorPagina = registrosPorPagina
             };
 
-            string query = @"sp_ObtenerPedidosPorEmprendimiento";
+            string query = "sp_ObtenerPedidosPorEmprendimiento";
 
             using var multi = await _sqlConnection.QueryMultipleAsync(query, parametros, commandType: CommandType.StoredProcedure);
 
@@ -188,17 +145,14 @@ namespace DA
                     factura.Detalles = detalles
                         .Where(d => d.Factura_id == factura.Factura_id)
                         .ToList();
-
                     pedido.Factura = factura;
                 }
             }
 
-            int totalCount = pedidos.Count;
-
             return new PagedResult<PedidoResponse>
             {
                 Items = pedidos,
-                TotalCount = totalCount
+                TotalCount = pedidos.Count
             };
         }
     }

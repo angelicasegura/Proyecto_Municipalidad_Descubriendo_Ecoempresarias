@@ -33,7 +33,6 @@ namespace Abstracciones.Modelos
     {
         public Guid Carrito_id { get; set; }
         public decimal Cantidad { get; set; }
-
         public Guid Producto_id { get; set; }
         public string NombreProducto { get; set; }
         public string Descripcion { get; set; }
@@ -42,4 +41,17 @@ namespace Abstracciones.Modelos
         public string Ruta_Imagen { get; set; }
         public int Emprendimiento_id { get; set; }
     }
+
+    // --- Pedido / Factura ---
+    public class ConfirmarPedidoRequest
+    {
+        public int EmprendimientoId { get; set; }
+    }
+
+    //public class ConfirmarPedidoResponse
+    //{
+    //    public int Pedido_id { get; set; }
+    //    public int Factura_id { get; set; }
+    //    public decimal Total { get; set; }
+    //}
 }

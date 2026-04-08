@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE sp_ObtenerPedido
+﻿CREATE   PROCEDURE [dbo].[sp_ObtenerPedido]
     @PedidoId UNIQUEIDENTIFIER
 AS
 BEGIN
@@ -11,9 +11,7 @@ BEGIN
         Usuario_id,
         Emprendimiento_id,
         FechaPedido,
-        Estado_id,
-        DireccionEntrega,
-        Observaciones
+        Estado_id
     FROM [dbo].[ECOEMPRESARIAS_PEDIDOS_TB]
     WHERE Pedido_id = @PedidoId;
 END

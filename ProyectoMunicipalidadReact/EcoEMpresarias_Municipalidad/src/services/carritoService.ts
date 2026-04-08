@@ -63,7 +63,7 @@ export async function actualizarCantidad(payload: {
 
 export async function eliminarItem(payload: {
   emprendimientoId: number;
-  productoId: number; // GUID string
+  productoId: number; 
 }) {
   const res = await fetch(`${API}/Eliminar`, {
     method: "DELETE",

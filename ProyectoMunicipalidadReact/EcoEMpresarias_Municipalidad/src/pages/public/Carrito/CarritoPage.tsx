@@ -21,8 +21,6 @@ export default function CarritoPage() {
   const [items, setItems] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [creandoPedido, setCreandoPedido] = useState(false);
-  const [direccionEntrega, setDireccionEntrega] = useState("");
-  const [observaciones, setObservaciones] = useState("");
 
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -69,37 +67,18 @@ export default function CarritoPage() {
   }, [items]);
 
   async function confirmarPedido() {
-
     try {
       setCreandoPedido(true);
-      const usuarioId = user?.id;
 
-      if (!usuarioId) {
-        toast.error("Usuario no encontrado");
-        setCreandoPedido(false);
-        return;
-      }
+      const resultado = await handleCrearPedido(emprendimientoId);
 
-      const pedidoId = await handleCrearPedido(
-        usuarioId,
-        emprendimientoId,
-        direccionEntrega,
-        observaciones
-      );
-
-      toast.success("Pedido creado correctamente");
-      
-     
-
-      
-       navigate("http://localhost:5173/pedidos/mis-pedidos");
+      toast.success(`Pedido #${resultado} creado correctamente`);
+      navigate("/pedidos/mis-pedidos");
 
     } catch {
-
       toast.error("No se pudo crear el pedido");
       setCreandoPedido(false);
     }
-
   }
 
   if (loading) return <div className="p-6">Cargando carrito...</div>;
@@ -129,10 +108,6 @@ export default function CarritoPage() {
       <CarritoResumen total={total} />
 
       <CarritoFormularioPedido
-        direccionEntrega={direccionEntrega}
-        setDireccionEntrega={setDireccionEntrega}
-        observaciones={observaciones}
-        setObservaciones={setObservaciones}
         confirmarPedido={confirmarPedido}
       />
 

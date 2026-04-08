@@ -1,4 +1,5 @@
-﻿CREATE   PROCEDURE [dbo].[sp_ObtenerPedidosPorUsuario]
+﻿
+CREATE   PROCEDURE [dbo].[sp_ObtenerPedidosPorUsuario]
 (
     @Usuario_id INT,
     @Estado_id INT = NULL,           -- filtrar por estado opcional
@@ -19,8 +20,6 @@ BEGIN
             P.Pedido_id,
             P.FechaPedido,
             P.Estado_id,
-            P.DireccionEntrega,
-            P.Observaciones,
             P.Factura_id,
             ROW_NUMBER() OVER (ORDER BY P.FechaPedido DESC) AS RowNum
         FROM dbo.ECOEMPRESARIAS_PEDIDOS_TB P
