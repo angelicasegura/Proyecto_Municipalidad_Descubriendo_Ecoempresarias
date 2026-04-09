@@ -7,7 +7,7 @@ export default function Layout({ children }: any) {
     <div
       className="p-6 transition-all duration-300"
       style={{
-        marginRight: expanded ? "250px" : "60px",
+        paddingRight: expanded ? "250px" : "60px",
       }}
     >
       {children}

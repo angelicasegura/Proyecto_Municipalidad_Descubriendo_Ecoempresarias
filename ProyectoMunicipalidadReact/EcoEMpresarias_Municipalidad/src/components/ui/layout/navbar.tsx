@@ -25,7 +25,7 @@ import logo from "../../../assets/logo.png";
 import { useAuth } from "../../../auth/AuthContext";
 import { handleLogout } from "../../../pages/auth/logout/handleLogout";
 import { useNavbar } from "@/context/NavbarContext";
-
+import {useNavigate} from "react-router-dom";
 export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [adminOpen, setAdminOpen] = useState(false);
@@ -67,6 +67,7 @@ export function Navbar() {
     setAdminDropdownOpen(false);
     setEmprendedorDropdownOpen(false);
   }, [location]);
+  const navigate = useNavigate();
   return (
     <>
       {/* Mobile Navbar solo en pantallas muy pequeñas */}
@@ -280,7 +281,7 @@ export function Navbar() {
               <Button
                 variant="secondary"
                 className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold w-full"
-                onClick={handleLogout}
+                onClick={() => handleLogout(navigate)}
               >
                 Cerrar Sesión
               </Button>
@@ -520,7 +521,7 @@ export function Navbar() {
               variant="secondary"
               className={`flex items-center justify-center gap-2 bg-accent hover:bg-accent/90 text-accent-foreground transition-all duration-300
         ${dashboardExpanded ? "w-full px-4" : "w-12 px-0 overflow-hidden"}`}
-              onClick={handleLogout}
+                onClick={() => handleLogout(navigate)}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
