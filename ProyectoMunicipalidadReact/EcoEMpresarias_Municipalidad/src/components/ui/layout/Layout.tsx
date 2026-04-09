@@ -5,7 +5,7 @@ export default function Layout({ children }: any) {
 
   return (
     <div
-      className="p-6 transition-all duration-300"
+      className="w-full"
       style={{
         paddingRight: expanded ? "250px" : "60px",
       }}
