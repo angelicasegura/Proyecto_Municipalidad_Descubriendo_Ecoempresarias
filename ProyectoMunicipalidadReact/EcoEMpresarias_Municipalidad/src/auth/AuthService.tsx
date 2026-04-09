@@ -1,7 +1,7 @@
 
 import { type ForgotPasswordRequest, type ForgotPasswordResponse } from "../pages/auth/login/auth.types";
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:7050/auth/olvido-contrasena';
+const API_URL = import.meta.env.VITE_API_URL || 'https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/auth/olvido-contrasena';
 
 
 export const forgotPassword = async (data: ForgotPasswordRequest): Promise<ForgotPasswordResponse> => {

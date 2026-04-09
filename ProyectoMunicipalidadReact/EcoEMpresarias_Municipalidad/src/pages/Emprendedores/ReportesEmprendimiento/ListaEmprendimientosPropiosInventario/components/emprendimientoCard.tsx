@@ -28,11 +28,11 @@ export function EmprendimientoCard({
   return (
     
       <Card  className="group overflow-hidden border-border hover:shadow-lg transition-all duration-300 hover:-translate-y-1 cursor-pointer">
-          <Link to={`/Seguimiento-Pedidos/${emprendedor.cedulaJuridica}`} className="block w-full h-full">
+          <Link to={`/Reportes-Emprendimiento/${emprendedor.emprendimientoId}`} className="block w-full h-full">
         <div className="relative aspect-16/10 overflow-hidden bg-muted">
           {emprendedor.ruta_Imagen_Logo ? (
             <img
-              src={`https://localhost:7050/api/Images/Buscar/1/${emprendedor.ruta_Imagen_Logo}`}
+              src={`https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/api/Images/Buscar/1/${emprendedor.ruta_Imagen_Logo}`}
               alt={emprendedor.nombre}
               className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
             />

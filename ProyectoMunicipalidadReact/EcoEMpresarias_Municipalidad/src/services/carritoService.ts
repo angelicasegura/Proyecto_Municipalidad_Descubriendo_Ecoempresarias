@@ -1,4 +1,4 @@
-const API = "https://localhost:7050/api/Carrito";
+const API = "https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/api/Carrito";
 
 function authHeader() {
   const token = localStorage.getItem("token");

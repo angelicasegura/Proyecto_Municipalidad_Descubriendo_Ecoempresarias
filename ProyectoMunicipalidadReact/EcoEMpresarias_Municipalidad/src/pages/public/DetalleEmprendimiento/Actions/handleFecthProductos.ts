@@ -12,7 +12,7 @@ export async function handleFetchProductos(
       emprendimiento_id: emprendimiento_id.toString()
     });
 
-    const response = await fetch(`https://localhost:7050/api/Producto/ObtenerProductos?${params.toString()}`);
+    const response = await fetch(`https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/api/Producto/ObtenerProductos?${params.toString()}`);
     
     if (!response.ok) throw new Error("Error al obtener productos");
 

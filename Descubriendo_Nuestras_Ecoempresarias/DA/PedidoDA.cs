@@ -99,7 +99,7 @@ namespace DA
                 Pedido_id = pedidoId,
                 Estado_id = EstadoID
             };
-            string query = @"sp_ActualizarEstadoProducto";
+            string query = @"sp_ActualizarEstadoPedido";
 
             Guid pedido = await _sqlConnection.QuerySingleAsync<Guid>(query,parametros, commandType: CommandType.StoredProcedure);
             return pedido;

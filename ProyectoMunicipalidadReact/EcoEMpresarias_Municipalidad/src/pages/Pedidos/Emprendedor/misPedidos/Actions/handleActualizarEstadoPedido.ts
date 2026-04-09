@@ -1,11 +1,11 @@
 import { authFetch } from "../../../../../auth/AuthFetch";
 import toast from "react-hot-toast";
 
-export async function handleActualizarPedido(pedidoId: number) {
+export async function handleActualizarPedido(pedidoId: string) {
   if (!pedidoId) throw new Error("Falta el pedidoId");
 
   const params = new URLSearchParams({ pedidoId: pedidoId.toString() });
-  const url = `https://localhost:7050/api/Pedido?${params.toString()}`;
+  const url = `https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/api/Pedido?${params.toString()}`;
 
   const res = authFetch(url, {
     method: "PUT",

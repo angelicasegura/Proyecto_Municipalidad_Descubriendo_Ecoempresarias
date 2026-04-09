@@ -67,5 +67,15 @@ namespace Flujo
         {
             return await _emprendimientoDA.VerificarExistenciaEmprendimiento(CedulaJuridica);
         }
+
+        public async Task<EmprendimientoResponse> GetEmprendiemientoPorEmprendimeintoID(int id)
+        {
+            return await _emprendimientoDA.GetEmprendiemientoPorEmprendimeintoID(id);
+        }
+
+        public async  Task<IEnumerable<EmprendimientoResponse>> ObtenerEmprendimientosActivos()
+        {
+            return await _emprendimientoDA.ObtenerEmprendimientosActivos();
+        }
     }
 }

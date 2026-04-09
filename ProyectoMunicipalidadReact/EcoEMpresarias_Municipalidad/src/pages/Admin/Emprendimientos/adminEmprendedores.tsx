@@ -44,7 +44,7 @@ export default function AdminEmprendedores() {
     });
 
     const res = await authFetch(
-      `https://localhost:7050/api/emprendimientos/paginados?${params.toString()}`,
+      `https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/api/emprendimientos/paginados?${params.toString()}`,
     );
     const data = await res.json();
 

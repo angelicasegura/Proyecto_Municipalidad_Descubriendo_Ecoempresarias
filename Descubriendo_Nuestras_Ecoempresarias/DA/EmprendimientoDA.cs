@@ -129,6 +129,22 @@ namespace DA
             }
         }
 
+        public async Task<EmprendimientoResponse> GetEmprendiemientoPorEmprendimeintoID(int id)
+        {
+            try
+            {
+                string query = @"sp_ObtenerEmprendimientoPorId";
+                var parameters = new
+                {
+                    Id = id
+                };
+                return await _sqlConnection.QueryFirstOrDefaultAsync<EmprendimientoResponse>(query, parameters, commandType: CommandType.StoredProcedure);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex);
+            }
+        }
 
         public async Task<List<EmprendimientoResponse>> GetEmprendimientoPorCedulaUsuario(int cedula, int estado_id)
         {
@@ -215,5 +231,18 @@ namespace DA
 
         }
 
+        public async Task<IEnumerable<EmprendimientoResponse>> ObtenerEmprendimientosActivos()
+        {
+            try
+            {
+                string query = @"SP_ObtenerEmprendimientosActivos";
+                var resultQuery = await _sqlConnection.QueryAsync<EmprendimientoResponse>(query);
+                return resultQuery;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex);
+            }
+        }
     }
 }

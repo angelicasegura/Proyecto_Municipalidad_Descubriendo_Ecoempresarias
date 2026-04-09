@@ -35,6 +35,8 @@ namespace Abstracciones.Interfaces.Flujo
 
         public Task<int> EliminarEmprendimeinto(int id);
         Task<int> InactivarOActivarEmprendimientosDeUsuario(int Cedula, int estado_id);
+        Task<EmprendimientoResponse> GetEmprendiemientoPorEmprendimeintoID(int id);
+        public Task<IEnumerable<EmprendimientoResponse>> ObtenerEmprendimientosActivos();
 
     }
 }

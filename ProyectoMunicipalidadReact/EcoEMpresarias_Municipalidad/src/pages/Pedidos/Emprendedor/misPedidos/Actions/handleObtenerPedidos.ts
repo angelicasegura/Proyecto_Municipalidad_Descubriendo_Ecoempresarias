@@ -1,16 +1,16 @@
 
 import { authFetch } from "../../../../../auth/AuthFetch";
-import type { PedidoResponse } from "../../../../../types/pedidoType";
+import type { PedidosResponse } from "../../../../../types/misPedidosType";
 import toast from "react-hot-toast";
 
 export async function handleFetchPedidosPorEmprendimiento(
   CedulaJuridica: string,
   page: number = 1
-): Promise<PedidoResponse[]> {
+): Promise<PedidosResponse> {
   if (!CedulaJuridica) throw new Error("Falta CedulaJuridica");
 
   const params = new URLSearchParams({ cedulaJuridica: CedulaJuridica, page: page.toString() });
-  const url = `https://localhost:7050/api/Pedido/Emprendimiento?${params.toString()}`;
+  const url = `https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/api/Pedido/Emprendimiento?${params.toString()}`;
 
   const res = authFetch(url)
     .then(async (response) => {
@@ -19,7 +19,7 @@ export async function handleFetchPedidosPorEmprendimiento(
         throw new Error(errorText || "Error al obtener los pedidos");
       }
       const data = await response.json();
-      return data.items as PedidoResponse[];
+      return data as PedidosResponse;
     });
 
   toast.promise(res, {

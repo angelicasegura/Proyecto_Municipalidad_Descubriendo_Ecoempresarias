@@ -161,6 +161,27 @@ namespace API.Controllers
 
 
 
+        [HttpGet("Obtener/EMprendimientoID")]
+        public async Task<IActionResult> obtenerEmprendimientoPorEmprendimientoId([FromQuery] int id)
+        {
+            try
+            {
+                if (id == null)
+                {
+                    return BadRequest("Id no indicado");
+                }
+                var emprendimiento = await _emprendimientoFlujo.GetEmprendiemientoPorEmprendimeintoID(id);
+
+
+                return Ok(emprendimiento);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+        }
+
         [HttpGet("Obtener/Cedula")]
         public async Task<IActionResult> obtenerEmprendimientosPorCedulaUsuario([FromQuery] int cedula)
         {

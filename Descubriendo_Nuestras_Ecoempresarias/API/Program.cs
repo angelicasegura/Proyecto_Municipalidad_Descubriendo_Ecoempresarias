@@ -1,15 +1,25 @@
 using Abstracciones.Interfaces.API;
+using Abstracciones.Interfaces.API.Eventos;
 using Abstracciones.Interfaces.DA;
+using Abstracciones.Interfaces.DA.Eventos;
+using Abstracciones.Interfaces.DA.Eventos.logica;
 using Abstracciones.Interfaces.Flujo;
+using Abstracciones.Interfaces.Flujo.Eventos;
+using Abstracciones.Interfaces.Flujo.Eventos.logica;
 using Abstracciones.Interfaces.Servicios;
 using Abstracciones.Modelos;
 using API.Controllers;
+using API.Controllers.Eventos;
 using API.Helpers;
 using API.Seguridad;
 using DA;
+using DA.Eventos;
+using DA.Eventos.Logica;
 using DA.Repositorios;
 using Flujo;
 using Flujo.EmaiService;
+using Flujo.Eventos;
+using Flujo.Eventos.Logica;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
@@ -61,10 +71,13 @@ builder.Services.AddAuthentication(options =>
 
     options.TokenValidationParameters = new TokenValidationParameters
     {
-        ValidateIssuer = false,     // true en prod
-        ValidateAudience = false,   // true en prod
+        ValidateIssuer = true,     // true en prod
+        ValidateAudience = true,   // true en prod
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
+
+        ValidIssuer = builder.Configuration["Jwt:Issuer"],   
+        ValidAudience = builder.Configuration["Jwt:Audience"],
 
         IssuerSigningKey = new SymmetricSecurityKey(keyBytes),
 
@@ -144,18 +157,40 @@ builder.Services.AddScoped<IComentarioDA, ComentarioDA>();
 builder.Services.AddScoped<IComentarioFlujo, ComentarioFlujo>();
 builder.Services.AddScoped<IPedidoDA, PedidoDA>();
 builder.Services.AddScoped<IPedidoFlujo, PedidoFlujo>();
-
+builder.Services.AddScoped<IPisoFlujo, PisoFlujo>();
+builder.Services.AddScoped<IPisoDA, PisoDA>();
+builder.Services.AddScoped<IZonaDA, ZonaDA>();
+builder.Services.AddScoped<IZonaFlujo, ZonaFlujo>();
+builder.Services.AddScoped<IMapaDA, MapaDA>();
+builder.Services.AddScoped<IMapaFlujo, MapaFlujo>();
+builder.Services.AddScoped<IStandFlujo, StandFlujo>();
+builder.Services.AddScoped<IStandDA, StandDA>();
+builder.Services.AddScoped<IPisoEventoDA, EventoPisoDA>();
+builder.Services.AddScoped<IEventoPisoFlujo, EventoPisoFlujo>();
+builder.Services.AddScoped<ILugarDA, LugarDA>();
+builder.Services.AddScoped<ILugarFlujo, LugarFlujo>();
+builder.Services.AddScoped<ILugarController, LugarController>();
+builder.Services.AddScoped<IEventoDA, EventoDA>();
+builder.Services.AddScoped<IEventoFlujo, EventoFlujo>();
+builder.Services.AddScoped<IEventoController, EventoController>();
+builder.Services.AddScoped<IReservaEventoDA, ReservaEventoDA>();
+builder.Services.AddScoped<IReservaEventoFlujo, ReservaEventoFlujo>();
+builder.Services.AddScoped<IReporteDA, ReporteDA>();
+builder.Services.AddScoped<IReporteFlujo, ReporteFlujo>();
+builder.Services.AddScoped<IZonaEventoDA, EventoZonaDA>();
+builder.Services.AddScoped<IEventoZonaFlujo, EventoZonaFlujo>();
+builder.Services.AddScoped<IEventoZonaStandDA, EventoZonaStandDA>();
+builder.Services.AddScoped<IEventoZonaStandFlujo, EventoZonaStandFlujo>();
+builder.Services.AddScoped<INotificacionesService, NotificacionService>();
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
+
     app.UseSwagger();
     app.UseSwaggerUI(c =>
     {
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1");
     });
-}
 
 app.UseHttpsRedirection();
 
@@ -164,6 +199,7 @@ app.UseRouting();
 app.UseCors("AllowViteApp");
 
 app.UseAuthentication();
+app.UseMiddleware<ValidarUsuarioMiddleware>();
 app.UseAuthorization();
 
 app.MapControllers();

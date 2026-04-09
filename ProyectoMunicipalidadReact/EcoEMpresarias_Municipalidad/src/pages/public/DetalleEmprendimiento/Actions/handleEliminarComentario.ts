@@ -2,7 +2,7 @@ export async function handleEliminarComentario(id: number) {
   const token = localStorage.getItem("token");
 
   const response = await fetch(
-    `https://localhost:7050/api/comentarios/${id}`,
+    `https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/api/comentarios/${id}`,
     {
       method: "DELETE",
       headers: {

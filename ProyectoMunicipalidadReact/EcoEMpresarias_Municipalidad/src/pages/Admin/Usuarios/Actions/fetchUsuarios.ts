@@ -36,7 +36,7 @@ export const fetchUsuarios = async ({
   }
 
   const params = new URLSearchParams(queryParams);
-  const url = `https://localhost:7050/api/Usuarios/pagination/?${params.toString()}`;
+  const url = `https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/api/Usuarios/pagination/?${params.toString()}`;
 
   const res = await authFetch(url, { signal });
 
