@@ -24,12 +24,13 @@ import {
 import logo from "../../../assets/logo.png";
 import { useAuth } from "../../../auth/AuthContext";
 import { handleLogout } from "../../../pages/auth/logout/handleLogout";
+import { useNavbar } from "@/context/NavbarContext";
 
 export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [adminOpen, setAdminOpen] = useState(false);
   const [emprendedorOpen, setEmprendedorOpen] = useState(false);
-  const [dashboardExpanded, setDashboardExpanded] = useState(false);
+  const { expanded: dashboardExpanded, setExpanded: setDashboardExpanded } = useNavbar();
   const { user } = useAuth();
   const [adminDropdownOpen, setAdminDropdownOpen] = useState(false);
   const [emprendedorDropdownOpen, setEmprendedorDropdownOpen] = useState(false);

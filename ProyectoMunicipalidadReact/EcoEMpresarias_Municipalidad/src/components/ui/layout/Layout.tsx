@@ -1,6 +1,15 @@
+import { useNavbar } from "../../../context/NavbarContext";
+
 export default function Layout({ children }: any) {
+  const { expanded } = useNavbar();
+
   return (
-    <div className="p-6 sm:mr-[60px] md:mr-[250px] transition-all duration-300">
+    <div
+      className="p-6 transition-all duration-300"
+      style={{
+        marginRight: expanded ? "250px" : "60px",
+      }}
+    >
       {children}
     </div>
   );
