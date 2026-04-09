@@ -7,7 +7,7 @@ export default function MisEventosPage() {
     const { data: usuario } = useQuery({
         queryKey: ["usuario"],
         queryFn: async () => {
-            const res = await authFetch("https://localhost:7050/auth/me")
+            const res = await authFetch("https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/auth/me")
             return res.json()
         }
     })
@@ -17,7 +17,7 @@ export default function MisEventosPage() {
         queryFn: async () => {
             if (!usuario?.id) return []
             const res = await authFetch(
-                `https://localhost:7050/api/emprendimientos/Obtener/Cedula?cedula=${usuario.id}`
+                `https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/api/emprendimientos/Obtener/Cedula?cedula=${usuario.id}`
             )
             return res.json()
         },
