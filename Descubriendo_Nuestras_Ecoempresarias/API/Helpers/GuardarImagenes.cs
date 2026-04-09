@@ -1,8 +1,17 @@
-﻿namespace API.Helpers
+﻿using Microsoft.Extensions.Hosting;
+
+namespace API.Helpers
 {
     public class GuardarImagenes
     {
-        public async Task<string> GuardarImagen(String RutaBase,IFormFile imagen, String carpeta)
+        private readonly IHostEnvironment _env;
+
+        public GuardarImagenes(IHostEnvironment env)
+        {
+            _env = env;
+        }
+
+        public async Task<string> GuardarImagen(IFormFile imagen, string carpeta)
         {
             var extensionesPermitidas = new[] { ".jpg", ".jpeg", ".png", ".webp" };
             var extension = Path.GetExtension(imagen.FileName).ToLower();
@@ -15,10 +24,8 @@
 
             var nombreArchivo = $"{Guid.NewGuid()}{extension}";
 
-            var rutaCarpeta = Path.Combine(
-                Directory.GetCurrentDirectory(),
-                RutaBase,
-                carpeta
+            var rutaCarpeta = Path.GetFullPath(
+                Path.Combine(_env.ContentRootPath, "..", "uploads", carpeta)
             );
 
             if (!Directory.Exists(rutaCarpeta))
@@ -31,7 +38,6 @@
                 await imagen.CopyToAsync(stream);
             }
 
-            // URL pública
             return nombreArchivo;
         }
     }
