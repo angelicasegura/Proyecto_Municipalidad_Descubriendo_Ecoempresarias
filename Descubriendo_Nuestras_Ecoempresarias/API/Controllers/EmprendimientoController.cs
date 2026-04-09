@@ -113,7 +113,7 @@ namespace API.Controllers
                     return BadRequest("Emprendimiento ya existente");
                 }
                 if (request.Imagen != null) { 
-                string rutaImagen = await _guardarImagen.GuardarImagen(rutaBase,request.Imagen, carpeta);
+                string rutaImagen = await _guardarImagen.GuardarImagen(request.Imagen, carpeta);
                     if (rutaImagen != null)
                     {
                         request.Ruta_Imagen_Logo = rutaImagen;
@@ -208,7 +208,7 @@ namespace API.Controllers
 
             if (emprendimiento.Imagen != null)
             {
-                string rutaImagen = await _guardarImagen.GuardarImagen(rutaBase, emprendimiento.Imagen, carpeta);
+                string rutaImagen = await _guardarImagen.GuardarImagen( emprendimiento.Imagen, carpeta);
 
                 if (rutaImagen != null)
                 {

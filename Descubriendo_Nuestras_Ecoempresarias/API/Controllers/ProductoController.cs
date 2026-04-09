@@ -45,7 +45,7 @@ namespace API.Controllers
 
                 if (producto.Imagen != null)
                 {
-                    string rutaImagen = await _guardarImagen.GuardarImagen(rutaBase, producto.Imagen, carpeta);
+                    string rutaImagen = await _guardarImagen.GuardarImagen( producto.Imagen, carpeta);
                     if (rutaImagen != null)
                     {
                         producto.Ruta_Imagen = rutaImagen;
@@ -86,7 +86,7 @@ namespace API.Controllers
 
                 if (producto.Imagen != null)
                 {
-                    string rutaImagen = await _guardarImagen.GuardarImagen(rutaBase, producto.Imagen, carpeta);
+                    string rutaImagen = await _guardarImagen.GuardarImagen( producto.Imagen, carpeta);
 
                     if (rutaImagen != null)
                     {
