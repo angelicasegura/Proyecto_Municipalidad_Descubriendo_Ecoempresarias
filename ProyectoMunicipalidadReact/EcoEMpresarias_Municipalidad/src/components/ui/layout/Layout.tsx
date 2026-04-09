@@ -1,26 +1,14 @@
 import { useNavbar } from "../../../context/NavbarContext";
-import { useEffect, useState } from "react";
 
 export default function Layout({ children }: any) {
   const { expanded } = useNavbar();
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
 
   return (
     <div
-      className="w-full"
-      style={{
-        paddingRight: isMobile ? "0px" : (expanded ? "250px" : "60px"),
-      }}
+      className={`
+        w-full
+        ${expanded ? "md:pr-[250px]" : "md:pr-[60px]"}
+      `}
     >
       {children}
     </div>
