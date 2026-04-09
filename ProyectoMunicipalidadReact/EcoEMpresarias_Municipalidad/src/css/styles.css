@@ -184,3 +184,6 @@
     background: linear-gradient(135deg, var(--azul-principal), var(--naranja-acento));
   }
 }
+body {
+  overflow-x: hidden;
+}
