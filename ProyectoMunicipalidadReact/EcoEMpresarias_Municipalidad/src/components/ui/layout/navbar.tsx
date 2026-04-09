@@ -2,6 +2,8 @@
 
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { Button } from "../button";
 import {
   DropdownMenu,
@@ -56,6 +58,14 @@ export function Navbar() {
       setAdminDropdownOpen(false);
     }
   };
+  const location = useLocation();
+  useEffect(() => {
+    setMobileMenuOpen(false);
+    setAdminOpen(false);
+    setEmprendedorOpen(false);
+    setAdminDropdownOpen(false);
+    setEmprendedorDropdownOpen(false);
+  }, [location]);
   return (
     <>
       {/* Mobile Navbar solo en pantallas muy pequeñas */}
@@ -89,9 +99,8 @@ export function Navbar() {
 
         {/* Mobile slide menu */}
         <div
-          className={`fixed top-0 right-0 h-full w-80 bg-[#056F94] shadow-2xl z-50 p-6 space-y-3 overflow-y-auto transform transition-transform duration-700 ${
-            mobileMenuOpen ? "translate-x-0" : "translate-x-full"
-          }`}
+          className={`fixed top-0 right-0 h-full w-80 bg-[#056F94] shadow-2xl z-50 p-6 space-y-3 overflow-y-auto transform transition-transform duration-700 ${mobileMenuOpen ? "translate-x-0" : "translate-x-full"
+            }`}
         >
           <div className="flex justify-end mb-4">
             <button
@@ -311,9 +320,8 @@ export function Navbar() {
             }}
           >
             <ChevronDown
-              className={`h-6 w-6 transition-transform duration-300 ${
-                dashboardExpanded ? "rotate-180" : ""
-              }`}
+              className={`h-6 w-6 transition-transform duration-300 ${dashboardExpanded ? "rotate-180" : ""
+                }`}
             />
           </button>
         </div>

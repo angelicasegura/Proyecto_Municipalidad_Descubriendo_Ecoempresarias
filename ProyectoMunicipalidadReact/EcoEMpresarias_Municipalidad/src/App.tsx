@@ -49,7 +49,6 @@ import ReportesEmprendimiento from "./pages/Emprendedores/ReportesEmprendimiento
 import EmprendimientosPropiosReportes from "./pages/Emprendedores/ReportesEmprendimiento/ListaEmprendimientosPropiosInventario/ListaEmprendientosPropios";
 import ReservarStandPage from "../src/pages/Eventos/ReservaStandPage";
 
-
 function App() {
   const { loading } = useAuth();
   if (loading) {
