@@ -31,7 +31,7 @@ export default function ModalGestionarZonas({ eventoId, piso, onCerrar }: Props)
         queryKey: ["zonasActivasPiso", piso.piso_id],
         queryFn: async () => {
             const res = await authFetch(
-                `https://localhost:7050/api/Zona/ObtenerZonasPorPisoActivas/${piso.piso_id}`
+                `https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/api/Zona/ObtenerZonasPorPisoActivas/${piso.piso_id}`
             )
             if (res.status === 204) return []
             if (!res.ok) throw new Error("Error al obtener zonas del piso")

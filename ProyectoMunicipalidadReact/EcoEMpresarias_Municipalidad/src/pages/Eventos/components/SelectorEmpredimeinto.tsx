@@ -12,7 +12,7 @@ interface Props {
     onCancelar: () => void
 }
 
-const IMG_BASE = "https://localhost:7050/uploads/"
+const IMG_BASE = "https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/uploads/"
 
 export default function SelectorEmprendimiento({ emprendimientos, onSeleccionar, onCancelar }: Props) {
     return (

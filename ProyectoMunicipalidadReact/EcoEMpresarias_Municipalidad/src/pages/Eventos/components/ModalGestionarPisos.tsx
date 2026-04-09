@@ -42,7 +42,7 @@ export default function ModalGestionarPisos({ eventoId, lugarId, onCerrar }: Pro
     const { data: pisosLugar = [], isLoading: loadingLugar } = useQuery<PisoLugar[]>({
         queryKey: ["pisos", lugarId],
         queryFn: async () => {
-            const res = await authFetch(`https://localhost:7050/api/Piso/ObtenerPisoPorLugar/${lugarId}`)
+            const res = await authFetch(`https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/api/Piso/ObtenerPisoPorLugar/${lugarId}`)
             if (res.status === 204) return []
             if (!res.ok) throw new Error("Error al obtener pisos del lugar")
             return res.json()
