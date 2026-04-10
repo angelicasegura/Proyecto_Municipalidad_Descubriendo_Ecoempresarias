@@ -5,10 +5,10 @@ export default function Layout({ children }: any) {
 
   return (
     <div
-      className="w-full"
-      style={{
-        paddingRight: expanded ? "250px" : "60px",
-      }}
+      className={`
+        w-full
+        ${expanded ? "md:pr-[250px]" : "md:pr-[60px]"}
+      `}
     >
       {children}
     </div>
