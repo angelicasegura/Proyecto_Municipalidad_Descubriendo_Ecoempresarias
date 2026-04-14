@@ -21,7 +21,7 @@ export default function ProductoCard({ producto }: Props) {
       {/* Imagen */}
       <div className="relative aspect-[4/3] overflow-hidden">
         <img
-          src={`https://localhost:7050/api/Images/Buscar/3/${producto.ruta_Imagen}`}
+          src={`https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/api/Images/Buscar/3/${producto.ruta_Imagen}`}
           alt={producto.nombreProducto}
           className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
           loading="lazy"

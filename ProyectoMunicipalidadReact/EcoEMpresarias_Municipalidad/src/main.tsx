@@ -6,20 +6,22 @@ import "../src/css/styles.css"
 import { AuthProvider } from "./auth/AuthContext"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import App from "./App"
-import { NavigationProvider } from "./context/NavigationContext" 
-
+import { NavigationProvider } from "./context/NavigationContext"
+import { NavbarProvider } from "./context/NavbarContext"
 const queryClient = new QueryClient()
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter>
-      <NavigationProvider>
-        <AuthProvider>
-          <QueryClientProvider client={queryClient}>
-            <App />
-          </QueryClientProvider>
-        </AuthProvider>
-      </NavigationProvider>
+      <NavbarProvider>
+        <NavigationProvider>
+          <AuthProvider>
+            <QueryClientProvider client={queryClient}>
+              <App />
+            </QueryClientProvider>
+          </AuthProvider>
+        </NavigationProvider>
+      </NavbarProvider>
     </BrowserRouter>
   </StrictMode>
 )

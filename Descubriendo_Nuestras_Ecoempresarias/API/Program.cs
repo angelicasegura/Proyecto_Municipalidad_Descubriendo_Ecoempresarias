@@ -42,7 +42,8 @@ builder.Services.AddCors(options =>
                     "http://localhost:5173",
                     "http://localhost:5174",
                     "https://localhost:5173",
-                    "https://localhost:5174"
+                    "https://localhost:5174",
+                    "https://descubriendoecoempresarias.netlify.app"
                 )
                 .AllowAnyHeader()
                 .AllowAnyMethod();
@@ -71,10 +72,13 @@ builder.Services.AddAuthentication(options =>
 
     options.TokenValidationParameters = new TokenValidationParameters
     {
-        ValidateIssuer = false,     // true en prod
-        ValidateAudience = false,   // true en prod
+        ValidateIssuer = true,     // true en prod
+        ValidateAudience = true,   // true en prod
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
+
+        ValidIssuer = builder.Configuration["Jwt:Issuer"],   
+        ValidAudience = builder.Configuration["Jwt:Audience"],
 
         IssuerSigningKey = new SymmetricSecurityKey(keyBytes),
 
@@ -196,6 +200,7 @@ app.UseRouting();
 app.UseCors("AllowViteApp");
 
 app.UseAuthentication();
+app.UseMiddleware<ValidarUsuarioMiddleware>();
 app.UseAuthorization();
 
 app.MapControllers();

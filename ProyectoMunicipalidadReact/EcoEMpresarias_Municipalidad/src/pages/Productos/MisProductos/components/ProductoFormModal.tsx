@@ -195,7 +195,7 @@ export function ProductoFormModal({ open, producto, categorias, onClose, onConfi
                         {esEdicion && producto?.ruta_Imagen && !imagen && (
                             <div className="mb-2">
                                 <img
-                                    src={`https://localhost:7050/api/Images/Buscar/3/${producto.ruta_Imagen}`}
+                                    src={`https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/api/Images/Buscar/3/${producto.ruta_Imagen}`}
                                     alt="Imagen actual"
                                     className="h-20 w-20 object-cover rounded-lg border"
                                 />

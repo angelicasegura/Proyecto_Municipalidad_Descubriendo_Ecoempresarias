@@ -48,7 +48,7 @@ import ProductosPage from "./pages/Productos/ProductoPage";
 import ReportesEmprendimiento from "./pages/Emprendedores/ReportesEmprendimiento/Reportes/ReportesEmprendimiento";
 import EmprendimientosPropiosReportes from "./pages/Emprendedores/ReportesEmprendimiento/ListaEmprendimientosPropiosInventario/ListaEmprendientosPropios";
 import ReservarStandPage from "../src/pages/Eventos/ReservaStandPage";
-
+import Layout from "./components/ui/layout/Layout";
 
 function App() {
   const { loading } = useAuth();
@@ -63,103 +63,105 @@ function App() {
           <Breadcrumbs />
         </div>
         <main className="flex-1">
-          <Toaster position="top-center" reverseOrder={false} />
-          <Routes>
-            {/* Esta parte es la del router aqui se define el link que se quiere que 
+          <Layout>
+            <Toaster position="top-center" reverseOrder={false} />
+            <Routes>
+              {/* Esta parte es la del router aqui se define el link que se quiere que 
         accione una ruta para cambiar de pagina, esto no es nada del los get o put a 
         la api, esto es solo lo visual */}
 
-            {/* public routes */}
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/emprendimientos" element={<EmprendimientosPage />} />
-            <Route path="/403" element={<ForbiddenPage />} />
-            <Route path="/mapas" element={<MapasPage />} />
-            <Route path="/eventos" element={<EventosPage />} />
-            <Route path="/eventos/:id" element={<EventoDetallePage />} />
-            <Route
-              path="/emprendimiento/:id/:cedulaJuridica"
-              element={<DetalleEmprendimiento />}
-            />
-            <Route path="/mapas" element={<MapasPage />} />
-
-            <Route path="/producto/:id" element={<DetalleProductoPage />} />
-
-            {/* HU-28: Ruta de registro */}
-            <Route path="/registro" element={<RegisterPage />} />
-
-
-            {/*Rutas de peidos*/}
-            <Route element={<ProtectedRoute allowedRoles={["ADMIN","EMPRENDEDOR","USUARIO"]} />}>
-              <Route path="/pedidos/mis-pedidos" element={<MisPedidosPage />} />
-            </Route>
-            {/* Ruta protegida para USUARIO (Carrito) */}
-            <Route element={<ProtectedRoute allowedRoles={["ADMIN","EMPRENDEDOR","USUARIO"]} />}>
-              <Route path="/carrito" element={<CarritoPage />} />
-            </Route>
-
-            {/* admin routes */}
-            <Route element={<ProtectedRoute allowedRoles={["ADMIN"]} />}>
-              <Route path="/usuarios" element={<AdminUsuarios />} />
+              {/* public routes */}
+              <Route path="/" element={<Home />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/emprendimientos" element={<EmprendimientosPage />} />
+              <Route path="/403" element={<ForbiddenPage />} />
+              <Route path="/mapas" element={<MapasPage />} />
+              <Route path="/eventos" element={<EventosPage />} />
+              <Route path="/eventos/:id" element={<EventoDetallePage />} />
               <Route
-                path="/emprendimientos-admin"
-                element={<AdminEmprendedores />}
+                path="/emprendimiento/:id/:cedulaJuridica"
+                element={<DetalleEmprendimiento />}
               />
-              <Route path="/solicitudes-eventos" element={<SolicitudesEventoPage />} />
-              <Route path="/admin/lugares" element={<AdminLugaresPage />} />
-              <Route path="/admin/crear-lugar" element={<CrearLugarPage />} />
-              <Route path="/admin/editar-lugar/:id" element={<EditarLugarPage />} />
-              <Route path="/reportesDashboard" element={<ReportesAdmin />} />
-            </Route>
+              <Route path="/mapas" element={<MapasPage />} />
 
-            {/* Emprendedores routes */}
-            <Route element={<ProtectedRoute allowedRoles={["EMPRENDEDOR","ADMIN"]} />}>
-              <Route
-                path="/emprendimientos-propio"
-                element={<EmprendimientosPropios />}
-              />
-              
-              <Route
-                path="/inventario/:id/:cedulaJuridica"
-                element={<InventarioEmprendimiento />}
-              />
-              <Route
-                path="/emprendimientos-propios"
-                element={<ListaEmprendimientosPropios/>}
-              />
-              <Route
-                path="/Seguimiento-Pedidos/:cedulaJuridica"
-                element={<PedidosPage />}
-              />
-              <Route path="/emprendimientos-propios-reportes" 
-              element={<EmprendimientosPropiosReportes/>}/>
-              <Route path="/reportes-emprendimiento/:id" element={<ReportesEmprendimiento />} />
-              <Route path="/mis-eventos" element={<MisEventosPage />} />
-              <Route path="/mis-eventos/:emprendimientoId" element={<MisEventosDetallePage />} />
-              <Route path="/reservar-evento/:eventoId" element={<SeleccionarEmprendimientoReservaPage />} />
-              <Route path="/reservar-evento/:eventoId/:emprendimientoId" element={<ReservarEventoPage />} />
-            </Route>
-            {/* Productos routes */}
-            <Route path="/productos" element={<ProductosPage />} />
-            <Route path="/productos/:id" element={<DetalleProductoPages />} />
-            <Route path="/mis-productos" element={<MisEmprendimientosPage />} />
-            <Route path="/mis-productos/:emprendimientoId" element={<MisProductosPage />} />
+              <Route path="/producto/:id" element={<DetalleProductoPage />} />
 
-            <Route path="/revision-productos" element={<ProductosPendientesPage />} />
-            <Route path="/productos-pendientes/:tipo" element={<ListaPendientesPage />} />
+              {/* HU-28: Ruta de registro */}
+              <Route path="/registro" element={<RegisterPage />} />
 
 
-            {/* Mapas routes */}
-            <Route path="/mapasEventos" element={<MapasPageEve />} />
+              {/*Rutas de peidos*/}
+              <Route element={<ProtectedRoute allowedRoles={["ADMIN", "EMPRENDEDOR", "USUARIO"]} />}>
+                <Route path="/pedidos/mis-pedidos" element={<MisPedidosPage />} />
+              </Route>
+              {/* Ruta protegida para USUARIO (Carrito) */}
+              <Route element={<ProtectedRoute allowedRoles={["ADMIN", "EMPRENDEDOR", "USUARIO"]} />}>
+                <Route path="/carrito" element={<CarritoPage />} />
+              </Route>
 
-            <Route path="/admin/lugares/:lugar_id" element={<LugarDetallePage />} />
+              {/* admin routes */}
+              <Route element={<ProtectedRoute allowedRoles={["ADMIN"]} />}>
+                <Route path="/usuarios" element={<AdminUsuarios />} />
+                <Route
+                  path="/emprendimientos-admin"
+                  element={<AdminEmprendedores />}
+                />
+                <Route path="/solicitudes-eventos" element={<SolicitudesEventoPage />} />
+                <Route path="/admin/lugares" element={<AdminLugaresPage />} />
+                <Route path="/admin/crear-lugar" element={<CrearLugarPage />} />
+                <Route path="/admin/editar-lugar/:id" element={<EditarLugarPage />} />
+                <Route path="/reportesDashboard" element={<ReportesAdmin />} />
+              </Route>
 
-            <Route path="/seleccionar-stand/:evento_id" element={<ReservarStandPage />} />
+              {/* Emprendedores routes */}
+              <Route element={<ProtectedRoute allowedRoles={["EMPRENDEDOR", "ADMIN"]} />}>
+                <Route
+                  path="/emprendimientos-propio"
+                  element={<EmprendimientosPropios />}
+                />
 
-        </Routes>
-      </main>
-      <Footer />
-    </div>
+                <Route
+                  path="/inventario/:id/:cedulaJuridica"
+                  element={<InventarioEmprendimiento />}
+                />
+                <Route
+                  path="/emprendimientos-propios"
+                  element={<ListaEmprendimientosPropios />}
+                />
+                <Route
+                  path="/Seguimiento-Pedidos/:cedulaJuridica"
+                  element={<PedidosPage />}
+                />
+                <Route path="/emprendimientos-propios-reportes"
+                  element={<EmprendimientosPropiosReportes />} />
+                <Route path="/reportes-emprendimiento/:id" element={<ReportesEmprendimiento />} />
+                <Route path="/mis-eventos" element={<MisEventosPage />} />
+                <Route path="/mis-eventos/:emprendimientoId" element={<MisEventosDetallePage />} />
+                <Route path="/reservar-evento/:eventoId" element={<SeleccionarEmprendimientoReservaPage />} />
+                <Route path="/reservar-evento/:eventoId/:emprendimientoId" element={<ReservarEventoPage />} />
+              </Route>
+              {/* Productos routes */}
+              <Route path="/productos" element={<ProductosPage />} />
+              <Route path="/productos/:id" element={<DetalleProductoPages />} />
+              <Route path="/mis-productos" element={<MisEmprendimientosPage />} />
+              <Route path="/mis-productos/:emprendimientoId" element={<MisProductosPage />} />
+
+              <Route path="/revision-productos" element={<ProductosPendientesPage />} />
+              <Route path="/productos-pendientes/:tipo" element={<ListaPendientesPage />} />
+
+
+              {/* Mapas routes */}
+              <Route path="/mapasEventos" element={<MapasPageEve />} />
+
+              <Route path="/admin/lugares/:lugar_id" element={<LugarDetallePage />} />
+
+              <Route path="/seleccionar-stand/:evento_id" element={<ReservarStandPage />} />
+
+            </Routes>
+          </Layout>
+        </main>
+        <Footer />
+      </div>
     </>
   );
 }

@@ -22,13 +22,13 @@ export default function CrearEventoModal({ onClose, onSuccess }: Props) {
   const { data: lugares = [] } = useQuery({
     queryKey: ["lugares"],
     queryFn: async () => {
-      const res = await authFetch("https://localhost:7050/api/Lugar/ObtenerLugares")
+      const res = await authFetch("https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/api/Lugar/ObtenerLugares")
       return res.json()
     }
   })
 
   // filtrar solo activos
-  const lugaresActivos = lugares.filter((l: any) => l.nombreEstado === "ACTIVO")
+  const lugaresActivos = lugares.filter((l: any) => l.nombreEstado === "Activo")
 
   const handleSubmit = async (e: any) => {
     e.preventDefault()
