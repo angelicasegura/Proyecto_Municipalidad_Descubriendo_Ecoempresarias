@@ -13,7 +13,7 @@ export function EmpresariasCard({ name, ruta_Imagen_Logo }: EmpresariasCardProps
         <img
           src={
             
-               `https://localhost:7050/api/Images/Buscar/2/${ruta_Imagen_Logo}`
+               `https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/api/Images/Buscar/2/${ruta_Imagen_Logo}`
               
           }
           alt={name}

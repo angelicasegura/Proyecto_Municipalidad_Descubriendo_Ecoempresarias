@@ -48,7 +48,7 @@ export default function ModalMapaEvento({ zona, onCerrar }: Props) {
         queryKey: ["mapa", zona.mapa_id],
         queryFn: async () => {
             const res = await authFetch(
-                `https://localhost:7050/api/Mapa/ObtenerMapaPorId/${zona.mapa_id}`
+                `https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/api/Mapa/ObtenerMapaPorId/${zona.mapa_id}`
             )
             if (!res.ok) throw new Error("Error al cargar mapa")
             return res.json()

@@ -1,7 +1,7 @@
 import { authFetch } from "../../../auth/AuthFetch";
 import  type { StandRequest, StandResponse } from "../../../types/mapaType";
 
-const BASE = "https://localhost:7050/api/Stand";
+const BASE = "https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/api/Stand";
 
 export async function fetchStandsPorMapa(mapa_id: number): Promise<StandResponse[]> {
     const res = await authFetch(`${BASE}/ObtenerStandPorMapa/${mapa_id}`);

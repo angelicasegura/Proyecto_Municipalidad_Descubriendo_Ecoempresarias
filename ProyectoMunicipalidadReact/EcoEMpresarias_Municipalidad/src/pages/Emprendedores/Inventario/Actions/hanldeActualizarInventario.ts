@@ -17,7 +17,7 @@ export async function handleActualizarInventario(
   if (!emprendimientoId) throw new Error("Falta emprendimientoId");
 
   
-  const userRes = await authFetch("https://localhost:7050/auth/me");
+  const userRes = await authFetch("https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/auth/me");
   if (!userRes.ok) throw new Error("No autenticado");
   const user = await userRes.json();
   if (!user?.id) throw new Error("Usuario no autenticado");
@@ -29,7 +29,7 @@ export async function handleActualizarInventario(
     CedulaJuridica,
   });
 
-  const url = `https://localhost:7050/api/Inventario/Editar?${params.toString()}`;
+  const url = `https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/api/Inventario/Editar?${params.toString()}`;
   console.debug("handleActualizarInventario -> URL:", url, "BODY:", payload);
 
   const res = authFetch(url, {

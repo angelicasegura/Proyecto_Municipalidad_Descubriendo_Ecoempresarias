@@ -48,7 +48,7 @@ export default function CarritoItemCard({
       <div className="w-20 h-20 bg-gray-100 rounded overflow-hidden flex items-center justify-center">
         {item.ruta_imagen ? (
           <img
-            src={`https://localhost:7050/api/Images/Buscar/3/${item.ruta_imagen}`}
+            src={`https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/api/Images/Buscar/3/${item.ruta_imagen}`}
             alt={item.nombreProducto}
             className="w-full h-full object-cover"
           />

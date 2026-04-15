@@ -8,7 +8,7 @@ export async function handleAgregarComentario(
   const token = localStorage.getItem("token");
 
   const response = await fetch(
-    `https://localhost:7050/api/comentarios/emprendimiento/${emprendimientoId}`,
+    `https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/api/comentarios/emprendimiento/${emprendimientoId}`,
     {
       method: "POST",
       headers: {

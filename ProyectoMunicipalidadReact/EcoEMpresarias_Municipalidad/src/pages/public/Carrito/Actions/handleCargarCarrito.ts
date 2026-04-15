@@ -9,7 +9,7 @@ export async function handleFetchCarrito(
     });
 
     const response = await authFetch(
-      `https://localhost:7050/api/Carrito/MiCarrito?${parameters.toString()}`
+      `https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/api/Carrito/MiCarrito?${parameters.toString()}`
     );
 
     if (!response.ok) throw new Error("Error al obtener carrito");

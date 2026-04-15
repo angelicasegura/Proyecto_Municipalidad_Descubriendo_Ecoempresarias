@@ -72,5 +72,10 @@ namespace Flujo
         {
             return await _emprendimientoDA.GetEmprendiemientoPorEmprendimeintoID(id);
         }
+
+        public async  Task<IEnumerable<EmprendimientoResponse>> ObtenerEmprendimientosActivos()
+        {
+            return await _emprendimientoDA.ObtenerEmprendimientosActivos();
+        }
     }
 }

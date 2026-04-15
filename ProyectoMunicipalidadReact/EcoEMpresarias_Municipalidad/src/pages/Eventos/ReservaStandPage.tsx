@@ -28,7 +28,7 @@ export default function ReservarStandPage() {
     const { data: evento } = useQuery({
         queryKey: ["evento", eventoId],
         queryFn: async () => {
-            const res = await authFetch(`https://localhost:7050/api/Evento/ObtenerEvento/${eventoId}`)
+            const res = await authFetch(`https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/api/Evento/ObtenerEvento/${eventoId}`)
             if (!res.ok) throw new Error("Error al cargar evento")
             return res.json()
         },

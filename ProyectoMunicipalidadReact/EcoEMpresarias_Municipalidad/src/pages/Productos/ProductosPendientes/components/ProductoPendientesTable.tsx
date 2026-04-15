@@ -48,7 +48,7 @@ export function ProductosPendientesTable({ productos, onAprobar, onRechazar }: P
                             <TableCell>
                                 {producto.ruta_Imagen ? (
                                     <img
-                                        src={`https://localhost:7050/api/Images/Buscar/3/${producto.ruta_Imagen}`}
+                                        src={`https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/api/Images/Buscar/3/${producto.ruta_Imagen}`}
                                         alt={producto.nombreProducto}
                                         className="h-12 w-12 rounded-lg object-cover border"
                                     />

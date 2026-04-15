@@ -9,7 +9,7 @@ export async function handleFetchCategorias(emprendimiento_id: number): Promise<
      });
 
 
-      const response = await fetch(`https://localhost:7050/api/CategoriasProductos/Obtener?${params.toString()}`);
+      const response = await fetch(`https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/api/CategoriasProductos/Obtener?${params.toString()}`);
      if (!response.ok) throw new Error("Error al obtener categorías");
      return await response.json(); 
 

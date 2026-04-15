@@ -15,7 +15,7 @@ export default function EditarLugarPage() {
   const { data: lugar } = useQuery({
     queryKey: ["lugar", id],
     queryFn: async () => {
-      const res = await authFetch(`https://localhost:7050/api/Lugar/ObtenerLugarId/${id}`)
+      const res = await authFetch(`https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/api/Lugar/ObtenerLugarId/${id}`)
       return res.json()
     }
   })

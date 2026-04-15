@@ -78,7 +78,7 @@ export default function DetalleProductoPage() {
                 <div className="rounded-2xl border bg-white p-10 flex items-center justify-center">
                     {producto.ruta_Imagen ? (
                         <img
-                            src={`https://localhost:7050/api/Images/Buscar/3/${producto.ruta_Imagen}`}
+                            src={`https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/api/Images/Buscar/3/${producto.ruta_Imagen}`}
                             alt={producto.nombreProducto}
                             className="max-h-[450px] w-auto object-contain"
                         />

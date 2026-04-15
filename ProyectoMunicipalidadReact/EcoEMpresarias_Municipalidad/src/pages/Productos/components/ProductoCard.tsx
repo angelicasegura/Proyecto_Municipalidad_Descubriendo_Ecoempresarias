@@ -22,7 +22,7 @@ export default function ProductoCard({ producto }: Props) {
             <div className="aspect-[4/3] w-full bg-gray-50 flex items-center justify-center overflow-hidden">
                 {producto.ruta_Imagen ? (
                     <img
-                        src={`https://localhost:7050/api/Images/Buscar/3/${producto.ruta_Imagen}`}
+                        src={`https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/api/Images/Buscar/3/${producto.ruta_Imagen}`}
                         alt={producto.nombreProducto}
                         className="w-full h-full object-cover"
                     />

@@ -21,9 +21,10 @@ export default function CarritoPage() {
   const [items, setItems] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [creandoPedido, setCreandoPedido] = useState(false);
-
-  const { user } = useAuth();
+  const [direccionEntrega, setDireccionEntrega] = useState("");
+  const [observaciones, setObservaciones] = useState("");
   const navigate = useNavigate();
+  const { user } = useAuth();
   const emprendimientoId = Number(localStorage.getItem("emprendimientoId") || 0); //TODO recuerda que esto no se debe hacer asi, que primero se haga una lsita de carritos y asi, esto hay que cambiarlo a futuro
 
   async function cargarCarrito() {
@@ -67,18 +68,37 @@ export default function CarritoPage() {
   }, [items]);
 
   async function confirmarPedido() {
+
     try {
       setCreandoPedido(true);
+      const usuarioId = user?.id;
 
-      const resultado = await handleCrearPedido(emprendimientoId);
+      if (!usuarioId) {
+        toast.error("Usuario no encontrado");
+        setCreandoPedido(false);
+        return;
+      }
 
-      toast.success(`Pedido #${resultado} creado correctamente`);
-      navigate("/pedidos/mis-pedidos");
+      const pedidoId = await handleCrearPedido(
+        usuarioId,
+        emprendimientoId,
+        direccionEntrega,
+        observaciones
+      );
+
+      toast.success("Pedido creado correctamente");
+      
+      
+
+      
+      navigate("https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/pedidos/mis-pedidos");
 
     } catch {
+
       toast.error("No se pudo crear el pedido");
       setCreandoPedido(false);
     }
+
   }
 
   if (loading) return <div className="p-6">Cargando carrito...</div>;
@@ -108,6 +128,10 @@ export default function CarritoPage() {
       <CarritoResumen total={total} />
 
       <CarritoFormularioPedido
+        direccionEntrega={direccionEntrega}
+        setDireccionEntrega={setDireccionEntrega}
+        observaciones={observaciones}
+        setObservaciones={setObservaciones}
         confirmarPedido={confirmarPedido}
       />
 

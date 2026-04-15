@@ -24,7 +24,7 @@ export default function EventosPage() {
   const eventosFiltrados =
     user?.rol === "ADMIN"
       ? eventos
-      : eventos.filter((e: any) => e.estado_id === 1 || e.nombreEstado ==="ACTIVO")
+      : eventos.filter((e: any) => e.estado_id === 1 || e.nombreEstado ==="Activo")
 
       console.log(eventos)
 

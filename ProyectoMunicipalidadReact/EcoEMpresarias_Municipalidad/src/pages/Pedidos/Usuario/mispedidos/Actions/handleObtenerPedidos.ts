@@ -19,7 +19,7 @@ export async function handleObtenerPedidosPendientes(
     if (estadoId) params.append("estadoId", estadoId.toString());
     if (fecha) params.append("fecha", fecha);
 
-    const url = `https://localhost:7050/api/Pedido?${params.toString()}`;
+    const url = `https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/api/Pedido?${params.toString()}`;
 
     const response = await authFetch(url, {
       method: "GET",

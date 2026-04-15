@@ -59,12 +59,38 @@ namespace API.Controllers
             return Ok(respuesta);
         }
 
-        [HttpPost]
-        public Task<IActionResult> RegistrarUsuario()
+        [HttpPost("registro")]
+        public async Task<IActionResult> RegistrarUsuario([FromBody] UsuarioRegistroRequest usuario)
         {
-            throw new NotImplementedException();
-        }
+            try
+            {
+                var usuarioDB = new UsuarioRequest
+                {
+                    IdUsuario = usuario.IdUsuario,
+                    Nombre = usuario.Nombre,
+                    Apellidos = usuario.Apellidos,
+                    Telefono = usuario.Telefono,
+                    Contrasena = HashGenerator.HashHelper.GenerarHashSHA256(usuario.Contrasena),
+                    Email = usuario.Email,
+                    Edad = usuario.Edad,
+                    IdEstado = 1,
+                    IdRol = 3,
+                    Ruta_Imagen_Perfil = "UserHolder.jpg"
+                };
 
+                var resultado = await _usuarioFlujo.Agregar(usuarioDB);
+
+                return Ok(new
+                {
+                    mensaje = "Usuario registrado correctamente",
+                    usuarioId = resultado
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 
         [Authorize]
         [HttpGet("me")]

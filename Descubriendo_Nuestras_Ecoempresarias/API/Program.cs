@@ -42,7 +42,8 @@ builder.Services.AddCors(options =>
                     "http://localhost:5173",
                     "http://localhost:5174",
                     "https://localhost:5173",
-                    "https://localhost:5174"
+                    "https://localhost:5174",
+                    "https://descubriendoecoempresarias.netlify.app"
                 )
                 .AllowAnyHeader()
                 .AllowAnyMethod();
@@ -181,17 +182,16 @@ builder.Services.AddScoped<IZonaEventoDA, EventoZonaDA>();
 builder.Services.AddScoped<IEventoZonaFlujo, EventoZonaFlujo>();
 builder.Services.AddScoped<IEventoZonaStandDA, EventoZonaStandDA>();
 builder.Services.AddScoped<IEventoZonaStandFlujo, EventoZonaStandFlujo>();
+builder.Services.AddScoped<INotificacionesService, NotificacionService>();
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
+
     app.UseSwagger();
     app.UseSwaggerUI(c =>
     {
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1");
     });
-}
 
 app.UseHttpsRedirection();
 

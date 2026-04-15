@@ -1,19 +1,46 @@
+import type { PedidoRequest } from "../../../../types/pedidoType"
 import { authFetch } from "../../../../auth/AuthFetch"
 
 export async function handleCrearPedido(
-  emprendimientoId: number
-): Promise<number> {
-  const response = await authFetch(
-    "/api/Pedido",
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ emprendimientoId })
-    }
-  );
+  usuarioId: number,
+  emprendimientoId: number,
+  direccionEntrega: string,
+  observaciones?: string
+): Promise<string> {
+console.log(JSON.stringify({
+          usuarioId,
+          emprendimientoId,
+          direccionEntrega,
+          observaciones
+        }));
+  try {
 
-  if (!response.ok) throw new Error("Error creando pedido");
+    const response = await authFetch(
+      "https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/api/Pedido",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          usuarioId,
+          emprendimientoId,
+          direccionEntrega,
+          observaciones
+        })
+      }
+    );
 
-  const data = await response.json();
-  return data.pedido_id; // ahora también podés usar data.factura_id o data.total
+    if (!response.ok) throw new Error("Error creando pedido");
+
+    const data = await response.json();
+
+    return data.pedidoId;
+
+  } catch (error) {
+
+    console.error("Error creando pedido:", error);
+    throw error;
+
+  }
 }
