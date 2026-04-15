@@ -11,7 +11,7 @@ export async function handleObtenerPedidosPendientes(
 ): Promise<PedidosResponse> {
   try {
     const params = new URLSearchParams({
-     
+    
       pagina: pagina.toString(),
       registrosPorPagina: registrosPorPagina.toString(),
     });

@@ -91,7 +91,7 @@ export default function CarritoPage() {
       
 
       
-      navigate("https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/pedidos/mis-pedidos");
+      navigate("http://localhost:5173/pedidos/mis-pedidos");
 
     } catch {
 
