@@ -91,7 +91,7 @@ export default function CarritoPage() {
      
 
       
-       navigate("https://descubriendoecoempresarias.netlify.app/pedidos/mis-pedidos/pedidos/mis-pedidos");
+       navigate("/pedidos/mis-pedidos");
 
     } catch {
 
