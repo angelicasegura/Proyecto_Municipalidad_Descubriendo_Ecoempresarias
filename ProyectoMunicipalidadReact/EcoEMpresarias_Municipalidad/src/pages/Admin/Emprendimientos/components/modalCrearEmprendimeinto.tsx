@@ -273,7 +273,7 @@ export function ModalCrearEmprendimiento({
               </div>
             </div>
 
-            {/* NUEVOS CAMPOS SIN CAMBIAR DISEÑO */}
+            
             <div className="space-y-2">
               <Label>Descripción</Label>
               <div className="relative">
