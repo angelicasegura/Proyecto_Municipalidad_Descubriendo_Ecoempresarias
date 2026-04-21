@@ -46,17 +46,17 @@ export default function CarritoItemCard({
     <div className="border rounded-lg p-4 flex gap-4 items-center">
 
       <div className="w-20 h-20 bg-gray-100 rounded overflow-hidden flex items-center justify-center">
-        {item.ruta_imagen ? (
-          <img
-            src={`https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/api/Images/Buscar/3/${item.ruta_imagen}`}
-            alt={item.nombreProducto}
-            className="w-full h-full object-cover"
-          />
-        ) : (
-          <span className="text-xs text-gray-500">
-            Sin imagen
-          </span>
-        )}
+       {item.Ruta_Imagen ? (
+  <img
+    src={`https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/api/Images/Buscar/3/${item.Ruta_Imagen}`}
+    alt={item.nombreProducto}
+    className="w-full h-full object-cover"
+  />
+) : (
+  <span className="text-xs text-gray-500">
+    Sin imagen
+  </span>
+)}
       </div>
 
       <div className="flex-1">
