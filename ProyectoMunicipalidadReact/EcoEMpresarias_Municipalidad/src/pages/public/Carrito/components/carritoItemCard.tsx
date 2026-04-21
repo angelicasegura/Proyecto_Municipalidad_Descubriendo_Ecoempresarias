@@ -20,6 +20,7 @@ export default function CarritoItemCard({
   eliminarItem,
   reload
 }: Props) {
+  console.log("ITEM:", item) 👈 AQUI
 
   async function handleActualizar(cantidad: number) {
 
