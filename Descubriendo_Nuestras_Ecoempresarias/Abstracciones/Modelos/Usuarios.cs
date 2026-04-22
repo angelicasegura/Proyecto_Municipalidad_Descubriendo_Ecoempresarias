@@ -31,7 +31,7 @@ namespace Abstracciones.Modelos
         public int IdEstado { get; set; }
         public int IdRol { get; set; }
 
-        public string Rol { get; set; }
+        public string? Rol { get; set; }
 
 
     }
