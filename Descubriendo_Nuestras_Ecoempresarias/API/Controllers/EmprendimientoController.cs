@@ -223,7 +223,7 @@ namespace API.Controllers
         [HttpPut("EditarEmprendimiento/{id}")]
         public async Task<IActionResult> EditarEmprendimiento([FromRoute] int id, [FromForm] EmprendimientoRequest emprendimiento)
         {
-            //implementar que busque antes de crear, pero se pone despues
+            
             string rutaBase = _configuration["LinksDocument:DocumentosLink"];
             string carpeta = _configuration["Carpetas:emprendimientos"];
 
@@ -254,7 +254,14 @@ namespace API.Controllers
         {
             try
             {
-                var resultado = await _emprendimientoFlujo.EliminarEmprendimeinto(id);
+                var emprendimiento = await _emprendimientoFlujo.GetEmprendiemientoPorEmprendimeintoID(id);
+                int estado_id = 0;
+                if (emprendimiento.EstadoId == 0)
+                {
+                    estado_id = 1;
+                }
+
+                var resultado = await _emprendimientoFlujo.InactivarOActivarEmprendimientosDeUsuario(emprendimiento.UsuarioId,estado_id);
                 return Ok(resultado);
             }
             catch (Exception ex)

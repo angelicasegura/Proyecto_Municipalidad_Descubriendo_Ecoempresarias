@@ -175,12 +175,7 @@ export function Navbar() {
                 >
                   Usuarios
                 </Link>
-                <Link
-                  to="/roles"
-                  className="block py-2 px-4 text-white hover:text-accent rounded-md"
-                >
-                  Gestión de Roles
-                </Link>
+                
                 <Link
                   to="/emprendimientos-admin"
                   className="block py-2 px-4 text-white hover:text-accent rounded-md"
@@ -387,9 +382,7 @@ export function Navbar() {
                 <Link to="/usuarios" className="text-white hover:text-accent">
                   Usuarios
                 </Link>
-                <Link to="/roles" className="text-white hover:text-accent">
-                  Gestión de Roles
-                </Link>
+                
                 <Link
                   to="/emprendimientos-admin"
                   className="text-white hover:text-accent"

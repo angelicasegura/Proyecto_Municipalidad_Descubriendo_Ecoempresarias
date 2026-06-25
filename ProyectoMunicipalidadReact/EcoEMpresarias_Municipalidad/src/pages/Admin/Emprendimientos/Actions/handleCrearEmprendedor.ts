@@ -14,7 +14,7 @@ export function handleCrearEmprendedor({
 }: Props) {
   return async (emprendimientoData: any) => {
     
-      console.log([...emprendimientoData.entries()]);
+      
       const response = authFetch(
         "https://apidescubriendoecoempresarias-gybugkhkbagse2e4.canadacentral-01.azurewebsites.net/api/emprendimientos/crearAdmin",
         {
