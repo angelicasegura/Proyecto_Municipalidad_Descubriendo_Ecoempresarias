@@ -10,12 +10,7 @@ export function InicialBanner() {
         <p className="text-xl leading-relaxed mb-8 opacity-95 text-pretty">
           Celebrando a mujeres emprendedoras que transforman sus comunidades con negocios sostenibles
         </p>
-        <Button
-          size="lg"
-          className="bg-[#f2a33c] hover:bg-[#e6932d] text-[#333] font-semibold text-base px-8 shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all"
-        >
-          Conoce Más
-        </Button>
+        
       </div>
     </section>
   )
