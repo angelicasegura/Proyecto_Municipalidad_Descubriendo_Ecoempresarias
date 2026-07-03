@@ -1,15 +1,28 @@
-import { useState } from "react"
-import { useNavigate, Link } from "react-router-dom"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../../components/ui/card"
-import { Button } from "../../../components/ui/button"
-import { Input } from "../../../components/ui/input"
-import { Label } from "../../../components/ui/label"
-import { Alert, AlertDescription } from "../../../components/ui/alert"
-import { Leaf, UserPlus, AlertCircle, Loader2, Eye, EyeOff } from "lucide-react"
-import { registrarUsuario } from "./actions/handleRegistro"
+import { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "../../../components/ui/card";
+import { Button } from "../../../components/ui/button";
+import { Input } from "../../../components/ui/input";
+import { Label } from "../../../components/ui/label";
+import { Alert, AlertDescription } from "../../../components/ui/alert";
+import {
+  Leaf,
+  UserPlus,
+  AlertCircle,
+  Loader2,
+  Eye,
+  EyeOff,
+} from "lucide-react";
+import { registrarUsuario } from "./actions/handleRegistro";
 
 export default function RegisterPage() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     idUsuario: "",
@@ -19,43 +32,44 @@ export default function RegisterPage() {
     email: "",
     contrasena: "",
     edad: "",
-  })
+  });
 
-  const [errors, setErrors] = useState<Record<string, string>>({})
-  const [successMessage, setSuccessMessage] = useState<string | null>(null)
-  const [isLoading, setIsLoading] = useState(false)
-  const [registerError, setRegisterError] = useState<string | null>(null)
-  const [showPassword, setShowPassword] = useState(false)
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [registerError, setRegisterError] = useState<string | null>(null);
+  const [showPassword, setShowPassword] = useState(false);
 
   const validateForm = () => {
-    const newErrors: Record<string, string> = {}
+    const newErrors: Record<string, string> = {};
 
-    if (!formData.idUsuario) newErrors.idUsuario = "La cédula es requerida"
-    if (!formData.nombre) newErrors.nombre = "El nombre es requerido"
-    if (!formData.apellidos) newErrors.apellidos = "Los apellidos son requeridos"
-    if (!formData.telefono) newErrors.telefono = "El teléfono es requerido"
+    if (!formData.idUsuario) newErrors.idUsuario = "La cédula es requerida";
+    if (!formData.nombre) newErrors.nombre = "El nombre es requerido";
+    if (!formData.apellidos)
+      newErrors.apellidos = "Los apellidos son requeridos";
+    if (!formData.telefono) newErrors.telefono = "El teléfono es requerido";
 
     if (!formData.email) {
-      newErrors.email = "El email es requerido"
+      newErrors.email = "El email es requerido";
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = "Ingresa un email válido"
+      newErrors.email = "Ingresa un email válido";
     }
 
     if (!formData.contrasena) {
-      newErrors.contrasena = "La contraseña es requerida"
-    } else if (formData.contrasena.length < 6) {
-      newErrors.contrasena = "Debe tener al menos 6 caracteres"
+      newErrors.contrasena = "La contraseña es requerida";
+    } else if (formData.contrasena.length < 8) {
+      newErrors.contrasena = "La contraseña debe tener al menos 8 caracteres";
     }
 
     if (!formData.edad) {
-      newErrors.edad = "La edad es requerida"
+      newErrors.edad = "La edad es requerida";
     } else if (Number(formData.edad) < 12) {
-      newErrors.edad = "Debes tener al menos 12 años"
+      newErrors.edad = "Debes tener al menos 12 años";
     }
 
-    setErrors(newErrors)
-    return Object.keys(newErrors).length === 0
-  }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[var(--gris-claro)] p-4">
@@ -81,13 +95,13 @@ export default function RegisterPage() {
           <form
             className="space-y-4"
             onSubmit={async (e) => {
-              e.preventDefault()
-              setRegisterError(null)
-              setSuccessMessage(null)
+              e.preventDefault();
+              setRegisterError(null);
+              setSuccessMessage(null);
 
-              if (!validateForm()) return
+              if (!validateForm()) return;
 
-              setIsLoading(true)
+              setIsLoading(true);
               try {
                 await registrarUsuario({
                   idUsuario: Number(formData.idUsuario),
@@ -97,16 +111,18 @@ export default function RegisterPage() {
                   contrasena: formData.contrasena,
                   email: formData.email,
                   edad: Number(formData.edad),
-                })
+                });
 
-                setSuccessMessage("Registro exitoso. Redirigiendo al login...")
-                setTimeout(() => navigate("/login"), 2000)
+                setSuccessMessage("Registro exitoso. Redirigiendo al login...");
+                setTimeout(() => navigate("/login"), 2000);
               } catch (error) {
                 setRegisterError(
-                  error instanceof Error ? error.message : "Error al registrarse"
-                )
+                  error instanceof Error
+                    ? error.message
+                    : "Error al registrarse",
+                );
               } finally {
-                setIsLoading(false)
+                setIsLoading(false);
               }
             }}
           >
@@ -136,7 +152,9 @@ export default function RegisterPage() {
                 }
                 className={errors.idUsuario ? "border-destructive" : ""}
               />
-              {errors.idUsuario && <p className="text-sm text-destructive">{errors.idUsuario}</p>}
+              {errors.idUsuario && (
+                <p className="text-sm text-destructive">{errors.idUsuario}</p>
+              )}
             </div>
 
             {/* NOMBRE */}
@@ -149,7 +167,9 @@ export default function RegisterPage() {
                 }
                 className={errors.nombre ? "border-destructive" : ""}
               />
-              {errors.nombre && <p className="text-sm text-destructive">{errors.nombre}</p>}
+              {errors.nombre && (
+                <p className="text-sm text-destructive">{errors.nombre}</p>
+              )}
             </div>
 
             {/* APELLIDOS */}
@@ -162,7 +182,9 @@ export default function RegisterPage() {
                 }
                 className={errors.apellidos ? "border-destructive" : ""}
               />
-              {errors.apellidos && <p className="text-sm text-destructive">{errors.apellidos}</p>}
+              {errors.apellidos && (
+                <p className="text-sm text-destructive">{errors.apellidos}</p>
+              )}
             </div>
 
             {/* TELEFONO */}
@@ -176,7 +198,9 @@ export default function RegisterPage() {
                 }
                 className={errors.telefono ? "border-destructive" : ""}
               />
-              {errors.telefono && <p className="text-sm text-destructive">{errors.telefono}</p>}
+              {errors.telefono && (
+                <p className="text-sm text-destructive">{errors.telefono}</p>
+              )}
             </div>
 
             {/* EMAIL */}
@@ -190,7 +214,9 @@ export default function RegisterPage() {
                 }
                 className={errors.email ? "border-destructive" : ""}
               />
-              {errors.email && <p className="text-sm text-destructive">{errors.email}</p>}
+              {errors.email && (
+                <p className="text-sm text-destructive">{errors.email}</p>
+              )}
             </div>
 
             {/* CONTRASEÑA */}
@@ -204,7 +230,9 @@ export default function RegisterPage() {
                   onChange={(e) =>
                     setFormData({ ...formData, contrasena: e.target.value })
                   }
-                  className={errors.contrasena ? "border-destructive pr-10" : "pr-10"}
+                  className={
+                    errors.contrasena ? "border-destructive pr-10" : "pr-10"
+                  }
                 />
 
                 <button
@@ -233,7 +261,9 @@ export default function RegisterPage() {
                 }
                 className={errors.edad ? "border-destructive" : ""}
               />
-              {errors.edad && <p className="text-sm text-destructive">{errors.edad}</p>}
+              {errors.edad && (
+                <p className="text-sm text-destructive">{errors.edad}</p>
+              )}
             </div>
 
             <Button
@@ -257,12 +287,15 @@ export default function RegisterPage() {
 
           <div className="mt-6 text-center text-sm">
             ¿Ya tienes cuenta?{" "}
-            <Link to="/login" className="text-[var(--azul-principal)] font-medium">
+            <Link
+              to="/login"
+              className="text-[var(--azul-principal)] font-medium"
+            >
               Inicia sesión
             </Link>
           </div>
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }
