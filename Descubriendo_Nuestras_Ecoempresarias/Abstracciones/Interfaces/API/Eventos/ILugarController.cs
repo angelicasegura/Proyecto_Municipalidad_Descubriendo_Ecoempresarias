@@ -12,7 +12,7 @@ namespace Abstracciones.Interfaces.API.Eventos
     {
         public Task<IActionResult> AgregarLugar(LugarRequest lugar);
         public Task<IActionResult> EditarLugar(int id, LugarRequest lugar);
-        public Task<IActionResult> InactivarLugar(int id);
+        public Task<IActionResult> ActualizarEstadoLugar(int id, int estado);
         public Task<IActionResult> ObtenerLugares();
         public Task<IActionResult> ObtenerLugarPorId(int id);
     }

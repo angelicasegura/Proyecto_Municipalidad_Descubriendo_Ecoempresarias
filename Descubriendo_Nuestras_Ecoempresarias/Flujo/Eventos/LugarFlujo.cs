@@ -25,11 +25,10 @@ namespace Flujo.Eventos
             return await _lugarDA.EditarLugar(id, lugar);
         }
 
-        public async Task<int> InactivarLugar(int id)
+        public async Task<int> ActualizarEstadoLugar(int id, int estado)
         {
-            return await _lugarDA.InactivarLugar(id);
+            return await _lugarDA.ActualizarEstadoLugar(id, estado);
         }
-
         public async Task<IEnumerable<LugarResponse>> ObtenerLugares()
         {
             return await _lugarDA.ObtenerLugares();

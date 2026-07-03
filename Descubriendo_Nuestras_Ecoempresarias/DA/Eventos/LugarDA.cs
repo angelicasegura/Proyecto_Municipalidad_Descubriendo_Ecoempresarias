@@ -56,14 +56,31 @@ namespace DA.Eventos
             return resultQuery;
         }
 
-        public async Task<int> InactivarLugar(int id)
+        public async Task<int> ActualizarEstadoLugar(int id, int estado)
         {
-            string query = @"SP_InactivarLugar";
-            var resultQuery = await _sqlConnection.ExecuteScalarAsync<int>(query, new
+            try
             {
-                Lugar_id = id
-            });
-            return resultQuery;
+                string query = "SP_ActualizarEstadoLugar";
+
+                var resultado = await _sqlConnection.ExecuteScalarAsync<int>(
+                    query,
+                    new
+                    {
+                        Lugar_id = id,
+                        Estado_id = estado
+                    },
+                    commandType: CommandType.StoredProcedure
+                );
+
+                if (resultado != 0)
+                    return 1;
+
+                return 0;
+            }
+            catch
+            {
+                throw new Exception("Error actualizando el estado del lugar.");
+            }
         }
 
         public async Task<IEnumerable<LugarResponse>> ObtenerLugares()
