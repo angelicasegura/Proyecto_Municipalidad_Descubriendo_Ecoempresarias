@@ -11,8 +11,8 @@ namespace Abstracciones.Interfaces.DA.Eventos
     {
         public Task<int> AgregarLugar(LugarRequest lugar);
         public Task<int> EditarLugar(int id, LugarRequest lugar);
-        public Task<int> InactivarLugar(int id);
-        public Task<IEnumerable<LugarResponse>> ObtenerLugares();
+        public Task<int> ActualizarEstadoLugar(int id, int estado);     
+            public Task<IEnumerable<LugarResponse>> ObtenerLugares();
         public Task<LugarResponse> ObtenerLugarPorId(int id);
 
     }
