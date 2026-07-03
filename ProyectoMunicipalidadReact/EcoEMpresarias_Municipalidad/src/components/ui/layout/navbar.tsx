@@ -20,17 +20,19 @@ import {
   Users,
   MapPin,
   BarChart,
+  PackageCheck,
 } from "lucide-react";
 import logo from "../../../assets/logo.png";
 import { useAuth } from "../../../auth/AuthContext";
 import { handleLogout } from "../../../pages/auth/logout/handleLogout";
 import { useNavbar } from "@/context/NavbarContext";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [adminOpen, setAdminOpen] = useState(false);
   const [emprendedorOpen, setEmprendedorOpen] = useState(false);
-  const { expanded: dashboardExpanded, setExpanded: setDashboardExpanded } = useNavbar();
+  const { expanded: dashboardExpanded, setExpanded: setDashboardExpanded } =
+    useNavbar();
   const { user } = useAuth();
   const [adminDropdownOpen, setAdminDropdownOpen] = useState(false);
   const [emprendedorDropdownOpen, setEmprendedorDropdownOpen] = useState(false);
@@ -101,8 +103,9 @@ export function Navbar() {
 
         {/* Mobile slide menu */}
         <div
-          className={`fixed top-0 right-0 h-full w-80 bg-[#056F94] shadow-2xl z-50 p-6 space-y-3 overflow-y-auto transform transition-transform duration-700 ${mobileMenuOpen ? "translate-x-0" : "translate-x-full"
-            }`}
+          className={`fixed top-0 right-0 h-full w-80 bg-[#056F94] shadow-2xl z-50 p-6 space-y-3 overflow-y-auto transform transition-transform duration-700 ${
+            mobileMenuOpen ? "translate-x-0" : "translate-x-full"
+          }`}
         >
           <div className="flex justify-end mb-4">
             <button
@@ -175,7 +178,7 @@ export function Navbar() {
                 >
                   Usuarios
                 </Link>
-                
+
                 <Link
                   to="/emprendimientos-admin"
                   className="block py-2 px-4 text-white hover:text-accent rounded-md"
@@ -317,8 +320,9 @@ export function Navbar() {
             }}
           >
             <ChevronDown
-              className={`h-6 w-6 transition-transform duration-300 ${dashboardExpanded ? "rotate-180" : ""
-                }`}
+              className={`h-6 w-6 transition-transform duration-300 ${
+                dashboardExpanded ? "rotate-180" : ""
+              }`}
             />
           </button>
         </div>
@@ -346,6 +350,15 @@ export function Navbar() {
             >
               <ShoppingCart className="h-6 w-6" />
               {dashboardExpanded && <span>Carrito</span>}
+            </Link>
+          )}
+          {["ADMIN", "EMPRENDEDOR", "USUARIO"].includes(user?.rol ?? "") && (
+            <Link
+              to="/pedidos/mis-pedidos"
+              className="flex items-center gap-3 text-white hover:text-accent w-full px-2"
+            >
+              <PackageCheck className="h-6 w-6" />
+              {dashboardExpanded && <span>Mis Pedidos</span>}
             </Link>
           )}
           {["ADMIN", "EMPRENDEDOR"].includes(user?.rol ?? "") && (
@@ -382,7 +395,7 @@ export function Navbar() {
                 <Link to="/usuarios" className="text-white hover:text-accent">
                   Usuarios
                 </Link>
-                
+
                 <Link
                   to="/emprendimientos-admin"
                   className="text-white hover:text-accent"
@@ -514,7 +527,7 @@ export function Navbar() {
               variant="secondary"
               className={`flex items-center justify-center gap-2 bg-accent hover:bg-accent/90 text-accent-foreground transition-all duration-300
         ${dashboardExpanded ? "w-full px-4" : "w-12 px-0 overflow-hidden"}`}
-                onClick={() => handleLogout(navigate)}
+              onClick={() => handleLogout(navigate)}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"

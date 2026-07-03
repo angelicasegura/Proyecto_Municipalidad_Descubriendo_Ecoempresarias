@@ -33,8 +33,10 @@ export async function handleCrearEvento(
   );
 
   if (!response.ok) {
-    throw new Error("Error al crear evento");
-  }
+  const error = await response.text();
+  console.error("Error API:", error);
+  throw new Error(error);
+}
 
   return await response.json();
 }
