@@ -3,8 +3,8 @@ import { AlertTriangle } from "lucide-react";
 interface Props {
   titulo: string;
   mensaje: string;
-  textoBoton: string;
-  colorBoton: "red" | "green";
+  textoBoton?: string;
+  colorBoton?: "red" | "green";
   onConfirmar: () => void;
   onCancelar: () => void;
   cargando?: boolean;
@@ -13,8 +13,8 @@ interface Props {
 export default function ModalConfirmar({
   titulo,
   mensaje,
-  textoBoton,
-  colorBoton,
+  textoBoton = "Sí, inactivar",
+  colorBoton = "red",
   onConfirmar,
   onCancelar,
   cargando,
