@@ -1,6 +1,9 @@
 import { Button } from "../../../components/ui/button"
+import { useNavigate } from "react-router-dom";
 
 export function BannerUneteComunidad() {
+    const navigate = useNavigate();
+
   return (
     <section id="contact" className="gradient-hero text-white py-16 sm:py-20 text-center">
       <div className="mx-auto max-w-175 px-8">
@@ -11,6 +14,7 @@ export function BannerUneteComunidad() {
         <Button
           size="lg"
           className="bg-[#FFD177] hover:bg-[#E6BC6B] text-[#333] font-semibold text-base px-8 shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all"
+          onClick={() => navigate("/registro")}
         >
           Registrarse Ahora
         </Button>

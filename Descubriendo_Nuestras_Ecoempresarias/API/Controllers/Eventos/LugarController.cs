@@ -28,7 +28,7 @@ namespace API.Controllers.Eventos
             _configuration = configuration;
         }
 
-        //[Authorize(Roles = "ADMIN")]
+        [Authorize(Roles = "ADMIN")]
         [HttpPost("CrearLugar")]
         public async Task<IActionResult> AgregarLugar([FromBody] LugarRequest lugar)
         {
@@ -44,7 +44,7 @@ namespace API.Controllers.Eventos
             }
         }
 
-        //[Authorize(Roles = "ADMIN")]
+        [Authorize(Roles = "ADMIN")]
         [HttpPut("EditarLugar/{id}")]
         public async Task<IActionResult> EditarLugar([FromRoute]int id, [FromBody] LugarRequest lugar)
         {
@@ -61,22 +61,19 @@ namespace API.Controllers.Eventos
         }
 
         //[Authorize(Roles = "ADMIN")]
-        [HttpPut("InactivarLugar/{id}")]
-        public async Task<IActionResult> InactivarLugar([FromRoute] int id)
+        [Authorize(Roles = "ADMIN")]
+        [HttpPut("ActualizarEstadoLugar/{id}")]
+        public async Task<IActionResult> ActualizarEstadoLugar( int id, [FromBody] int estado)
         {
-            try
-            {
-                var resultado = await _lugarFlujo.InactivarLugar(id);
-                return Ok(resultado);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-                return StatusCode(500, $"Error interno al inactivar lugar es: {ex.Message}");
-            }
+            var resultado = await _lugarFlujo.ActualizarEstadoLugar(id, estado);
+
+            if (resultado == 1)
+                return Ok();
+
+            return BadRequest();
         }
 
-        //[Authorize(Roles = "ADMIN")]
+        [Authorize(Roles = "ADMIN")]
         [HttpGet("ObtenerLugares")]
         public async Task<IActionResult> ObtenerLugares()
         {
@@ -96,7 +93,7 @@ namespace API.Controllers.Eventos
             }
         }
 
-        //[Authorize(Roles = "ADMIN")]
+        [Authorize(Roles = "ADMIN")]
         [HttpGet("ObtenerLugarId/{id}")]
         public async Task<IActionResult> ObtenerLugarPorId([FromRoute] int id)
         {

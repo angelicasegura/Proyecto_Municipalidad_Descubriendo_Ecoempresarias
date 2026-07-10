@@ -64,6 +64,15 @@ namespace API.Controllers
         {
             try
             {
+                if (string.IsNullOrWhiteSpace(usuario.Contrasena))
+                {
+                    return BadRequest("La contraseña es obligatoria.");
+                }
+
+                if (usuario.Contrasena.Length < 8)
+                {
+                    return BadRequest("La contraseña debe tener al menos 8 caracteres.");
+                }
                 var usuarioDB = new UsuarioRequest
                 {
                     IdUsuario = usuario.IdUsuario,
