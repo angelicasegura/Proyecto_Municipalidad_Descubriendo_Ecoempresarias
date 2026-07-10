@@ -119,30 +119,21 @@ namespace API.Controllers
             var user = await _usuarioFlujo.BuscarUsuarioPorEmail(forgotPassword.Email);
 
             if (user == null)
-                return StatusCode(204, new { message = "No se encontró un usuario con ese correo electrónico" });
+                return Ok(new { message = "Si el correo es correcto, recibirás un email" });
 
             string tempPassword = GenerateTemporaryPassword().Trim();
             string hash = HashGenerator.HashHelper.GenerarHashSHA256(tempPassword);
             user.Contrasena = hash;
             await _usuarioFlujo.Editar(user.IdUsuario, user);
 
+            // Enviar email
+            string emailBody = $@"
+            <h2>Recuperación de Contraseña</h2>
+            <p>Tu contraseña temporal es: <strong>{tempPassword}</strong></p>
+            <p>Por favor, cámbiala después de iniciar sesión.</p>
+        ";
 
-            try
-            {
-                string emailBody = $@"
-        <h2>Recuperación de Contraseña</h2>
-        <p>Tu contraseña temporal es: <strong>{tempPassword}</strong></p>
-        <p>Por favor, cámbiala después de iniciar sesión.</p>";
-
-                await _emailService.SendEmailAsync(user.Email, "Recuperación de Contraseña", emailBody);
-            }
-            catch (Exception ex)
-            {
-                // Log del error (usa tu logger, ej. ILogger<T>)
-                _logger.LogError(ex, "Error enviando email de recuperación a {Email}", user.Email);
-                // No expongas el error real al cliente
-                return StatusCode(500, new { message = "No se pudo enviar el correo, intenta más tarde" });
-            }
+            await _emailService.SendEmailAsync(user.Email, "Recuperación de Contraseña", emailBody);
 
             return Ok(new { message = "Si el correo existe, recibirás un email" });
         }
