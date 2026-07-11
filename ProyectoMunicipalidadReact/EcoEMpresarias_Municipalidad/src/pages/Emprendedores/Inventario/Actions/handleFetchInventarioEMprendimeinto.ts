@@ -1,5 +1,9 @@
+
+
+
 import { authFetch } from "../../../../auth/AuthFetch";
 import type { Inventario } from "../../../../types/productosType";
+
 
 export async function handleFetchInventarioEmprendimientoFiltrado(
   emprendimiento_id: string,

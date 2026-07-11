@@ -1,10 +1,8 @@
-// InventarioEmprendimiento.tsx (padre)
 import { useParams } from "react-router-dom";
 import { useEffect, useMemo, useState } from "react";
 import type { Inventario, InventarioRequest } from "../../../types/productosType";
 import { handleFetchInventarioEmprendimientoFiltrado } from "./Actions/handleFetchInventarioEMprendimeinto";
 import { InventarioGrid } from "./components/InventarioGrid";
-import { BarraBusqueda } from "../../Productos/components/BarraBusqueda";
 import { useDebounce } from "../../../types/useDebounce";
 
 export default function InventarioEmprendimiento() {
@@ -44,14 +42,13 @@ export default function InventarioEmprendimiento() {
 
   return (
     <div>
-      <div className="mb-6">
-        <BarraBusqueda valor={nombre} onChange={setNombre} />
-      </div>
       <InventarioGrid
         items={inventario}
         CedulaJuridica={cedulaJuridica || ""}
         emprendimientoId={numericId || undefined}
         onUpdated={handleUpdated}
+        nombreBusqueda={nombre}
+        onNombreBusquedaChange={setNombre}
       />
     </div>
   );

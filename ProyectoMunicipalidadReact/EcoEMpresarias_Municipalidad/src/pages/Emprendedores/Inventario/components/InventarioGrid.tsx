@@ -6,15 +6,25 @@ import { type Inventario, type InventarioRequest } from "../../../../types/produ
 import { BannerInventario } from "./bannerInventario"
 import { handleActualizarInventario } from "../Actions/hanldeActualizarInventario"
 import { InventarioModal } from "./InventarioModal"
+import { BarraBusqueda } from "../../../Productos/components/BarraBusqueda" // ajusta el path
 
 interface InventarioGridProps {
   items: Inventario[]
   CedulaJuridica: string
   emprendimientoId?: number
   onUpdated?: (updated: InventarioRequest) => void
+  nombreBusqueda: string
+  onNombreBusquedaChange: (valor: string) => void
 }
 
-export function InventarioGrid({ items, CedulaJuridica, emprendimientoId, onUpdated }: InventarioGridProps) {
+export function InventarioGrid({
+  items,
+  CedulaJuridica,
+  emprendimientoId,
+  onUpdated,
+  nombreBusqueda,
+  onNombreBusquedaChange,
+}: InventarioGridProps) {
   const [modalOpen, setModalOpen] = useState(false)
   const [selected, setSelected] = useState<{
     productoId: string
@@ -22,7 +32,6 @@ export function InventarioGrid({ items, CedulaJuridica, emprendimientoId, onUpda
     cantidadActual: number
     cantidadMinima: number
     estadoId: number
-
   } | null>(null)
 
   const totalUnidades = useMemo(() => items.reduce((s, it) => s + (it.cantidadActual ?? 0), 0), [items])
@@ -52,19 +61,21 @@ export function InventarioGrid({ items, CedulaJuridica, emprendimientoId, onUpda
 
     try {
       await handleActualizarInventario(fullPayload, CedulaJuridica, emprendimientoId)
-      // notificar al padre para que actualice la UI si lo desea
       onUpdated?.(fullPayload)
       setModalOpen(false)
     } catch (err) {
       console.error("Error actualizando inventario:", err)
-      // opcional: mostrar toast de error
       setModalOpen(false)
     }
   }
 
   return (
-    <div >
+    <div>
       <BannerInventario />
+
+      <div className="max-w-5xl mx-auto mb-6">
+        <BarraBusqueda valor={nombreBusqueda} onChange={onNombreBusquedaChange} />
+      </div>
 
       <div className="max-w-5xl mx-auto shadow-md rounded-lg overflow-hidden">
         <table className="min-w-full border-collapse">
