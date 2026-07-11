@@ -11,6 +11,6 @@ namespace Abstracciones.Interfaces.Flujo
     {
         Task<Guid> AgregarInventario(Inventario inventario);
         Task<Guid> EditarInventario(Guid id, InventarioRequest inventario);
-        Task<List<Inventario>> ObtenerInventarios(int emprendimiento_id);
+        Task<List<Inventario>> ObtenerInventarios(int emprendimiento_id, string? nombre);
     }
 }

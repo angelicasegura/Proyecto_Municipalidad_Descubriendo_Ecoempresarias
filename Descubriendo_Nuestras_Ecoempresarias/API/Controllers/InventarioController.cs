@@ -21,7 +21,10 @@ namespace API.Controllers
 
         [Authorize(Roles = "ADMIN,EMPRENDEDOR")]
         [HttpGet("Mi-Inventario")]
-        public async Task<IActionResult> ObtenerInventarios([FromQuery] int emprendimiento_id, [FromQuery] string CedulaJuridica)
+        public async Task<IActionResult> ObtenerInventarios(
+                [FromQuery] int emprendimiento_id,
+                [FromQuery] string CedulaJuridica,
+                [FromQuery] string? nombre)
         {
             try
             {
@@ -37,14 +40,12 @@ namespace API.Controllers
                     return Unauthorized("No tienes permiso para acceder a este recurso");
                 }
 
-                var inventarios = await _inventarioFlujo.ObtenerInventarios(emprendimiento_id);
+                var inventarios = await _inventarioFlujo.ObtenerInventarios(emprendimiento_id, nombre);
                 return Ok(inventarios);
             }
             catch (Exception ex)
             {
                 return StatusCode(500, $"Error interno al obtener el inventario: {ex.Message}");
-
-
             }
         }
 

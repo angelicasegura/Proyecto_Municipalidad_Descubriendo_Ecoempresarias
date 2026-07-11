@@ -1,6 +1,7 @@
 ﻿
-CREATE PROCEDURE sp_ObtenerInventarioPorEmprendimiento
-    @Emprendimiento_id INT
+CREATE  PROCEDURE sp_ObtenerInventarioPorEmprendimiento
+    @Emprendimiento_id INT,
+    @Nombre NVARCHAR(200) = NULL
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -22,12 +23,12 @@ BEGIN
     FROM ECOEMPRESARIAS_INVENTARIO_TB I
         INNER JOIN ECOEMPRESARIAS_PRODUCTO_TB P 
             ON I.Producto_id = P.Producto_id
-
         INNER JOIN ECOEMPRESARIAS_EMPRENDIMIENTOS_TB EP 
             ON P.Emprendimiento_id = EP.Emprendimiento_id
 
     WHERE 
         P.Emprendimiento_id = @Emprendimiento_id
-        AND P.Estado_id = 1              -- Producto activo
-        AND EP.Estado_id = 1             -- Emprendimiento activo
+        AND P.Estado_id = 1        -- Producto activo
+        AND EP.Estado_id = 1       -- Emprendimiento activo
+        AND (@Nombre IS NULL OR P.NombreProducto LIKE '%' + @Nombre + '%')
 END

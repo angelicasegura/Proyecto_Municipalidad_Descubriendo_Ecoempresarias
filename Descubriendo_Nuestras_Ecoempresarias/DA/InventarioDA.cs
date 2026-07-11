@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace DA
 {
@@ -65,14 +66,15 @@ namespace DA
         }
 
 
-        public async Task<List<Inventario>> ObtenerInventarios(int emprendimiento_id)
+        public async Task<List<Inventario>> ObtenerInventarios(int emprendimiento_id, string? nombre = null)
         {
             try
             {
                 string query = @"sp_ObtenerInventarioPorEmprendimiento";
                 var parameters = new
                 {
-                    Emprendimiento_id = emprendimiento_id
+                    Emprendimiento_id = emprendimiento_id,
+                    Nombre = nombre
                 };
                 var resultQuery = await _sqlConnection.QueryAsync<Inventario>(query, parameters, commandType: System.Data.CommandType.StoredProcedure);
                 return resultQuery.ToList();
