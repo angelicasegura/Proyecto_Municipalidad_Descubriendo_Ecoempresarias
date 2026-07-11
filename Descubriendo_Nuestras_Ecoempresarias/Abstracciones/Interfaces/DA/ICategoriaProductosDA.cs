@@ -10,5 +10,8 @@ namespace Abstracciones.Interfaces.DA
     public interface ICategoriaProductosDA
     {
         Task<List<CategoriaProducto>> ObtenerCategoriasProductos(int? emprendimiento_id);
+        Task<IEnumerable<CategoriaProducto>> ObtenerCategorias(int? estado_id);
+
+
     }
 }

@@ -18,6 +18,11 @@ namespace Flujo
             _categoriaProductosDA = categoriaProductosDA;
         }
 
+        public async Task<IEnumerable<CategoriaProducto>> ObtenerCategorias(int? estado_id)
+        {
+            return await _categoriaProductosDA.ObtenerCategorias(estado_id);
+        }
+
         public async  Task<List<CategoriaProducto>> ObtenerCategoriasProductos(int? emprendimiento_id)
         {
             return await _categoriaProductosDA.ObtenerCategoriasProductos( emprendimiento_id);
