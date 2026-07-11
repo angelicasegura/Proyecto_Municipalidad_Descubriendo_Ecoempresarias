@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
 import type { Producto } from "../../types/productosType"
 import { obtenerProductosFiltrados } from "../../types/productosType"
-import type { Categoria } from "../../types/categoriaType"
-import { obtenerCategoriasFiltrado } from "../../types/categoriaType"
+import type { CategoriaProducto } from "../../types/productosType"
+import { obtenerCategoriasFiltrado } from "../../types/productosType"
 import { useDebounce } from "../../types/useDebounce"
 import ProductoCard from "./components/ProductoCard"
 import { BarraBusqueda } from "./components/BarraBusqueda"
@@ -11,7 +11,7 @@ import { PackageOpen } from "lucide-react"
 
 export default function ProductosPage() {
     const [productos, setProductos] = useState<Producto[]>([])
-    const [categorias, setCategorias] = useState<Categoria[]>([])
+    const [categorias, setCategorias] = useState<CategoriaProducto[]>([])
     const [nombre, setNombre] = useState("")
     const [categoriaId, setCategoriaId] = useState("")
     const [loading, setLoading] = useState(true)
@@ -50,7 +50,7 @@ export default function ProductosPage() {
             <h1 className="text-2xl font-bold mb-6">Productos</h1>
 
             {/* Barra de filtros */}
-            <div className="flex flex-col sm:flex-row gap-3 mb-8">
+            <div className="flex flex-col sm:flex-row gap-4 mb-8">
                 <BarraBusqueda valor={nombre} onChange={setNombre} />
                 <FiltroCategoria
                     categorias={categorias}

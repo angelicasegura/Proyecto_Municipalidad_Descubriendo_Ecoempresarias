@@ -197,4 +197,10 @@ export async function obtenerProductosFiltrados(
 }
 
 
+export async function obtenerCategoriasFiltrado(): Promise<CategoriaProducto[]> {
+    const res = await authFetch(`${BASE_URL}/api/CategoriasProductos/ObtenerCategorias`)
+    if (!res.ok) throw new Error("Error al obtener categorías")
+    return res.json()
+}
+
 

@@ -1,7 +1,7 @@
-import type { Categoria } from '../../../types/categoriaType';
+import type { CategoriaProducto } from '../../../types/productosType';
 
 interface FiltroCategoriaProps {
-    categorias: Categoria[]
+    categorias: CategoriaProducto[]
     categoriaSeleccionada: string
     onChange: (categoriaId: string) => void
 }
@@ -19,8 +19,8 @@ export function FiltroCategoria({
         >
             <option value="">Todas las categorías</option>
             {categorias.map((cat) => (
-                <option key={cat.Categoria_id} value={cat.Categoria_id}>
-                    {cat.Nombre}
+                <option key={cat.categoria_Id} value={cat.categoria_Id}>
+                    {cat.nombre}
                 </option>
             ))}
         </select>
