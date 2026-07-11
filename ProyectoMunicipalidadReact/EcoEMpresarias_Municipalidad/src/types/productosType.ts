@@ -186,7 +186,7 @@ export async function obtenerProductosFiltrados(
 ): Promise<Producto[]> {
   const params = new URLSearchParams()
   if (nombre) params.append("nombre", nombre)
-  if (categoriaId) params.append("categoriaId", categoriaId)
+  if (categoriaId) params.append("categoria_id", categoriaId)
 
   const query = params.toString() ? `?${params.toString()}` : ""
   const res = await authFetch(`${BASE_URL}/api/Producto/ObtenerProductos${query}`)
