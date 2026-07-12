@@ -27,9 +27,9 @@ namespace Flujo
            return await _inventarioDA.EditarInventario(id, inventario);
         }
 
-        public async Task<List<Inventario>> ObtenerInventarios(int emprendimiento_id)
+        public async Task<List<Inventario>> ObtenerInventarios(int emprendimiento_id, string? nombre = null)
         {
-            return await _inventarioDA.ObtenerInventarios(emprendimiento_id);
+            return await _inventarioDA.ObtenerInventarios(emprendimiento_id, nombre );
         }
     }
 }

@@ -1,22 +1,39 @@
 import { useEffect, useState } from "react"
 import type { Producto } from "../../types/productosType"
-import { obtenerProductos} from "../../types/productosType"
+import { obtenerProductosFiltrados } from "../../types/productosType"
+import type { CategoriaProducto } from "../../types/productosType"
+import { obtenerCategoriasFiltrado } from "../../types/productosType"
+import { useDebounce } from "../../types/useDebounce"
 import ProductoCard from "./components/ProductoCard"
+import { BarraBusqueda } from "./components/BarraBusqueda"
+import { FiltroCategoria } from "./components/FiltroCategoria"
 import { PackageOpen } from "lucide-react"
 
-
 export default function ProductosPage() {
-    // productos que llegan de la API
     const [productos, setProductos] = useState<Producto[]>([])
+    const [categorias, setCategorias] = useState<CategoriaProducto[]>([])
+    const [nombre, setNombre] = useState("")
+    const [categoriaId, setCategoriaId] = useState("")
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState<string | null>(null)
 
+    const nombreDebounced = useDebounce(nombre, 400)
+
+    // Cargar categorías una sola vez, al montar
     useEffect(() => {
-        // Esta función se ejecuta cuando el componente se monta por primera vez
+        obtenerCategoriasFiltrado()
+            .then(setCategorias)
+            .catch((err) => console.error("Error al cargar categorías:", err))
+    }, [])
+
+    // Buscar productos cada vez que cambia el nombre (debounced) o la categoría
+    useEffect(() => {
         const fetchProductos = async () => {
             try {
-                const data = await obtenerProductos()
+                setLoading(true)
+                const data = await obtenerProductosFiltrados(nombreDebounced, categoriaId)
                 setProductos(data)
+                setError(null)
             } catch (err) {
                 setError("No se pudieron cargar los productos")
                 console.error(err)
@@ -26,14 +43,25 @@ export default function ProductosPage() {
         }
 
         fetchProductos()
-    }, []) 
+    }, [nombreDebounced, categoriaId])
 
-    // --- PANTALLA DE CARGA ---
-    if (loading) {
-        return (
-            <div className="mx-auto max-w-6xl px-4 py-10">
+    return (
+        <div className="mx-auto max-w-6xl px-4 py-10">
+            <h1 className="text-2xl font-bold mb-6">Productos</h1>
+
+            {/* Barra de filtros */}
+            <div className="flex flex-col sm:flex-row gap-4 mb-8">
+                <BarraBusqueda valor={nombre} onChange={setNombre} />
+                <FiltroCategoria
+                    categorias={categorias}
+                    categoriaSeleccionada={categoriaId}
+                    onChange={setCategoriaId}
+                />
+            </div>
+
+            {/* --- PANTALLA DE CARGA --- */}
+            {loading && (
                 <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                    {/* Mostramos 8 skeletons mientras carga */}
                     {Array.from({ length: 8 }).map((_, i) => (
                         <div key={i} className="rounded-2xl border overflow-hidden animate-pulse">
                             <div className="aspect-[4/3] bg-gray-200" />
@@ -45,47 +73,33 @@ export default function ProductosPage() {
                         </div>
                     ))}
                 </div>
-            </div>
-        )
-    }
+            )}
 
-    // --- PANTALLA DE ERROR ---
-    if (error) {
-        return (
-            <div className="mx-auto max-w-6xl px-4 py-10">
+            {/* --- PANTALLA DE ERROR --- */}
+            {!loading && error && (
                 <div className="flex flex-col items-center justify-center gap-3 rounded-2xl bg-red-50 py-16">
                     <p className="text-lg font-medium text-red-600">{error}</p>
                 </div>
-            </div>
-        )
-    }
+            )}
 
-    // --- PANTALLA SIN RESULTADOS ---
-    if (productos.length === 0) {
-        return (
-            <div className="mx-auto max-w-6xl px-4 py-10">
+            {/* --- SIN RESULTADOS --- */}
+            {!loading && !error && productos.length === 0 && (
                 <div className="flex flex-col items-center justify-center gap-3 rounded-2xl bg-muted/50 py-16">
                     <PackageOpen className="h-12 w-12 text-muted-foreground" />
                     <p className="text-lg font-medium text-muted-foreground">
                         No se encontraron productos
                     </p>
                 </div>
-            </div>
-        )
-    }
+            )}
 
-    // --- PANTALLA PRINCIPAL ---
-    return (
-        <div className="mx-auto max-w-6xl px-4 py-10">
-            <h1 className="text-2xl font-bold mb-6">Productos</h1>
-            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                {productos.map((producto) => (
-                    <ProductoCard
-                        key={producto.producto_id}
-                        producto={producto}
-                    />
-                ))}
-            </div>
+            {/* --- RESULTADOS --- */}
+            {!loading && !error && productos.length > 0 && (
+                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                    {productos.map((producto) => (
+                        <ProductoCard key={producto.producto_id} producto={producto} />
+                    ))}
+                </div>
+            )}
         </div>
     )
 }

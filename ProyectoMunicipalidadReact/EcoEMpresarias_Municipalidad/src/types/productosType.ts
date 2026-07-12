@@ -1,5 +1,7 @@
 import  { authFetch } from "../auth/AuthFetch";
 
+import type { Categoria } from './categoriaType';
+
 export interface Producto {
   producto_id: string 
   nombreProducto: string
@@ -175,6 +177,30 @@ export async function rechazarProducto(id: string): Promise<void> {
   const res = await authFetch(`${BASE_URL}/api/Producto/RechazarProducto/${id}`)
   console.log(res.status)
   if (!res.ok) throw new Error("Error al rechazar producto")
+}
+
+// Trae productos filtrados por nombre y/o categoría (búsqueda en vivo)
+export async function obtenerProductosFiltrados(
+  nombre?: string,
+  categoriaId?: string
+): Promise<Producto[]> {
+  const params = new URLSearchParams()
+  if (nombre) params.append("nombre", nombre)
+  if (categoriaId) params.append("categoria_id", categoriaId)
+
+  const query = params.toString() ? `?${params.toString()}` : ""
+  const res = await authFetch(`${BASE_URL}/api/Producto/ObtenerProductos${query}`)
+
+  if (res.status === 204) return []
+  if (!res.ok) throw new Error("Error al obtener productos filtrados")
+  return res.json()
+}
+
+
+export async function obtenerCategoriasFiltrado(): Promise<CategoriaProducto[]> {
+    const res = await authFetch(`${BASE_URL}/api/CategoriasProductos/ObtenerCategorias`)
+    if (!res.ok) throw new Error("Error al obtener categorías")
+    return res.json()
 }
 
 

@@ -30,5 +30,14 @@ namespace API.Controllers
                 return StatusCode(500, $"Error interno al obtener categorias de productos: {ex.Message}");
             }
         }
+
+        [HttpGet("ObtenerCategorias")]
+        public async Task<IActionResult> ObtenerCategorias()
+        {
+            var categorias = await _categoriaProductoFlujo.ObtenerCategorias(1);
+            return Ok(categorias);
+        }
+
+
     }
 }

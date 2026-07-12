@@ -59,6 +59,8 @@ namespace DA
                 Apellidos = usuario.Apellidos,
                 Telefono = usuario.Telefono,
                 Contrasena = usuario.Contrasena,
+                Estado_id = usuario.IdEstado,
+                Rol_id = usuario.IdRol,
                 Email = usuario.Email,
                 Ruta_Imagen_Perfil = usuario.Ruta_Imagen_Perfil,
                 Edad = usuario.Edad
@@ -66,6 +68,7 @@ namespace DA
 
             return resultQuery;
         }
+
 
         public async Task<int> Eliminar(int Id)
         {

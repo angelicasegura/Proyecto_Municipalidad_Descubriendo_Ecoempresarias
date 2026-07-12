@@ -10,5 +10,7 @@ namespace Abstracciones.Interfaces.Flujo
     public interface ICategoriaProductosFlujo
     {
         Task<List<CategoriaProducto>> ObtenerCategoriasProductos(int? emprendimiento_id);
+
+        Task<IEnumerable<CategoriaProducto>> ObtenerCategorias(int? estado_id);
     }
 }

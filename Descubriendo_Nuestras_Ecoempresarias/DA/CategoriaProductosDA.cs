@@ -4,6 +4,7 @@ using Dapper;
 using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,6 +22,27 @@ namespace DA
             _sqlConnection = _repositorioDapper.ObtenerRepositorio();
 
         }
+
+        public async Task<IEnumerable<CategoriaProducto>> ObtenerCategorias(int? estado_id)
+        {
+            try { 
+            var parameters = new { Estado_id = estado_id };
+            string query = @"SP_ObtenerCategorias";
+            var resultQuery = await _sqlConnection.QueryAsync<CategoriaProducto>(
+                query,
+                parameters,
+                commandType: CommandType.StoredProcedure
+            );
+            return resultQuery;
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception($"Error al obtener las categorias: {ex.Message}");
+            }
+
+        }
+        
 
         public async Task<List<CategoriaProducto>> ObtenerCategoriasProductos(int? emprendimiento_id)
         {
