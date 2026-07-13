@@ -15,7 +15,7 @@ export default function MapaList({ mapas, isLoading, onEditar, onAbrir, onCambia
   const [procesando, setProcesando] = useState<number | null>(null)
 
   const handleEstado = async (mapa: MapaResponse) => {
-    const activar = mapa.estadoNombre !== "ACTIVO"
+    const activar = mapa.estadoNombre !== "Activo"
     setProcesando(mapa.mapa_id)
     await onCambiarEstado(mapa.mapa_id, activar)
     setProcesando(null)
@@ -47,7 +47,8 @@ export default function MapaList({ mapas, isLoading, onEditar, onAbrir, onCambia
         </thead>
         <tbody>
           {mapas.map((mapa, index) => {
-            const esActivo = mapa.estadoNombre === "ACTIVO"
+            console.log(JSON.stringify(mapa.estadoNombre));
+            const esActivo = mapa.estadoNombre === "Activo"
             return (
               <tr key={mapa.mapa_id} className="border-b text-sm">
                 <td className="py-3 text-gray-500">{index + 1}</td>
