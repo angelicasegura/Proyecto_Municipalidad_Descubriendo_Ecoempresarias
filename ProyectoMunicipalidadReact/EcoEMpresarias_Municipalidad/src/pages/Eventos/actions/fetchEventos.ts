@@ -9,6 +9,8 @@ export interface Evento {
   cupos_actuales: number
   lugar_id: number
   estado_id: number
+  nombreEstado: string;
+  nombreLugar: string;
 }
 
 export async function fetchEventos(): Promise<Evento[]> {

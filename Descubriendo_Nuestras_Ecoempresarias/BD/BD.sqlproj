@@ -146,7 +146,7 @@
     <Build Include="dbo\Stored Procedures\SP_ObtenerEventoPorNombre.sql" />
     <Build Include="dbo\Stored Procedures\SP_ObtenerEventoPorId.sql" />
     <Build Include="dbo\Stored Procedures\SP_ActualizarEstadoLugar.sql" />
-    <Build Include="dbo\Stored Procedures\SP_InactivarEvento.sql" />
+    <Build Include="dbo\Stored Procedures\SP_ActualizarEstadoEvento.sql" />
     <Build Include="dbo\Stored Procedures\SP_EditarLugar.sql" />
     <Build Include="dbo\Stored Procedures\SP_EditarEvento.sql" />
     <Build Include="dbo\Stored Procedures\SP_AgregarLugar.sql" />
@@ -179,7 +179,7 @@
     <Build Include="dbo\Stored Procedures\SP_ObtenerEventoPorNombre.sql" />
     <Build Include="dbo\Stored Procedures\SP_ObtenerEventoPorId.sql" />
     <Build Include="dbo\Stored Procedures\SP_ActualizarEstadoLugar.sql" />
-    <Build Include="dbo\Stored Procedures\SP_InactivarEvento.sql" />
+    <Build Include="dbo\Stored Procedures\SP_ActualizarEstadoEvento.sql" />
     <Build Include="dbo\Stored Procedures\SP_EditarLugar.sql" />
     <Build Include="dbo\Stored Procedures\SP_EditarEvento.sql" />
     <Build Include="dbo\Stored Procedures\SP_CrearReservaEvento.sql" />

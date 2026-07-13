@@ -6,7 +6,6 @@ CREATE PROCEDURE SP_AgregarEvento
     @Fecha_final DATE,
     @Horario TIME,
 	@Cupos INT,
-	@Cupos_actuales INT,
 	@Lugar_id INT,
     @Estado_id INT
 AS
@@ -46,7 +45,7 @@ BEGIN
 			@Fecha_final ,
 			@Horario ,
 			@Cupos ,
-			@Cupos_actuales ,
+			@Cupos ,
 			@Lugar_id ,
 			@Estado_id)
 

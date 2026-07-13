@@ -7,7 +7,6 @@ export async function handleCrearEvento(
   cupos: number,
   lugar_id: number
 ) {
-
   const token = localStorage.getItem("token");
 
   const response = await fetch(
@@ -25,18 +24,21 @@ export async function handleCrearEvento(
         Fecha_final: fecha_final,
         Horario: horario + ":00",
         Cupos: cupos,
-        Cupos_actuales: 0,
         Lugar_id: lugar_id,
         Estado_id: 1
       })
     }
   );
 
-  if (!response.ok) {
-  const error = await response.text();
-  console.error("Error API:", error);
-  throw new Error(error);
-}
+  console.log("Status:", response.status);
+  console.log("OK:", response.ok);
 
-  return await response.json();
+  const texto = await response.text();
+  console.log("Respuesta:", texto);
+
+  if (!response.ok) {
+    throw new Error(texto);
+  }
+
+  return texto;
 }

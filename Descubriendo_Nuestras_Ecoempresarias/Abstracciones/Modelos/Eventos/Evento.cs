@@ -14,7 +14,6 @@ namespace Abstracciones.Modelos.Eventos
         public DateTime Fecha_Final { get; set; }
         public TimeSpan Horario { get; set; }
         public int Cupos { get; set; }
-        public int Cupos_actuales { get; set; }
 
 
     }
@@ -27,6 +26,8 @@ namespace Abstracciones.Modelos.Eventos
 
     public class EventoResponse : EventoBase
     {
+        public int Cupos_actuales { get; set; }
+
         public int Evento_id { get; set; }
         public string Lugar_id { get; set; }
         

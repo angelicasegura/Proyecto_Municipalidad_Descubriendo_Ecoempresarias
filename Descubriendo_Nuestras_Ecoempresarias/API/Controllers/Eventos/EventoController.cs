@@ -81,19 +81,15 @@ namespace API.Controllers.Eventos
         }
 
         [Authorize(Roles = "ADMIN")]
-        [HttpPut("InactivarEvento/{id}")]
-        public async Task<IActionResult> InactivarEvento([FromRoute]  int id)
+        [HttpPut("ActualizarEstadoEvento/{id}")]
+        public async Task<IActionResult> ActualizarEstadoEvento(int id, [FromBody] int estado)
         {
-            try
-            {
-                var resultado = await _eventoFlujo.InactivarEvento(id);
-                return Ok(resultado);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-                return StatusCode(500, $"Error interno al inactivar evento es: {ex.Message}");
-            }
+            var resultado = await _eventoFlujo.ActualizarEstadoEvento(id, estado);
+
+            if (resultado == 1)
+                return Ok();
+
+            return BadRequest();
         }
 
 

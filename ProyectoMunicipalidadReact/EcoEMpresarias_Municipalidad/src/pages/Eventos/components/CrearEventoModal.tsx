@@ -1,7 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { handleCrearEvento } from "../actions/handleCrearEvento";
 import { authFetch } from "../../../auth/AuthFetch";
+import {
+  Alert,
+  AlertTitle,
+  AlertDescription,
+} from "../../../components/ui/alert";
 
 interface Props {
   onClose: () => void;
@@ -10,7 +15,6 @@ interface Props {
 
 export default function CrearEventoModal({ onClose, onSuccess }: Props) {
   const [errors, setErrors] = useState<Record<string, string>>({});
-
   const [nombreEvento, setNombreEvento] = useState("");
   const [descripcion, setDescripcion] = useState("");
   const [fechaInicio, setFechaInicio] = useState("");
@@ -18,6 +22,19 @@ export default function CrearEventoModal({ onClose, onSuccess }: Props) {
   const [horario, setHorario] = useState("");
   const [cupos, setCupos] = useState(0);
   const [lugarId, setLugarId] = useState<number | null>(null);
+  const [alerta, setAlerta] = useState<{
+    tipo: "success" | "error";
+    mensaje: string;
+  } | null>(null);
+  useEffect(() => {
+    if (alerta) {
+      const timer = setTimeout(() => {
+        setAlerta(null);
+      }, 3000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [alerta]);
 
   // traer lugares
   const { data: lugares = [] } = useQuery({
@@ -58,35 +75,64 @@ export default function CrearEventoModal({ onClose, onSuccess }: Props) {
 
     return Object.keys(newErrors).length === 0;
   };
- const handleSubmit = async (e: any) => {
-  e.preventDefault();
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
 
-  if (!validateForm()) return;
+    if (!validateForm()) return;
 
-  try {
-    await handleCrearEvento(
-      nombreEvento,
-      descripcion,
-      fechaInicio,
-      fechaFinal,
-      horario,
-      cupos,
-      lugarId!
-    );
+    try {
+      await handleCrearEvento(
+        nombreEvento,
+        descripcion,
+        fechaInicio,
+        fechaFinal,
+        horario,
+        cupos,
+        lugarId!,
+      );
 
-    onSuccess();
-    onClose();
-  } catch (error) {
-    console.error(error);
-    alert("Error creando evento");
-  }
-};
+      setAlerta({
+        tipo: "success",
+        mensaje: "Evento creado correctamente",
+      });
+      setNombreEvento("");
+      setDescripcion("");
+      setFechaInicio("");
+      setFechaFinal("");
+      setHorario("");
+      setCupos(0);
+      setLugarId(null);
+      setErrors({});
+      setTimeout(() => {
+        onSuccess();
+        onClose();
+      }, 2000);
+    } catch (error) {
+      console.error(error);
+
+      setAlerta({
+        tipo: "error",
+        mensaje: "Error creando el evento",
+      });
+    }
+  };
 
   return (
     <div className="fixed inset-0 bg-black/40 flex justify-center items-start pt-20 overflow-y-auto z-50">
       <div className="bg-white p-6 rounded-lg w-[450px] shadow-lg max-h-[90vh] overflow-y-auto">
         <h2 className="text-xl font-bold mb-4">Crear Evento</h2>
+        {alerta && (
+          <Alert
+            variant={alerta.tipo === "error" ? "destructive" : "default"}
+            className="mb-4"
+          >
+            <AlertTitle>
+              {alerta.tipo === "success" ? "Éxito" : "Error"}
+            </AlertTitle>
 
+            <AlertDescription>{alerta.mensaje}</AlertDescription>
+          </Alert>
+        )}
         <form onSubmit={handleSubmit} className="space-y-3">
           <label className="block text-sm font-medium">Nombre del evento</label>
           <input

@@ -18,7 +18,6 @@ export function EventosGrid({ eventos }: Props) {
       ))} */}
 
       {eventos.map((evento) => {
-        console.log(evento)
         return (<EventoCard
           key={evento.evento_id}
           evento={evento}

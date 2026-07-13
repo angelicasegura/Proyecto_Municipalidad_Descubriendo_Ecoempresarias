@@ -28,9 +28,9 @@ namespace Flujo.Eventos
             return await _eventoDA.EditarEvento(id, evento);
         }
 
-        public async Task<int> InactivarEvento(int id)
+        public async Task<int> ActualizarEstadoEvento(int id, int estado)
         {
-            return await _eventoDA.InactivarEvento(id);
+            return await _eventoDA.ActualizarEstadoEvento(id, estado);
         }
 
         public async Task<EventoResponse> ObtenerEventoPorId(int id)

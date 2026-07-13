@@ -1,24 +1,36 @@
-import type { Evento } from "../actions/fetchEventos"
-import { Calendar, MapPin } from "lucide-react"
-import { Link } from "react-router-dom"
-import { useAuth } from "../../../auth/AuthContext"
+import type { Evento } from "../actions/fetchEventos";
+import { Calendar, MapPin } from "lucide-react";
+import { Link } from "react-router-dom";
+import { useAuth } from "../../../auth/AuthContext";
 
 interface Props {
-  evento: Evento
+  evento: Evento;
 }
 
 export default function EventoCard({ evento }: Props) {
-
-  const { user } = useAuth()
-  const emprendedor = user?.rol === "EMPRENDEDOR"
+  const { user } = useAuth();
+  const emprendedor = user?.rol === "EMPRENDEDOR";
+  const administrador = user?.rol === "ADMIN";
 
   return (
-
     <div className="bg-white rounded-lg shadow-md p-5 border-t-4 border-orange-400 hover:shadow-lg transition">
+      <div className="flex justify-between items-start mb-3">
+        <h3 className="text-blue-600 font-semibold text-lg leading-6">
+          {evento.nombreEvento}
+        </h3>
 
-      <h3 className="text-blue-600 font-semibold text-lg mb-3">
-        {evento.nombreEvento}
-      </h3>
+        {administrador && (
+          <span
+            className={`px-2 py-1 rounded-full text-xs font-semibold text-white ${
+              evento.nombreEstado === "Activo"
+                ? "bg-green-600"
+                : "bg-red-600"
+            }`}
+          >
+            {evento.nombreEstado}
+          </span>
+        )}
+      </div>
 
       <div className="flex items-center text-gray-600 text-sm mb-1">
         <Calendar className="w-4 h-4 mr-2 text-blue-500" />
@@ -27,15 +39,12 @@ export default function EventoCard({ evento }: Props) {
 
       <div className="flex items-center text-gray-600 text-sm mb-3">
         <MapPin className="w-4 h-4 mr-2 text-pink-500" />
-        {evento.lugar_id ?? "Lugar del evento"}
+        {evento.nombreLugar ?? "Lugar del evento"}
       </div>
 
-      <p className="text-gray-600 text-sm mb-4">
-        {evento.descripcion}
-      </p>
-
+      <p className="text-gray-600 text-sm mb-4">{evento.descripcion}</p>
+      
       <div className="flex gap-2 flex-wrap">
-
         <Link
           to={`/eventos/${evento.evento_id}`}
           className="bg-blue-600 text-white px-3 py-1.5 rounded-md text-sm hover:bg-blue-700"
@@ -62,9 +71,7 @@ export default function EventoCard({ evento }: Props) {
             </Link>
           </>
         )}
-
       </div>
-
     </div>
-  )
+  );
 }
