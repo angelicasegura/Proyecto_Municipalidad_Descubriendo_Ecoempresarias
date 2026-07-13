@@ -26,7 +26,6 @@ export async function handleEditarEvento(
         fecha_Final: fecha_Final,
         horario: horario + ":00",
         cupos: cupos,
-        cupos_actuales: cupos,
         lugar_id: lugar_id,
         estado_id: 1
       })

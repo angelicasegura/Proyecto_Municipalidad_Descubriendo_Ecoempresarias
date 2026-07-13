@@ -11,7 +11,7 @@ namespace Abstracciones.Interfaces.DA.Eventos
     {
         public Task<int> AgregarEvento(EventoRequest evento);
         public Task<int> EditarEvento(int id, EventoRequest evento);
-        public Task<int> InactivarEvento(int id);
+        public Task<int> ActualizarEstadoEvento(int id, int estado);
         public Task<IEnumerable<EventoResponse>> ObtenerEventos();
         public Task<EventoResponse> ObtenerEventoPorId(int id);
         public Task<EventoResponse> ObtenerEventoPorNombre(string nombre);

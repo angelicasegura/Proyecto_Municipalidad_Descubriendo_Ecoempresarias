@@ -6,7 +6,6 @@
     @Fecha_final DATE,
     @Horario TIME,
 	@Cupos INT,
-	@Cupos_actuales INT,
 	@Lugar_id INT,
     @Estado_id INT
 AS
@@ -24,7 +23,6 @@ BEGIN
 			Fecha_final = @Fecha_final,
 			Horario = @Horario,
 			Cupos =  @Cupos,
-			Cupos_actuales = @Cupos_actuales,
 			Lugar_id = @Lugar_id,
 			Estado_id = @Estado_id
         WHERE Evento_id = @Evento_id;

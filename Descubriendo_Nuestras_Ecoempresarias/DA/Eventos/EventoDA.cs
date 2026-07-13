@@ -31,8 +31,7 @@ namespace DA.Eventos
                 Fecha_inicio = evento.Fecha_inicio,
                 Fecha_Final = evento.Fecha_Final,
                 Horario = evento.Horario,
-                Cupos = evento.Cupos,
-                Cupos_actuales = evento.Cupos,
+                Cupos = evento.Cupos, 
                 Estado_id = 1
             });
             return resultQuery;
@@ -52,20 +51,36 @@ namespace DA.Eventos
                 Fecha_Final = evento.Fecha_Final,
                 Horario = evento.Horario,
                 Cupos = evento.Cupos,
-                Cupos_actuales = evento.Cupos_actuales,
                 Estado_id = evento.Estado_id
             });
             return resultQuery;
         }
 
-        public async Task<int> InactivarEvento(int id)
+        public async Task<int> ActualizarEstadoEvento(int id, int estado)
         {
-            string query = @"SP_InactivarEvento";
-            var resultQuery = await _sqlConnection.ExecuteScalarAsync<int>(query, new
+            try
             {
-                Evento_id = id
-            });
-            return resultQuery;
+                string query = "SP_ActualizarEstadoEvento";
+
+                var resultado = await _sqlConnection.ExecuteScalarAsync<int>(
+                    query,
+                    new
+                    {
+                        Evento_id = id,
+                        Estado_id = estado
+                    },
+                    commandType: CommandType.StoredProcedure
+                );
+
+                if (resultado != 0)
+                    return 1;
+
+                return 0;
+            }
+            catch
+            {
+                throw new Exception("Error actualizando el estado del evento.");
+            }
         }
 
         public async Task<EventoResponse> ObtenerEventoPorId(int id)
