@@ -6,6 +6,7 @@ import ConfirmarCambioEstado from "./modalConfirmarCambioEstado";
 import { useState } from "react";
 import ModalEditarEvento from "./ModalEditarEvento";
 import ModalGestionarPisos from "./ModalGestionarPisos";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 interface Props {
   evento: any;
@@ -20,20 +21,24 @@ export default function EventoDetalleCard({ evento }: Props) {
   const [mostrarModalEditar, setMostrarModalEditar] = useState(false);
   const [mostrarGestionPisos, setMostrarGestionPisos] = useState(false);
 
+
+  const queryClient = useQueryClient();
+
   if (!evento) return null;
 
-  const handleCambioEstado = async () => {
-    try {
-      await handleActualizarEstadoEvento(
-        evento.evento_id,
-        evento.estado_id === 1 ? 0 : 1,
-      );
+  
+  const actualizarEstadoMutation = useMutation({
+    mutationFn: ({ id, estado }: { id: number; estado: number }) =>
+      handleActualizarEstadoEvento(id, estado),
 
-      navigate("/eventos");
-    } catch (error) {
-      console.error(error);
-    }
-  };
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: ["evento", evento.evento_id],
+      });
+
+      setMostrarConfirmacion(false);
+    },
+  });
 
   return (
     <>
@@ -44,7 +49,9 @@ export default function EventoDetalleCard({ evento }: Props) {
           {esAdmin && (
             <span
               className={`px-3 py-1 rounded-full text-sm font-semibold text-white ${
-                evento.nombreEstado === "Activo" ? "bg-green-600" : "bg-red-600"
+                evento.nombreEstado === "Activo"
+                  ? "bg-green-600"
+                  : "bg-red-600"
               }`}
             >
               {evento.nombreEstado}
@@ -57,6 +64,7 @@ export default function EventoDetalleCard({ evento }: Props) {
             <Calendar size={16} />
             Fecha: {new Date(evento.fecha_inicio).toLocaleDateString()}
           </div>
+
           <div className="flex items-center gap-2">
             <MapPin size={16} />
             Lugar: {evento.nombreLugar}
@@ -66,6 +74,7 @@ export default function EventoDetalleCard({ evento }: Props) {
         <hr className="mb-4" />
 
         <h3 className="font-semibold mb-2">Descripción del evento</h3>
+
         <p className="text-gray-600 mb-6">{evento.descripcion}</p>
 
         <div className="space-y-4 mt-6">
@@ -97,7 +106,6 @@ export default function EventoDetalleCard({ evento }: Props) {
 
           {esAdmin && (
             <>
-              {/* Botón gestionar pisos — solo si el evento tiene lugar asignado */}
               {evento.lugar_id && (
                 <button
                   onClick={() => setMostrarGestionPisos(true)}
@@ -118,29 +126,36 @@ export default function EventoDetalleCard({ evento }: Props) {
               <button
                 onClick={() => setMostrarConfirmacion(true)}
                 className={`text-white px-4 py-2 rounded ${
-                  evento.estado_id === 1
+                  evento.nombreEstado === "Activo"
                     ? "bg-red-600 hover:bg-red-700"
                     : "bg-green-600 hover:bg-green-700"
                 }`}
               >
-                {evento.estado_id === 1 ? "Inactivar" : "Activar"}
+                {evento.nombreEstado === "Activo"
+                  ? "Inactivar"
+                  : "Activar"}
               </button>
             </>
           )}
         </div>
       </div>
 
-      {/* Modal confirmar eliminación */}
+     
       {mostrarConfirmacion && (
         <ConfirmarCambioEstado
           nombreEvento={evento.nombreEvento}
-          estado={evento.estado_id}
+          esActivo={evento.nombreEstado === "Activo"}
           onCancel={() => setMostrarConfirmacion(false)}
-          onConfirm={handleCambioEstado}
+          onConfirm={() =>
+            actualizarEstadoMutation.mutate({
+              id: evento.evento_id,
+              estado: evento.nombreEstado === "Activo" ? 0 : 1,
+            })
+          }
+          cargando={actualizarEstadoMutation.isPending}
         />
       )}
 
-      {/* Modal editar */}
       {mostrarModalEditar && (
         <ModalEditarEvento
           evento={evento}
@@ -149,7 +164,6 @@ export default function EventoDetalleCard({ evento }: Props) {
         />
       )}
 
-      {/* Modal gestionar pisos */}
       {mostrarGestionPisos && (
         <ModalGestionarPisos
           eventoId={evento.evento_id}

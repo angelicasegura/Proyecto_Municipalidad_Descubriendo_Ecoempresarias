@@ -30,8 +30,7 @@ export async function handleCrearEvento(
     }
   );
 
-  console.log("Status:", response.status);
-  console.log("OK:", response.ok);
+
 
   const texto = await response.text();
   console.log("Respuesta:", texto);
