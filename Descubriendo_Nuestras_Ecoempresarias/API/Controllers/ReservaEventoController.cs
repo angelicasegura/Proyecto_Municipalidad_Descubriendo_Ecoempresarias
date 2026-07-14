@@ -24,9 +24,17 @@ namespace API.Controllers
         [HttpPost("CrearReserva")]
         public async Task<IActionResult> CrearReserva(ReservaEventoRequest reserva)
         {
-            var resultado = await _reservaEventoFlujo.CrearReservaEvento(reserva);
+            try
+            {
+                var resultado = await _reservaEventoFlujo.CrearReservaEvento(reserva);
 
-            return Ok(resultado);
+                return Ok(resultado);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
         }
         [Authorize(Roles = "EMPRENDEDOR")]
 

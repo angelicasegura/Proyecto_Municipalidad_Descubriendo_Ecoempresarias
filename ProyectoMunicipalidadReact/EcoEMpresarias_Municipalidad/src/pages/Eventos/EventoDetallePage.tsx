@@ -1,25 +1,26 @@
-import { useParams } from "react-router-dom"
-import { useQuery } from "@tanstack/react-query"
-import EventoDetalleCard from "./components/eventoDetalleCard"
-import { fetchEventoPorId } from "./actions/fetchEventoPorId"
+import { useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import EventoDetalleCard from "./components/eventoDetalleCard";
+import { fetchEventoPorId } from "./actions/fetchEventoPorId";
 
-export default function EventoDetallePage(){
+export default function EventoDetallePage() {
+  const { id } = useParams();
 
-    const { id } = useParams()
+  const eventoId = Number(id);
 
-    const { data, isLoading, error } = useQuery({
-        queryKey:["evento", id],
-        queryFn: () => fetchEventoPorId(Number(id)),
-        enabled: !!id
-    })
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["evento", eventoId],
+    queryFn: () => fetchEventoPorId(eventoId),
+    enabled: !!eventoId,
+  });
 
-    if(isLoading) return <p>Cargando evento...</p>
+  if (isLoading) return <p>Cargando evento...</p>;
 
-    if(error) return <p>Error cargando evento</p>
+  if (error) return <p>Error cargando evento</p>;
 
-    return(
-        <div className="min-h-screen bg-background py-10 px-4">
-            {data && <EventoDetalleCard evento={data} />}
-        </div>
-    )
+  return (
+    <div className="min-h-screen bg-background py-10 px-4">
+      {data && <EventoDetalleCard evento={data} />}
+    </div>
+  );
 }

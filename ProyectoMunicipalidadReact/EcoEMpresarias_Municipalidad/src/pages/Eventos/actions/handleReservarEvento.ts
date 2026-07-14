@@ -25,11 +25,16 @@ export async function handleReservarEvento(data:any){
     }
   )
 
-  if(!response.ok){
-    const errorText = await response.text()
-    console.error("Error backend:", errorText)
-    throw new Error("Error creando reserva")
+  if (!response.ok) {
+  const errorText = await response.text();
+
+  console.log(errorText);
+
+  if (errorText.includes("Este emprendimiento ya tiene una reserva")) {
+    throw new Error("Ya tienes una solicitud registrada para este evento.");
   }
 
+  throw new Error(errorText);
+}
   return true
 }

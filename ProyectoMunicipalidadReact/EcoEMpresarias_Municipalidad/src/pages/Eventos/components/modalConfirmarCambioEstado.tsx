@@ -1,25 +1,22 @@
-import { AlertTriangle, Info, X } from "lucide-react"
-
+import { AlertTriangle, Info, X } from "lucide-react";
 interface Props {
-  nombreEvento: string
-  estado: number
-  onCancel: () => void
-  onConfirm: () => void
+  nombreEvento: string;
+  esActivo: boolean;
+  onCancel: () => void;
+  onConfirm: () => void;
+  cargando?: boolean;
 }
 
 export default function ConfirmarCambioEstado({
   nombreEvento,
-  estado,
+  esActivo,
   onCancel,
-  onConfirm
+  onConfirm,
+  cargando,
 }: Props) {
-  const esActivo = estado === 1;
-
   return (
     <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-
       <div className="bg-white rounded-xl shadow-xl w-[450px] overflow-hidden">
-
         <div
           className={`text-white px-5 py-3 flex items-center justify-between ${
             esActivo ? "bg-red-600" : "bg-green-600"
@@ -55,28 +52,26 @@ export default function ConfirmarCambioEstado({
           <div className="flex justify-end gap-3 pt-4">
             <button
               onClick={onCancel}
-              className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg"
+              disabled={cargando}
+              className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg disabled:opacity-50"
             >
               Cancelar
             </button>
 
             <button
               onClick={onConfirm}
+              disabled={cargando}
               className={`text-white px-4 py-2 rounded-lg ${
                 esActivo
                   ? "bg-red-600 hover:bg-red-700"
                   : "bg-green-600 hover:bg-green-700"
-              }`}
+              } disabled:opacity-50`}
             >
-              {esActivo ? "Inactivar" : "Activar"}
+              {cargando ? "Procesando..." : esActivo ? "Inactivar" : "Activar"}
             </button>
-
           </div>
-
         </div>
-
       </div>
-
     </div>
-  )
+  );
 }
